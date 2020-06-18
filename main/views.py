@@ -5,4 +5,4 @@ from django.shortcuts import render
 
 def main(request):
     template = 'main/main.html'
-    return render(request,template,{})
+    return render(request, template, {})
