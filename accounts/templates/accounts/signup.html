@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+{% block body_block %}
+<form method="POST">
+    {%csrf_token%}
+    <p>{{form.username.label}} {{form.username}}</p>
+    <p>{{form.roll.label}} {{form.roll}} <span><small style="color:red">*required</small></span></p>
+    <p>{{form.speciality.label}} {{form.speciality}} <span><small style="color:red">*required</small></p>
+    <p>{{form.first_name.label}} {{form.first_name}}</p>
+    <p>{{form.last_name.label}} {{form.last_name}}</p>
+    <p>{{form.email.label}} {{form.email}}</p>
+    <p>{{form.password1.label}} {{form.password1}}</p>
+    <p>Password Confirmation {{form.password2}}</p>
+    {%if form.errors%}
+        {%for error in form.username.errors%}
+            <p>{{error}}</p>
+        {%endfor%}
+        {%for error in form.password2.errors%}
+            <p>{{error}}</p>
+        {%endfor%}
+    {%endif%}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

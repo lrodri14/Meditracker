@@ -6,8 +6,8 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
 
     ROLL_CHOICES = (
-        ('D', 'DOCTOR'),
-        ('A', 'ASSISTANT'),
+        ('D', 'Doctor'),
+        ('A', 'Assistant'),
     )
     SPECIALITY_CHOICES = (
         ('A&I', 'ALLERGY & IMMUNOLOGY'),
