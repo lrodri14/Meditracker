@@ -3,8 +3,8 @@
 <form method="POST">
     {%csrf_token%}
     <p>{{form.username.label}} {{form.username}}</p>
-    <p>{{form.roll.label}} {{form.roll}} <span><small style="color:red">*required</small></span></p>
-    <p>{{form.speciality.label}} {{form.speciality}} <span><small style="color:red">*required</small></p>
+    <p>{{form.roll.label}} {{form.roll}} {{form.roll.help_text}}</p>
+    <p>{{form.speciality.label}} {{form.speciality}} {{form.speciality.help_text}}</p>
     <p>{{form.first_name.label}} {{form.first_name}}</p>
     <p>{{form.last_name.label}} {{form.last_name}}</p>
     <p>{{form.email.label}} {{form.email}}</p>

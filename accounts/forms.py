@@ -2,8 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm as CreationForm
 from django.contrib.auth.forms import UserChangeForm as ChangeForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.contrib.auth.models import User
-from .models import CustomUser
+from .models import CustomUser, Profile
 
 
 class UserCreationForm(CreationForm):
@@ -28,6 +27,10 @@ class SignUpForm(CreationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'roll', 'speciality')
+
+
+class ProfileForm(forms.ModelForm):
+    pass
 
 
 
