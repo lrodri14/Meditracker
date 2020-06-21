@@ -38,7 +38,8 @@ class CustomUser(AbstractUser):
     roll = models.CharField('Roll',max_length=25, blank=False, help_text='Choose the roll you will acquire in this account.', choices=ROLL_CHOICES)
     speciality = models.CharField('Speciality', max_length=100, blank=True, help_text='If your roll is (A, Assistant), leave this field blank.' , choices=SPECIALITY_CHOICES)
 
-class UserProfile(models.Model):
+
+class UsersProfile(models.Model):
 
     GENDER_CHOICES = (
         ('M', 'Masculine'),
