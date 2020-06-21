@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
         ('D', 'Doctor'),
         ('A', 'Assistant'),
     )
+
     SPECIALITY_CHOICES = (
         ('A&I', 'ALLERGY & IMMUNOLOGY'),
         ('A', 'ANESTHESIOLOGY'),
@@ -34,19 +35,29 @@ class CustomUser(AbstractUser):
         ('U', 'UROLOGY'),
     )
 
-    roll = models.CharField('Roll',max_length=25, blank=False, help_text='*Required', choices=ROLL_CHOICES)
-    speciality = models.CharField('Speciality', max_length=100, blank=True, choices=SPECIALITY_CHOICES, help_text='If your roll is (A, Assistant), leave this field blank.')
+    roll = models.CharField('Roll',max_length=25, blank=False, help_text='Choose the roll you will acquire in this account.', choices=ROLL_CHOICES)
+    speciality = models.CharField('Speciality', max_length=100, blank=True, help_text='If your roll is (A, Assistant), leave this field blank.' , choices=SPECIALITY_CHOICES)
 
+class UserProfile(models.Model):
 
-class Profile:
     GENDER_CHOICES = (
         ('M', 'Masculine'),
         ('F', 'Femenine'),
-        ('U', 'Undefined'),
+        ('U', 'Undefined')
     )
-    user = models.OneToOneField(get_user_model(),on_delete=models.CASCADE,verbose_name='User')
-    profile_pic = models.ImageField('Profile Picture', null=True)
-    gender = models.CharField('Gender', max_length=25, blank=False, choices=GENDER_CHOICES)
-    birth_date = models.DateField('Birth Date', null=True)
-    # country = models.CharField('Country', max_length=100, choices=COUNTRY_CHOICES)
 
+    LOCATION_CHOICES = (
+        ('H', 'Honduras'),
+    )
+
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, verbose_name='user')
+    profile_pic = models.ImageField('profile picture', null=True)
+    bio = models.TextField('biography', blank=True, help_text='Let us know about you')
+    birth_date = models.DateField('birth date')
+    gender = models.CharField('gender', max_length=25, blank=False, choices=GENDER_CHOICES)
+    location = models.CharField('location', max_length=100, blank=False, choices=LOCATION_CHOICES, help_text='Provide your location')
+
+    class Meta:
+        ordering = ['user']
+        verbose_name = 'User Profile'
+        verbose_name_plural = 'User Profiles'

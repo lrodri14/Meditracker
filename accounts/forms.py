@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm as CreationForm
 from django.contrib.auth.forms import UserChangeForm as ChangeForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .models import CustomUser, Profile
+from .models import CustomUser, UserProfile
 
 
 class UserCreationForm(CreationForm):
@@ -30,7 +30,9 @@ class SignUpForm(CreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    pass
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
 
 
 
