@@ -1,12 +1,18 @@
 {%extends 'base.html'%}
+{%load staticfiles%}
 {%block body_block%}
-    {%if form.errors%}
-        <p>Your credentials are incorrect, please try again.</p>
-    {%endif%}
-    <form action="" method="POST">
+<link rel="stylesheet" href="{%static 'accounts/css/login.css'%}">
+    <form action="" method="POST" autocomplete="off">
+        <h1>Log in</h1>
         {%csrf_token%}
-        {{form.as_p}}
-        <p><a href="{%url 'accounts:password_reset'%}">Did you forgot your password?</a></p>
+        <p>{{form.username.label}}</p>
+        <p>{{form.username}}</p>
+        <p>{{form.password.label}}</p>
+        <p>{{form.password}}</p>
+        {%if form.errors%}
+            <p>Your credentials are incorrect, please try again.</p>
+            <p><a href="{%url 'accounts:password_reset'%}">Did you forgot your password?</a></p>
+        {%endif%}
         <button type="submit">Log In</button>
     </form>
 {%endblock%}
