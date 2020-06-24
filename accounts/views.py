@@ -1,8 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
-from django.contrib.auth import login,authenticate
-from .forms import SignUpForm
+from .forms import SignUpForm, ProfileForm
+from .models import UsersProfile
 # Create your views here.
 
 
@@ -45,7 +45,7 @@ class PasswordResetComplete(PasswordResetCompleteView):
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = SignUpForm(data=request.POST)
         if form.is_valid():
             form.save()
             return redirect('accounts:login')
@@ -53,3 +53,10 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
+
+def profile_change(request):
+    profile = get_object_or_404(UsersProfile, user=request.user)
+    form = ProfileForm(request.POST or None, instance=profile)
+    if form.is_valid():
+        form.save()
+    return render(request, 'accounts/profile_change.html', {'form': form})

@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'accounts/css/profile.css'%}">
+<form method="POST">
+    {%csrf_token%}
+    <h1>Let's set up your profile</h1>
+    <label for="id_profile_pic">Profile Picture</label>
+    <p>{{form.profile_pic}}</p>
+    <p>{{form.phone_number.label}}</p>
+    <p>{{form.phone_number}}</p>
+    <p>{{form.bio.label}}</p>
+    <p>{{form.bio}}</p>
+    <p>{{form.birth_date.label}}</p>
+    <p>{{form.birth_date}}</p>
+    <p>{{form.gender.label}}</p>
+    <p>{{form.gender}}</p>
+    <p>{{form.location.label}}</p>
+    <p>{{form.location}}</p>
+    <p>{{form.address.label}}</p>
+    <p>{{form.address}}</p>
+    <button type="submit">Proceed</button>
+</form>
+{%endblock%}

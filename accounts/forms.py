@@ -30,9 +30,13 @@ class SignUpForm(CreationForm):
 
 
 class ProfileForm(forms.ModelForm):
+    profile_pic = forms.ImageField(widget=forms.FileInput, required=None)
+    birth_date = forms.DateField(widget=forms.SelectDateWidget(years=[x for x in range(1920, 2101)]), required=None)
+
     class Meta:
         model = UsersProfile
         fields = '__all__'
+
 
 
 
