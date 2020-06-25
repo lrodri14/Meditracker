@@ -55,7 +55,7 @@ def signup(request):
 
 
 def profile_change(request):
-    user_profile = UsersProfile.objects.get(user=request.user)
+    user_profile = get_object_or_404(UsersProfile, user=request.user)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -69,5 +69,5 @@ def profile_change(request):
             user_profile.save()
     else:
         form = ProfileForm(instance=user_profile)
-    return render(request, 'accounts/profile_change.html',context={'form':form, 'user':user_profile})
+    return render(request, 'accounts/profile_change.html',context={'form': form, 'user': user_profile})
 
