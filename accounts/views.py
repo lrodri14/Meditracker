@@ -55,8 +55,19 @@ def signup(request):
 
 
 def profile_change(request):
-    profile = get_object_or_404(UsersProfile, user=request.user)
-    form = ProfileForm(request.POST or None, instance=profile)
-    if form.is_valid():
-        form.save()
-    return render(request, 'accounts/profile_change.html', {'form': form})
+    user_profile = UsersProfile.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_profile.profile_pic = form.cleaned_data['profile_pic']
+            user_profile.bio = form.cleaned_data['bio']
+            user_profile.phone_number = form.cleaned_data['phone_number']
+            user_profile.birth_date = form.cleaned_data['birth_date']
+            user_profile.gender = form.cleaned_data['gender']
+            user_profile.location = form.cleaned_data['location']
+            user_profile.address = form.cleaned_data['address']
+            user_profile.save()
+    else:
+        form = ProfileForm(instance=user_profile)
+    return render(request, 'accounts/profile_change.html',context={'form':form, 'user':user_profile})
+

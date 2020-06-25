@@ -35,8 +35,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = UsersProfile
-        fields = '__all__'
-
+        exclude = ('user',)
 
 
 
