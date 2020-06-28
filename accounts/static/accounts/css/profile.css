@@ -1,141 +1,71 @@
-form{
+.wrapper{
+    display: grid;
+    grid-template-columns: 30% 69%;
+    grid-gap: 5px;
+    margin: auto;
+    margin-top: 8%;
+    width: 80%;
+    background-color: #12212b;
+    border-radius: 10px;
+}
+
+.first{
+    background-color: cyan;
+    border-radius: 10px;
+    color: #12212b;
+    padding: 10px;
     text-align: center;
-    background-color: #12212b;
-    padding: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -30%);
 }
 
-h1{
-    padding: 25px;
+.first img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid #3262a8;
+    transition: 0.5s;
 }
 
-p{
-    font-size: 20px;
+.first img:hover{
+    width: 230px;
+    height: 230px;
+    transition: 0.5s;
 }
 
-input[type=text]{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width:60%;
-  transition: 0.5s;
+.first a{
+    color: #12212b;
+    border-bottom: 1px solid #12211b;
+    transition: 0.5s;
 }
 
-input[type=password]{
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width: 60%;
-  transition: 0.5s;
+.first a:hover{
+    font-size: 16px;
+    transition: 0.5s;
 }
 
-input[type=email]{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width: 60%;
-  transition: 0.5s;
+#bio{
+    text-align: justify;
+    font-size: 12px;
+    transition: 0.1s;
 }
 
-label[for=id_profile_pic]{
-    margin: 20px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border: 2px solid #0ff5fc;
-    border-radius: 10px;
-    color: #0ff5fc;
+#bio:hover{
+    text-align: justify;
+    font-size: 15px;
+    transition: 0.1s;
+}
+
+#second .personal-info{
+    display: grid;
+    grid-template-columns: 45% 45%;
+}
+
+#second h1{
+    text-align: center;
     padding: 5px;
+    border-bottom: 0.5px solid cyan;
 }
 
-label[for=id_profile_pic]:hover{
-   background-color: #0ff5fc;
-    color: #12212b;
-    transition: 0.5s;
+#second li{
+    list-style: none;
 }
 
-input[type=file]{
-    display: none;
-}
-
-input[type=text]:hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=password]:hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=text]:focus{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=password]:focus{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=email]:hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=email]:focus{
-  width: 75%;
-  transition: 0.5s;
-}
-
-textarea{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  transition: 0.5s;
-}
-
-select{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align-last:center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width:60%;
-  margin: 5px;
-  transition: 0.5s;
-}
-
-button{
-    margin: 20px;
-    width: 30%;
-    height: 30px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border: 2px solid #0ff5fc;
-    border-radius: 10px;
-    color: #0ff5fc;
-}
-
-button:hover{
-    background-color: #0ff5fc;
-    color: #12212b;
-    transition: 0.5s;
-}

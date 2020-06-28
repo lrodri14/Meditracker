@@ -2,8 +2,8 @@
 {%load static%}
 {%block title%}Change Profile{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'accounts/css/profile.css'%}">
-<form method="POST" enctype="multipart/form-data">
+<link rel="stylesheet" href="{%static 'accounts/css/profile_change.css'%}">
+<form method="POST" enctype="multipart/form-data" autocomplete="off">
     {%csrf_token%}
     <h1>Let's set up your profile</h1>
     <label for="id_profile_pic">Profile Picture</label>
@@ -14,6 +14,8 @@
     <p>{{form.bio}}</p>
     <p>{{form.birth_date.label}}</p>
     <p>{{form.birth_date}}</p>
+    <p>{{form.origin.label}}</p>
+    <p>{{form.origin}}</p>
     <p>{{form.gender.label}}</p>
     <p>{{form.gender}}</p>
     <p>{{form.location.label}}</p>

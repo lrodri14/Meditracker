@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
 from .forms import SignUpForm, ProfileForm
@@ -54,19 +54,29 @@ def signup(request):
     return render(request, 'accounts/signup.html', {'form': form})
 
 
+def profile(request):
+    return render(request, 'accounts/profile.html')
+
 def profile_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            user_profile.profile_pic = form.cleaned_data['profile_pic']
+            if form.cleaned_data['profile_pic']:
+                user_profile.profile_pic = form.cleaned_data['profile_pic']
+            elif 'profile_pic-clear' in request.POST and request.POST['profile_pic-clear']:
+                user_profile.profile_pic = None
+            else:
+                user_profile.profile_pic = user_profile.profile_pic
             user_profile.bio = form.cleaned_data['bio']
             user_profile.phone_number = form.cleaned_data['phone_number']
             user_profile.birth_date = form.cleaned_data['birth_date']
+            user_profile.origin = form.cleaned_data['origin']
             user_profile.gender = form.cleaned_data['gender']
             user_profile.location = form.cleaned_data['location']
             user_profile.address = form.cleaned_data['address']
             user_profile.save()
+            return redirect('accounts:profile')
     else:
         form = ProfileForm(instance=user_profile)
     return render(request, 'accounts/profile_change.html',context={'form': form, 'user': user_profile})

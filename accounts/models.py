@@ -6,32 +6,32 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
 
     ROLL_CHOICES = (
-        ('D', 'Doctor'),
-        ('A', 'Assistant'),
+        ('Doctor', 'Doctor'),
+        ('Assistant', 'Assistant'),
     )
 
     SPECIALITY_CHOICES = (
-        ('A&I', 'ALLERGY & IMMUNOLOGY'),
-        ('A', 'ANESTHESIOLOGY'),
-        ('DM', 'DERMATOLOGY'),
-        ('DT', 'DENTIST'),
-        ('DR', 'DIAGNOSTIC RADIOLOGY'),
-        ('EM', 'EMERGENCY MEDICINE'),
-        ('FM', 'FAMILY MEDICINE'),
-        ('IM', 'INTERNAL MEDICINE'),
-        ('MG', 'MEDICAL GENETICS'),
-        ('NEU', 'NEUROLOGY'),
-        ('NM', 'NUCLEAR MEDICINE'),
-        ('OG', 'OBSTETRICS AND GYNECOLOGY'),
-        ('OP', 'OPHTHALMOLOGY'),
-        ('PT', 'PATHOLOGY'),
-        ('PD', 'PEDIATRICS'),
-        ('PMR', 'PHYSICAL MEDICINE & REHABILITATION'),
-        ('PM', 'PREVENTIVE MEDICINE'),
-        ('PS', 'PSYCHIATRY'),
-        ('RO', 'RADIATION ONCOLOGY'),
-        ('S', 'SURGERY'),
-        ('U', 'UROLOGY'),
+        ('ALLERGY & IMMUNOLOGY', 'ALLERGY & IMMUNOLOGY'),
+        ('ANESTHESIOLOGY', 'ANESTHESIOLOGY'),
+        ('DERMATOLOGY', 'DERMATOLOGY'),
+        ('DENTIST', 'DENTIST'),
+        ('DIAGNOSTIC RADIOLOGY', 'DIAGNOSTIC RADIOLOGY'),
+        ('EMERGENCY MEDICINE', 'EMERGENCY MEDICINE'),
+        ('FAMILY MEDICINE', 'FAMILY MEDICINE'),
+        ('INTERNAL MEDICINE', 'INTERNAL MEDICINE'),
+        ('MEDICAL GENETICS', 'MEDICAL GENETICS'),
+        ('NEUROLOGY', 'NEUROLOGY'),
+        ('NUCLEAR MEDICINE', 'NUCLEAR MEDICINE'),
+        ('OBSTETRICS AND GYNECOLOGY', 'OBSTETRICS AND GYNECOLOGY'),
+        ('OPHTHALMOLOGY', 'OPHTHALMOLOGY'),
+        ('PATHOLOGY', 'PATHOLOGY'),
+        ('PEDIATRICS', 'PEDIATRICS'),
+        ('PHYSICAL MEDICINE & REHABILITATION', 'PHYSICAL MEDICINE & REHABILITATION'),
+        ('PREVENTIVE MEDICINE', 'PREVENTIVE MEDICINE'),
+        ('PSYCHIATRY', 'PSYCHIATRY'),
+        ('RADIATION ONCOLOGY', 'RADIATION ONCOLOGY'),
+        ('SURGERY', 'SURGERY'),
+        ('UROLOGY', 'UROLOGY'),
     )
 
     roll = models.CharField('Roll',max_length=25, blank=False, help_text='Choose the roll you will acquire in this account.', choices=ROLL_CHOICES)
@@ -49,21 +49,26 @@ class CustomUser(AbstractUser):
 class UsersProfile(models.Model):
 
     GENDER_CHOICES = (
-        ('M', 'Masculine'),
-        ('F', 'Femenine'),
-        ('U', 'Undefined')
+        ('Masculine', 'Masculine'),
+        ('Femenine', 'Femenine'),
+        ('Undefined', 'Undefined')
     )
 
     LOCATION_CHOICES = (
-        ('HN', 'Honduras'),
+        ('Honduras', 'Honduras'),
     )
 
-    user = models.OneToOneField(CustomUser, blank=True, null=True, on_delete=models.CASCADE, verbose_name='user')
+    ORIGIN_CHOICES = (
+        ('Honduras', 'Honduras'),
+    )
+
+    user = models.OneToOneField(CustomUser, blank=True, null=True, on_delete=models.CASCADE, verbose_name='user', related_name='profile')
     profile_pic = models.ImageField('profile picture', blank=True, null=True, help_text='Let us see you! Upload a profile picture', upload_to='accounts/profile_pictures')
     phone_number = models.CharField('phone number', max_length=15, null=True, blank=True, help_text='Provide your phone number')
     bio = models.TextField('biography', blank=True, null=True, help_text='Let us know about you')
     birth_date = models.DateField('birth date', blank=True, null=True,)
     gender = models.CharField('gender', max_length=25, blank=False, null=True, choices=GENDER_CHOICES)
+    origin = models.CharField('origin', max_length=50, blank=False, null=True, choices=ORIGIN_CHOICES)
     location = models.CharField('location', max_length=100, blank=False, null=True, choices=LOCATION_CHOICES, help_text='Provide your location')
     address = models.TextField('address', max_length=200, blank=False, null=True, help_text='Provide your exact address')
 
