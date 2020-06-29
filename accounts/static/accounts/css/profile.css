@@ -3,14 +3,14 @@
     grid-template-columns: 30% 69%;
     grid-gap: 5px;
     margin: auto;
-    margin-top: 8%;
+    margin-top: 6%;
     width: 80%;
     background-color: #12212b;
     border-radius: 10px;
 }
 
 .first{
-    background-color: cyan;
+    background-color: #0ff5fc;
     border-radius: 10px;
     color: #12212b;
     padding: 10px;
@@ -44,13 +44,7 @@
 
 #bio{
     text-align: justify;
-    font-size: 12px;
-    transition: 0.1s;
-}
-
-#bio:hover{
-    text-align: justify;
-    font-size: 15px;
+    font-size: 16px;
     transition: 0.1s;
 }
 

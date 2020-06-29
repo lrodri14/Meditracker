@@ -79,5 +79,5 @@ def profile_change(request):
             return redirect('accounts:profile')
     else:
         form = ProfileForm(instance=user_profile)
-    return render(request, 'accounts/profile_change.html',context={'form': form, 'user': user_profile})
+    return render(request, 'accounts/profile_change.html',context={'form': form, 'user': request.user})
 

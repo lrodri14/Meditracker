@@ -6,12 +6,30 @@
 <form method="POST" enctype="multipart/form-data" autocomplete="off">
     {%csrf_token%}
     <h1>Let's set up your profile</h1>
-    <label for="id_profile_pic">Profile Picture</label>
-    <p>{{form.profile_pic}}</p>
-    <p>{{form.phone_number.label}}</p>
-    <p>{{form.phone_number}}</p>
+    {% if user.profile.profile_pic.url != ''%}
+        <img src="{{user.profile.profile_pic.url}}" alt="">
+    {% else %}
+        {% if user.profile.gender == 'Femenine' %}
+            <img src="{%static 'accounts/avatars/female_doctor.jpg'%}" alt="">
+        {% else %}
+            <img src="{%static 'accounts/avatars/male_doctor.jpg'%}" alt="">
+        {% endif %}
+    {%endif%}
+    <br>
+    <br>
+    {%if user.profile.profile_pic%}
+        <label for="id_profile_pic">Change Picture</label>
+        <p>{{form.profile_pic}}</p>
+        <label for="clear">Remove current profile picture?</label>
+        <input type="checkbox" id="clear" name="profile_pic-clear">
+    {%else%}
+        <label for="id_profile_pic">Add Profile Picture</label>
+        <p>{{form.profile_pic}}</p>
+    {%endif%}
     <p>{{form.bio.label}}</p>
     <p>{{form.bio}}</p>
+    <p>{{form.phone_number.label}}</p>
+    <p>{{form.phone_number}}</p>
     <p>{{form.birth_date.label}}</p>
     <p>{{form.birth_date}}</p>
     <p>{{form.origin.label}}</p>

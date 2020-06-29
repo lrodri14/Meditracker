@@ -1,0 +1,48 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Home{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'home/css/home.css'%}">
+<script src="https://kit.fontawesome.com/88a15a2649.js" crossorigin="anonymous"></script>
+
+<div class="container">
+    <h1>Menu</h1>
+    <div class="wrapper-one">
+        <div>
+            <a href=""><i class="fas fa-user-injured"></i></a>
+            <h3>Patients</h3>
+        </div>
+        <div>
+            <a href=""><i class="far fa-calendar-check"></i></a>
+            <h3>Appointment</h3>
+        </div>
+        <div>
+            <a href=""><i class="far fa-clipboard"></i></a>
+            <h3>Records</h3>
+        </div>
+        <div>
+            <a href=""><i class="fas fa-file-invoice"></i></a>
+            <h3>Reports</h3>
+        </div>
+    </div>
+
+    <div class="wrapper-two">
+        <div>
+            <a href=""><i class="fas fa-handshake"></i></a>
+            <p>Providers</p>
+        </div>
+        <div>
+            <a href=""><i class="fas fa-cog"></i></a>
+            <p>Settings</p>
+        </div>
+        <div>
+            <a href=""><i class="fas fa-question-circle"></i></a>
+            <p>Help</p>
+        </div>
+        <div>
+            <a href="{%url 'accounts:profile'%}"><i class="fas fa-user"></i></a>
+            <p>Profile</p>
+        </div>
+    </div>
+</div>
+{%endblock%}
