@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
 from .forms import SignUpForm, ProfileForm
 from .models import UsersProfile
@@ -30,6 +31,7 @@ class PasswordReset(PasswordResetView):
     success_url = reverse_lazy('accounts:password_reset_done')
 
 
+
 class PasswordResetDone(PasswordResetDoneView):
     template_name = 'accounts/password_reset_done.html'
 
@@ -53,9 +55,10 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
-
+@login_required()
 def profile(request):
     return render(request, 'accounts/profile.html')
+
 
 def profile_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
@@ -79,5 +82,5 @@ def profile_change(request):
             return redirect('accounts:profile')
     else:
         form = ProfileForm(instance=user_profile)
-    return render(request, 'accounts/profile_change.html',context={'form': form, 'user': request.user})
+    return render(request, 'accounts/profile_change.html', context={'form': form, 'user': request.user})
 

@@ -36,7 +36,7 @@ class AccountsUrlsTestCase(SimpleTestCase):
         self.assertEqual(resolved_view.func.view_class, PasswordResetDone)
 
     def test_password_reset_confirm(self):
-        url = reverse('accounts:password_reset_confirm', args=['jhbfdhj', 'jdsjvdds'])
+        url = reverse('accounts:password_reset_confirm', args=['00000', '00000'])
         resolved_view = resolve(url)
         self.assertEqual(resolved_view.func.view_class, PasswordResetConfirm)
 
