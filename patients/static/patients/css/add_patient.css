@@ -1,9 +1,15 @@
+body{
+    margin: 0%;
+    padding: 0%;
+}
+
 .wrapper{
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 33% 33% 33%;
 }
 
 form{
+    margin-top: -25px;
     text-align: center;
     background-color: #12212b;
 }
