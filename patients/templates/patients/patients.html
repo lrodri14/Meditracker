@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+{%block title%}Patients{%endblock%}
+{%block body_block%}
+    {%if patients_list%}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>Civil Status</th>
+                    <th>Procedence</th>
+                    <th>Residence</th>
+                    <th><i class="fas fa-plus">Add</i></th>
+                </tr>
+            </thead>
+        </table>
+        {%for p in patients_list%}
+            {{p.first_names}}
+        {%endfor%}
+    {%else%}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>Civil Status</th>
+                    <th>Procedence</th>
+                    <th>Residence</th>
+                    <th><a href="{%url 'patients:add_patient'%}"><i class="fas fa-plus"></i></a></th>
+                </tr>
+            </thead>
+        </table>
+        <p>There are no patients listed</p>
+    {%endif%}
+{%endblock%}

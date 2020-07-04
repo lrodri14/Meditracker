@@ -34,8 +34,11 @@ class CustomUser(AbstractUser):
         ('UROLOGY', 'UROLOGY'),
     )
 
-    roll = models.CharField('Roll',max_length=25, blank=False, help_text='Choose the roll you will acquire in this account.', choices=ROLL_CHOICES)
-    speciality = models.CharField('Speciality', max_length=100, blank=True, help_text='If your roll is (A, Assistant), leave this field blank.' , choices=SPECIALITY_CHOICES)
+    roll = models.CharField('Roll',max_length=25, blank=False,
+                            help_text='Choose the roll you will acquire in this account.', choices=ROLL_CHOICES)
+    speciality = models.CharField('Speciality', max_length=100, blank=True,
+                                  help_text='If your roll is (A, Assistant), leave this field blank.',
+                                  choices=SPECIALITY_CHOICES)
 
     def save(self, *args, **kwargs):
         self.first_name = self.first_name.title()
@@ -62,14 +65,18 @@ class UsersProfile(models.Model):
         ('Honduras', 'Honduras'),
     )
 
-    user = models.OneToOneField(CustomUser, blank=True, null=True, on_delete=models.CASCADE, verbose_name='user', related_name='profile')
-    profile_pic = models.ImageField('profile picture', blank=True, null=True, help_text='Let us see you! Upload a profile picture', upload_to='accounts/profile_pictures')
-    phone_number = models.CharField('phone number', max_length=15, null=True, blank=True, help_text='Provide your phone number')
+    user = models.OneToOneField(CustomUser, blank=True, null=True, on_delete=models.CASCADE, verbose_name='user',
+                                related_name='profile')
+    profile_pic = models.ImageField('profile picture', blank=True, null=True,
+                                    help_text='Let us see you! Upload a profile picture', upload_to='accounts/profile_pictures')
+    phone_number = models.CharField('phone number', max_length=15, null=True, blank=True,
+                                    help_text='Provide your phone number')
     bio = models.TextField('biography', blank=True, null=True, help_text='Let us know about you')
     birth_date = models.DateField('birth date', blank=True, null=True,)
     gender = models.CharField('gender', max_length=25, blank=False, null=True, choices=GENDER_CHOICES)
     origin = models.CharField('origin', max_length=50, blank=False, null=True, choices=ORIGIN_CHOICES)
-    location = models.CharField('location', max_length=100, blank=False, null=True, choices=LOCATION_CHOICES, help_text='Provide your location')
+    location = models.CharField('location', max_length=100, blank=False, null=True, choices=LOCATION_CHOICES,
+                                help_text='Provide your location')
     address = models.TextField('address', max_length=200, blank=False, null=True, help_text='Provide your exact address')
 
     class Meta:

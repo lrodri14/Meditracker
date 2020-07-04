@@ -1,0 +1,54 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Add Patient{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'patients/css/add_patient.css'%}">
+    <form method="POST" autocomplete="off">
+        {%csrf_token%}
+        <h1>Add Patient</h1>
+        <div class="wrapper">
+            <div>
+                <h1>Patient</h1>
+                <p>{{patient_form.id_number.label}}</p>
+                <p>{{patient_form.id_number}}</p>
+                <p>{{patient_form.first_names.label}}</p>
+                <p>{{patient_form.first_names}}</p>
+                <p>{{patient_form.last_names.label}}</p>
+                <p>{{patient_form.last_names}}</p>
+                <p>{{patient_form.birthday.label}}</p>
+                <p>{{patient_form.birthday}}</p>
+                <p>{{patient_form.phone_number.label}}</p>
+                <p>{{patient_form.phone_number}}</p>
+                <p>{{patient_form.civil_status.label}}</p>
+                <p>{{patient_form.civil_status}}</p>
+                <p>{{patient_form.origin.label}}</p>
+                <p>{{patient_form.origin}}</p>
+                <p>{{patient_form.residence.label}}</p>
+                <p>{{patient_form.residence}}</p>
+            </div>
+            <div>
+                <h1>Antecedents</h1>
+                <p>{{antecedents_form.antecedent.label}}</p>
+                <p>{{antecedents_form.antecedent}}</p>
+                <p>{{antecedents_form.info.label}}</p>
+                <p>{{antecedents_form.info}}</p>
+            </div>
+            <div>
+                <h1>Allergies</h1>
+                <p>{{allergies_form.allergy_type.label}}</p>
+                <p>{{allergies_form.allergy_type}}</p>
+                <p>{{allergies_form.about.label}}</p>
+                <p>{{allergies_form.about}}</p>
+            </div>
+            <div>
+                <h1>Insurance</h1>
+                <p>{{insurance_form.insurance_carrier.label}}</p>
+                <p>{{insurance_form.insurance_carrier}}</p>
+                <p>{{insurance_form.type_of_insurance.label}}</p>
+                <p>{{insurance_form.type_of_insurance}}</p>
+                <p>{{insurance_form.expiration_date.label}}</p>
+                <p>{{insurance_form.expiration_date}}</p>
+            </div>
+        </div>
+    </form>
+{%endblock%}
