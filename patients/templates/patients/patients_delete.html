@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Delete{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'patients/css/patients_delete.css'%}">
+<h1>Delete</h1>
+<h3>Are you sure you want to delete {{patient.first_names}} {{patient.last_names}} record?</h3>
+<form method="POST" action="{%url 'patients:patients_delete' patient.pk%}">
+    {%csrf_token%}
+    <input type="submit" name="choice" value="yes">
+    <input type="submit" name="choice" value="no">
+</form>
+{%endblock%}
