@@ -1,11 +1,11 @@
 {%extends 'base.html'%}
 {%load static%}
-{%block title%}Add Patient{%endblock%}
+{%block title%}Update Patient{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/add_patient.css'%}">
     <form method="POST" autocomplete="off">
         {%csrf_token%}
-        <h1>Add Patient</h1>
+        <h1>Update Patient</h1>
         <div class="wrapper">
             <div>
                 <h2>Patient</h2>
@@ -53,6 +53,6 @@
                 <p>{{insurance_form.expiration_date}}</p>
             </div>
         </div>
-        <button type="submit">Save</button>
+        <button type="submit">Save Changes</button>
     </form>
 {%endblock%}

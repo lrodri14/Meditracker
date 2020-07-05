@@ -6,19 +6,19 @@ from django.db import models
 
 class Patient(models.Model):
     CIVIL_STATUS_CHOICES = (
-        ('SINGLE', 'Single'),
-        ('MARRIED', 'Married'),
-        ('WIDOWED', 'Widowed'),
-        ('DIVORCED', 'Divorced'),
-        ('SEPARATED', 'Separated'),
+        ('S', 'Single'),
+        ('M', 'Married'),
+        ('W', 'Widowed'),
+        ('D', 'Divorced'),
+        ('SP', 'Separated'),
     )
 
     PROCEDENCE_CHOICES = (
-        ('HONDURAS', 'Honduras'),
+        ('HND', 'Honduras'),
     )
 
     RESIDENCE_CHOICES = (
-        ('HONDURAS', 'Honduras'),
+        ('HND', 'Honduras'),
     )
 
     id_number = models.CharField('ID number', max_length=20, null=True, blank=True,
@@ -28,7 +28,7 @@ class Patient(models.Model):
     last_names = models.CharField('patients last name', max_length=50, null=False, blank=False,
                                  help_text="Patient's Last Name")
     birthday = models.DateTimeField('patients birthday', help_text="Patients date of birth")
-    age = models.IntegerField('patients age')
+    age = models.IntegerField('patients age', null=True)
     phone_number = models.CharField('phone number', max_length=20, blank=True, null=True, help_text='Phone Number')
     civil_status = models.CharField(max_length=12, choices=CIVIL_STATUS_CHOICES)
     origin = models.CharField(max_length=50, choices=PROCEDENCE_CHOICES)
@@ -66,14 +66,14 @@ class InsuranceInformation(models.Model):
     )
     insurance_carrier = models.OneToOneField(InsuranceCarrier, on_delete=models.CASCADE,blank=True, null=True,
                                              verbose_name='insurance carrier', related_name='insurance')
-    type_of_insurance = models.CharField('insurance type', max_length=50, blank=False, null=True,
-                                         help_text='Type of insurnace', choices=INSURANCE_TYPE_CHOICES)
+    type_of_insurance = models.CharField('insurance type', max_length=50, blank=True, null=True,
+                                         help_text='Type of insurance', choices=INSURANCE_TYPE_CHOICES)
     expiration_date = models.DateField('insurance date expiration', help_text='insurance date expiration')
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE ,blank=True, null=True,
-                                   verbose_name='insurance owner', related_name='patient')
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=True, null=True,
+                                   verbose_name='insurance owner', related_name='insurance')
 
     def __str__(self):
-        return self.patient + "'s" + ' ' + "Insurance Information"
+        return self.patient.first_names + ' ' + self.patient.last_names +"'s" + ' ' + 'Insurance Information'
 
 # Allergies Information
 
@@ -94,11 +94,12 @@ class Allergies(models.Model):
 class AllergiesInformation(models.Model):
     allergy_type = models.OneToOneField(Allergies, on_delete=models.CASCADE, null=True, blank=True, verbose_name='allergy type',
                                         help_text='Allergy type of the patient', related_name='allergy')
-    about = models.TextField('about allergy', help_text='Tell us about what you suffer')
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE,blank=False, null=False, verbose_name='Patient')
+    about = models.TextField('about allergy', help_text='Tell us about what you suffer', blank=True, null=True)
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
+                                                                                            related_name='allergies')
 
     def __str__(self):
-        return self.patient + "'s" + ' ' + 'Allergies Information'
+        return self.patient.first_names + ' ' + self.patient.last_names +"'s" + ' ' + 'Allergies Information'
 
     def save(self, *args, **kwargs):
         self.about = self.about.capitalize()
@@ -110,14 +111,16 @@ class AllergiesInformation(models.Model):
 class Antecedents(models.Model):
     antecedent = models.CharField('antecedent', max_length=150, blank=True, null=True, help_text='Antecedent Type')
     info = models.TextField('antecedent info', blank=True, null=True, help_text='About this antecedent')
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE,blank=False, null=True, verbose_name='Patient')
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
+                                                                                            related_name='antecedents')
 
     def __str__(self):
-        return self.patient + "'s" + ' ' + 'Antecedents Information'
+        return self.patient.first_names + ' ' + self.patient.last_names +"'s" + ' ' + 'Antecedents Information'
 
     def save(self, *args, **kwargs):
-        self.antecedent = self.antecedent.title()
-        self.about = self.about.capitalize()
+        if self.antecedent and self.info:
+            self.antecedent = self.antecedent.title()
+            self.info = self.info.capitalize()
         super(Antecedents, self).save(*args, **kwargs)
 
 

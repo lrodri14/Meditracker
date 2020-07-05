@@ -1,0 +1,27 @@
+body{
+    background-color: #12212b;
+}
+
+#heading{
+    text-align: center;
+}
+
+.fas{
+    font-size: 100%;
+    float: right;
+    transition: 0.5s;
+}
+
+.fas:hover{
+    color:red;
+    transition: 0.5s;
+}
+
+.edit:hover{
+    color:green;
+    transition: 0.5s;
+}
+
+hr{
+    border: 1px solid cyan;
+}

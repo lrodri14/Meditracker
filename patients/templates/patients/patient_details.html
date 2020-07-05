@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}{{patient.first_names}} {{patient.last_names}}{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'patients/css/patient_details.css'%}">
+<div id="heading">
+    <h1 id="name">{{patient.first_names}} {{patient.last_names}} <a href="{%url 'patients:patients_delete' patient.pk%}"><i class="fas fa-trash"></i></a></h1>
+</div>
+<h1>Personal Info <a href="{%url 'patients:patients_update' patient.pk%}"><i class="fas fa-edit edit"></i></a></h1>
+<hr>
+<h3>Id Card Number: {{patient.id_number}}</h3>
+<h3>Full Name: {{patient.first_names}} {{patient.last_names}}</h3>
+<h3>Birthday: {{patient.birthday|date:"d M, Y"}}</h3>
+<h3>Age: {{patients.age}}</h3>
+<h3>Phone Number: {{patient.phone_number}}</h3>
+<h3>Civil Status: {{patient.get_civil_status_display}}</h3>
+<h3>Origin: {{patient.get_origin_display}}</h3>
+<h3>Residence: {{patient.get_residence_display}}</h3>
+<h1>Allergies</h1>
+<hr>
+<h3>Allergy Type: {{patient.allergies.allergy_type}}</h3>
+<h3>About: {{patient.allergies.about}}</h3>
+<h1>Antecedents</h1>
+<hr>
+<h3>Antecedent: {{patient.antecedents.antecedent}}</h3>
+<h3>Information: {{patient.antecedents.info}}</h3>
+<h1>Insurance</h1>
+<hr>
+<h3>Insurance Carrier: {{patient.insurance.insurance_carrier}}</h3>
+<h3>Type of Insurnace: {{patient.insurance.type_of_insurance}}</h3>
+<h3>Expiration Date: {{patient.insurance.expiration_date}}</h3>
+{%endblock%}

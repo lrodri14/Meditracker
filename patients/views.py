@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from .forms import *
 from .models import *
 
@@ -6,7 +6,7 @@ from .models import *
 
 
 def patients(request):
-    patients_list = Patient
+    patients_list = Patient.objects.all()
     template = 'patients/patients.html'
     context = {'patients': patients_list}
     return render(request, template, context=context)
@@ -19,29 +19,69 @@ def add_patient(request):
         antecedents_form = AntecedentForm(request.POST)
         insurance_form = InsuranceInformationForm(request.POST)
         if patient_form.is_valid() and allergies_form.is_valid() and antecedents_form.is_valid() and insurance_form.is_valid():
-            patient_form.save(commit=False)
+            patient = patient_form.save()
+            patient.save()
 
-            allergies_form.save(commit=False)
-            allergies_form.patient = patient_form
-            allergies_form.save()
+            allergies = allergies_form.save(commit=False)
+            allergies.patient = patient
+            allergies.save()
 
-            antecedents_form.save(commit=False)
-            antecedents_form.patient = patient_form
-            antecedents_form.save()
+            antecedents = antecedents_form.save(commit=False)
+            antecedents.patient = patient
+            antecedents.save()
 
-            insurance_form.save(commit=False)
-            insurance_form.patient = patient_form
-            insurance_form.save()
-
-            patient_form.save()
+            insurance = insurance_form.save(commit=False)
+            insurance.patient = patient
+            insurance.save()
+            return redirect('patients:patients')
     else:
         patient_form = PatientForm
         allergies_form = AllergiesInformationForm
         antecedents_form = AntecedentForm
         insurance_form = InsuranceInformationForm
-        template = 'patients/add_patient.html'
-        context = {'patient_form': patient_form,
-                   'allergies_form': allergies_form,
-                   'insurance_form': insurance_form,
-                   'antecedents_form': antecedents_form}
-    return render(request, template, context=context)
+    return render(request, 'patients/add_patient.html', context={'patient_form': patient_form,
+                                                               'allergies_form': allergies_form,
+                                                               'insurance_form': insurance_form,
+                                                               'antecedents_form': antecedents_form})
+
+
+def patient_details(request, pk):
+    patient = Patient.objects.get(pk=pk)
+    template = 'patients/patient_details.html'
+    return render(request, template, context={'patient': patient})
+
+
+def patient_delete(request, pk):
+    patient = Patient.objects.get(pk=pk)
+    patient.delete()
+    return redirect('patients:patients')
+
+
+def patient_update(request, pk):
+    patient = Patient.objects.get(pk=pk)
+    if request.method == 'POST':
+        patient_form = PatientForm(request.POST)
+        allergies_form = AllergiesInformationForm(request.POST)
+        antecedents_form = AntecedentForm(request.POST)
+        insurance_form = InsuranceInformationForm(request.POST)
+        if patient_form.is_valid() and allergies_form.is_valid() and antecedents_form.is_valid() and insurance_form.is_valid():
+            patient_form.save()
+            allergies_form.save()
+            antecedents_form.save()
+            insurance_form.save()
+            return redirect('patients:patients_details', pk=patient.pk)
+    else:
+        patient_allergies = AllergiesInformation.objects.get(patient=patient)
+        patient_antecedents = Antecedents.objects.get(patient=patient)
+        patient_insurance = InsuranceInformation.objects.get(patient=patient)
+        patient_form = PatientForm(instance=patient)
+        allergies_form = AllergiesInformationForm(instance=patient_allergies)
+        antecedents_form = AntecedentForm(instance=patient_antecedents)
+        insurance_form = InsuranceInformationForm(instance=patient_insurance)
+    return render(request, 'patients/patients_update.html', context={'patient_form': patient_form,
+                                                               'allergies_form': allergies_form,
+                                                               'insurance_form': insurance_form,
+                                                               'antecedents_form': antecedents_form})
+
+
+
