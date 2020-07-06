@@ -82,10 +82,10 @@ class Allergies(models.Model):
     allergy_type = models.CharField('allergy', max_length=100, null=False, blank=False, help_text='Allergy Type')
 
     def __str__(self):
-        return self.allergy
+        return self.allergy_type
 
     def save(self, *args, **kwargs):
-        self.allergy = self.allergy.title()
+        self.allergy_type = self.allergy_type.title()
         super(Allergies, self).save(*args, **kwargs)
 
 # Patient Allergies Information

@@ -53,35 +53,43 @@ def patient_details(request, pk):
 
 def patient_delete(request, pk):
     patient = Patient.objects.get(pk=pk)
-    patient.delete()
-    return redirect('patients:patients')
+    template = 'patients/patients_delete.html'
+    if request.method == 'POST':
+        if request.POST['choice'] == 'yes':
+            patient.delete()
+            return redirect('patients:patients')
+        else:
+            return redirect('patients:patients_details', pk=patient.pk)
+    return render(request, template, context={'patient': patient})
 
 
 def patient_update(request, pk):
+    template = 'patients/patients_update.html'
     patient = Patient.objects.get(pk=pk)
+    patient_allergies = AllergiesInformation.objects.get(patient=patient)
+    patient_insurance = InsuranceInformation.objects.get(patient=patient)
+    patient_antecedents = Antecedents.objects.get(patient=patient)
+    patient_form = PatientForm(request.POST, instance=patient)
+    allergies_form = AllergiesInformationForm(request.POST, instance=patient_allergies)
+    insurance_form = InsuranceInformationForm(request.POST, instance=patient_insurance)
+    antecedents_form = AntecedentForm(request.POST, instance=patient_antecedents)
     if request.method == 'POST':
-        patient_form = PatientForm(request.POST)
-        allergies_form = AllergiesInformationForm(request.POST)
-        antecedents_form = AntecedentForm(request.POST)
-        insurance_form = InsuranceInformationForm(request.POST)
-        if patient_form.is_valid() and allergies_form.is_valid() and antecedents_form.is_valid() and insurance_form.is_valid():
+        if patient_form.is_valid() and allergies_form.is_valid() and insurance_form.is_valid() and antecedents_form.is_valid():
             patient_form.save()
             allergies_form.save()
-            antecedents_form.save()
             insurance_form.save()
+            antecedents_form.save()
             return redirect('patients:patients_details', pk=patient.pk)
     else:
-        patient_allergies = AllergiesInformation.objects.get(patient=patient)
-        patient_antecedents = Antecedents.objects.get(patient=patient)
-        patient_insurance = InsuranceInformation.objects.get(patient=patient)
         patient_form = PatientForm(instance=patient)
         allergies_form = AllergiesInformationForm(instance=patient_allergies)
-        antecedents_form = AntecedentForm(instance=patient_antecedents)
         insurance_form = InsuranceInformationForm(instance=patient_insurance)
-    return render(request, 'patients/patients_update.html', context={'patient_form': patient_form,
+        antecedents_form = AntecedentForm(instance=patient_antecedents)
+    return render(request, template, context={'patient_form': patient_form,
                                                                'allergies_form': allergies_form,
                                                                'insurance_form': insurance_form,
                                                                'antecedents_form': antecedents_form})
+
 
 
 
