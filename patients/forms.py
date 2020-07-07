@@ -28,7 +28,7 @@ class InsuranceInformationForm(forms.ModelForm):
         exclude = ('patient',)
 
 
-class Allergies(forms.ModelForm):
+class AllergiesForm(forms.ModelForm):
 
     class Meta:
         model = Allergies

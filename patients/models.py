@@ -64,7 +64,7 @@ class InsuranceInformation(models.Model):
     INSURANCE_TYPE_CHOICES = (
         ('MEDICAL', 'Medical'),
     )
-    insurance_carrier = models.OneToOneField(InsuranceCarrier, on_delete=models.CASCADE,blank=True, null=True,
+    insurance_carrier = models.OneToOneField(InsuranceCarrier, on_delete=models.CASCADE, blank=True, null=True,
                                              verbose_name='insurance carrier', related_name='insurance')
     type_of_insurance = models.CharField('insurance type', max_length=50, blank=True, null=True,
                                          help_text='Type of insurance', choices=INSURANCE_TYPE_CHOICES)
@@ -73,7 +73,7 @@ class InsuranceInformation(models.Model):
                                    verbose_name='insurance owner', related_name='insurance')
 
     def __str__(self):
-        return self.patient.first_names + ' ' + self.patient.last_names +"'s" + ' ' + 'Insurance Information'
+        return str(self.patient)+ "'s" + ' ' + 'Insurance Information'
 
 # Allergies Information
 
@@ -99,7 +99,7 @@ class AllergiesInformation(models.Model):
                                                                                             related_name='allergies')
 
     def __str__(self):
-        return self.patient.first_names + ' ' + self.patient.last_names +"'s" + ' ' + 'Allergies Information'
+        return str(self.patient) + "'s" + ' ' + 'Allergies Information'
 
     def save(self, *args, **kwargs):
         self.about = self.about.capitalize()
@@ -115,7 +115,7 @@ class Antecedents(models.Model):
                                                                                             related_name='antecedents')
 
     def __str__(self):
-        return self.patient.first_names + ' ' + self.patient.last_names +"'s" + ' ' + 'Antecedents Information'
+        return str(self.patient) + "'s" + ' ' + 'Antecedents Information'
 
     def save(self, *args, **kwargs):
         if self.antecedent and self.info:
