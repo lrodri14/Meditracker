@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 
-years = [years for years in range(1940, 2101)]
+years = [years for years in range(1920, 2101)]
 
 
 class PatientForm(forms.ModelForm):
@@ -10,17 +10,17 @@ class PatientForm(forms.ModelForm):
 
     class Meta:
         model = Patient
-        exclude = ('age',)
+        fields = '__all__'
 
 
 class InsuranceCarrierForm(forms.ModelForm):
-
     class Meta:
         model = InsuranceCarrier
         fields = '__all__'
 
 
 class InsuranceInformationForm(forms.ModelForm):
+    # insurance_carrier = forms.ModelChoiceField(queryset=InsuranceCarrier.objects.filter())
     expiration_date = forms.DateField(widget=forms.SelectDateWidget(years=years))
 
     class Meta:

@@ -58,11 +58,11 @@ class UsersProfile(models.Model):
     )
 
     LOCATION_CHOICES = (
-        ('Honduras', 'Honduras'),
+        ('HND', 'Honduras'),
     )
 
     ORIGIN_CHOICES = (
-        ('Honduras', 'Honduras'),
+        ('HND', 'Honduras'),
     )
 
     user = models.OneToOneField(CustomUser, blank=True, null=True, on_delete=models.CASCADE, verbose_name='user',

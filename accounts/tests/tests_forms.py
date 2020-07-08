@@ -44,10 +44,10 @@ class TestProfileForm(TestCase):
             'gender': 'Masculine',
         })
 
-    def test_valid_fomr(self):
+    def test_valid_form(self):
         form = self.valid_data
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid)
 
-    def test_valid_fomr(self):
+    def test_valid_form(self):
         form = self.invalid_data
         self.assertEqual(len(form.errors), 3)

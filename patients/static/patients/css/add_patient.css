@@ -147,3 +147,11 @@ button:hover{
     color: #12212b;
     transition: 0.5s;
 }
+
+#add-allergies{
+    padding-left: 3%;
+}
+
+#add-insurance{
+    padding-left: 3%;
+}

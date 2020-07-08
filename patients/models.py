@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 # Create your models here.
 
 # Patients Model
@@ -28,11 +29,15 @@ class Patient(models.Model):
     last_names = models.CharField('patients last name', max_length=50, null=False, blank=False,
                                  help_text="Patient's Last Name")
     birthday = models.DateTimeField('patients birthday', help_text="Patients date of birth")
-    age = models.IntegerField('patients age', null=True)
     phone_number = models.CharField('phone number', max_length=20, blank=True, null=True, help_text='Phone Number')
     civil_status = models.CharField(max_length=12, choices=CIVIL_STATUS_CHOICES)
     origin = models.CharField(max_length=50, choices=PROCEDENCE_CHOICES)
     residence = models.CharField(max_length=50, choices=RESIDENCE_CHOICES)
+
+    def age(self):
+        today = timezone.localtime(timezone.now())
+        age = today - self.birthday
+        return int(age.days / 365.25)
 
     def __str__(self):
         return self.first_names + ' ' + self.last_names
@@ -47,7 +52,18 @@ class Patient(models.Model):
 
 
 class InsuranceCarrier(models.Model):
+
+    ORIGIN_CHOICES = (
+        ('HND', 'Honduras'),
+        ('NIC', 'Nicaragua'),
+    )
+
     company = models.CharField('company', max_length=100, blank=False, null=False, help_text='Insurance Carrier')
+    country = models.CharField('country', max_length=100, blank=False, null=True, help_text='Insurance Carrier origin',
+                               choices=ORIGIN_CHOICES, default=None)
+
+    class Meta:
+        unique_together = ['company', 'country']
 
     def __str__(self):
         return self.company
@@ -65,7 +81,7 @@ class InsuranceInformation(models.Model):
         ('MEDICAL', 'Medical'),
     )
     insurance_carrier = models.OneToOneField(InsuranceCarrier, on_delete=models.CASCADE, blank=True, null=True,
-                                             verbose_name='insurance carrier', related_name='insurance')
+                                             verbose_name='insurance carrier', related_name='insurance', unique=True)
     type_of_insurance = models.CharField('insurance type', max_length=50, blank=True, null=True,
                                          help_text='Type of insurance', choices=INSURANCE_TYPE_CHOICES)
     expiration_date = models.DateField('insurance date expiration', help_text='insurance date expiration')

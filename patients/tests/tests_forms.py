@@ -50,8 +50,10 @@ class TestInsuranceCarrierForm(SimpleTestCase):
         })
         self.assertEquals(len(insurance_carrier.errors),1)
 
-
+#
 # class TestInsuranceInformationForm(TestCase):
+#
+#     longMessage = True
 #
 #     def setUp(self):
 #         self.insurance = InsuranceCarrier.objects.create(
@@ -60,7 +62,7 @@ class TestInsuranceCarrierForm(SimpleTestCase):
 #
 #     def test_insurance_information_form_is_valid(self):
 #         insurance_form = InsuranceInformationForm(data={
-#             'insurance_carier': self.insurance,
+#             'insurance_carrier': self.insurance,
 #             'type_of_insurance': 'MEDICAL',
 #             'expiration_date': timezone.now()
 #         })
@@ -69,7 +71,7 @@ class TestInsuranceCarrierForm(SimpleTestCase):
 #
 #     def test_insurance_information_form_is_invalid(self):
 #         insurance_form = InsuranceInformationForm(data={
-#             'insurance_carrier': self.insurance,
+#             'insurance_carrier': 'lafise',
 #             'type_of_insurance': 'MEDICAL',
 #             'expiration_date': timezone.now()
 #         })
