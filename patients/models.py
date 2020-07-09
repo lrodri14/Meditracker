@@ -96,6 +96,8 @@ class InsuranceInformation(models.Model):
 
 class Allergies(models.Model):
     allergy_type = models.CharField('allergy', max_length=100, null=False, blank=False, help_text='Allergy Type')
+    created_by = models.CharField('created by user', max_length=100, null=False, blank=False,
+                                  help_text='User by who the allergy was created.')
 
     def __str__(self):
         return self.allergy_type
@@ -103,6 +105,9 @@ class Allergies(models.Model):
     def save(self, *args, **kwargs):
         self.allergy_type = self.allergy_type.title()
         super(Allergies, self).save(*args, **kwargs)
+
+    class Meta:
+        unique_together = ['allergy_type', 'created_by']
 
 # Patient Allergies Information
 

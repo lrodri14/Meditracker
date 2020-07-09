@@ -32,7 +32,7 @@ class AllergiesForm(forms.ModelForm):
 
     class Meta:
         model = Allergies
-        fields = '__all__'
+        exclude = ('created_by',)
 
 
 class AllergiesInformationForm(forms.ModelForm):

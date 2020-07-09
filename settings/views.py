@@ -77,19 +77,62 @@ def insurance_delete(request, pk):
 
 
 def allergies_list(request):
-    pass
+    allergies_created = Allergies.objects.get(created_by=request.user)
+    template = 'settings/allergies_list.html'
+    context = {'allergies': allergies_created}
+    return render(request, template, context)
 
 
 def allergies_create(request):
-    pass
+    allergies_form = forms.AllergiesForm
+    template = 'settings/add_allergies.html'
+    context = {'allergies_form': allergies_form}
+    if request.method == 'POST':
+        if allergies_form.is_valid():
+            try:
+                allergies_form.save()
+                return redirect(reverse('settings:settings'))
+            except IntegrityError:
+                context['unique_error'] = 'This allergy is already in your options'
+                return render(request, template, context)
+    return render(request, template, context)
 
 
-def allergies_delete(request):
-    pass
+def allergies_details(request, pk):
+    allergy = Allergies.objects.get(pk=pk)
+    template = 'settings/allergy_details.html'
+    context = {'allergy': allergy}
+    return render(request, template, context)
 
 
-def allergies_update(request):
-    pass
+def allergies_update(request, pk):
+    allergy = Allergies.objects.get(pk=pk)
+    template = 'settings/update_allergy.html'
+    allergy_form = forms.AllergiesForm(request.POST, instance=allergy)
+    context = {'allergy': allergy, 'allergy_form': allergy_form}
+    if request.method == 'POST':
+        if allergy_form.is_valid():
+            try:
+                allergy_form.save()
+                return redirect(reverse('settings:allergies_detail', args=allergy.pk))
+            except IntegrityError:
+                context['unique_error'] = 'This allergy is already in your options'
+                return render(request, template, context)
+    return render(request, template, context)
+
+
+def allergies_delete(request, pk):
+    allergy = Allergies.objects.get(pk=pk)
+    template = 'settings/allergy_delete.html'
+    context = {'allergy': allergy}
+    if request.method == 'POST':
+        if request.POST['choice'] == 'yes':
+            allergy.delete()
+            return redirect(reverse('settings:settings'))
+        else:
+            return redirect(reverse('settings:settings'))
+    return render(request, template, context)
+
 
 
 
