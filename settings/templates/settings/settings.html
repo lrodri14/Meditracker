@@ -1,0 +1,76 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Settings{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'settings/css/settings.css'%}">
+
+    <h1>Settings</h1>
+    <h4>Insurances listed in {{user.profile.get_origin_display}}</h4>
+        <!--Insurances-->
+        <table>
+            <thead>
+                <tr id="heading">
+                    <th>
+                        Company
+                    </th>
+                    <th>
+                        <a href="{%url 'settings:insurance_list'%}">View all</a>
+                    </th>
+                    <th>
+                        <a href="{%url 'settings:insurance_add'%}"><i class="fas fa-plus"></i></a>
+                    </th>
+                </tr>
+            </thead>
+             {% if insurance_list%}
+            <tbody>
+                {%for i in insurance_list%}
+                    <tr onclick="window.location='{%url 'settings:insurance_details' i.pk %}'">
+                        <td>{{i.company}}</td>
+                        <td><a href="{%url 'settings:insurance_update' i.pk%}"><i class="fas fa-edit"></i></a></td>
+                        <td></td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+            {%else%}
+            <tr>
+                <td><p>There are no insurances listed in your region</p></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {%endif%}
+        </table>
+
+        <!--Allergies-->
+        <h4>Allergies registered</h4>
+        <table>
+            <thead>
+                <tr id="heading2">
+                    <th>
+                        Allergy
+                    </th>
+                    <th>
+                        <a href="">View all</a>
+                    </th>
+                    <th>
+                        <a href="{%url 'settings:insurance_add'%}"><i class="fas fa-plus"></i></a>
+                    </th>
+                </tr>
+            </thead>
+             {% if allergies_created_list%}
+            <tbody>
+                {%for a in allergies_created_list%}
+                    <tr onclick="window.location='{%url 'settings:insurance_details' i.pk %}'">
+                        <td>{{a.allergy_type}}</td>
+                        <td><a href="{%url 'settings:insurance_update' i.pk%}"><i class="fas fa-edit"></i></a></td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+            {%else%}
+            <tr>
+                <td><p>There are no allergies registered yet</p></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {%endif%}
+        </table>
+{%endblock%}

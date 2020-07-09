@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home',
     'accounts',
     'patients',
+    'settings',
 ]
 
 PASSWORD_HASHERS = [

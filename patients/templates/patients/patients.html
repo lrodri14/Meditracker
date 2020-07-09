@@ -16,7 +16,7 @@
                 <th>Civil Status</th>
                 <th>Origin</th>
                 <th>Residence</th>
-                <th><a href="{%url 'patients:insurance_add'%}"><i class="fas fa-plus"></i></a></th>
+                <th><a href="{%url 'patients:add_patient'%}"><i class="fas fa-plus"></i></a></th>
             </tr>
             {%for p in patients%}
                 <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">

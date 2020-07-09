@@ -2,7 +2,7 @@
 {%load static%}
 {%block title%}Add Patient{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'patients/css/add_patient.css'%}">
+<link rel="stylesheet" href="{%static 'patients/css/update_patient.css'%}">
     <form method="POST" autocomplete="off">
         {%csrf_token%}
         <h1>Add Patient</h1>
@@ -37,14 +37,14 @@
                 <p>{{antecedents_form.antecedent}}</p>
                 <p>{{antecedents_form.info.label}}</p>
                 <p>{{antecedents_form.info}}</p>
-                <h2>Allergies <a href="" id="add-allergies"><i class="fas fa-plus"></i></a></h2>
+                <h2>Allergies</h2>
                 <p>{{allergies_form.allergy_type.label}}</p>
                 <p>{{allergies_form.allergy_type}}</p>
                 <p>{{allergies_form.about.label}}</p>
                 <p>{{allergies_form.about}}</p>
             </div>
             <div>
-                <h2>Insurance <a href="{%url 'patients:insurance_add' %}" id="add-insurance"><i class="fas fa-plus"></i></a></h2>
+                <h2>Insurance</h2>
                 <p>{{insurance_form.insurance_carrier.label}}</p>
                 <p>{{insurance_form.insurance_carrier}}</p>
                 <p>{{insurance_form.type_of_insurance.label}}</p>
