@@ -2,9 +2,10 @@ from ..forms import *
 from django.test import SimpleTestCase, TestCase
 from django.utils import timezone
 from ..models import InsuranceCarrier
+from django.contrib.auth import get_user_model
 
 
-class TestPatientForm(SimpleTestCase):
+class TestPatientForm(TestCase):
 
     def test_patient_form_is_valid(self):
         patient = PatientForm(data={
@@ -15,7 +16,7 @@ class TestPatientForm(SimpleTestCase):
             'phone_number': 33905511,
             'civil_status': 'S',
             'origin': 'HND',
-            'residence': 'HND'
+            'residence': 'HND',
         })
 
         self.assertTrue(patient.is_valid())
@@ -29,18 +30,19 @@ class TestPatientForm(SimpleTestCase):
             'phone_number': 33905511,
             'civil_status': None,
             'origin': None,
-            'residence': None
+            'residence': None,
         })
 
         self.assertFalse(patient.is_valid())
         self.assertEquals(len(patient.errors), 4)
 
 
-class TestInsuranceCarrierForm(SimpleTestCase):
+class TestInsuranceCarrierForm(TestCase):
 
     def test_insurance_carrier_form_is_valid(self):
         insurance_carrier = InsuranceCarrierForm(data={
-            'company': 'lafise'
+            'company': 'lafise',
+            'country': 'NIC'
         })
         self.assertTrue(insurance_carrier.is_valid())
 
@@ -48,7 +50,7 @@ class TestInsuranceCarrierForm(SimpleTestCase):
         insurance_carrier = InsuranceCarrierForm(data={
             'company': None
         })
-        self.assertEquals(len(insurance_carrier.errors),1)
+        self.assertEquals(len(insurance_carrier.errors), 2)
 
 #
 # class TestInsuranceInformationForm(TestCase):
@@ -83,7 +85,8 @@ class TestAllergiesForm(SimpleTestCase):
 
     def test_allergies_form_is_valid(self):
         allergy = AllergiesForm(data={
-            'allergy_type': 'dust'
+            'allergy_type': 'dust',
+            'created_by': 'user'
         })
 
         self.assertTrue(allergy.is_valid())

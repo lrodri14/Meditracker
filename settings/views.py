@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
 from patients import forms
 InsuranceCarrier = apps.get_model('patients', 'InsuranceCarrier')
@@ -64,20 +65,23 @@ def insurance_update(request, pk):
 
 
 def insurance_delete(request, pk):
-    carrier = InsuranceCarrier.objects.get(pk=pk)
-    context = {'insurance': carrier}
-    template = 'settings/insurance_delete.html'
-    if request.method == 'POST':
-        if request.POST['choice'] == 'yes':
-            carrier.delete()
-            return redirect(reverse('settings:settings'))
-        else:
-            return redirect(reverse('settings:settings'))
-    return render(request, template, context)
+    try:
+        carrier = InsuranceCarrier.objects.get(pk=pk)
+        context = {'insurance': carrier}
+        template = 'settings/insurance_delete.html'
+        if request.method == 'POST':
+            if request.POST['choice'] == 'yes':
+                carrier.delete()
+                return redirect(reverse('settings:settings'))
+            else:
+                return redirect(reverse('settings:settings'))
+        return render(request, template, context)
+    except ObjectDoesNotExist:
+        return redirect(reverse('settings:settings'))
 
 
 def allergies_list(request):
-    allergies_created = Allergies.objects.get(created_by=request.user)
+    allergies_created = Allergies.objects.filter(created_by=request.user)
     template = 'settings/allergies_list.html'
     context = {'allergies': allergies_created}
     return render(request, template, context)
@@ -88,9 +92,12 @@ def allergies_create(request):
     template = 'settings/add_allergies.html'
     context = {'allergies_form': allergies_form}
     if request.method == 'POST':
+        allergies_form = forms.AllergiesForm(request.POST)
         if allergies_form.is_valid():
             try:
-                allergies_form.save()
+                allergy = allergies_form.save(commit=False)
+                allergy.created_by = request.user
+                allergy.save()
                 return redirect(reverse('settings:settings'))
             except IntegrityError:
                 context['unique_error'] = 'This allergy is already in your options'
@@ -114,7 +121,7 @@ def allergies_update(request, pk):
         if allergy_form.is_valid():
             try:
                 allergy_form.save()
-                return redirect(reverse('settings:allergies_detail', args=allergy.pk))
+                return redirect(reverse('settings:allergies_list'))
             except IntegrityError:
                 context['unique_error'] = 'This allergy is already in your options'
                 return render(request, template, context)
@@ -122,16 +129,19 @@ def allergies_update(request, pk):
 
 
 def allergies_delete(request, pk):
-    allergy = Allergies.objects.get(pk=pk)
-    template = 'settings/allergy_delete.html'
-    context = {'allergy': allergy}
-    if request.method == 'POST':
-        if request.POST['choice'] == 'yes':
-            allergy.delete()
-            return redirect(reverse('settings:settings'))
-        else:
-            return redirect(reverse('settings:settings'))
-    return render(request, template, context)
+    try:
+        allergy = Allergies.objects.get(pk=pk)
+        template = 'settings/allergy_delete.html'
+        context = {'allergy': allergy}
+        if request.method == 'POST':
+            if request.POST['choice'] == 'yes':
+                allergy.delete()
+                return redirect(reverse('settings:settings'))
+            else:
+                return redirect(reverse('settings:settings'))
+        return render(request, template, context)
+    except ObjectDoesNotExist:
+        return redirect(reverse('settings:settings'))
 
 
 

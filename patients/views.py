@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, reverse
 from .forms import *
 from .models import *
-from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
 
 def patients(request):
-    patients_list = Patient.objects.all()
+    patients_list = Patient.objects.filter(created_by=request.user)
     template = 'patients/patients.html'
     context = {'patients': patients_list}
     return render(request, template, context=context)
@@ -20,7 +20,8 @@ def add_patient(request):
         antecedents_form = AntecedentForm(request.POST)
         insurance_form = InsuranceInformationForm(request.POST)
         if patient_form.is_valid() and allergies_form.is_valid() and antecedents_form.is_valid() and insurance_form.is_valid():
-            patient = patient_form.save()
+            patient = patient_form.save(commit=False)
+            patient.created_by = request.user
             patient.save()
 
             allergies = allergies_form.save(commit=False)
@@ -53,15 +54,18 @@ def patient_details(request, pk):
 
 
 def patient_delete(request, pk):
-    patient = Patient.objects.get(pk=pk)
-    template = 'patients/patients_delete.html'
-    if request.method == 'POST':
-        if request.POST['choice'] == 'yes':
-            patient.delete()
-            return redirect('patients:patients')
-        else:
-            return redirect('patients:patients_details', pk=patient.pk)
-    return render(request, template, context={'patient': patient})
+    try:
+        patient = Patient.objects.get(pk=pk)
+        template = 'patients/patients_delete.html'
+        if request.method == 'POST':
+            if request.POST['choice'] == 'yes':
+                patient.delete()
+                return redirect('patients:patients')
+            else:
+                return redirect('patients:patients_details', pk=patient.pk)
+        return render(request, template, context={'patient': patient})
+    except ObjectDoesNotExist:
+        return redirect(reverse('patients:patients'))
 
 
 def patient_update(request, pk):

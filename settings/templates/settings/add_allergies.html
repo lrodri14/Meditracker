@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Add Allergy{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'settings/css/add_allergy.css'%}">
+<form method="POST" autocomplete="off">
+    {%csrf_token%}
+    <h1>Add Allergy</h1>
+    <p>{{allergies_form.allergy_type.label}}</p>
+    <p>{{allergies_form.allergy_type}}</p>
+    <a href="{%url 'settings:allergies_list'%}"><button type="button">Allergies List</button></a>
+    <p>{{unique_error}}</p>
+    <button type="submit">Add Allergy</button>
+</form>
+{%endblock%}

@@ -11,12 +11,6 @@ table{
     cursor: default;
 }
 
-#heading2{
-    background-color: #12212b;
-    color: cyan;
-    cursor: default;
-}
-
 tr th{
     padding-top: 10px;
     padding-bottom: 10px;
@@ -73,7 +67,7 @@ tr:nth-child(even):hover .fa-edit{
     padding: 10px;
 }
 
-#no-insurance{
+#no-allergies{
     position: absolute;
     top: 50%;
     left: 50%;

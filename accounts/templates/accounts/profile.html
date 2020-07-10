@@ -42,7 +42,7 @@
                     <ul>
                         <li><h3>Birth Date: {%if user.profile.birth_date%}{{user.profile.birth_date}}{%else%}Not Available{%endif%}</h3></li>
                         <li><h3>Gender: {%if user.profile.gender%}{{user.profile.gender}}{%else%}Not Available{%endif%}</h3></li>
-                        <li><h3>Origin: {%if user.profile.origin%}{{user.profile.origin}}{%else%}Not Available{%endif%}</h3></li>
+                        <li><h3>Origin: {%if user.profile.origin%}{{user.profile.get_origin_display}}{%else%}Not Available{%endif%}</h3></li>
                     </ul>
                 </div>
             </div>
@@ -58,7 +58,7 @@
             <h1>Address Information</h1>
             <ul>
                 <li>
-                    <h3>Location: {%if user.profile.location%}{{user.profile.location}}{%else%}Not Available{%endif%}</h3>
+                    <h3>Location: {%if user.profile.location%}{{user.profile.get_location_display}}{%else%}Not Available{%endif%}</h3>
                 </li>
                 <li>
                     <h3>Address: {%if user.profile.address%}{{user.profile.address}}{%else%}No Address available{%endif%}</h3>

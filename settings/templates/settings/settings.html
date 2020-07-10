@@ -49,19 +49,20 @@
                         Allergy
                     </th>
                     <th>
-                        <a href="">View all</a>
+                        <a href="{%url 'settings:allergies_list'%}">View all</a>
                     </th>
                     <th>
-                        <a href="{%url 'settings:insurance_add'%}"><i class="fas fa-plus"></i></a>
+                        <a href="{%url 'settings:allergy_add'%}"><i class="fas fa-plus"></i></a>
                     </th>
                 </tr>
             </thead>
-             {% if allergies_created_list%}
+             {% if allergies_list%}
             <tbody>
-                {%for a in allergies_created_list%}
-                    <tr onclick="window.location='{%url 'settings:insurance_details' i.pk %}'">
+                {%for a in allergies_list%}
+                    <tr onclick="window.location='{%url 'settings:allergies_details' a.pk %}'">
                         <td>{{a.allergy_type}}</td>
-                        <td><a href="{%url 'settings:insurance_update' i.pk%}"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="{%url 'settings:allergies_update' a.pk%}"><i class="fas fa-edit"></i></a></td>
+                        <td></td>
                     </tr>
                 {%endfor%}
             </tbody>

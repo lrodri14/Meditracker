@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth import get_user_model
+user = get_user_model()
 # Create your models here.
 
 # Patients Model
@@ -25,7 +27,7 @@ class Patient(models.Model):
     id_number = models.CharField('ID number', max_length=20, null=True, blank=True,
                                  help_text='Provide you ID Card Number')
     first_names = models.CharField('patients name', max_length=50, null=False, blank=False,
-                            help_text="Patient's Name")
+                                help_text="Patient's Name")
     last_names = models.CharField('patients last name', max_length=50, null=False, blank=False,
                                  help_text="Patient's Last Name")
     birthday = models.DateTimeField('patients birthday', help_text="Patients date of birth")
@@ -33,6 +35,9 @@ class Patient(models.Model):
     civil_status = models.CharField(max_length=12, choices=CIVIL_STATUS_CHOICES)
     origin = models.CharField(max_length=50, choices=PROCEDENCE_CHOICES)
     residence = models.CharField(max_length=50, choices=RESIDENCE_CHOICES)
+    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=False, null=True,
+                                   help_text='User who created this patient', verbose_name='created_by',
+                                   related_name='creator')
 
     def age(self):
         today = timezone.localtime(timezone.now())
@@ -96,8 +101,8 @@ class InsuranceInformation(models.Model):
 
 class Allergies(models.Model):
     allergy_type = models.CharField('allergy', max_length=100, null=False, blank=False, help_text='Allergy Type')
-    created_by = models.CharField('created by user', max_length=100, null=False, blank=False,
-                                  help_text='User by who the allergy was created.')
+    created_by = models.ForeignKey(user, blank=False, on_delete=models.CASCADE, null=True,
+                                      help_text='User by who this allergy was created', related_name='user')
 
     def __str__(self):
         return self.allergy_type
