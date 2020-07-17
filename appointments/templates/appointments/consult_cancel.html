@@ -1,12 +1,15 @@
 {%extends 'base.html'%}
 {%load static%}
-{%block title%}Consults List{%endblock%}
+{%block title%}Consult Cancel{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'appointments/css/delete_consult.css'%}">
 <form method="POST">
     {%csrf_token%}
-    <h1>Delete Consult</h1>
-    <h3>Are you sure you want to delete this record?</h3>
+    <h1>Are you sure you want to cancel this appointment?</h1>
+    <p>Patient: {{consult.patient}}</p>
+    <p>Date and Time: {{consult.datetime}}</p>
+    <p>Motive: {{consult.motive}}</p>
+    <p>Suffering: {{consult.suffering}}</p>
     <button type="submit" value="yes" name="choice">Yes</button>
     <button type="submit" value="no" name="choice">No</button>
 </form>

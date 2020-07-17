@@ -5,8 +5,7 @@ years = [years for years in range(1920, 2101)]
 
 
 class PatientForm(forms.ModelForm):
-    birthday = forms.DateField(widget=forms.SelectDateWidget(years=years
-                                                             ))
+    birthday = forms.DateField(widget=forms.SelectDateWidget(years=years))
 
     class Meta:
         model = Patient

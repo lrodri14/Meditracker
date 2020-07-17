@@ -1,0 +1,55 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Consults Details{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'appointments/css/consults_details.css'%}">
+<div id="heading">
+    <h1>{{consult.patient.first_names}} {{consult.patient.last_names}}</h1>
+    <h2>Date: {{consult.datetime}}</h2>
+</div>
+<h1>Appointment General Info</h1>
+<hr>
+<h3>Patient:</h3>
+<h3>Date:</h3>
+<h3>Time:</h3>
+<h3>Motive:</h3>
+<h3>Suffering:</h3>
+<!---->
+<h1>Vital Signs</h1>
+<hr>
+<h3>Blood Pressure:</h3>
+<h3>Temperature:</h3>
+<h3>Size:</h3>
+<h3>Weight:</h3>
+
+<h1>Exams</h1>
+<hr>
+<h3>Exams:</h3>
+<h1>Organ System</h1>
+<hr>
+<h3>Digestive System:</h3>
+<h3>Endocrine System:</h3>
+<h3>Renal System:</h3>
+<h3>Lymphatic System:</h3>
+<h3>Respiratory System: </h3>
+<h3></h3>
+<h1>Physical Exploration</h1>
+<hr>
+<h3>Head Exploration: </h3>
+<h3>Thorax Exploration:</h3>
+<h1>Diagnose</h1>
+<hr>
+<h3>CIE-10 Group:</h3>
+<h3>CIE-10 Detail:</h3>
+<h3>Diagnose:</h3>
+<h3>Procedure:</h3>
+<h3>Analysis:</h3>
+<h3>Notes:</h3>
+<h1>Treatment</h1>
+<hr>
+<h3>Medicine:</h3>
+<h3>Description:</h3>
+<h3>Use:</h3>
+<h3>Doses:</h3>
+<h3>Actions:</h3>
+{%endblock%}

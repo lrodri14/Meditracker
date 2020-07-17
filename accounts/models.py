@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import Group, Permission
 # Create your models here.
-
 
 class CustomUser(AbstractUser):
 
@@ -78,6 +78,7 @@ class UsersProfile(models.Model):
     location = models.CharField('location', max_length=100, blank=False, null=True, choices=LOCATION_CHOICES,
                                 help_text='Provide your location')
     address = models.TextField('address', max_length=200, blank=False, null=True, help_text='Provide your exact address')
+    tzone = models.CharField('timezone', max_length=40, blank=False, null=True, help_text='Provide your timezone')
 
     class Meta:
         ordering = ['user']

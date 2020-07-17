@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Create Consult{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'appointments/css/create_consult.css'%}">
+<form method="POST">
+    {%csrf_token%}
+    <h1>Create Consult</h1>
+    <p>{{consults_form.patient.label}}</p>
+    <p>{{consults_form.patient}}</p>
+    <p>{{consults_form.datetime.label}}</p>
+    <p>{{consults_form.datetime}}</p>
+    <p>{{consults_form.motive.label}}</p>
+    <p>{{consults_form.motive}}</p>
+    <p>{{consults_form.suffering.label}}</p>
+    <p>{{consults_form.suffering}}</p>
+    {{unique_error}}
+    <button type="submit">Create Consult</button>
+</form>
+{%endblock%}

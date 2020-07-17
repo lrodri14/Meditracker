@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm as CreationForm
 from django.contrib.auth.forms import UserChangeForm as ChangeForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import CustomUser, UsersProfile
+import pytz
 
 
 class UserCreationForm(CreationForm):
@@ -32,6 +33,7 @@ class SignUpForm(CreationForm):
 class ProfileForm(forms.ModelForm):
     profile_pic = forms.ImageField(widget=forms.FileInput, required=None)
     birth_date = forms.DateField(widget=forms.SelectDateWidget(years=[x for x in range(1920, 2101)]), required=None)
+    tzone = forms.ChoiceField(choices=[(x, x) for x in pytz.common_timezones])
 
     class Meta:
         model = UsersProfile

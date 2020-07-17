@@ -16,6 +16,8 @@
                 <th>Civil Status</th>
                 <th>Origin</th>
                 <th>Residence</th>
+                <th>Edit</th>
+                <th>Delete</th>
                 <th><a href="{%url 'patients:add_patient'%}"><i class="fas fa-plus"></i></a></th>
             </tr>
             {%for p in patients%}
@@ -29,7 +31,9 @@
                     <td>{{p.get_civil_status_display}}</td>
                     <td>{{p.get_origin_display}}</td>
                     <td>{{p.get_residence_display}}</td>
-                    <td><a href=""></a></td>
+                    <td><a href="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></a></td>
+                    <td><a href="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></a></td>
+                    <td></td>
                 </tr>
             {%endfor%}
         </table>

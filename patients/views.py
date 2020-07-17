@@ -2,15 +2,18 @@ from django.shortcuts import render, redirect, reverse
 from .forms import *
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 
 # Create your views here.
 
 
 def patients(request):
+    now = timezone.now()
     patients_list = Patient.objects.filter(created_by=request.user)
     template = 'patients/patients.html'
-    context = {'patients': patients_list}
+    context = {'patients': patients_list, 'now':now}
     return render(request, template, context=context)
+
 
 
 def add_patient(request):
@@ -74,10 +77,10 @@ def patient_update(request, pk):
     patient_allergies = AllergiesInformation.objects.get(patient=patient)
     patient_insurance = InsuranceInformation.objects.get(patient=patient)
     patient_antecedents = Antecedents.objects.get(patient=patient)
-    patient_form = PatientForm(request.POST, instance=patient)
-    allergies_form = AllergiesInformationForm(request.POST, instance=patient_allergies)
-    insurance_form = InsuranceInformationForm(request.POST, instance=patient_insurance)
-    antecedents_form = AntecedentForm(request.POST, instance=patient_antecedents)
+    patient_form = PatientForm(instance=patient)
+    allergies_form = AllergiesInformationForm(instance=patient_allergies)
+    insurance_form = InsuranceInformationForm(instance=patient_insurance)
+    antecedents_form = AntecedentForm(instance=patient_antecedents)
     if request.method == 'POST':
         if patient_form.is_valid() and allergies_form.is_valid() and insurance_form.is_valid() and antecedents_form.is_valid():
             patient_form.save()

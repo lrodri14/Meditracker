@@ -1,0 +1,64 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Consult{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'appointments/css/update_consult.css'%}">
+<h1 id="heading">Consult</h1>
+<h4>Patient: {{consult.patient.first_names}} {{consult.patient.last_names}}</h4>
+<h4>Date: {{consult.datetime|date}}</h4>
+<h4>Time: {{consult.datetime|time}}</h4>
+<h4>Motive: {{consult.motive}}</h4>
+<h4>Suffering: {{consult.suffering}}</h4>
+<form method="POST">
+    {%csrf_token%}
+    <hr>
+    <div class="wrapper">
+        <div>
+            <h2>General Info</h2>
+            <h3>Vital Signs</h3>
+            <p>{{consult_form.blood_pressure.label}}</p>
+            <p>{{consult_form.blood_pressure}}</p>
+            <p>{{consult_form.temperature.label}}</p>
+            <p>{{consult_form.temperature}}</p>
+            <p>{{consult_form.weight.label}}</p>
+            <p>{{consult_form.weight}}</p>
+            <p>{{consult_form.size.label}}</p>
+            <p>{{consult_form.size}}</p>
+            <h3>Exams</h3>
+            <label for="id_medical_exams" id="medical_exams">Provide Exams</label>
+            <p>{{consult_form.medical_exams}}</p>
+        </div>
+        <div id="wrapper-one">
+            <h2>Examination</h2>
+            <hr>
+            <h3>Organ System</h3>
+            <p>{{consult_form.digestive_system.label}} {{consult_form.digestive_system}}</p>
+            <p>{{consult_form.endocrine_system.label}} {{consult_form.endocrine_system}}</p>
+            <p>{{consult_form.renal_system.label}} {{consult_form.renal_system}}</p>
+            <p>{{consult_form.lymphatic_system.label}} {{consult_form.lymphatic_system}}</p>
+            <p>{{consult_form.respiratory_system.label}} {{consult_form.respiratory_system}}</p>
+            <br>
+            <h2>Physical Exploration</h2>
+            <hr>
+            <p>{{consult_form.head_exploration.label}} {{consult_form.head_exploration}}</p>
+            <p>{{consult_form.thorax_exploration.label}} {{consult_form.thorax_exploration}}</p>
+        </div>
+    </div>
+    <hr>
+    <div id="diagnose">
+        <h2>Diagnose</h2>
+        <p>{{consult_form.cie_10_group.label}} {{consult_form.cie_10_group}}</p>
+        <p>{{consult_form.cie_10_detail.label}} {{consult_form.cie_10_detail}}</p>
+        <p>{{consult_form.diagnose.label}} {{consult_form.diagnose}}</p>
+        <p>{{consult_form.procedure.label}} {{consult_form.procedure}}</p>
+        <p>{{consult_form.analysis.label}} {{consult_form.analysis}}</p>
+        <p>{{consult_form.notes.label}} {{consult_form.notes}}</p>
+        <br>
+        <hr>
+        <h2>Treatment</h2>
+        <p>{{consult_form.medicine.label}} {{consult_form.medicine}}</p><br><br>
+        <p>{{consult_form.actions.label}} {{consult_form.actions}}</p>
+    </div>
+    <button type="submit">Update</button>
+</form>
+{%endblock%}

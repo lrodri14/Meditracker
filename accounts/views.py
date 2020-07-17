@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
 from .forms import SignUpForm, ProfileForm
+from django.contrib.auth.models import Group
 from .models import UsersProfile
 # Create your views here.
 
@@ -47,9 +48,16 @@ class PasswordResetComplete(PasswordResetCompleteView):
 
 def signup(request):
     if request.method == 'POST':
+        doctor = Group.objects.get(name='Doctor')
+        assistant = Group.objects.get(name='Assistant')
         form = SignUpForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            if user.roll == 'Assistant':
+                user.groups.add(assistant)
+            else:
+                user.groups.add(doctor)
+            user.save()
             return redirect('accounts:login')
     else:
         form = SignUpForm()
@@ -71,15 +79,16 @@ def profile_change(request):
                 user_profile.profile_pic = None
             else:
                 user_profile.profile_pic = user_profile.profile_pic
-            user_profile.bio = form.cleaned_data['bio']
-            user_profile.phone_number = form.cleaned_data['phone_number']
-            user_profile.birth_date = form.cleaned_data['birth_date']
-            user_profile.origin = form.cleaned_data['origin']
-            user_profile.gender = form.cleaned_data['gender']
-            user_profile.location = form.cleaned_data['location']
-            user_profile.address = form.cleaned_data['address']
-            user_profile.save()
-            return redirect('accounts:profile')
+                user_profile.bio = form.cleaned_data['bio']
+                user_profile.phone_number = form.cleaned_data['phone_number']
+                user_profile.birth_date = form.cleaned_data['birth_date']
+                user_profile.origin = form.cleaned_data['origin']
+                user_profile.gender = form.cleaned_data['gender']
+                user_profile.location = form.cleaned_data['location']
+                user_profile.address = form.cleaned_data['address']
+                user_profile.tzone = form.cleaned_data['tzone']
+                user_profile.save()
+                return redirect('accounts:profile')
     else:
         form = ProfileForm(instance=user_profile)
     return render(request, 'accounts/profile_change.html', context={'form': form, 'user': request.user})

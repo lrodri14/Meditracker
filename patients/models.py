@@ -30,7 +30,7 @@ class Patient(models.Model):
                                 help_text="Patient's Name")
     last_names = models.CharField('patients last name', max_length=50, null=False, blank=False,
                                  help_text="Patient's Last Name")
-    birthday = models.DateTimeField('patients birthday', help_text="Patients date of birth")
+    birthday = models.DateField('patients birthday', help_text="Patients date of birth")
     phone_number = models.CharField('phone number', max_length=20, blank=True, null=True, help_text='Phone Number')
     civil_status = models.CharField(max_length=12, choices=CIVIL_STATUS_CHOICES)
     origin = models.CharField(max_length=50, choices=PROCEDENCE_CHOICES)
@@ -41,7 +41,7 @@ class Patient(models.Model):
 
     def age(self):
         today = timezone.localtime(timezone.now())
-        age = today - self.birthday
+        age = today.date() - self.birthday
         return int(age.days / 365.25)
 
     def __str__(self):
