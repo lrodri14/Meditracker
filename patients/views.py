@@ -17,7 +17,6 @@ def patients(request):
     return render(request, template, context=context)
 
 
-
 def add_patient(request):
     if request.method == 'POST':
         patient_form = PatientForm(request.POST)
@@ -47,9 +46,9 @@ def add_patient(request):
         antecedents_form = AntecedentForm
         insurance_form = InsuranceInformationForm
     return render(request, 'patients/add_patient.html', context={'patient_form': patient_form,
-                                                               'allergies_form': allergies_form,
-                                                               'insurance_form': insurance_form,
-                                                               'antecedents_form': antecedents_form})
+                                                                 'allergies_form': allergies_form,
+                                                                 'insurance_form': insurance_form,
+                                                                 'antecedents_form': antecedents_form})
 
 
 def patient_details(request, pk):
@@ -96,5 +95,5 @@ def patient_update(request, pk):
         insurance_form = InsuranceInformationForm(instance=patient_insurance)
         antecedents_form = AntecedentForm(instance=patient_antecedents)
     return render(request, template, context={'patient_form': patient_form, 'allergies_form': allergies_form,
-                                                                               'insurance_form': insurance_form,
-                                                                               'antecedents_form': antecedents_form})
+                                                                            'insurance_form': insurance_form,
+                                                                            'antecedents_form': antecedents_form})
