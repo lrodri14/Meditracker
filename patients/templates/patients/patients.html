@@ -3,40 +3,53 @@
 {%block title%}Patients{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/patients.css'%}">
-    {%if patients%}
     <h1>Patients</h1>
-        <table>
-            <tr id="heading">
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Birthday</th>
-                <th>Age</th>
-                <th>Phone Number</th>
-                <th>Civil Status</th>
-                <th>Origin</th>
-                <th>Residence</th>
-                <th>Edit</th>
-                <th>Delete</th>
-                <th><a href="{%url 'patients:add_patient'%}"><i class="fas fa-plus"></i></a></th>
-            </tr>
-            {%for p in patients%}
-                <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">
-                    <td>{{p.id_number}}</td>
-                    <td>{{p.first_names}}</td>
-                    <td>{{p.last_names}}</td>
-                    <td>{{p.birthday}}</td>
-                    <td>{{p.age}}</td>
-                    <td>{{p.phone_number}}</td>
-                    <td>{{p.get_civil_status_display}}</td>
-                    <td>{{p.get_origin_display}}</td>
-                    <td>{{p.get_residence_display}}</td>
-                    <td><a href="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></a></td>
-                    <td><a href="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></a></td>
-                    <td></td>
+    {%if patients%}
+    <div class="wrapper">
+        <div>
+            <table>
+                <tr id="heading">
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Birthday</th>
+                    <th>Age</th>
+                    <th>Phone Number</th>
+                    <th>Civil Status</th>
+                    <th>Origin</th>
+                    <th>Residence</th>
+                    {%if doctor%}<th>Edit</th>
+                    <th>Delete</th>{%endif%}
+                    <th><a href="{%url 'patients:add_patient'%}"><i class="fas fa-plus"></i></a></th>
                 </tr>
-            {%endfor%}
-        </table>
+                {%for p in patients%}
+                    <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">
+                        <td>{{p.id_number}}</td>
+                        <td>{{p.first_names}}</td>
+                        <td>{{p.last_names}}</td>
+                        <td>{{p.birthday}}</td>
+                        <td>{{p.age}}</td>
+                        <td>{{p.phone_number}}</td>
+                        <td>{{p.get_civil_status_display}}</td>
+                        <td>{{p.get_origin_display}}</td>
+                        <td>{{p.get_residence_display}}</td>
+                        {%if doctor%}<td><a href="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></a></td>{%endif%}
+                        <td></td>
+                    </tr>
+                {%endfor%}
+            </table>
+        </div>
+        <div>
+            <form method="POST">
+                {%csrf_token%}
+                <h1>Filter Results</h1>
+                <p>{{form.patient.label}}</p>
+                <p>{{form.patient}}</p>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
     {%else%}
         <p id="no_patients">There are no patients listed</p>
         <a  id="add_patients" href="{%url 'patients:add_patient'%}"><i class="fas fa-plus"></i></a>

@@ -4,8 +4,9 @@
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'appointments/css/consults.css'%}">
 <h1>Consults Pending for Today</h1>
-<h3>Date: {{ today|time}}</h3>
-{%if doctor%}<a href="{%url 'appointments:consults_list'%}"><button type="button">Show all records</button></a>{%else%}<a href="{%url 'appointments:consult_register'%}"><button type="button">Show register</button></a>{%endif%}
+<h3>Date: {{ today|date}}</h3>
+{%if doctor%}<a href="{%url 'appointments:consults_list'%}"><button type="button">Show all records</button></a>{%endif%}
+<a href="{%url 'appointments:consult_register'%}"><button type="button">Show register</button></a>
 {%if appointments%}
     <table>
         <thead>
@@ -14,9 +15,7 @@
                 <th>Patient</th>
                 <th>Date and Time</th>
                 <th>Status</th>
-                {%if doctor%}
-                <th>Complete</th>
-                {%endif%}
+                {%if doctor%}<th>Complete</th>{%endif%}
                 <th><a href="{%url 'appointments:create_consult'%}"><i class="fas fa-plus"></i></a></th>
             </tr>
         </thead>
@@ -26,8 +25,8 @@
                     <td>{{a.patient.id_number}}</td>
                     <td>{{a.patient.first_names}} {{a.patient.last_names}}</td>
                     <td>{{a.datetime}}</td>
-                    <td>{%if a.status < 1%}<div id="status-0">Pending...</div>{%elif a.status == 1%}<div id="status-1">Finished</div>{%endif%}</td>
-                    <td>{%if doctor%}<a href="{%url 'appointments:update_consult' a.pk%}"><i class="fas fa-edit"></i></a>{%endif%}</td>
+                    <td>{%if a.status < 1%}<div id="status-0">Pending...</div>{%elif a.status >= 1%}<div id="status-1">Finished</div>{%endif%}</td>
+                    {%if doctor%}<td><a href="{%url 'appointments:update_consult' a.pk%}"><i class="fas fa-edit"></i></a></td>{%endif%}
                     <td></td>
                 </tr>
             {%endfor%}
@@ -37,5 +36,4 @@
     <p id="no-consults">There are no consults for today's date</p>
     <a id="add-consult" href="{%url 'appointments:create_consult'%}"><i class="fas fa-plus"></i></a>
 {%endif%}
-
 {%endblock%}

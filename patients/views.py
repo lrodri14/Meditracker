@@ -2,16 +2,18 @@ from django.shortcuts import render, redirect, reverse
 from .forms import *
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.contrib.auth.models import Group
 
 # Create your views here.
 
 
 def patients(request):
-    now = timezone.now()
+    doctor_group = Group.objects.get(name='Doctor')
+    doctor = doctor_group in request.user.groups.all()
     patients_list = Patient.objects.filter(created_by=request.user)
+    patient_filter = PatientFilter
     template = 'patients/patients.html'
-    context = {'patients': patients_list, 'now':now}
+    context = {'patients': patients_list, 'doctor':doctor, 'form': patient_filter}
     return render(request, template, context=context)
 
 

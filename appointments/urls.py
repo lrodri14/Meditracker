@@ -11,5 +11,4 @@ urlpatterns = [
     path('delete_consult/<int:pk>', delete_consult, name='delete_consult'),
     path('consult_register/', consults_register, name='consult_register'),
     path('consult_date_update/<int:pk>', consult_date_update, name='consult_date_update'),
-    path('consult_cancel/<int:pk>', consult_cancel, name='consult_cancel'),
 ]

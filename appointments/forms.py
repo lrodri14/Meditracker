@@ -1,5 +1,8 @@
 from .models import Consults
 from django import forms
+from django.utils import timezone
+import datetime
+from dateutil import relativedelta
 
 
 class ConsultsForm(forms.ModelForm):
@@ -31,3 +34,11 @@ class UpdateConsultsForm(forms.ModelForm):
             'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 150}),
             'actions': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
         }
+
+
+years = [y for y in range(1920, timezone.now().year+1)]
+
+
+class DateFilterForm(forms.Form):
+    date_from = forms.DateField(widget=forms.SelectDateWidget(years=years), initial=timezone.now() - relativedelta.relativedelta(month=3))
+    date_to = forms.DateField(widget=forms.SelectDateWidget(years=years), initial=timezone.now())

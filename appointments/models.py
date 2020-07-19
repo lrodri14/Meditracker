@@ -61,7 +61,7 @@ class Consults(models.Model):
     medicine = models.TextField('medicine', blank=True, null=True, help_text='Medicine')
     actions = models.TextField('actions', blank=True, null=True, help_text='actions')
     # Status
-    status = models.IntegerField('status', blank=True, null=True, help_text='Handles the consult status', default=-1)
+    status = models.BooleanField('status', blank=True, null=True, help_text='Handles the consult status', default=False)
     created_at = models.DateField('created at', blank=True, null=True, help_text='moment created', default=timezone.now)
 
     def __str__(self):
@@ -70,7 +70,6 @@ class Consults(models.Model):
     def save(self, *args, **kwargs):
         self.suffering = self.suffering.capitalize()
         self.motive = self.motive.capitalize()
-        self.status += 1
         # self.digestive_system = self.digestive_system.capitalize()
         # self.endocrine_system = self.endocrine_system.capitalize()
         # self.renal_system = self.renal_system.capitalize()

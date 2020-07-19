@@ -45,3 +45,7 @@ class AntecedentForm(forms.ModelForm):
     class Meta:
         model = Antecedents
         exclude = ('patient',)
+
+
+class PatientFilter(forms.Form):
+    patient = forms.TextInput()

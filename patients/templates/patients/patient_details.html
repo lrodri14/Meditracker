@@ -4,9 +4,9 @@
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/patient_details.css'%}">
 <div id="heading">
-    <h1 id="name">{{patient.first_names}} {{patient.last_names}} <a href="{%url 'patients:patients_delete' patient.pk%}"><i class="fas fa-trash"></i></a></h1>
+    <h1 id="name">{{patient.first_names}} {{patient.last_names}}</h1>
 </div>
-<h1>Personal Info <a href="{%url 'patients:patients_update' patient.pk%}"><i class="fas fa-edit edit"></i></a></h1>
+<h1>Personal Info</h1>
 <hr>
 <h3>Id Card Number: {{patient.id_number}}</h3>
 <h3>Full Name: {{patient.first_names}} {{patient.last_names}}</h3>
