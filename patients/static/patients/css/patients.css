@@ -17,6 +17,23 @@ form{
     padding: 10px;
 }
 
+input[type=text]{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align: center;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: 2px solid #0ff5fc;
+  border-radius: 15px;
+  height: 30px;
+  width:60%;
+  transition: 0.5s;
+}
+
+input[type=text]:hover{
+  width: 75%;
+  transition: 0.5s;
+}
+
 button{
     margin: 20px;
     width: 30%;

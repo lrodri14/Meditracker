@@ -48,4 +48,4 @@ class AntecedentForm(forms.ModelForm):
 
 
 class PatientFilter(forms.Form):
-    patient = forms.TextInput()
+    patient = forms.CharField(widget=forms.TextInput)

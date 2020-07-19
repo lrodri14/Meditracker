@@ -41,7 +41,7 @@
             </table>
         </div>
         <div>
-            <form method="POST">
+            <form method="POST" autocomplete="off">
                 {%csrf_token%}
                 <h1>Filter Results</h1>
                 <p>{{form.patient.label}}</p>

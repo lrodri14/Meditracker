@@ -13,7 +13,7 @@ def patients(request):
     patients_list = Patient.objects.filter(created_by=request.user)
     patient_filter = PatientFilter
     template = 'patients/patients.html'
-    context = {'patients': patients_list, 'doctor':doctor, 'form': patient_filter}
+    context = {'patients': patients_list, 'doctor': doctor, 'form': patient_filter}
     return render(request, template, context=context)
 
 
