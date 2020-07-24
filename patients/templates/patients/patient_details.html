@@ -6,7 +6,7 @@
 <div id="heading">
     <h1 id="name">{{patient.first_names}} {{patient.last_names}}</h1>
 </div>
-<h1>Personal Info</h1>
+<h1>Personal Info <a href="{%url 'appointments:consults_list' patient.pk%}"><i class="fas fa-book-medical"></i></a></h1>
 <hr>
 <h3>Id Card Number: {{patient.id_number}}</h3>
 <h3>Full Name: {{patient.first_names}} {{patient.last_names}}</h3>

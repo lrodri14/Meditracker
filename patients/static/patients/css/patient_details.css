@@ -13,15 +13,6 @@ body{
 }
 
 .fas:hover{
-    color:red;
-    transition: 0.5s;
-}
-
-.edit:hover{
     color:green;
     transition: 0.5s;
-}
-
-hr{
-    border: 1px solid cyan;
 }

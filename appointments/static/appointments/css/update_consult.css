@@ -34,6 +34,17 @@ h4{
     margin-top: 3%;
 }
 
+.fas{
+    font-size: 35px;
+    float: right;
+    transition: 0.5s;
+}
+
+.fas:hover{
+  transition: 0.5s;
+  color: green;
+}
+
 p{
     font-size: 20px;
 }

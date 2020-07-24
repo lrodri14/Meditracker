@@ -6,7 +6,7 @@
 <h1>Consults Pending for Today</h1>
 <h3>Date: {{ today|date}}</h3>
 {%if doctor%}<a href="{%url 'appointments:consults_list'%}"><button type="button">Show all records</button></a>{%endif%}
-<a href="{%url 'appointments:consult_register'%}"><button type="button">Show register</button></a>
+<a href="{%url 'appointments:agenda'%}"><button type="button">Agenda</button></a>
 {%if appointments%}
     <table>
         <thead>
@@ -25,7 +25,7 @@
                     <td>{{a.patient.id_number}}</td>
                     <td>{{a.patient.first_names}} {{a.patient.last_names}}</td>
                     <td>{{a.datetime}}</td>
-                    <td>{%if a.status < 1%}<div id="status-0">Pending...</div>{%elif a.status >= 1%}<div id="status-1">Finished</div>{%endif%}</td>
+                    <td><div id="status-0">Pending...</div></td>
                     {%if doctor%}<td><a href="{%url 'appointments:update_consult' a.pk%}"><i class="fas fa-edit"></i></a></td>{%endif%}
                     <td></td>
                 </tr>

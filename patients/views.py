@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse
+from appointments.models import Consults
 from .forms import *
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
@@ -14,6 +15,15 @@ def patients(request):
     patient_filter = PatientFilter
     template = 'patients/patients.html'
     context = {'patients': patients_list, 'doctor': doctor, 'form': patient_filter}
+    if request.method == 'POST':
+        patient_filter = PatientFilter(request.POST)
+        if patient_filter.is_valid():
+            if patient_filter.cleaned_data['patient'][0] in [str(x) for x in range(0, 11)]:
+                context['patients'] = Patient.objects.filter(id_number__icontains=int(patient_filter.cleaned_data['patient']), created_by=request.user)
+                return render(request, template, context)
+            elif type(patient_filter.cleaned_data['patient']) == str:
+                context['patients'] = Patient.objects.filter(first_names__icontains=patient_filter.cleaned_data['patient'], created_by=request.user)
+                return render(request, template, context)
     return render(request, template, context=context)
 
 
@@ -60,11 +70,16 @@ def patient_details(request, pk):
 def patient_delete(request, pk):
     try:
         patient = Patient.objects.get(pk=pk)
+        consults = Consults.objects.filter(patient=patient)
         template = 'patients/patients_delete.html'
         if request.method == 'POST':
             if request.POST['choice'] == 'yes':
-                patient.delete()
-                return redirect('patients:patients')
+                if consults:
+                    template = 'patients/patient_delete_error.html'
+                    return render(request, template, context={'error': 'Can not delete this patient, it is linked to {} records'.format(len(consults))})
+                else:
+                    patient.delete()
+                    return redirect('patients:patients')
             else:
                 return redirect('patients:patients_details', pk=patient.pk)
         return render(request, template, context={'patient': patient})

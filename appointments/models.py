@@ -21,6 +21,14 @@ class Cie10Group(models.Model):
 
 
 class Consults(models.Model):
+
+    STATUS_CHOICES = (
+        ('OPEN', 'Open'),
+        ('CONFIRMED', 'Confirmed'),
+        ('CANCELLED', 'Cancelled'),
+        ('CLOSED', 'Closed'),
+    )
+
     # Consult creator
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='patient',
                                 help_text='Patient assisting, this consult', related_name='patient')
@@ -61,8 +69,8 @@ class Consults(models.Model):
     medicine = models.TextField('medicine', blank=True, null=True, help_text='Medicine')
     actions = models.TextField('actions', blank=True, null=True, help_text='actions')
     # Status
-    status = models.BooleanField('status', blank=True, null=True, help_text='Handles the consult status', default=False)
-    created_at = models.DateField('created at', blank=True, null=True, help_text='moment created', default=timezone.now)
+    medical_status = models.BooleanField('medical_status', blank=True, null=True, help_text='Handles the medical consult status', default=False)
+    status = models.CharField('status', max_length=10, blank=True, null=True, help_text='Handles the consult status', default=STATUS_CHOICES[0][0], choices=STATUS_CHOICES)
 
     def __str__(self):
         return str(self.patient) + "'s consult for " + str(self.datetime)
@@ -70,24 +78,18 @@ class Consults(models.Model):
     def save(self, *args, **kwargs):
         self.suffering = self.suffering.capitalize()
         self.motive = self.motive.capitalize()
-        # self.digestive_system = self.digestive_system.capitalize()
-        # self.endocrine_system = self.endocrine_system.capitalize()
-        # self.renal_system = self.renal_system.capitalize()
-        # self.respiratory_system = self.respiratory_system.capitalize()
-        # self.lymphatic_system = self.lymphatic_system.capitalize()
-        # self.head_exploration = self.head_exploration.capitalize()
-        # self.thorax_exploration = self.thorax_exploration.capitalize()
-        # self.cie_10_detail = self.cie_10_detail.capitalize()
-        # self.diagnose = self.diagnose.capitalize()
-        # self.procedure = self.procedure.capitalize()
-        # self.analysis = self.analysis.capitalize()
-        # self.notes = self.notes.capitalize()
-        # self.medicine = self.medicine.capitalize()
-        # self.description = self.description.capitalize()
-        # self.use = self.use.capitalize()
-        # self.doses = self.doses.capitalize()
-        # self.actions = self.actions.capitalize()
         super(Consults, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ['patient', 'datetime']
+
+
+class Drugs(models.Model):
+    name = models.CharField('drugs', max_length=200, blank=True, null=True, unique=True, help_text='drugs name')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.capitalize()
+        super(self, Drugs).save(*args, **kwargs)

@@ -22,7 +22,7 @@
                         <td>{{a.patient.id_number}}</td>
                         <td>{{a.patient.first_names}} {{a.patient.last_names}}</td>
                         <td>{{a.datetime}}</td>
-                        <td>{%if a.status < 1%}<div id="status-0">Pending...</div>{%elif a.status >= 1%} <div id="status-1">Finished</div>{%endif%}</td>
+                        <td><div id="status-1">Finished</div></td>
                     </tr>
                 {%endfor%}
             </tbody>
@@ -40,7 +40,7 @@
         </form>
     </div>
     {%else%}
-        <p id="no-consults">There are no records filled yet</p>
+        <p id="no-consults">There are no records filled</p>
     {%endif%}
 </div>
 {%endblock%}
