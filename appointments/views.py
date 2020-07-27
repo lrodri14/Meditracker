@@ -10,10 +10,12 @@ from django.contrib.auth.models import Group
 from django.db import IntegrityError
 from django.db.models import Q
 import calendar
+from .tasks import change_status
 # Create your views here.
 
 
 def consults(request):
+    change_status.delay()
     today = timezone.localtime(timezone.now())
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
@@ -105,10 +107,6 @@ def cancel_consult(request, pk):
 
 def agenda(request):
     today = timezone.localtime(timezone.now())
-    passed_appointments = Consults.objects.filter(datetime__date__lt=timezone.localtime(timezone.now()).date())
-    for ap in passed_appointments:
-        ap.status = 'CLOSED'
-        ap.save()
     form = AgendaDateFilterForm
     consults = Consults.objects.filter(created_by=request.user, datetime__date__month__gte=today.month, medical_status=False).order_by('datetime')
     months = []

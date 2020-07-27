@@ -151,7 +151,9 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = '/'
 
-SOUTH_MIGRATION_MODULES = {
-    'taggit': 'taggit.south_migrations',
-    'happenings': 'happenings.south_migrations',
-}
+# CELERY SETTINGS
+
+CELERY_BROKER_URL = 'redis://h:p49d7338b5680b410abf146ebf5f73c224ca53eeeebfd510396bcc4b313b83eb2@ec2-54-147-212-222.compute-1.amazonaws.com:26469'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
