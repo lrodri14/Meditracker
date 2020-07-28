@@ -8,7 +8,7 @@ from django.utils import timezone
 def change_status():
     consults = Consults.objects.all()
     for c in consults:
-        if c.status == 'OPEN' and c.datetime < timezone.localtime(timezone.now()):
+        if c.status == 'OPEN' and c.datetime.date < timezone.localtime(timezone.now()).date():
             c.status = 'CLOSED'
             c.save()
         else:

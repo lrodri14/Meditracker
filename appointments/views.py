@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from django.db.models import Q
 import calendar
 from .tasks import change_status
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -26,7 +27,10 @@ def consults(request):
 
 
 def consults_list(request, pk=None):
-    appointments = Consults.objects.filter(created_by=request.user, medical_status=True)
+    appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True).order_by('datetime')
+    paginator = Paginator(appointments_list, 25)
+    page = request.GET.get('page')
+    appointments = paginator.get_page(page)
     form = RecordsDateFilterForm
     template = 'appointments/consults_list.html'
     context = {'appointments': appointments, 'form': form}
@@ -48,16 +52,17 @@ def consults_list(request, pk=None):
 
 
 def create_consult(request):
-    consults_form = ConsultsForm
+    consults_form = ConsultsForm(user=request.user)
     template = 'appointments/create_consult.html'
     context = {'consults_form': consults_form}
     try:
         if request.method == 'POST':
-            consults_form = ConsultsForm(request.POST)
+            consults_form = ConsultsForm(request.user, request.POST)
             if consults_form.is_valid():
                 consult = consults_form.save(commit=False)
                 consult.created_by = request.user
                 consult.save()
+                print(consult.patient)
                 return redirect(reverse('appointments:consults'))
     except IntegrityError:
             context['unique_error'] = 'There is a consult created for that date and time already'
@@ -138,10 +143,13 @@ def agenda(request):
 
 
 def registers(request):
-    consults = Consults.objects.filter(created_by=request.user).order_by('-datetime')
+    consults_list = Consults.objects.filter(created_by=request.user).order_by('-datetime')
+    paginator = Paginator(consults_list, 25)
+    page = request.GET.get('page')
+    consults = paginator.get_page(page)
     template = 'appointments/registers.html'
     form = RegistersFilter
-    context = {'consults': consults, 'form':form, 'items': len(consults)}
+    context = {'consults': consults, 'form':form, 'items': len(consults_list)}
     if request.method == 'POST':
         form = RegistersFilter(request.POST)
         if form.is_valid():
@@ -176,13 +184,13 @@ def registers(request):
 
 def consult_date_update(request, pk):
     consult = Consults.objects.get(pk=pk)
-    consult_form = ConsultsForm(request.POST or None, instance=consult)
+    consult_form = ConsultsForm(request.user, request.POST or None, instance=consult)
     template = 'appointments/consult_date_update.html'
     context = {'consult_form': consult_form}
     if request.method == 'POST':
         if consult_form.is_valid():
             consult_form.save()
-            return redirect('appointments:consult_register')
+            return redirect('appointments:agenda')
         else:
             context['error'] = 'Please insert all the valid values.'
             return render(request, template, context)

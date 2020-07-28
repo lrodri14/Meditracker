@@ -185,3 +185,37 @@ input[type=text]{
   width:60%;
   transition: 0.5s;
 }
+
+.list-container{
+    background-color: #12212b;
+    padding: 0.5%;
+}
+
+.pagination{
+    list-style: none;
+}
+
+.disabled{
+    color: #12212b;
+    background-color: cyan;
+    cursor: not-allowed;
+}
+
+#active{
+    color: #12212b;
+    background-color: cyan;
+    cursor: not-allowed;
+}
+
+.pagination li{
+    display: inline;
+    border: 1px solid cyan;
+    margin: 1%;
+    padding: 1%;
+}
+
+.pagination li:hover{
+    color: #12212b;
+    background-color:cyan;
+    transition: 0.5s;
+    cursor: pointer;

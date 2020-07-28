@@ -4,6 +4,7 @@ from .forms import *
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import Group
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -11,10 +12,13 @@ from django.contrib.auth.models import Group
 def patients(request):
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    patients_list = Patient.objects.filter(created_by=request.user)
+    patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
+    paginator = Paginator(patients_list, 25)
+    page = request.GET.get('page')
+    patients = paginator.get_page(page)
     patient_filter = PatientFilter
     template = 'patients/patients.html'
-    context = {'patients': patients_list, 'doctor': doctor, 'form': patient_filter}
+    context = {'patients': patients, 'doctor': doctor, 'form': patient_filter}
     if request.method == 'POST':
         patient_filter = PatientFilter(request.POST)
         if patient_filter.is_valid():

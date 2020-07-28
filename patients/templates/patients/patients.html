@@ -39,6 +39,29 @@
                     </tr>
                 {%endfor%}
             </table>
+            {% if patients.has_other_pages %}
+            <div class="list-container">
+              <ul class="pagination">
+                {% if patients.has_previous %}
+                  <li onclick="window.location='?page={{ patients.previous_page_number }}'">&laquo;</li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in patients.paginator.page_range %}
+                  {% if patients.number == i %}
+                    <li id="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li onclick="window.location='?page={{ i }}'">{{i}}</li>
+                  {% endif %}
+                {% endfor %}
+                {% if patients.has_next %}
+                  <li onclick="window.location='?page={{ patients.next_page_number }}'">&raquo;</li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+              </ul>
+            </div>
+            {% endif %}
         </div>
         <div>
             <form method="POST" autocomplete="off">

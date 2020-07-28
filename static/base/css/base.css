@@ -4,6 +4,19 @@ body{
     color: #0ff5fc;
 }
 
+.fa-home{
+    font-size: 28px;
+    transition: 0.5s;
+    margin-top: 0.5%;
+    margin-left: 0.5%;
+}
+
+.fa-home:hover{
+    margin: 0.5%;
+    font-size: 32px;
+    transition: 0.5s;
+}
+
 a {
     text-decoration: none;
     color: #0ff5fc;

@@ -2,7 +2,7 @@ from .models import Consults
 from django import forms
 from django.utils import timezone
 from dateutil import relativedelta
-from django.core.exceptions import ValidationError
+from patients.models import Patient
 
 
 class ConsultsForm(forms.ModelForm):
@@ -11,6 +11,10 @@ class ConsultsForm(forms.ModelForm):
     class Meta:
         model = Consults
         fields = ('patient', 'datetime', 'motive', 'suffering',)
+
+    def __init__(self, user, *args, **kwargs):
+        super(ConsultsForm, self).__init__(*args, **kwargs)
+        self.fields['patient'].queryset = Patient.objects.filter(created_by=user)
 
 
 class UpdateConsultsForm(forms.ModelForm):

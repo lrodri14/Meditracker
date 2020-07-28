@@ -7,7 +7,7 @@
 <div class="wrapper">
     <div>
     {%if consults%}
-        <p>{{items}} have been found</p>
+        <p>{{items}} records have been found</p>
             <table>
                     <thead>
                         <tr id="heading">
@@ -18,7 +18,6 @@
                         </tr>
                     </thead>
             {%for c in consults%}
-                <tbody>
                     <tr>
                         <td>{{c.patient.id_number}}</td>
                         <td>{{c.patient.first_names}} {{c.patient.last_names}}</td>
@@ -35,9 +34,31 @@
                             {%endif%}
                         </td>
                     </tr>
-                </tbody>
                 {%endfor%}
         </table>
+        {% if consults.has_other_pages %}
+            <div class="list-container">
+              <ul class="pagination">
+                {% if consults.has_previous %}
+                  <li onclick="window.location='?page={{ consults.previous_page_number }}'">&laquo;</li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in consults.paginator.page_range %}
+                  {% if consults.number == i %}
+                    <li id="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li onclick="window.location='?page={{ i }}'">{{i}}</li>
+                  {% endif %}
+                {% endfor %}
+                {% if consults.has_next %}
+                  <li onclick="window.location='?page={{ consults.next_page_number }}'">&raquo;</li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {%endif%}
+              </ul>
+            </div>
+        {% endif %}
     </div>
     <div>
         <form method="POST" autocomplete="off">
