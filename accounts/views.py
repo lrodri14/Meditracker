@@ -32,7 +32,6 @@ class PasswordReset(PasswordResetView):
     success_url = reverse_lazy('accounts:password_reset_done')
 
 
-
 class PasswordResetDone(PasswordResetDoneView):
     template_name = 'accounts/password_reset_done.html'
 
@@ -63,7 +62,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
-@login_required()
+
 def profile(request):
     return render(request, 'accounts/profile.html')
 

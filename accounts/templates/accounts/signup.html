@@ -1,8 +1,8 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Sign Up{%endblock%}
+{%block return%}{%endblock%}{%block home%}{%endblock%}
 {% block body_block %}
-{%block content%}{%endblock%}
 <link rel="stylesheet" href="{% static 'accounts/css/signup.css'%}">
 <form method="POST" autocomplete="off">
     {%csrf_token%}

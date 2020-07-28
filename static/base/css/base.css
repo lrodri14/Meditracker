@@ -4,6 +4,19 @@ body{
     color: #0ff5fc;
 }
 
+.fa-long-arrow-alt-left{
+    font-size: 30px;
+    transition: 0.5s;
+    margin-top: 0.5%;
+    margin-left: 0.5%;
+}
+
+.fa-long-arrow-alt-left:hover{
+    margin: 0.5%;
+    font-size: 36px;
+    transition: 0.5s;
+}
+
 .fa-home{
     font-size: 28px;
     transition: 0.5s;

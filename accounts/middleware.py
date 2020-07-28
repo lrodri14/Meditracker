@@ -14,7 +14,8 @@ class LoginRequiredMiddleware:
         return response
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        view_names = ['Login', 'signup', 'main']
+        view_names = ['Login', 'signup', 'main', 'ChangePassword', 'ChangePasswordDone', 'PasswordReset',
+                      'PasswordResetDone', 'PasswordResetConfirm', 'PasswordResetComplete']
         if request.user.is_authenticated and view_func.__name__ in view_names:
             return redirect(settings.LOGIN_REDIRECT_URL)
         elif request.user.is_authenticated or view_func.__name__ in view_names:

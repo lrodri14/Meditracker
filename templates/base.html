@@ -13,7 +13,7 @@
     <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
 </head>
 <body>
-    {%block content%}<a href="{%url 'home:home'%}"><i class="fas fa-home"></i></a>{%endblock%}
+    {%block return%}<a href=""><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}{%block home%}<a href="{%url 'home:home'%}"><i class="fas fa-home"></i></a>{%endblock%}
     {%block body_block%}
     {%endblock%}
 </body>

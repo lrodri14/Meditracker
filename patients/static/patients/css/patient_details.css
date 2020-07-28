@@ -6,13 +6,39 @@ body{
     text-align: center;
 }
 
-.fas{
+.fa-book-medical{
     font-size: 100%;
     float: right;
     transition: 0.5s;
 }
 
-.fas:hover{
+.fa-book-medical:hover{
     color:green;
+    transition: 0.5s;
+}
+
+.fa-long-arrow-alt-left{
+    font-size: 30px;
+    transition: 0.5s;
+    margin-top: 0.5%;
+    margin-left: 0.5%;
+}
+
+.fa-long-arrow-alt-left:hover{
+    margin: 0.5%;
+    font-size: 36px;
+    transition: 0.5s;
+}
+
+.fa-home{
+    font-size: 28px;
+    transition: 0.5s;
+    margin-top: 0.5%;
+    margin-left: 0.5%;
+}
+
+.fa-home:hover{
+    margin: 0.5%;
+    font-size: 32px;
     transition: 0.5s;
 }
