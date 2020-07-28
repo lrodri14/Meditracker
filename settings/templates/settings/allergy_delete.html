@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Delete Allergy{%endblock%}
+{%block return%}<a href="{%url 'settings:allergies_details' allergy.pk%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'settings/css/allergy_delete.css'%}">
 <form method="POST">

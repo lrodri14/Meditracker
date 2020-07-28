@@ -28,7 +28,6 @@ def consults(request):
 
 def consults_list(request, pk=None):
     appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True).order_by('datetime')
-    print(appointments_list[0].datetime.date() < timezone.localtime().date())
     paginator = Paginator(appointments_list, 25)
     page = request.GET.get('page')
     appointments = paginator.get_page(page)

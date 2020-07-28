@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {%load static%}
 {%block title%}Allergy Details{%endblock%}
+{%block return%}<a href="{%url 'settings:settings'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'settings/css/allergy_details.css'%}">
 <div id="details">
