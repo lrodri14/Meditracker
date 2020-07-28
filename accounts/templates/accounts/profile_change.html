@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Change Profile{%endblock%}
+{%block return%}<a href="{%url 'accounts:profile'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'accounts/css/profile_change.css'%}">
 <form method="POST" enctype="multipart/form-data" autocomplete="off">
