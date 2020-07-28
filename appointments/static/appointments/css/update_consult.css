@@ -34,13 +34,13 @@ h4{
     margin-top: 3%;
 }
 
-.fas{
+.fa-book-medical{
     font-size: 35px;
     float: right;
     transition: 0.5s;
 }
 
-.fas:hover{
+.fa-book-medical:hover{
   transition: 0.5s;
   color: green;
 }

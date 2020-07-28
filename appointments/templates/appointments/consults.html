@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Consults for Today{%endblock%}
+{%block return%}<a href="{%url 'home:home'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'appointments/css/consults.css'%}">
 <h1>Consults Pending for Today</h1>
