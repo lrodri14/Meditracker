@@ -20,6 +20,17 @@ class Cie10Group(models.Model):
         super(Cie10Group, self).save(*args, **kwargs)
 
 
+class Drugs(models.Model):
+    name = models.CharField('drugs', max_length=200, blank=True, null=True, help_text='drugs name')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.capitalize()
+        super(Drugs, self).save(*args, **kwargs)
+
+
 class Consults(models.Model):
 
     STATUS_CHOICES = (
@@ -66,6 +77,7 @@ class Consults(models.Model):
     analysis = models.TextField('analysis', blank=True, null=True, help_text='Analysis')
     notes = models.TextField('notes', blank=True, null=True, help_text='Notes')
     # Treatmenet
+    drugs = models.ManyToManyField(Drugs, blank=True, help_text='Drugs recommended', verbose_name='Drugs', related_name='drugs')
     medicine = models.TextField('medicine', blank=True, null=True, help_text='Medicine')
     actions = models.TextField('actions', blank=True, null=True, help_text='actions')
     # Status
@@ -82,14 +94,3 @@ class Consults(models.Model):
 
     class Meta:
         unique_together = ['patient', 'datetime']
-
-
-class Drugs(models.Model):
-    name = models.CharField('drugs', max_length=200, blank=True, null=True, unique=True, help_text='drugs name')
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        self.name = self.name.capitalize()
-        super(self, Drugs).save(*args, **kwargs)

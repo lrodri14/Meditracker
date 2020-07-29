@@ -162,6 +162,25 @@ textarea{
   transition: 0.5s;
 }
 
+#drugs{
+    max-height: 120px;
+    width: 20%;
+    border: 1px solid cyan;
+    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    text-align: left;
+    margin: auto;
+}
+
+#drugs input{
+    float: left;
+}
+
+#drugs ul{
+    list-style: none;
+}
+
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;

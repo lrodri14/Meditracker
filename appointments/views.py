@@ -10,7 +10,7 @@ from django.contrib.auth.models import Group
 from django.db import IntegrityError
 from django.db.models import Q
 import calendar
-from .tasks import change_status
+from .tasks import change_status, save_new_drug
 from django.core.paginator import Paginator
 # Create your views here.
 
@@ -62,7 +62,6 @@ def create_consult(request):
                 consult = consults_form.save(commit=False)
                 consult.created_by = request.user
                 consult.save()
-                print(consult.patient)
                 return redirect(reverse('appointments:consults'))
     except IntegrityError:
             context['unique_error'] = 'There is a consult created for that date and time already'
@@ -84,8 +83,12 @@ def update_consult(request, pk):
     context = {'consult': consult, 'consult_form': consult_form}
     if request.method == 'POST':
         if consult_form.is_valid():
+            consult = consult_form.save(commit=False)
+            if consult.medicine != '':
+                save_new_drug.delay(drugs=list(consult.medicine.splitlines()))
             consult.medical_status = True
-            consult_form.save()
+            consult.save()
+            consult_form.save_m2m()
             return redirect('appointments:consults')
     return render(request, template, context)
 

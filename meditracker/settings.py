@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',
     'main',
     'home',
     'accounts',
@@ -156,4 +157,8 @@ LOGOUT_REDIRECT_URL = '/'
 CELERY_BROKER_URL = 'redis://h:p49d7338b5680b410abf146ebf5f73c224ca53eeeebfd510396bcc4b313b83eb2@ec2-54-147-212-222.compute-1.amazonaws.com:26469'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_IMPORTS = (
+    'appointments.tasks',
+)
+CELERY_RESULT_BACKEND = 'django-db'
 

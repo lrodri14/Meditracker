@@ -1,4 +1,4 @@
-from .models import Consults
+from .models import Consults, Drugs
 from django import forms
 from django.utils import timezone
 from dateutil import relativedelta
@@ -35,6 +35,7 @@ class UpdateConsultsForm(forms.ModelForm):
             'procedure': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'analysis': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'notes': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
+            'drugs': forms.CheckboxSelectMultiple(),
             'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 150}),
             'actions': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
         }
@@ -78,6 +79,12 @@ class RegistersFilter(forms.Form):
     patient = forms.CharField(max_length=100, widget=forms.TextInput,required=False)
     month = forms.ChoiceField(choices=MONTH_CHOICES, required=False)
     year = forms.ChoiceField(choices=YEARS_CHOICES, required=False)
+
+
+class DrugsForm(forms.ModelForm):
+    class Meta:
+        model = Drugs
+        fields = '__all__'
 
 
 

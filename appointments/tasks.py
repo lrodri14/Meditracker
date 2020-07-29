@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 from celery import shared_task
-from .models import Consults
+from .models import Consults, Drugs
 from django.utils import timezone
 
 
@@ -12,3 +13,13 @@ def change_status():
             c.save()
         else:
             continue
+
+
+@shared_task
+def save_new_drug(drugs):
+    if drugs:
+        for drug in drugs:
+            new_drug = Drugs.objects.create(name=drug)
+            new_drug.save()
+        else:
+            pass
