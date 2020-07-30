@@ -34,7 +34,7 @@ class CustomUser(AbstractUser):
         ('UROLOGY', 'UROLOGY'),
     )
 
-    roll = models.CharField('Roll',max_length=25, blank=False,
+    roll = models.CharField('Roll', max_length=25, blank=False,
                             help_text='Choose the roll you will acquire in this account.', choices=ROLL_CHOICES)
     speciality = models.CharField('Speciality', max_length=100, blank=True,
                                   help_text='If your roll is (A, Assistant), leave this field blank.',

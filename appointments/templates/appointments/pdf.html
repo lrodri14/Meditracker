@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Receipt</title>
+    <style>
+        img{
+            width: 100px;
+            height: 100px;
+            float: right;
+        }
+
+        span{
+            color: #3287a8;
+        }
+
+        #drug{
+            color: #aeb352;
+        }
+    </style>
+</head>
+<body>
+    <img src="/Users/lralcocer/PycharmProjects/Meditracker/meditracker/appointments/static/appointments/pdf/logo.jpg" alt="">
+    <h1>Doctor: <span>{{user.first_name}} {{user.last_name}}</span></h1>
+    <h1>Speciality: <span>{{user.speciality}}</span></h1>
+    <hr>
+    <h1>Medical Receipt</h1>
+    <h1>Patient: <span>{{consult.patient}}</span></h1>
+    <h1>Suffering: <span>{{consult.suffering}}</span></h1>
+    <h1>Motive: <span>{{consult.motive}}</span></h1>
+    <hr>
+    <h1>Drugs and Uses</h1>
+    {%for drug in consult.drugs.all%}
+        <p id="drug">{{drug}}</p>
+    {%endfor%}
+    <hr>
+    <h1>Actions</h1>
+    {%if actions%}
+    {%else%}
+        <h1>None</h1>
+    {%endif%}
+    <hr>
+    <h1>Contact and Addressing Information</h1>
+    <h1>Phone Number: {{user.profile.phone_number}}</h1>
+    <h1>Address: {{user.profile.address}}</h1>
+</body>
+</html>

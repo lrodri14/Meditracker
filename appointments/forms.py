@@ -84,7 +84,7 @@ class RegistersFilter(forms.Form):
 class DrugsForm(forms.ModelForm):
     class Meta:
         model = Drugs
-        fields = '__all__'
+        exclude = ('created_by',)
 
 
 

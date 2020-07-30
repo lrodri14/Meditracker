@@ -10,7 +10,7 @@
         <!--Insurances-->
         <table>
             <thead>
-                <tr id="heading">
+                <tr id="heading1">
                     <th>
                         Company
                     </th>
@@ -70,6 +70,41 @@
             {%else%}
             <tr>
                 <td><p>There are no allergies registered yet</p></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {%endif%}
+        </table>
+
+        <!--Drugs-->
+        <h4>Drugs registered</h4>
+        <table>
+            <thead>
+                <tr id="heading3">
+                    <th>
+                        Drug
+                    </th>
+                    <th>
+                        <a href="{%url 'settings:drugs_list'%}">View all</a>
+                    </th>
+                    <th>
+                        <a href="{%url 'settings:drug_add'%}"><i class="fas fa-plus"></i></a>
+                    </th>
+                </tr>
+            </thead>
+             {% if drugs_list%}
+            <tbody>
+                {%for d in drugs_list%}
+                    <tr onclick="window.location='{%url 'settings:drug_details' d.pk%}'">
+                        <td>{{d.name}}</td>
+                        <td><a href="{%url 'settings:drug_update' d.pk%}"><i class="fas fa-edit"></i></a></td>
+                        <td></td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+            {%else%}
+            <tr>
+                <td><p>There are no drugs registered yet</p></td>
                 <td></td>
                 <td></td>
             </tr>

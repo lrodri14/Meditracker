@@ -1,6 +1,4 @@
 from django.db import models
-from django.apps import apps
-from django.utils import timezone
 from patients.models import Patient
 from django.contrib.auth import get_user_model
 user = get_user_model()
@@ -21,7 +19,9 @@ class Cie10Group(models.Model):
 
 
 class Drugs(models.Model):
-    name = models.CharField('drugs', max_length=200, blank=True, null=True, help_text='drugs name')
+    name = models.CharField('drugs', max_length=200, blank=False, null=True, help_text='drugs name')
+    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True, help_text='Drug created by',
+                                   related_name='created_by', verbose_name='Created By')
 
     def __str__(self):
         return self.name

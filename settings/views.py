@@ -3,18 +3,27 @@ from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
 from patients import forms
+from appointments.forms import DrugsForm
 InsuranceCarrier = apps.get_model('patients', 'InsuranceCarrier')
+Drugs = apps.get_model('appointments', 'Drugs')
 Allergies = apps.get_model('patients', 'Allergies')
+
 
 # Create your views here.
 
 
+# Settings
+
+
 def settings(request):
     template = 'settings/settings.html'
-    insurances_list = InsuranceCarrier.objects.filter(country=request.user.profile.origin)
-    allergies_created_list = Allergies.objects.all()
-    context = {'insurance_list': insurances_list, 'allergies_list': allergies_created_list}
+    insurances_list = InsuranceCarrier.objects.filter(country=request.user.profile.origin)[:5]
+    allergies_created_list = Allergies.objects.all()[:5]
+    drugs_list = Drugs.objects.filter(created_by=request.user)[:5]
+    context = {'insurance_list': insurances_list, 'allergies_list': allergies_created_list, 'drugs_list': drugs_list}
     return render(request, template, context)
+
+# Insurances
 
 
 def insurance_list(request):
@@ -80,6 +89,8 @@ def insurance_delete(request, pk):
         return redirect(reverse('settings:settings'))
 
 
+# Allergies
+
 def allergies_list(request):
     allergies_created = Allergies.objects.filter(created_by=request.user)
     template = 'settings/allergies_list.html'
@@ -143,6 +154,63 @@ def allergies_delete(request, pk):
     except ObjectDoesNotExist:
         return redirect(reverse('settings:settings'))
 
+
+# Drugs
+
+
+def drugs_list(request):
+    drugs_list = Drugs.objects.filter(created_by=request.user)
+    template = 'settings/drugs_list.html'
+    context = {'drugs': drugs_list}
+    return render(request, template, context)
+
+
+def create_drug(request):
+    drugs_form = DrugsForm
+    template = 'settings/create_drug.html'
+    context = {'form': drugs_form}
+    if request.method == 'POST':
+        drugs_form = DrugsForm(request.POST)
+        if drugs_form.is_valid():
+            drug = drugs_form.save(commit=False)
+            drug.created_by = request.user
+            drug.save()
+            return redirect(reverse('settings:settings'))
+    return render(request, template, context)
+
+
+def drug_details(request, pk):
+    drug = Drugs.objects.get(pk=pk)
+    template = 'settings/drug_details.html'
+    context = {'drug': drug}
+    return render(request, template, context)
+
+
+def update_drug(request, pk):
+    drug = Drugs.objects.get(pk=pk)
+    drug_form = DrugsForm(request.POST or None, instance=drug)
+    template = 'settings/update_drug.html'
+    context = {'drug': drug, 'form': drug_form}
+    if request.POST:
+        if drug_form.is_valid():
+            drug_form.save()
+    return render(request, template, context)
+
+
+def delete_drug(request, pk):
+    try:
+        drug = Drugs.objects.get(pk=pk)
+        template = 'settings/delete_drug.html'
+        context = {'drug': drug}
+        if request.method == 'POST':
+            if request.POST['choice'] == 'yes':
+                drug.delete()
+                return redirect(reverse('settings:settings'))
+            else:
+                return redirect(reverse('settings:settings'))
+        return render(request, template, context)
+    except ObjectDoesNotExist:
+        return redirect(reverse('settings:settings'))
 
 
 

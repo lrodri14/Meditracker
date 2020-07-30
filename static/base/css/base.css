@@ -4,6 +4,19 @@ body{
     color: #0ff5fc;
 }
 
+::-webkit-scrollbar {
+    width: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background: #288aad;
+}
+
+::-webkit-scrollbar-thumb {
+    background: cyan;
+}
+
+
 .fa-long-arrow-alt-left{
     font-size: 30px;
     transition: 0.5s;

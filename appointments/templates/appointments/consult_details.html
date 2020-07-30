@@ -9,49 +9,50 @@
     <h1>{{consult.patient.first_names}} {{consult.patient.last_names}}</h1>
     <h2>Date: {{consult.datetime}}</h2>
 </div>
-<h1>Appointment General Info</h1>
+<h1>Appointment General Info <a href="{%url 'appointments:create_pdf' consult.pk%}"><i class="fas fa-download"></i></a></h1>
 <hr>
-<h3>Patient:</h3>
-<h3>Date:</h3>
-<h3>Time:</h3>
-<h3>Motive:</h3>
-<h3>Suffering:</h3>
+<h3>Patient: {{consult.patient.first_names}} {{consult.patient.last_names}}</h3>
+<h3>Date: {{consult.datetime.date}}</h3>
+<h3>Time: {{consult.datetime.time}}</h3>
+<h3>Motive: {{consult.motive}}</h3>
+<h3>Suffering: {{consult.suffering}}</h3>
 <!---->
 <h1>Vital Signs</h1>
 <hr>
-<h3>Blood Pressure:</h3>
-<h3>Temperature:</h3>
-<h3>Size:</h3>
-<h3>Weight:</h3>
+<h3>Blood Pressure: {{consult.blood_pressure}}</h3>
+<h3>Temperature: {{consult.temperature}}</h3>
+<h3>Size: {{consult.size}}</h3>
+<h3>Weight: {{consult.weight}}</h3>
 
 <h1>Exams</h1>
 <hr>
-<h3>Exams:</h3>
+<h3>Exams: {{consult.medical_exams}}</h3>
 <h1>Organ System</h1>
 <hr>
-<h3>Digestive System:</h3>
-<h3>Endocrine System:</h3>
-<h3>Renal System:</h3>
-<h3>Lymphatic System:</h3>
-<h3>Respiratory System: </h3>
+<h3>Digestive System: {{consult.digestive_system}}</h3>
+<h3>Endocrine System: {{consult.endocrine_system}}</h3>
+<h3>Renal System: {{consult.renal_system}}</h3>
+<h3>Lymphatic System: {{consult.lymphatic_system}}</h3>
+<h3>Respiratory System: {{consult.respiratory_system}}</h3>
 <h3></h3>
 <h1>Physical Exploration</h1>
 <hr>
-<h3>Head Exploration: </h3>
-<h3>Thorax Exploration:</h3>
+<h3>Head Exploration: {{consult.head_exploration}}</h3>
+<h3>Thorax Exploration: {{consult.thorax_exploration}}</h3>
 <h1>Diagnose</h1>
 <hr>
-<h3>CIE-10 Group:</h3>
-<h3>CIE-10 Detail:</h3>
-<h3>Diagnose:</h3>
-<h3>Procedure:</h3>
-<h3>Analysis:</h3>
-<h3>Notes:</h3>
-<h1>Treatment</h1>
+<h3>CIE-10 Group: {{consult.cie_10_group}}</h3>
+<h3>CIE-10 Detail: {{consult.cie_10_detail}}</h3>
+<h3>Diagnose: {{consult.diagnose}}</h3>
+<h3>Procedure: {{consult.procedure}}</h3>
+<h3>Analysis: {{consult.analysis}}</h3>
+<h3>Notes: {{consult.notes}}</h3>
+<h1>Treatment: {{consult.treatment}}</h1>
 <hr>
-<h3>Medicine:</h3>
-<h3>Description:</h3>
-<h3>Use:</h3>
-<h3>Doses:</h3>
-<h3>Actions:</h3>
+<h3>Drugs Used:</h3>
+{%for drug in consult.drugs.all%}
+    <p>{{drug}}</p>
+{%endfor%}
+<h3>Actions: {{consult.actions}}</h3>
 {%endblock%}
+

@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Drugs List{%endblock%}
+{%block body_block%}
+<link rel="stylesheet" href="{%static 'settings/css/drug_delete.css'%}">
+<form method="POST">
+    {%csrf_token%}
+    <h1>{{drug.company}}</h1>
+    <h3>Are you sure you want to delete this drug?</h3>
+    <label for="yes"></label>
+    <input id="yes" type="submit" name="choice" value="yes">
+    <label for="no"></label>
+    <input id="no" type="submit" name="choice" value="no">
+</form>
+{%endblock%}

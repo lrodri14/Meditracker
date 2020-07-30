@@ -10,3 +10,14 @@ hr{
     border: 1px solid cyan;
 }
 
+.fa-download{
+    float: right;
+    transition: 0.5s;
+}
+
+.fa-download:hover{
+    float: right;
+    font-size: 36px;
+    color: green;
+    transition: 0.5s;
+}

@@ -12,6 +12,8 @@ from django.db.models import Q
 import calendar
 from .tasks import change_status, save_new_drug
 from django.core.paginator import Paginator
+from .utils import render_to_pdf
+
 # Create your views here.
 
 
@@ -27,7 +29,7 @@ def consults(request):
 
 
 def consults_list(request, pk=None):
-    appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True).order_by('datetime')
+    appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True).order_by('-datetime')
     paginator = Paginator(appointments_list, 25)
     page = request.GET.get('page')
     appointments = paginator.get_page(page)
@@ -85,7 +87,7 @@ def update_consult(request, pk):
         if consult_form.is_valid():
             consult = consult_form.save(commit=False)
             if consult.medicine != '':
-                save_new_drug.delay(drugs=list(consult.medicine.splitlines()))
+                save_new_drug.delay(drugs=list(consult.medicine.splitlines()), user_id=request.user.id)
             consult.medical_status = True
             consult.save()
             consult_form.save_m2m()
@@ -205,3 +207,11 @@ def consult_confirm(request, pk):
     consult.status = 'CONFIRMED'
     consult.save()
     return redirect(reverse('appointments:agenda'))
+
+
+def create_pdf(request, pk):
+    consult = Consults.objects.get(pk=pk)
+    template = 'appointments/pdf.html'
+    context = {'consult': consult, 'user':request.user}
+    pdf = render_to_pdf(template, context)
+    return pdf
