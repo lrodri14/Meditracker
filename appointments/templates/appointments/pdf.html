@@ -5,6 +5,22 @@
     <meta charset="UTF-8">
     <title>Medical Receipt</title>
     <style>
+
+        h1{
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-family: 'Tangerine', cursive;
+        }
+
+        h2{
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-family: 'Tangerine', cursive;
+        }
+
+        h4{
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-family: 'Tangerine', cursive;
+        }
+
         img{
             width: 100px;
             height: 100px;
@@ -12,37 +28,36 @@
         }
 
         span{
-            color: #3287a8;
+            font-size: 16px;
         }
 
-        #drug{
-            color: #aeb352;
+        .info{
+            text-align: center;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Tangerine&display=swap" rel="stylesheet">
 </head>
 <body>
-    <img src="/Users/lralcocer/PycharmProjects/Meditracker/meditracker/appointments/static/appointments/pdf/logo.jpg" alt="">
-    <h1>Doctor: <span>{{user.first_name}} {{user.last_name}}</span></h1>
-    <h1>Speciality: <span>{{user.speciality}}</span></h1>
+    <img src="{%static 'appointments/pdf/logo2.png'%}" alt="">
+    <h1>Dr. {{user.first_name}} {{user.last_name}}</h1>
+    <h2>Speciality: <span>{{user.get_speciality_display}}</span></h4></h2>
+    <h2>Email: {{user.email}}</h2>
     <hr>
-    <h1>Medical Receipt</h1>
-    <h1>Patient: <span>{{consult.patient}}</span></h1>
-    <h1>Suffering: <span>{{consult.suffering}}</span></h1>
-    <h1>Motive: <span>{{consult.motive}}</span></h1>
+    <h1 class="info">Consult Information</h1>
     <hr>
-    <h1>Drugs and Uses</h1>
+    <h2>Date and Time:</h2>
+    <p>{{consult.datetime}}</p>
+    <h2>Motive:</h2>
+    <p>{{consult.motive}}</p>
+    <h2>Suffering:</h2>
+    <p>{{consult.suffering}}</p>
+    <h1 class="info">Drugs and Uses</h1>
+    <hr>
     {%for drug in consult.drugs.all%}
-        <p id="drug">{{drug}}</p>
+        <p>{{drug}}</p>
     {%endfor%}
     <hr>
-    <h1>Actions</h1>
-    {%if actions%}
-    {%else%}
-        <h1>None</h1>
-    {%endif%}
-    <hr>
-    <h1>Contact and Addressing Information</h1>
-    <h1>Phone Number: {{user.profile.phone_number}}</h1>
-    <h1>Address: {{user.profile.address}}</h1>
+    <small>{{user.email}} - {{user.profile.phone_number}}</small><br>
+    <small>{{user.profile.address}}</small>
 </body>
 </html>

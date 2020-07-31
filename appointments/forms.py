@@ -35,10 +35,15 @@ class UpdateConsultsForm(forms.ModelForm):
             'procedure': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'analysis': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'notes': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
-            'drugs': forms.CheckboxSelectMultiple(),
-            'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 150}),
-            'actions': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
+            'drugs': forms.CheckboxSelectMultiple(attrs={'onclick': "checkbox()"}),
+            'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 150, 'placeholder': 'Use this widget to create drugs that are not listed *(One per line), '
+                                                                                     '\nDrug #1 \nDrug #2 \nDrug #3'}),
+            'actions': forms.Textarea(attrs={'rows': 5, 'cols': 150, 'placeholder': 'e.j \nDrug #1 - 2 pills every 12 hours.'}),
         }
+
+    def __init__(self, user, *args, **kwargs):
+        super(UpdateConsultsForm, self).__init__(*args, **kwargs)
+        self.fields['drugs'].queryset = Drugs.objects.filter(created_by=user)
 
 
 years = [y for y in range(1920, timezone.now().year+1)]
@@ -85,6 +90,7 @@ class DrugsForm(forms.ModelForm):
     class Meta:
         model = Drugs
         exclude = ('created_by',)
+
 
 
 

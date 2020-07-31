@@ -12,8 +12,10 @@ from django.db.models import Q
 import calendar
 from .tasks import change_status, save_new_drug
 from django.core.paginator import Paginator
-from .utils import render_to_pdf
-
+from weasyprint import HTML
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.contrib.auth import get_user_model
 # Create your views here.
 
 
@@ -80,10 +82,11 @@ def consults_details(request, pk):
 
 def update_consult(request, pk):
     consult = Consults.objects.get(pk=pk)
-    consult_form = UpdateConsultsForm(request.POST or None, instance=consult)
+    consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
     template = 'appointments/update_consult.html'
     context = {'consult': consult, 'consult_form': consult_form}
     if request.method == 'POST':
+        consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
         if consult_form.is_valid():
             consult = consult_form.save(commit=False)
             if consult.medicine != '':
@@ -209,9 +212,12 @@ def consult_confirm(request, pk):
     return redirect(reverse('appointments:agenda'))
 
 
-def create_pdf(request, pk):
+def generate_pdf(request, pk):
+    user = get_user_model().objects.get(pk=request.user.pk)
     consult = Consults.objects.get(pk=pk)
-    template = 'appointments/pdf.html'
-    context = {'consult': consult, 'user':request.user}
-    pdf = render_to_pdf(template, context)
-    return pdf
+    context = {'user':user, 'consult':consult}
+    template = render_to_string('appointments/pdf.html', context)
+    pdf = HTML(string=template, base_url=request.build_absolute_uri()).write_pdf()
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="result.pdf"'
+    return response

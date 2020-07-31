@@ -14,5 +14,5 @@ urlpatterns = [
     path('register', registers, name='registers'),
     path('consult_confirm/<int:pk>', consult_confirm, name='consult_confirm'),
     path('consult_date_update/<int:pk>', consult_date_update, name='consult_date_update'),
-    path('create_pdf/<int:pk>', create_pdf, name='create_pdf'),
+    path('create_pdf/<int:pk>', generate_pdf, name='create_pdf'),
 ]

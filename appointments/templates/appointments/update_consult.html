@@ -64,4 +64,23 @@
     </div>
     <button type="submit">Update</button>
 </form>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script>
+function checkbox(){
+  var checkboxes = document.getElementsByName('drugs');
+  var checkboxesChecked = [];
+  var labels = document.getElementsByTagName('label');
+  var labelsText = []
+  // loop over them all
+  for (var i=0; i<checkboxes.length; i++) {
+     // And stick the checked ones onto an array...
+     if (checkboxes[i].checked && labels[i+1].getAttribute('for') == checkboxes[i].id) {
+        checkboxesChecked.push(checkboxes[i].id);
+        labelsText.push(labels[i+1].textContent)
+     }
+  }
+  document.getElementById("id_actions").value = labelsText;
+}
+</script>
 {%endblock%}
+document.getElementsByTagName('LABEL')[1].textContent
