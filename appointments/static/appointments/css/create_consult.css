@@ -4,7 +4,7 @@ body{
 
 
 form{
-    margin-top: -25px;
+    margin-top: -20px;
     text-align: center;
     background-color: #12212b;
     width: 30%;
@@ -79,5 +79,15 @@ a{
 
 button:hover a{
     color: #12212b;
+    transition: 0.5s;
+}
+
+#add_new_patient{
+    text-decoration: underline;
+    transition: 0.5s;
+}
+
+#add_new_patient:hover{
+    font-size: 16px;
     transition: 0.5s;
 }

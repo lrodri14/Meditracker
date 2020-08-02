@@ -16,6 +16,7 @@
                             <th>Patient</th>
                             <th>Date and Time</th>
                             <th>Status</th>
+                            <th>Medical Status</th>
                         </tr>
                     </thead>
             {%for c in consults%}
@@ -32,6 +33,15 @@
                                 <div id="Canceled">Cancelled</div>
                             {%elif c.status == 'CLOSED'%}
                                 <div id="Closed">Closed</div>
+                            {%endif%}
+                        </td>
+                        <td>
+                            {%if c.medical_status == False and c.datetime.date < today%}
+                                <div id="never_attended">Never Attended</div>
+                            {%elif c.medical_status == False and c.datetime.date > today%}
+                                <div id="pending">Pending</div>
+                            {%else%}
+                                <div id="attended">Attended</div>
                             {%endif%}
                         </td>
                     </tr>

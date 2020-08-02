@@ -47,6 +47,24 @@ button:hover{
     transition: 0.5s;
 }
 
+#never_attended{
+    background-color: red;
+    color: #12212b;
+    height: 100%;
+}
+
+#pending{
+    background-color: yellow;
+    color: #12212b;
+    height: 100%;
+}
+
+#attended{
+    background-color: green;
+    color: #12212b;
+    height: 100%;
+}
+
 #heading{
     background-color: #12212b;
     color: cyan;

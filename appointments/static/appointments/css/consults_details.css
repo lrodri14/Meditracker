@@ -21,3 +21,8 @@ hr{
     color: green;
     transition: 0.5s;
 }
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}

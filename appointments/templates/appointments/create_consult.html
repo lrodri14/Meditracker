@@ -9,6 +9,7 @@
     <h1>Create Consult</h1>
     <p>{{consults_form.patient.label}}</p>
     <p>{{consults_form.patient}}</p>
+    <small>Patient not in listing? <a href="{%url 'patients:add_patient'%}" id="add_new_patient">Add new one</a></small>
     <p>{{consults_form.datetime.label}}</p>
     <p>{{consults_form.datetime}}</p>
     <p>{{consults_form.motive.label}}</p>

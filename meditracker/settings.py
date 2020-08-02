@@ -161,4 +161,3 @@ CELERY_IMPORTS = (
     'appointments.tasks',
 )
 CELERY_RESULT_BACKEND = 'django-db'
-

@@ -152,12 +152,13 @@ def agenda(request):
 
 def registers(request):
     consults_list = Consults.objects.filter(created_by=request.user).order_by('-datetime')
+    today = timezone.localtime().date()
     paginator = Paginator(consults_list, 25)
     page = request.GET.get('page')
     consults = paginator.get_page(page)
     template = 'appointments/registers.html'
     form = RegistersFilter
-    context = {'consults': consults, 'form':form, 'items': len(consults_list)}
+    context = {'consults': consults, 'form':form, 'items': len(consults_list), 'today': today}
     if request.method == 'POST':
         form = RegistersFilter(request.POST)
         if form.is_valid():

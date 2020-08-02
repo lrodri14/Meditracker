@@ -35,7 +35,7 @@ class UpdateConsultsForm(forms.ModelForm):
             'procedure': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'analysis': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'notes': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
-            'drugs': forms.CheckboxSelectMultiple(attrs={'onclick': "checkbox()"}),
+            'drugs': forms.CheckboxSelectMultiple(),
             'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 150, 'placeholder': 'Use this widget to create drugs that are not listed *(One per line), '
                                                                                      '\nDrug #1 \nDrug #2 \nDrug #3'}),
             'actions': forms.Textarea(attrs={'rows': 5, 'cols': 150, 'placeholder': 'e.j \nDrug #1 - 2 pills every 12 hours.'}),

@@ -56,6 +56,9 @@
     {%for drug in consult.drugs.all%}
         <p>{{drug}}</p>
     {%endfor%}
+    {%for medicine in consult.medicine.splitlines%}
+        <p>{{medicine}}</p>
+    {%endfor%}
     <hr>
     <small>{{user.email}} - {{user.profile.phone_number}}</small><br>
     <small>{{user.profile.address}}</small>
