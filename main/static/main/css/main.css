@@ -30,12 +30,6 @@ video {
     transition: 0.5s;
 }
 
-.overlay img:hover{
-    height: 120px;
-    width: 120px;
-    transition: 0.5s;
-}
-
 #wrapper{
     width: 100%;
 }
@@ -59,14 +53,4 @@ video {
     color: white;
     transition: 0.5s;
 }
-
-#wrapper ul li a:hover{
-    font-size: 35px;
-    padding: 10px;
-    border-radius: 15px;
-    color: cyan;
-    background-color: #3e5278;
-    transition: 0.5s;
-}
-
 
