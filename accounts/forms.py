@@ -35,7 +35,7 @@ class SignUpForm(CreationForm):
         speciality = cleaned_data.get('speciality')
 
         if roll == 'Doctor' and speciality == '':
-            msg = 'You must specific your area'
+            msg = 'You must specify your area'
             self.add_error('speciality', msg)
 
 

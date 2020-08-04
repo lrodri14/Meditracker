@@ -1,3 +1,4 @@
+//Checked
 var inputs = document.querySelectorAll('input')
 var roll = document.querySelector('#id_roll')
 var signUp = document.querySelector('button')
@@ -17,18 +18,14 @@ for (let i = 0; i<inputs.length; i++){
 // Roll
 roll.addEventListener('change', function(){
     if(roll.value === 'Assistant'){
-        document.querySelector('#id_speciality').style.display = 'none'
-        for (let i = 0; i < document.querySelectorAll('p').length; i++){
-            if (document.querySelectorAll('p')[i].textContent === 'Speciality'){
-               document.querySelectorAll('p')[i].style.display = 'none'
-            } else{
-               document.querySelectorAll('p')[i].style.display = ''
-            }
-        }
-    } else {
-        document.querySelector('#id_speciality').style.display = ''
+        document.querySelector('#speciality-label').classList.add('hide-select')
+        document.querySelector('#id_speciality').classList.add('hide-select')
+    } else{
+        document.querySelector('#speciality-label').classList.remove('hide-select')
+        document.querySelector('#id_speciality').classList.remove('hide-select')
     }
 })
+
 
 // SignUp Button
 for (let i = 0; i<inputs.length; i++){

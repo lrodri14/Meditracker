@@ -1,3 +1,4 @@
+/*Checked*/
 /*Form*/
 form{
     text-align: center;
@@ -19,6 +20,10 @@ p{
 }
 
 /*Inputs*/
+span{
+    color: red;
+}
+
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
@@ -29,6 +34,10 @@ input{
   height: 30px;
   width:60%;
   transition: 0.5s;
+}
+
+input[type=password]{
+    font: small-caption;
 }
 
 .input-hover{
@@ -48,6 +57,12 @@ select{
   transition: 0.5s;
 }
 
+.hide-select{
+    display: none;
+    transition: display 0.5s;
+}
+
+/*Button*/
 button{
     margin: 20px;
     width: 30%;

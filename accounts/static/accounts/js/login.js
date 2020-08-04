@@ -1,3 +1,4 @@
+//Checked
 var username = document.querySelector('#id_username')
 var password = document.querySelector('#id_password')
 var loginBtn = document.querySelector('button')

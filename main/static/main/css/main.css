@@ -1,3 +1,4 @@
+/*Checked*/
 /*Body*/
 body{
     margin: 0px;
@@ -26,10 +27,15 @@ video {
     width: 100%;
 }
 
-.overlay img{
+img{
     height: 100px;
     width: 100px;
     padding: 30px;
+}
+
+.image-hover{
+    height: 100px;
+    width: 100px;
 }
 
 /*List*/
@@ -61,6 +67,7 @@ video {
 .hover-over{
     background-color: #3e5278;
     color: cyan;
+    font-size: 28px;
     cursor: pointer;
     transition: background-color 0.7s;
 }

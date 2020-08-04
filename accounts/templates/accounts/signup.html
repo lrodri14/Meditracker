@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Sign Up{%endblock%}
@@ -10,13 +11,13 @@
     <p>{{form.username.label}}</p>
     <p>{{form.username}}</p>
     <p>{{form.roll.label}}</p>
-    <p>{{form.roll}}</p>
     <p><small>{{form.roll.help_text}}</small></p>
-    <p>{{form.speciality.label}}</p>
+    <p>{{form.roll}}</p>
+    <p id="speciality-label">{{form.speciality.label}}</p>
     <p>{{form.speciality}}</p>
     {%if form.errors%}
         {%for error in form.speciality.errors%}
-            <p><small>*{{error}}</small></p>
+            <p><small><span>*</span>{{error}}</small></p>
         {%endfor%}
     {%endif%}
     <p>{{form.first_name.label}}</p>

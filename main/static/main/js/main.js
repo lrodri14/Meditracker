@@ -1,7 +1,11 @@
+// Checked
+
+
 var li = document.querySelectorAll('li')
 var logo = document.querySelector('img')
 
-  for (let i = 0; i < li.length; i++) {
+// Links
+for (let i = 0; i < li.length; i++) {
     li[i].addEventListener('mouseover', function(){
         this.classList.add('hover-over')
 })
@@ -10,6 +14,7 @@ var logo = document.querySelector('img')
     })
   }
 
+// Logo
 logo.addEventListener('mouseover', function(){
     this.style.cssText = 'width: 150px; height: 150px; transition: 0.5s;'
 })
