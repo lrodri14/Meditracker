@@ -27,6 +27,7 @@
             <p><small>Last Connection: {{user.last_login|date:"g:i a"}}</small></p>
             {%if user.is_authenticated%}
                 <small><a href="{%url 'accounts:profile_change' %}">Edit Profile</a></small>
+                <small><a href="{%url 'accounts:change_password' %}">Change Password</a></small>
             {%endif%}
         </div>
         <div id="second">

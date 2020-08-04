@@ -38,7 +38,7 @@
                         <td>
                             {%if c.medical_status == False and c.datetime.date < today%}
                                 <div id="never_attended">Never Attended</div>
-                            {%elif c.medical_status == False and c.datetime.date > today%}
+                            {%elif c.medical_status == False and c.datetime.date >= today%}
                                 <div id="pending">Pending</div>
                             {%else%}
                                 <div id="attended">Attended</div>
