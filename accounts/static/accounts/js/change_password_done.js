@@ -1,3 +1,4 @@
+//Checked
 var seconds = 6
 var redirect = document.querySelector('#redirection')
 

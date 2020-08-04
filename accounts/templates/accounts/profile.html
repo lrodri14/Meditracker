@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Profile{%endblock%}
@@ -22,7 +23,7 @@
                 <p>Biography not available</p>
             {%else%}
                 <p>Biography</p>
-                <p id="bio">{{user.profile.bio}}</p>
+            <p id="bio">{{user.profile.bio}}</p>
             {%endif%}
             <p><small>Last Connection: {{user.last_login|date:"g:i a"}}</small></p>
             {%if user.is_authenticated%}
@@ -68,4 +69,5 @@
             </ul>
         </div>
     </div>
+<script src="{%static 'accounts/js/profile.js'%}"></script>
 {%endblock%}

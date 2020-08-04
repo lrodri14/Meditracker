@@ -1,3 +1,5 @@
+/*Checked*/
+/*First Div*/
 .wrapper{
     display: grid;
     grid-template-columns: 30% 69%;
@@ -17,7 +19,9 @@
     text-align: center;
 }
 
-.first img{
+
+/*Images*/
+img{
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -25,19 +29,21 @@
     transition: 0.5s;
 }
 
-.first img:hover{
+.image-hover{
     width: 230px;
     height: 230px;
     transition: 0.5s;
 }
 
+
+/*Links*/
 .first a{
     color: #12212b;
     border-bottom: 1px solid #12211b;
     transition: 0.5s;
 }
 
-.first a:hover{
+.link-hover{
     font-size: 16px;
     transition: 0.5s;
 }
@@ -48,6 +54,8 @@
     transition: 0.1s;
 }
 
+
+/*Second Div*/
 #second .personal-info{
     display: grid;
     grid-template-columns: 45% 45%;
