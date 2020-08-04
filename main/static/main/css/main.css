@@ -1,3 +1,4 @@
+/*Body*/
 body{
     margin: 0px;
     padding: 0px;
@@ -5,6 +6,7 @@ body{
     color: white;
 }
 
+/*Video*/
 video {
   object-fit: cover;
   width: 100vw;
@@ -15,6 +17,7 @@ video {
   z-index:0;
 }
 
+/*Image*/
 .overlay {
     position:absolute;
     top:0;
@@ -27,9 +30,9 @@ video {
     height: 100px;
     width: 100px;
     padding: 30px;
-    transition: 0.5s;
 }
 
+/*List*/
 #wrapper{
     width: 100%;
 }
@@ -46,6 +49,7 @@ video {
     display: inline-block;
     padding: 25px;
     border-radius: 10px;
+    transition: 0.5s;
 }
 
 #wrapper ul li a{
@@ -54,3 +58,9 @@ video {
     transition: 0.5s;
 }
 
+.hover-over{
+    background-color: #3e5278;
+    color: cyan;
+    cursor: pointer;
+    transition: background-color 0.7s;
+}

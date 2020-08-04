@@ -1,3 +1,4 @@
+/*Form*/
 form{
     text-align: center;
     background-color: #12212b;
@@ -17,7 +18,8 @@ p{
     font-size: 20px;
 }
 
-input[type=text]{
+/*Inputs*/
+input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
   color: #0ff5fc;
@@ -29,55 +31,7 @@ input[type=text]{
   transition: 0.5s;
 }
 
-input[type=password]{
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width: 60%;
-  transition: 0.5s;
-}
-
-input[type=email]{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width: 60%;
-  transition: 0.5s;
-}
-
-input[type=text]:hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=password]:hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=text]:focus{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=password]:focus{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=email]:hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=email]:focus{
+.input-hover{
   width: 75%;
   transition: 0.5s;
 }
@@ -103,10 +57,18 @@ button{
     border: 2px solid #0ff5fc;
     border-radius: 10px;
     color: #0ff5fc;
+    opacity: 0;
+    transition: 0.5s;
 }
 
-button:hover{
+.button-fade-in{
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+.button-hover{
     background-color: #0ff5fc;
     color: #12212b;
+    cursor: pointer;
     transition: 0.5s;
 }

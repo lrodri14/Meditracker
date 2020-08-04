@@ -29,6 +29,16 @@ class SignUpForm(CreationForm):
         model = CustomUser
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'roll', 'speciality')
 
+    def clean(self):
+        cleaned_data = super().clean()
+        roll = cleaned_data.get('roll')
+        speciality = cleaned_data.get('speciality')
+
+        if roll == 'Doctor' and speciality == '':
+            msg = 'You must specific your area'
+            self.add_error('speciality', msg)
+
+
 
 class ProfileForm(forms.ModelForm):
     profile_pic = forms.ImageField(widget=forms.FileInput, required=None)

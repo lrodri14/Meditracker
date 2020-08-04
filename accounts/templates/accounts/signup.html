@@ -14,7 +14,11 @@
     <p><small>{{form.roll.help_text}}</small></p>
     <p>{{form.speciality.label}}</p>
     <p>{{form.speciality}}</p>
-    <p><small>{{form.speciality.help_text}}</small></p>
+    {%if form.errors%}
+        {%for error in form.speciality.errors%}
+            <p><small>*{{error}}</small></p>
+        {%endfor%}
+    {%endif%}
     <p>{{form.first_name.label}}</p>
     <p>{{form.first_name}}</p>
     <p>{{form.last_name.label}}</p>
@@ -36,6 +40,7 @@
     {%if profile_form.errors%}
         {{profile_form.errors}}
     {%endif%}
-    <button type="submit">Submit</button>
+    <button type="submit">Sign Up</button>
 </form>
+<script src="{%static 'accounts/js/signup.js'%}"></script>
 {% endblock %}

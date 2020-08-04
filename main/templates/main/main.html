@@ -9,13 +9,13 @@
     </video>
     <div class="overlay">
         <div id="wrapper">
-            <img src="{%static 'main/logo/logo.png'%}" alt="">
+            <img src="{%static 'main/logo/logo.png'%}">
             <ul>
-                <li>
-                    <a href="{%url 'accounts:login'%}">Login</a>
+                <li onclick="window.location='{%url 'accounts:login'%}'">
+                    Login
                 </li>
-                <li>
-                    <a href="{%url 'accounts:signup'%}">Sign Up</a>
+                <li onclick="window.location='{%url 'accounts:signup'%}'">
+                    Sign Up
                 </li>
             </ul>
         </div>
