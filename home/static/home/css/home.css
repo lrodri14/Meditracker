@@ -1,3 +1,4 @@
+/*Checked*/
 /*Container*/
 .container{
     position: absolute;
@@ -18,6 +19,7 @@ h1{
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
+    transition: 0.5s;
 }
 
 .wrapper-two{
@@ -32,13 +34,13 @@ h1{
     padding: 20%;
     background-color: #3e5278;
     border: 0.5px solid #0ff5fc;
-    transition: 0.5s;
+    transition: background-color 0.5s;
     color: #0ff5fc;
 }
 
 .tile-hover{
     background-color: #f2f1ed;
-    transition: 0.5s;
+    transition: background-color 0.5s;
     color: #3e5278;
     border: none;
     cursor: pointer;
@@ -55,8 +57,19 @@ a{
 
 i{
     font-size: 50px;
+    transition: 0.5s;
 }
 
-/*
+.i-hover{
+    font-size: 60px;
+    transition: 0.2s;
+}
 
-*/
+h3{
+    transition: 0.5s;
+}
+
+.h3-hover{
+    font-size: 20px;
+    transition: 0.5s;
+}
