@@ -1,3 +1,4 @@
+/*Container*/
 .container{
     position: absolute;
     top: 10%;
@@ -7,23 +8,45 @@
     height: 80%;
 }
 
+/*Menu Title*/
 h1{
     color: #0ff5fc;
 }
 
+/*Wrapper One Top*/
 .wrapper-one{
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
 }
 
-.wrapper-one div{
+.wrapper-two{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-gap: 10px;
+    margin-top: 10px;
+}
+
+.tile{
     text-align: center;
     padding: 20%;
     background-color: #3e5278;
     border: 0.5px solid #0ff5fc;
     transition: 0.5s;
     color: #0ff5fc;
+}
+
+.tile-hover{
+    background-color: #f2f1ed;
+    transition: 0.5s;
+    color: #3e5278;
+    border: none;
+    cursor: pointer;
+}
+
+.tile-fade-out{
+    opacity: 0.5;
+    transition: 0.5s;
 }
 
 a{
@@ -34,33 +57,6 @@ i{
     font-size: 50px;
 }
 
-.wrapper-one div:hover{
-    background-color: #f2f1ed;
-    transition: 0.5s;
-    color: #3e5278;
-    border: none;
-}
+/*
 
-.wrapper-two{
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-gap: 10px;
-    margin-top: 20px;
-}
-
-.wrapper-two div{
-    text-align: center;
-    padding: 20%;
-    background-color: #3e5278;
-    border: 0.5px solid #0ff5fc;
-    transition: 0.5s;
-    color: #0ff5fc;
-}
-
-
-.wrapper-two div:hover{
-    background-color: #f2f1ed;
-    transition: 0.5s;
-    color: #3e5278;
-    border: none;
-}
+*/

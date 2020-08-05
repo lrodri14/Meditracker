@@ -1,9 +1,12 @@
+/*Checked*/
+/*Body*/
 body{
     font-family: 'Alegreya Sans SC', sans-serif;
     background-color: #3e5278;
     color: #0ff5fc;
 }
 
+/*Scrollbar*/
 ::-webkit-scrollbar {
     width: 14px;
 }
@@ -16,7 +19,7 @@ body{
     background: cyan;
 }
 
-
+/*Icons*/
 .fa-long-arrow-alt-left{
     font-size: 30px;
     transition: 0.5s;
@@ -39,9 +42,10 @@ body{
 
 .fa-home:hover{
     margin: 0.5%;
-    font-size: 32px;
+    font-size: 36px;
     transition: 0.5s;
 }
+
 
 a {
     text-decoration: none;
