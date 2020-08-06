@@ -36,6 +36,7 @@ h1{
     border: 0.5px solid #0ff5fc;
     transition: background-color 0.5s;
     color: #0ff5fc;
+
 }
 
 .tile-hover{
@@ -58,6 +59,7 @@ a{
 i{
     font-size: 50px;
     transition: 0.5s;
+    pointer-events: none;
 }
 
 .i-hover{
@@ -67,6 +69,7 @@ i{
 
 h3{
     transition: 0.5s;
+    pointer-events: none;
 }
 
 .h3-hover{
