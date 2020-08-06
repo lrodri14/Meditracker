@@ -1,6 +1,4 @@
 // Checked
-
-
 var li = document.querySelectorAll('li')
 var logo = document.querySelector('img')
 

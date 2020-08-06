@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Patients{%endblock%}
@@ -65,6 +66,7 @@
             {% endif %}
         </div>
         <div>
+            <i class="fas fa-filter"></i>
             <form method="POST" autocomplete="off">
                 {%csrf_token%}
                 <h1>Filter Results</h1>
@@ -80,4 +82,5 @@
         <p id="no_patients">There are no patients listed</p>
         <a  id="add_patients" href="{%url 'patients:add_patient'%}"><i class="fas fa-plus"></i></a>
     {%endif%}
+<script src="{%static 'patients/js/patients.js'%}"></script>
 {%endblock%}
