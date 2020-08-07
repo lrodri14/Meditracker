@@ -1,3 +1,4 @@
+/*Checked*/
 table{
     background-color: #12212b;
     border-collapse: collapse;
@@ -42,36 +43,6 @@ tr:nth-child(odd){
 tr:nth-child(even){
     background-color: #2a465c;
     transition: 0.5s;
-}
-
-tr:nth-child(odd):hover {
-    background-color: cyan;
-    color: #12212b;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-tr:nth-child(odd):hover td{
-    color: #12212b;
-}
-
-tr:nth-child(even):hover{
-    background-color: cyan;
-    color: #12212b;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-tr:nth-child(even):hover td{
-    color: #12212b;
-}
-
-tr:nth-child(odd):hover .fa-edit{
-    color: #12212b;
-}
-
-tr:nth-child(even):hover .fa-edit{
-    color: #12212b;
 }
 
 .fa-plus{
