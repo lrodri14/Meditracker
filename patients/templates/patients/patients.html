@@ -36,7 +36,7 @@
                         <td>{{p.get_origin_display}}</td>
                         <td>{{p.get_residence_display}}</td>
                         {%if doctor%}<td><a href="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></a></td>
-                        <td><a href="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></a></td>{%endif%}
+                        <td><a id="delete" href="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></a></td>{%endif%}
                         <td></td>
                     </tr>
                 {%endfor%}

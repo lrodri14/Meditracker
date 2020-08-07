@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Allergies{%endblock%}
@@ -19,4 +20,5 @@
     {%else%}
         <p id="no-allergies">There are no allergies listed</p>
     {%endif%}
+<script src="{%static 'settings/js/allergies_list.js'%}"></script>
 {%endblock%}

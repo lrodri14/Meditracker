@@ -1,7 +1,9 @@
+/*Checked*/
+/*Body*/
 body{
     background-color: #12212b;
 }
-
+/*Button*/
 button{
     margin: 20px;
     width: 10%;
@@ -13,7 +15,7 @@ button{
     color: #0ff5fc;
 }
 
-button:hover{
+.button-hover{
     background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;

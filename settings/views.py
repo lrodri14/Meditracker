@@ -59,7 +59,7 @@ def insurance_details(request, pk):
 
 def insurance_update(request, pk):
     carrier = InsuranceCarrier.objects.get(pk=pk)
-    insurance_form = forms.InsuranceCarrierForm(request.POST, instance=carrier)
+    insurance_form = forms.InsuranceCarrierForm(request.POST or None, instance=carrier)
     template = 'settings/insurance_update.html'
     context = {'insurance': insurance_form}
     if request.method == 'POST':
@@ -126,7 +126,7 @@ def allergies_details(request, pk):
 def allergies_update(request, pk):
     allergy = Allergies.objects.get(pk=pk)
     template = 'settings/update_allergy.html'
-    allergy_form = forms.AllergiesForm(request.POST, instance=allergy)
+    allergy_form = forms.AllergiesForm(request.POST or None, instance=allergy)
     context = {'allergy': allergy, 'allergy_form': allergy_form}
     if request.method == 'POST':
         if allergy_form.is_valid():

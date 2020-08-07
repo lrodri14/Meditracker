@@ -1,8 +1,10 @@
+/*Checked*/
+/*Body*/
 body{
     background-color: #12212b;
 }
-
-input[type=submit]{
+/*Button*/
+input{
     margin: 20px;
     width: 10%;
     height: 30px;
@@ -13,8 +15,9 @@ input[type=submit]{
     color: #0ff5fc;
 }
 
-input[type=submit]:hover{
+.input-hover{
     background-color: #0ff5fc;
     color: #12212b;
+    cursor: pointer;
     transition: 0.5s;
 }

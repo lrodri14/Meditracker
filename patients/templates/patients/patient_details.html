@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}{{patient.first_names}} {{patient.last_names}}{%endblock%}
@@ -30,4 +31,5 @@
 <h3>Insurance Carrier: {{patient.insurance.insurance_carrier}}</h3>
 <h3>Type of Insurnace: {{patient.insurance.type_of_insurance}}</h3>
 <h3>Expiration Date: {{patient.insurance.expiration_date}}</h3>
+<script src="{%static 'patients/js/patient_details.js'%}"></script>
 {%endblock%}

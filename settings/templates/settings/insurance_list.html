@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Insurances{%endblock%}
@@ -19,4 +20,5 @@
     {%else%}
         <p id="no-insurance">No insurances listed for {{user.profile.get_origin_display}}</p>
     {%endif%}
+<script src="{%static 'settings/js/insurance_list.js'%}"></script>
 {%endblock%}

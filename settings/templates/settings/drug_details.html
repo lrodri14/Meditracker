@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Drugs List{%endblock%}
@@ -9,4 +10,5 @@
     <h2>Name: {{drug.name}}</h2>
     <a id="delete" href="{%url 'settings:drug_delete' drug.pk%}"><i class="fas fa-trash"></i></a>
 </div>
+<script src="{%static 'settings/js/drug_details.js'%}"></script>
 {%endblock%}

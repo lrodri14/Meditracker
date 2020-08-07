@@ -26,7 +26,7 @@ if (rows){
     for(let i = 0; i<rows.length; i++){
         let childNodes = rows[i].childNodes
         if (rows[i].id === ''){
-            rows[i].addEventListener('mouseover', function(){
+            rows[i].addEventListener('mouseover', function(e){
                 rows[i].style.backgroundColor = 'cyan'
                 rows[i].classList.add('tr-hover')
                 sound.play()
@@ -37,7 +37,6 @@ if (rows){
                             var children = childNodes[c].children
                             for (var cc = 0; cc<children.length; cc++){
                                 children[cc].style.color = '#12212b'
-                                children[cc].style.fontSize = '24px'
                                 children[cc].style.transition = '0.5s'
                             }
                         }
@@ -55,7 +54,6 @@ if (rows){
                             var children = childNodes[c].children
                             for (var cc = 0; cc<children.length; cc++){
                                 children[cc].style.color = 'cyan'
-                                children[cc].style.fontSize = ''
                             }
                         }
                     }

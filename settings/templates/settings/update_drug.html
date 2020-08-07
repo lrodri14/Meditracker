@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Drugs List{%endblock%}
@@ -6,11 +7,12 @@
 <link rel="stylesheet" href="{%static 'settings/css/update_drug.css'%}">
 <form method="POST" autocomplete="off">
     {%csrf_token%}
-    <h1>Update Allergy</h1>
+    <h1>Update Drug</h1>
     <p>{{form.name.label}}</p>
     <p>{{form.name}}</p>
     <a href="{%url 'settings:settings'%}"><button type="button">Drugs List</button></a>
     <p>{{unique_error}}</p>
     <button type="submit">Update Drug</button>
 </form>
+<script src="{%static 'settings/js/update_drug.js'%}"></script>
 {%endblock%}
