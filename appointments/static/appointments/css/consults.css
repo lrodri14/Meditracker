@@ -1,23 +1,9 @@
+/*Checked*/
 table{
     background-color: #12212b;
     border-collapse: collapse;
     margin: auto;
     width: 100%;
-}
-
-button[type=button]{
-    margin-bottom: 10px;
-    width: 10%;
-    height: 30px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    background-color:#3e5278;
-    border: 2px solid #0ff5fc;
-    color: #0ff5fc;
-}
-
-button[type=button]:hover{
-    background-color: #0ff5fc;
-    color: #12212b;
     transition: 0.5s;
 }
 
@@ -25,12 +11,13 @@ button[type=button]:hover{
     background-color: #12212b;
     color: cyan;
     cursor: default;
-    transition: 0.5sl
+    transition: 0.5;
 }
 
-#heading:hover a{
-    color: cyan;
+tr{
     transition: 0.5s;
+    line-height: 20px;
+    margin: 10px;
 }
 
 tr th{
@@ -55,34 +42,30 @@ tr:nth-child(even){
     transition: 0.5s;
 }
 
-tr:nth-child(odd):hover {
+.tr-hover{
     background-color: cyan;
+    transition: 0.5s;
+    cursor: pointer;
+    line-height: 50px;
+    color: #12212b;
+}
+
+/*Buttons*/
+button{
+    margin-bottom: 10px;
+    width: 10%;
+    height: 30px;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    background-color:#3e5278;
+    border: 2px solid #0ff5fc;
+    color: #0ff5fc;
+}
+
+.button-hover{
+    background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
     cursor: pointer;
-}
-
-tr:nth-child(odd):hover td{
-    color: #12212b;
-}
-
-tr:nth-child(odd):hover a{
-    color: #12212b;
-}
-
-tr:nth-child(even):hover{
-    background-color: cyan;
-    color: #12212b;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-tr:nth-child(even):hover td{
-    color: #12212b;
-}
-
-tr:nth-child(even):hover a{
-    color: #12212b;
 }
 
 #no-consults{
@@ -100,6 +83,7 @@ tr:nth-child(even):hover a{
     margin-right: -50%;
     transform: translate(-50%, -50%);
     font-size: 25px;
+    transition: 0.5s;
 }
 
 #status-0{

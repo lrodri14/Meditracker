@@ -1,7 +1,6 @@
 //Checked
-//Sound
-if (document.querySelector('#id_patient') !== 'undefined' && document.querySelector('#id_patient') !== 'null'){
-    var input = document.querySelector('#id_patient')
+if (document.querySelectorAll('tr') !== 'undefined' && document.querySelectorAll('tr') !== 'null'){
+    var rows = document.querySelectorAll('tr')
 }
 if (document.querySelector('.fa-filter') !== 'undefined' && document.querySelector('.fa-filter') !== 'null'){
     var i = document.querySelector('.fa-filter')
@@ -12,15 +11,9 @@ if (document.querySelector('button') !== 'undefined' && document.querySelector('
 if (document.querySelector('form') !== 'undefined' && document.querySelector('form') !== 'null'){
     var form = document.querySelector('form')
 }
-if (document.querySelectorAll('tr') !== 'undefined' && document.querySelectorAll('tr') !== 'null'){
-    var rows = document.querySelectorAll('tr')
-}
-if (document.querySelectorAll('td') !== 'undefined' && document.querySelectorAll('td') !== 'null'){
-    var td = document.querySelectorAll('td')
-}
 
-if (document.querySelector('#add_patients') !== 'undefined' && document.querySelector('#add_patients') !== 'null'){
-    var addPatient = document.querySelector('#add_patients')
+if (document.querySelector('.all-registers') !== 'undefined' && document.querySelector('.all-registers') !== 'null'){
+    var allRegisters = document.querySelector('.all-registers')
 }
 
 //Table Rows
@@ -54,7 +47,7 @@ if (rows){
                     if (childNodes[c].children){
                             var children = childNodes[c].children
                             for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = 'cyan'
+                                children[cc].style.color = ''
                                 }
                             }
                         }
@@ -62,17 +55,6 @@ if (rows){
                 })
         }
     }
-}
-
-// Input
-if (input){
-    input.addEventListener('mouseover', function(){
-        this.style.width = '75%'
-    })
-
-    input.addEventListener('mouseout', function(){
-        this.style.width = ''
-    })
 }
 
 // Show filter button
@@ -90,6 +72,7 @@ if (i){
     })
 }
 
+
 // Button
 if (button){
     button.addEventListener('mouseover', function(){
@@ -101,12 +84,13 @@ if (button){
     })
 }
 
-if (addPatient){
-    setInterval(function(){
-        if (addPatient.style.top == '90%'){
-            addPatient.style.top = '88%'
-        } else {
-            addPatient.style.top = '90%'
-        }
-    },500)
+// AllRegisters
+if (allRegisters){
+    allRegisters.addEventListener('mouseover', function(){
+        this.classList.add('all-registers-hover')
+    })
+
+    allRegisters.addEventListener('mouseout', function(){
+        this.classList.remove('all-registers-hover')
+    })
 }

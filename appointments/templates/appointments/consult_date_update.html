@@ -3,7 +3,7 @@
 {%block title%}Consult Update{%endblock%}
 {%block return%}<a href="{%url 'appointments:agenda'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'appointments/css/create_consult.css'%}">
+<link rel="stylesheet" href="{%static 'appointments/css/consult_date_update.css'%}">
 <form method="POST">
     {%csrf_token%}
     <h1>Update Consult</h1>
@@ -18,4 +18,5 @@
     {{error}}
     <button type="submit">Update Consult</button>
 </form>
+<script src="{%static 'appointments/js/create_consult.js'%}"></script>
 {%endblock%}

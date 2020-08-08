@@ -40,7 +40,7 @@ h4{
     transition: 0.5s;
 }
 
-.fa-book-medical:hover{
+.fa-book-medical-hover{
   transition: 0.5s;
   color: green;
 }
@@ -64,9 +64,10 @@ p input[type=file]{
     transition: 0.5s;
 }
 
-#medical_exams:hover{
+.medical-exams-hover{
     color: #12212b;
     background-color: cyan;
+    cursor: pointer;
 }
 
 
@@ -205,10 +206,11 @@ button{
     color: #0ff5fc;
 }
 
-button:hover{
+.button-hover{
     background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 #add-allergies{

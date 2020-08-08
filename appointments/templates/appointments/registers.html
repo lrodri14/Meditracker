@@ -72,6 +72,7 @@
         {% endif %}
     </div>
     <div>
+        <i class="fas fa-filter"></i>
         <form method="POST" autocomplete="off">
             {%csrf_token%}
             <h2>Filter Results</h2>
@@ -89,4 +90,5 @@
         <p id="no-consults">There are no appointments created</p>
     {%endif%}
 </div>
+<script src="{%static 'appointments/js/registers.js'%}"></script>
 {%endblock%}

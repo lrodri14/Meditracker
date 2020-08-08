@@ -15,7 +15,7 @@ hr{
     transition: 0.5s;
 }
 
-.fa-download:hover{
+.fa-download-hover{
     float: right;
     font-size: 36px;
     color: green;

@@ -24,9 +24,8 @@ table{
 tr{
     transition: 0.5s;
     line-height: 20px;
-    padding: 5px;
+    margin: 10px;
 }
-
 
 tr th{
     padding-top: 10px;

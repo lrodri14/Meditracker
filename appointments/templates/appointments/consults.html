@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Consults for Today{%endblock%}
@@ -37,4 +38,5 @@
     <p id="no-consults">There are no consults for today's date</p>
     <a id="add-consult" href="{%url 'appointments:create_consult'%}"><i class="fas fa-plus"></i></a>
 {%endif%}
+<script src="{%static 'appointments/js/consults.js'%}"></script>
 {%endblock%}

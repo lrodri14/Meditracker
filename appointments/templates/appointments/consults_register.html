@@ -49,6 +49,8 @@
         {%endfor%}
     </div>
     <div>
+        <i class="fas fa-filter"></i>
+        <button type="button" class="all-registers" onclick="window.location='{%url 'appointments:registers'%}'">Show all registers</button><br>
         <form method="POST">
             {%csrf_token%}
             <h2>Filter Results</h2>
@@ -58,10 +60,10 @@
             <p>{{form.date_to}}</p>
             <button type="submit">Search</button><br>
         </form>
-        <button type="button" onclick="window.location='{%url 'appointments:registers'%}'">Show all registers</button><br>
     </div>
     {%else%}
         <p id="no-consults">There are no appointments pending...</p>
     {%endif%}
 </div>
+<script src="{%static 'appointments/js/consult_registers.js'%}"></script>
 {%endblock%}

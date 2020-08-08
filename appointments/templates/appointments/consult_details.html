@@ -1,3 +1,4 @@
+<!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Consults Details{%endblock%}
@@ -65,5 +66,6 @@
 {%for actions in consult.actions.splitlines%}
     <p>{{actions}}</p>
 {%endfor%}
+<script src="{%static 'appointments/js/consult_details.js'%}"></script>
 {%endblock%}
 
