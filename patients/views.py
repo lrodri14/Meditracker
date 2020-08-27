@@ -1,5 +1,7 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, reverse
 from appointments.models import Consults
+from django.template.loader import render_to_string
 from .forms import *
 from .models import *
 from django.core.exceptions import ObjectDoesNotExist
@@ -72,23 +74,23 @@ def patient_details(request, pk):
 
 
 def patient_delete(request, pk):
-    try:
-        patient = Patient.objects.get(pk=pk)
-        consults = Consults.objects.filter(patient=patient)
-        template = 'patients/patients_delete.html'
-        if request.method == 'POST':
-            if request.POST['choice'] == 'yes':
-                if consults:
-                    template = 'patients/patient_delete_error.html'
-                    return render(request, template, context={'error': 'Can not delete this patient, it is linked to {} records'.format(len(consults))})
-                else:
-                    patient.delete()
-                    return redirect('patients:patients')
-            else:
-                return redirect('patients:patients_details', pk=patient.pk)
-        return render(request, template, context={'patient': patient})
-    except ObjectDoesNotExist:
-        return redirect(reverse('patients:patients'))
+    patient = Patient.objects.get(pk=pk)
+    patients = Patient.objects.filter(created_by=request.user)
+    doctor_group = Group.objects.get(name='Doctor')
+    doctor = doctor_group in request.user.groups.all()
+    consults = Consults.objects.filter(patient=patient)
+    template = 'patients/patients_delete.html'
+    context = {'patient': patient}
+    data = {'html': render_to_string(template, context, request=request)}
+    if request.method == 'POST':
+        if len(consults) > 0:
+            context = {'error': 'Sorry this patient can not be deleted, it is linked to {} records'.format(len(consults))}
+        else:
+            patient.delete()
+            context = {'patient_deleted': ' Patient has been deleted successfully'}
+            data = {'html': render_to_string(template, context, request=request),
+                    'patients': render_to_string('patients/patients_partial_list.html', {'patients':patients, 'doctor': doctor}, request)}
+    return JsonResponse(data)
 
 
 def patient_update(request, pk):

@@ -10,6 +10,7 @@
     <div class="wrapper">
         <div>
             <table>
+                <thead>
                 <tr id="heading">
                     <th>ID</th>
                     <th>First Name</th>
@@ -23,24 +24,17 @@
                     {%if doctor%}<th>Edit</th>
                     <th>Delete</th>{%endif%}
                     <th><a href="{%url 'patients:add_patient'%}"><i class="fas fa-plus"></i></a></th>
+                </thead>
                 </tr>
-                {%for p in patients%}
-                    <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">
-                        <td>{{p.id_number}}</td>
-                        <td>{{p.first_names}}</td>
-                        <td>{{p.last_names}}</td>
-                        <td>{{p.birthday}}</td>
-                        <td>{{p.age}}</td>
-                        <td>{{p.phone_number}}</td>
-                        <td>{{p.get_civil_status_display}}</td>
-                        <td>{{p.get_origin_display}}</td>
-                        <td>{{p.get_residence_display}}</td>
-                        {%if doctor%}<td><a href="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></a></td>
-                        <td><a id="delete" href="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></a></td>{%endif%}
-                        <td></td>
-                    </tr>
-                {%endfor%}
+                <tbody>
+                <!--Included Template-->
+                    {%include 'patients/patients_partial_list.html'%}
+                </tbody>
             </table>
+            <!--Modal-->
+            <div class="modal">
+                <div class="modal-content"></div>
+            </div>
             {% if patients.has_other_pages %}
             <div class="list-container">
               <ul class="pagination">
