@@ -10,7 +10,7 @@ form{
     text-align: center;
     background-color: #12212b;
     width: 30%;
-    position: absolute;
+    position: relative;
     top: 55%;
     left: 50%;
     margin-right: -50%;

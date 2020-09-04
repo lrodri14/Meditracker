@@ -42,7 +42,7 @@ class Consults(models.Model):
 
     # Consult creator
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='patient',
-                                help_text='Patient assisting, this consult', related_name='patient')
+                                help_text='Patient assisting this consult', related_name='patient')
     datetime = models.DateTimeField('Date of the consult', blank=False, null=True, help_text='Date the consult will be done')
     motive = models.TextField('motive of the consult', blank=False, null=True,
                               help_text='The motive of your assistance to the consult')

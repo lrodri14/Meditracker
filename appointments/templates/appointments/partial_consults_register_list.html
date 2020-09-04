@@ -1,0 +1,65 @@
+<div class="table">
+{%if consults%}
+    {%for m in months%}
+        <h1>{{m}}</h1>
+        <table>
+            <thead>
+                <tr id="heading">
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Date and Time</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Confirm</th>
+                    <th>Cancel</th>
+                </tr>
+            </thead>
+            <tbody>
+            {%for c in consults%}
+                {%if c.datetime|date:"F" == m%}
+                    <tr>
+                        <td>{{c.patient.id_number}}</td>
+                        <td>{{c.patient.first_names}} {{c.patient.last_names}}</td>
+                        <td>{{c.datetime}}</td>
+                        <td>
+                            {%if c.status == 'OPEN'%}<div id="Open">Open</div>
+                            {%elif c.status == 'CONFIRMED'%}
+                                <div id="Confirmed">Confirmed</div>
+                            {%elif c.status == 'CANCELLED'%}
+                                <div id="Canceled">Cancelled</div>
+                            {%elif c.status == 'CLOSED'%}
+                                <div id="Closed">Closed</div>
+                            {%endif%}
+                        </td>
+                        <td>{%if c.status == 'OPEN'%}<a class="update" href="{%url 'appointments:consult_date_update' c.pk%}"><i class="fas fa-edit"></i></a>{%endif%}</td>
+                        <td>{%if c.status == 'OPEN'%}<a href="{%url 'appointments:consult_confirm' c.pk%}"><i class="fas fa-check"></i></a>{%endif%}</td>
+                        <td>{%if c.status == 'OPEN'%}<a class="cancel" href="{%url 'appointments:cancel_consult' c.pk%}"><i class="fas fa-times-circle"></i></a>{%endif%}</td>
+                    </tr>
+                {%endif%}
+            {%endfor%}
+        </tbody>
+    </table>
+    <div class="modal">
+        <div class="modal-content">
+
+        </div>
+    </div>
+    {%endfor%}
+</div>
+<div class="form">
+    <i class="fas fa-filter"></i>
+    <button type="button" class="all-registers" onclick="window.location='{%url 'appointments:registers'%}'">Registers</button><br>
+    <form method="POST">
+        {%csrf_token%}
+        <h2>Filter Results</h2>
+        <p>{{form.date_from.label}}</p>
+        <p>{{form.date_from}}</p>
+        <p>{{form.date_to.label}}</p>
+        <p>{{form.date_to}}</p>
+        <button type="submit">Search</button><br>
+    </form>
+</div>
+{%else%}
+    <button type="button" class="registers" onclick="window.location='{%url 'appointments:registers'%}'">Registers</button><br>
+    <p id="no-consults">There are no appointments pending...</p>
+{%endif%}

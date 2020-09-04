@@ -1,12 +1,8 @@
-{%extends 'base.html'%}
 {%load static%}
-{%block title%}Create Consult{%endblock%}
-{%block return%}<a href="{%url 'appointments:consults'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'appointments/css/create_consult.css'%}">
-<form method="POST">
+<form method="POST" action="{% url 'appointments:create_consult'%}">
     {%csrf_token%}
-    <h1>Create Consult</h1>
+    <h2>Create Consult</h2>
     <p>{{consults_form.patient.label}}</p>
     <p>{{consults_form.patient}}</p>
     <small>Patient not in listing? <a href="{%url 'patients:add_patient'%}" id="add_new_patient">Add new one</a></small>
@@ -19,5 +15,4 @@
     {{unique_error}}
     <button type="submit">Create Consult</button>
 </form>
-<script src="{%static 'appointments/js/create_consult.js'%}"></script>
 {%endblock%}

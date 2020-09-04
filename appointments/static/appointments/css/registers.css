@@ -57,6 +57,29 @@ tr:nth-child(even){
     color: #12212b;
 }
 
+#Open{
+    background-color: yellow;
+    color: #12212b;
+    height: 100%;
+}
+
+#Confirmed{
+    background-color: green;
+    color: #12212b;
+    height: 100%;
+}
+
+#Canceled{
+    background-color: gray;
+    color: #12212b;
+    height: 100%;
+}
+
+#Closed{
+    background-color: red;
+    color: #12212b;
+    height: 100%;
+}
 
 #never_attended{
     background-color: red;
@@ -88,7 +111,7 @@ form{
     text-align: center;
     background-color: #12212b;
     padding: 10px;
-    margin-top: -300%;
+    margin-top: -400%;
     transition: 0.5s;
 }
 

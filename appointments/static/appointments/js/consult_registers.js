@@ -1,96 +1,168 @@
 //Checked
-if (document.querySelectorAll('tr') !== 'undefined' && document.querySelectorAll('tr') !== 'null'){
-    var rows = document.querySelectorAll('tr')
-}
-if (document.querySelector('.fa-filter') !== 'undefined' && document.querySelector('.fa-filter') !== 'null'){
-    var i = document.querySelector('.fa-filter')
-}
-if (document.querySelector('button') !== 'undefined' && document.querySelector('form') !== 'null'){
-    var button = document.querySelector('button')
-}
-if (document.querySelector('form') !== 'undefined' && document.querySelector('form') !== 'null'){
-    var form = document.querySelector('form')
+if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
+    var wrapper = document.querySelector('.wrapper')
 }
 
-if (document.querySelector('.all-registers') !== 'undefined' && document.querySelector('.all-registers') !== 'null'){
-    var allRegisters = document.querySelector('.all-registers')
+if (document.querySelector('.registers') !== 'undefined' && document.querySelector('.registers') !== 'null'){
+    var registers = document.querySelector('.registers')
 }
 
-//Table Rows
-if (rows){
-    for(let i = 0; i<rows.length; i++){
-        let childNodes = rows[i].childNodes
-        if (rows[i].id === ''){
-            rows[i].addEventListener('mouseover', function(e){
-                rows[i].style.backgroundColor = 'cyan'
-                rows[i].classList.add('tr-hover')
-                for (let c = 0; c<childNodes.length; c++){
-                    if (childNodes[c].nodeName != '#text'){
-                        childNodes[c].style.color = '#12212b'
-                        if (childNodes[c].children){
-                            var children = childNodes[c].children
-                            for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = '#12212b'
-                                children[cc].style.transition = '0.5s'
-                                }
-                            }
-                        }
-                    }
-                })
+// Async functions
+async function cancelAW(url){
+    const result = await fetch(url)
+    const data = await result.json()
+    return data
+}
 
-        rows[i].addEventListener('mouseout', function(){
-            rows[i].style.backgroundColor = ''
-            rows[i].classList.remove('tr-hover')
-            for (let c = 0; c<childNodes.length; c++){
-                if (childNodes[c].nodeName != '#text'){
-                    childNodes[c].style.color = 'cyan'
-                    if (childNodes[c].children){
-                            var children = childNodes[c].children
-                            for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = ''
-                                }
-                            }
-                        }
-                    }
-                })
+async function updateAW(url){
+    const result = await fetch(url)
+    const data = await result.json()
+    return data
+}
+
+async function submitAW(url, method, csrfmiddlewaretoken){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}})
+    const data = await result.json()
+    return data
+}
+
+// Event delegation capturing
+if (wrapper){
+
+    function retrieveItems(){
+        var modal = document.querySelector('.modal')
+        var modalContent = document.querySelector('.modal-content')
+        var form = document.querySelector('.form > form')
+        return {
+            modal: modal,
+            modalContent: modalContent,
+            form: form
         }
     }
+
+    //Wrapper mouse over
+    wrapper.addEventListener('mouseover', (e) => {
+
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.add('button-form-hover')
+        }
+
+        if (e.target.nodeName === 'I'){
+            e.target.classList.add('button-hover')
+        }
+
+    })
+
+    //Wrapper mouse out
+    wrapper.addEventListener('mouseout', (e) => {
+
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.remove('button-form-hover')
+        }
+
+        if (e.target.nodeName === 'I'){
+            e.target.classList.remove('button-hover')
+        }
+
+        if (e.target.nodeName === 'TD'){
+
+            var rows = document.querySelectorAll('tr')
+                for(let i = 0; i<rows.length; i++){
+                let childNodes = rows[i].childNodes
+                if (rows[i].id === ''){
+                    rows[i].addEventListener('mouseover', function(e){
+                        rows[i].style.backgroundColor = 'cyan'
+                        rows[i].classList.add('tr-hover')
+                        for (let c = 0; c<childNodes.length; c++){
+                            if (childNodes[c].nodeName != '#text'){
+                                childNodes[c].style.color = '#12212b'
+                                if (childNodes[c].children){
+                                    var children = childNodes[c].children
+                                    for (var cc = 0; cc<children.length; cc++){
+                                        children[cc].style.color = '#12212b'
+                                        children[cc].style.transition = '0.5s'
+                                        }
+                                    }
+                                }
+                            }
+                        })
+
+                    rows[i].addEventListener('mouseout', function(){
+                        rows[i].style.backgroundColor = ''
+                        rows[i].classList.remove('tr-hover')
+                        for (let c = 0; c<childNodes.length; c++){
+                            if (childNodes[c].nodeName != '#text'){
+                                childNodes[c].style.color = 'cyan'
+                                if (childNodes[c].children){
+                                        var children = childNodes[c].children
+                                        for (var cc = 0; cc<children.length; cc++){
+                                            children[cc].style.color = ''
+                                            }
+                                        }
+                                    }
+                                }
+                            })
+                }
+                }
+        }
+
+    })
+
+    //Wrapper Click
+    wrapper.addEventListener('click', (e) => {
+        var form = retrieveItems()['form']
+        if (e.target.classList.contains('fa-filter')){
+            !form.classList.contains('show-form') ? form.classList.add('show-form') : form.classList.remove('show-form')
+        }
+
+        if (e.target.classList.contains('fa-times-circle')){
+            var modal = retrieveItems()['modal']
+            var modalContent = retrieveItems()['modalContent']
+            e.stopPropagation()
+            e.preventDefault()
+            cancelAW(e.target.parentNode.href)
+            .then(data => {
+                modalContent.innerHTML = data['html']
+                modal.classList.add('modal-show')
+            })
+        }
+
+        if (e.target.value === 'no'){
+            var modal = retrieveItems()['modal']
+            e.preventDefault()
+            modal.classList.remove('modal-show')
+        }
+
+    })
+
+
+    //Wrapper Submit
+    wrapper.addEventListener('submit', (e) => {
+        var modal = retrieveItems()['modal']
+        if (e.target.nodeName === 'FORM' && e.target.nodeName.classList.contains('modal-form')){
+            e.preventDefault()
+            const form = e.target
+            const url = form.action
+            const method = form.method
+            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+            submitAW(url, method, csrfmiddlewaretoken)
+            .then(data => {
+                wrapper.innerHTML = data['html']
+            })
+            modal.classList.remove('modal-show')
+        }
+    })
+
 }
 
-// Show filter button
-if (i){
-    i.addEventListener('mouseover', function(){
-        this.classList.add('button-hover')
+//Registers
+
+if (registers){
+    registers.addEventListener('mouseover', function(){
+        this.classList.add('registers-hover')
     })
 
-    i.addEventListener('mouseout', function(){
-        this.classList.remove('button-hover')
-    })
-
-    i.addEventListener('click', function(){
-        !form.classList.contains('show-form') ? form.classList.add('show-form') : form.classList.remove('show-form')
-    })
-}
-
-
-// Button
-if (button){
-    button.addEventListener('mouseover', function(){
-        this.classList.add('button-form-hover')
-    })
-
-    button.addEventListener('mouseout', function(){
-        this.classList.remove('button-form-hover')
-    })
-}
-
-// AllRegisters
-if (allRegisters){
-    allRegisters.addEventListener('mouseover', function(){
-        this.classList.add('all-registers-hover')
-    })
-
-    allRegisters.addEventListener('mouseout', function(){
-        this.classList.remove('all-registers-hover')
+    registers.addEventListener('mouseout', function(){
+        this.classList.remove('registers-hover')
     })
 }

@@ -9,6 +9,11 @@
 <h3>Date: {{ today|date}}</h3>
 {%if doctor%}<a href="{%url 'appointments:consults_list'%}"><button type="button">Show all records</button></a>{%endif%}
 <a href="{%url 'appointments:agenda'%}"><button type="button">Agenda</button></a>
+<div class="modal">
+    <div class="modal-content">
+
+    </div>
+</div>
 {%if appointments%}
     <table>
         <thead>
@@ -18,7 +23,7 @@
                 <th>Date and Time</th>
                 <th>Status</th>
                 {%if doctor%}<th>Complete</th>{%endif%}
-                <th><a href="{%url 'appointments:create_consult'%}"><i class="fas fa-plus"></i></a></th>
+                <th><a href="{%url 'appointments:create_consult'%}" class="create-consult-modal"><i class="fas fa-plus"></i></a></th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +41,7 @@
     </table>
 {%else%}
     <p id="no-consults">There are no consults for today's date</p>
-    <a id="add-consult" href="{%url 'appointments:create_consult'%}"><i class="fas fa-plus"></i></a>
+    <a id="add-consult" class="create-consult-modal" href="{%url 'appointments:create_consult'%}"><i class="fas fa-plus"></i></a>
 {%endif%}
 <script src="{%static 'appointments/js/consults.js'%}"></script>
 {%endblock%}

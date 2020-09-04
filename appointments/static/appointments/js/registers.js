@@ -72,11 +72,11 @@ if (i){
 // Button
 if (button){
     for (let i = 0; i<button.length; i++){
-        button.addEventListener('mouseover', function(){
+        button[i].addEventListener('mouseover', function(){
             this.classList.add('button-form-hover')
         })
 
-        button.addEventListener('mouseout', function(){
+        button[i].addEventListener('mouseout', function(){
             this.classList.remove('button-form-hover')
         })
     }
