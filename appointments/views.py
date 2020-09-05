@@ -5,9 +5,7 @@ from .models import Consults
 from patients.models import Patient
 from .forms import ConsultsForm, UpdateConsultsForm, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
 from django.utils import timezone
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import Group
-from django.db import IntegrityError
 from django.db.models import Q
 import calendar
 from .tasks import save_new_drug
@@ -115,12 +113,11 @@ def cancel_consult(request, pk):
         form = AgendaDateFilterForm
         updated_consults = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
         months = []
+        months_names = []
         for c in consults:
             if c.datetime.astimezone(tzone).month not in months:
                 months.append(c.datetime.month)
-        months_names = []
-        for x in months:
-            months_names.append(calendar.month_name[x])
+                months_names.append(calendar.month_name[c.datetime.month])
         data = {'html': render_to_string('appointments/partial_consults_register_list.html', {'consults': updated_consults, 'months': months_names, 'form':form}, request=request)}
     return JsonResponse(data)
 
@@ -131,12 +128,11 @@ def agenda(request):
     form = AgendaDateFilterForm
     consults = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
     months = []
+    months_names = []
     for c in consults:
         if c.datetime.astimezone(tzone).month not in months:
             months.append(c.datetime.month)
-    months_names = []
-    for x in months:
-        months_names.append(calendar.month_name[x])
+            months_names.append(calendar.month_name[c.datetime.month])
     template = 'appointments/consults_register.html'
     context = {'consults': consults, 'form': form, 'months': months_names, 'today': today}
     if request.method == 'POST':
@@ -146,12 +142,11 @@ def agenda(request):
             to_date = form.cleaned_data['date_to']
             consults = Consults.objects.filter(datetime__date__gte=from_date, datetime__date__lte=to_date, medical_status=False, created_by=request.user).order_by('datetime')
             months = []
+            months_names = []
             for c in consults:
                 if c.datetime.astimezone(tzone).month not in months:
                     months.append(c.datetime.month)
-            months_names = []
-            for x in months:
-                months_names.append(calendar.month_name[x])
+                    months_names.append(calendar.month_name[c.datetime.month])
             context['consults'] = consults
             context['months'] = months_names
             return render(request, template, context)
@@ -163,7 +158,6 @@ def registers(request):
     tzone = timezone.get_current_timezone()
     consults_list = Consults.objects.filter(created_by=request.user).order_by('-datetime')
     not_attended_consults = Consults.objects.filter(created_by=request.user, datetime__date__lte=today.date(), medical_status=False)
-    print(not_attended_consults)
     paginator = Paginator(consults_list, 25)
     page = request.GET.get('page')
     consults = paginator.get_page(page)
@@ -217,22 +211,43 @@ def consult_date_update(request, pk):
     consult = Consults.objects.get(pk=pk)
     consult_form = ConsultsForm(request.user, request.POST or None, instance=consult)
     template = 'appointments/consult_date_update.html'
-    context = {'consult_form': consult_form}
+    context = {'consult_form': consult_form, 'consult':consult}
+    data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
         if consult_form.is_valid():
             consult_form.save()
-            return redirect('appointments:agenda')
+            today = timezone.localtime()
+            tzone = timezone.get_current_timezone()
+            form = AgendaDateFilterForm
+            updated_consults = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
+            months = []
+            months_names = []
+            for c in updated_consults:
+                if c.datetime.astimezone(tzone).month not in months:
+                    months.append(c.datetime.month)
+                    months_names.append(calendar.month_name[c.datetime.month])
+            data = {'html': render_to_string('appointments/partial_consults_register_list.html', {'consults': updated_consults, 'months': months_names, 'form': form}, request=request)}
         else:
             context['error'] = 'Please insert all the valid values.'
-            return render(request, template, context)
-    return render(request, template, context)
+    return JsonResponse(data)
 
 
 def consult_confirm(request, pk):
     consult = Consults.objects.get(pk=pk)
     consult.status = 'CONFIRMED'
     consult.save()
-    return redirect(reverse('appointments:agenda'))
+    today = timezone.localtime()
+    tzone = timezone.get_current_timezone()
+    form = AgendaDateFilterForm
+    updated_consults = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
+    months = []
+    months_names = []
+    for c in updated_consults:
+        if c.datetime.astimezone(tzone).month not in months:
+            months.append(c.datetime.month)
+            months_names.append(calendar.month_name[c.datetime.month])
+    data = {'html': render_to_string('appointments/partial_consults_register_list.html', {'consults': updated_consults, 'months': months_names, 'form': form}, request=request)}
+    return JsonResponse(data)
 
 
 def generate_pdf(request, pk):

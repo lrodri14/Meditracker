@@ -178,8 +178,12 @@ if (modalContent){
             e.preventDefault()
             submitFormAW(form, csrfmiddlewaretoken, button)
             .then(data => {
-               modalContent.innerHTML = data['html']
-               tbody.innerHTML = data['patients']
+                if (data.hasOwnProperty('patients')){
+                    modalContent.innerHTML = data['html']
+                    tbody.innerHTML = data['patients']
+                }else{
+                    modalContent.innerHTML = data['html']
+                }
             })
         }
     })

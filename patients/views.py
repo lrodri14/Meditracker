@@ -78,18 +78,19 @@ def patient_delete(request, pk):
     patients = Patient.objects.filter(created_by=request.user)
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    consults = Consults.objects.filter(patient=patient)
+    consults = Consults.objects.filter(patient=patient, medical_status=True)
     template = 'patients/patients_delete.html'
     context = {'patient': patient}
     data = {'html': render_to_string(template, context, request=request)}
     if request.method == 'POST':
         if len(consults) > 0:
             context = {'error': 'Sorry this patient can not be deleted, it is linked to {} records'.format(len(consults))}
+            data = {'html': render_to_string(template, context, request)}
         else:
             patient.delete()
             context = {'patient_deleted': ' Patient has been deleted successfully'}
             data = {'html': render_to_string(template, context, request=request),
-                    'patients': render_to_string('patients/patients_partial_list.html', {'patients':patients, 'doctor': doctor}, request)}
+                    'patients': render_to_string('patients/patients_partial_list.html', {'patients': patients, 'doctor': doctor}, request)}
     return JsonResponse(data)
 
 

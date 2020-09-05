@@ -86,7 +86,7 @@ tr:nth-child(even){
     background-color: rgba(0,0,0,0.3);
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     display: none;
     top: 0;
     left: 0;
@@ -97,18 +97,40 @@ tr:nth-child(even){
 }
 
 .modal-content{
-    background-color: #12212b;
-    width: 50%;
-    height: 50%;
+    display: inline-block;
     margin-left: 25%;
-    margin-top: 10%;
+    width: 50%;
 }
-
-.modal-form{
-    margin-top: 0%;
-}
-
 /*Form*/
+
+.modal-cancel-form{
+    margin-top: 25%;
+    padding: 50px;
+}
+
+.update-date-form{
+    margin-top: 2%;
+    width: 50%;
+    margin-left: 22%;
+    padding: 25px;
+}
+
+#close{
+    border: none;
+    width: 5%;
+    border-radius: 0px;
+    float: right;
+    margin-top: 5%;
+    margin-right: 21%;
+}
+
+textarea{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: 2px solid #0ff5fc;
+  transition: 0.5s;
+}
 
 .fa-filter{
     margin-top: 30%;
