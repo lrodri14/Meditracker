@@ -1,6 +1,5 @@
 ////Checked
 ////Sound
-
 if (document.querySelector('#add_patients') !== 'undefined' && document.querySelector('#add_patients') !== 'null'){
     var addPatient = document.querySelector('#add_patients')
 }
@@ -74,63 +73,85 @@ function collectRows(){
 }
 
 if (table){
-    table.addEventListener('mouseover', () => {
-        var elements = collectRows()
-        var rows = elements[0]
-        var deletion = elements[1]
 
-        // rows
-        for(let i = 0; i<rows.length; i++){
-        let childNodes = rows[i].childNodes
-        if (rows[i].id === ''){
-            rows[i].addEventListener('mouseover', function(e){
-                rows[i].style.backgroundColor = 'cyan'
-                rows[i].classList.add('tr-hover')
-                for (let c = 0; c<childNodes.length; c++){
-                    if (childNodes[c].nodeName != '#text'){
-                        childNodes[c].style.color = '#12212b'
-                        if (childNodes[c].children){
-                            var children = childNodes[c].children
-                            for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = '#12212b'
-                                children[cc].style.transition = '0.5s'
-                                }
-                            }
-                        }
-                    }
-                })
+    table.addEventListener('mouseover', (e) => {
 
-        rows[i].addEventListener('mouseout', function(){
-            rows[i].style.backgroundColor = ''
-            rows[i].classList.remove('tr-hover')
+          if (e.target.nodeName === 'TD' || e.target.nodeName === 'I'){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
+            const childNodes = row.childNodes
+            row.style.backgroundColor = 'cyan'
+            row.classList.add('tr-hover')
             for (let c = 0; c<childNodes.length; c++){
                 if (childNodes[c].nodeName != '#text'){
-                    childNodes[c].style.color = 'cyan'
+                    childNodes[c].style.color = '#12212b'
                     if (childNodes[c].children){
-                            var children = childNodes[c].children
-                            for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = 'cyan'
-                                }
+                        var children = childNodes[c].children
+                        for (var cc = 0; cc<children.length; cc++){
+                            children[cc].style.color = '#12212b'
+                            children[cc].style.transition = '0.5s'
                             }
                         }
                     }
-                })
-        }
-    }
-    for (let i = 0; i<deletion.length; i++){
-        deletion[i].addEventListener('click', (e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            deleteAW(deletion[i].href)
-            .then(data => {
-                modal.classList.add('modal-show')
-                modalContent.innerHTML = data['html']
-            })
-        })
-    }
+                }
 
+          }
+        //*********************************************************
+        // These deletion elements have a parent with a click event
+        // So event delegation can not be set to the table tag, but td and tr's are added dynamically
+        // How to deal with these situations?
+        let deletion = document.querySelectorAll('.delete')
+        for (let i = 0; i<deletion.length; i++){
+            deletion[i].addEventListener('click', (e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                deleteAW(deletion[i].href)
+                .then(data => {
+                    modal.classList.add('modal-show')
+                    modalContent.innerHTML = data['html']
+                })
+            })
+        }
     })
-}
+
+    table.addEventListener('mouseout', (e) => {
+      if (e.target.nodeName === 'TD' || e.target.nodeName === 'I'){
+        let row
+        e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
+        const childNodes = row.childNodes
+        row.style.backgroundColor = ''
+        row.classList.remove('tr-hover')
+        for (let c = 0; c<childNodes.length; c++){
+            if (childNodes[c].nodeName != '#text'){
+                childNodes[c].style.color = 'cyan'
+                if (childNodes[c].children){
+                        var children = childNodes[c].children
+                        for (var cc = 0; cc<children.length; cc++){
+                            children[cc].style.color = 'cyan'
+                            }
+                        }
+                    }
+                }
+
+      }
+     })
+
+    // Elements to open modal not working because of parent, it has a click event too and is being fired.
+    // How to deal with this?
+        //    table.addEventListener('click', () => {
+        //        if (e.target.classList.contains('fa-trash')){
+        //            const url = e.target.parentNode.href
+        //            e.stopPropagation()
+        //            e.preventDefault()
+        //            deleteAW(url)
+        //            .then(data => {
+        //                modal.classList.add('modal-show')
+        //                modalContent.innerHTML = data['html']
+        //            })
+        //        }
+        //    })
+    }
+//}
 
 //Modal event
 if (modal){
@@ -138,40 +159,29 @@ if (modal){
         if (e.target === modal){
             modal.classList.remove('modal-show')
         }
-    })
-}
 
-//Modal Form Buttons Hover
-if (modal){
-    modal.addEventListener('mouseover', (e) => {
-        if (Array.prototype.slice.call(modal.classList).includes('modal-show')){
-            const elements = document.querySelectorAll('button')
-            for (let i = 0; i<elements.length; i++){
-                elements[i].addEventListener('mouseover', () => {
-                    elements[i].classList.add('button-form-hover')
-                })
-                elements[i].addEventListener('mouseout', () => {
-                    elements[i].classList.remove('button-form-hover')
-                })
-            }
-        }
-    })
-}
-
-//Modal Form Buttons Click
-if (modalContent){
-    modalContent.addEventListener('click', (e) => {
         if (e.target.value === 'no' || e.target.textContent === 'Ok'){
             e.stopPropagation()
             e.preventDefault()
             modal.classList.remove('modal-show')
         }
     })
-}
 
-// Modal Submit
-if (modalContent){
-    modalContent.addEventListener('submit', (e) => {
+    modal.addEventListener('mouseover', (e) => {
+        if (e.target.nodeName === 'BUTTON'){
+            const button = e.target
+            button.classList.add('button-form-hover')
+        }
+    })
+
+    modal.addEventListener('mouseout', (e) => {
+        if (e.target.nodeName === 'BUTTON'){
+            const button = e.target
+            button.classList.remove('button-form-hover')
+        }
+    })
+
+    modal.addEventListener('submit', (e) => {
         const form = document.querySelector('#modal-form')
         const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
         if (e.target === form){
@@ -188,6 +198,7 @@ if (modalContent){
         }
     })
 }
+
 
 // Show filter button
 if (i){
