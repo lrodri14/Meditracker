@@ -149,7 +149,8 @@ def agenda(request):
                     months_names.append(calendar.month_name[c.datetime.month])
             context['consults'] = consults
             context['months'] = months_names
-            return render(request, template, context)
+            data = {'html': render_to_string('appointments/partial_consults_register_list.html', context, request)}
+            return JsonResponse(data)
     return render(request, template, context)
 
 

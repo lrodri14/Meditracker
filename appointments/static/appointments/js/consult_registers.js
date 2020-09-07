@@ -38,6 +38,12 @@ async function submitUpdateAW(url, method, csrfmiddlewaretoken, formData){
     return data
 }
 
+async function filterResultsAW(url, method, csrfmiddlewaretoken, formData){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
+    const data = await result.json()
+    return data
+}
+
 // Event delegation capturing
 if (wrapper){
 
@@ -199,6 +205,18 @@ if (wrapper){
                 wrapper.innerHTML = data['html']
             })
             modal.classList.remove('modal-show')
+        } else{
+            e.preventDefault()
+            const form = e.target
+            const url = form.action
+            const method = form.method
+            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]')
+            const data = new FormData(form)
+            filterResultsAW(url, method, csrfmiddlewaretoken, data)
+            .then(data => {
+                wrapper.innerHTML = data['html']
+                document.querySelector('.filter-results-form').classList.add('show-form')
+            })
         }
     })
 
