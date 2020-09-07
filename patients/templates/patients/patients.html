@@ -63,14 +63,13 @@
         </div>
         <div>
             <i class="fas fa-filter"></i>
-            <form method="POST" autocomplete="off" class="">
+            <form method="POST" action="{%url 'patients:patients'%}" autocomplete="off" class="result-filter">
                 {%csrf_token%}
                 <h1>Filter Results</h1>
                 <p>{{form.patient.label}} Name</p>
                 <p>Or</p>
                 <p>ID Number</p>
                 <p>{{form.patient}}</p>
-                <button type="submit">Search</button>
             </form>
         </div>
     </div>

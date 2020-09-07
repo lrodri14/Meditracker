@@ -1,10 +1,10 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from appointments.models import Consults
 from django.template.loader import render_to_string
 from .forms import *
 from .models import *
-from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
 
@@ -23,13 +23,16 @@ def patients(request):
     context = {'patients': patients, 'doctor': doctor, 'form': patient_filter}
     if request.method == 'POST':
         patient_filter = PatientFilter(request.POST)
+        template = 'patients/patients_partial_list.html'
+        data = dict()
         if patient_filter.is_valid():
-            if patient_filter.cleaned_data['patient'][0] in [str(x) for x in range(0, 11)]:
+            if patient_filter.cleaned_data['patient'][0] in [str(x) for x in range(0, 9)]:
                 context['patients'] = Patient.objects.filter(id_number__icontains=int(patient_filter.cleaned_data['patient']), created_by=request.user)
-                return render(request, template, context)
+                data = {'html': render_to_string(template, context, request)}
             elif type(patient_filter.cleaned_data['patient']) == str:
-                context['patients'] = Patient.objects.filter(first_names__icontains=patient_filter.cleaned_data['patient'], created_by=request.user)
-                return render(request, template, context)
+                context['patients'] = Patient.objects.filter(Q(first_names__icontains=patient_filter.cleaned_data['patient']) | Q(last_names__icontains=patient_filter.cleaned_data['patient']), created_by=request.user)
+                data = {'html': render_to_string(template, context, request)}
+        return JsonResponse(data)
     return render(request, template, context=context)
 
 

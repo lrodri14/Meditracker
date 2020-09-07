@@ -43,6 +43,13 @@ async function deleteAW(url){
     return data
 }
 
+// Result's filter
+async function filterResults(url, method, csrfmiddlewaretoken, formData){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
+    const data = await result.json()
+    return data
+}
+
 // Form Submit
 async function submitFormAW(form, csrfmiddlewaretoken, button){
     const result = await fetch(form.action, {method:'POST', headers:{'X-CSRFToken': csrfmiddlewaretoken}})
@@ -64,19 +71,12 @@ if (addPatient){
 }
 
 // Table
-// Adding event listenera to rows and delete button
-
-function collectRows(){
-    let rows = document.querySelectorAll('tr')
-    let deletion = document.querySelectorAll('.delete')
-    return [rows,deletion]
-}
 
 if (table){
 
     table.addEventListener('mouseover', (e) => {
 
-          if (e.target.nodeName === 'TD' || e.target.nodeName === 'I'){
+          if (e.target.nodeName === 'TD' || (e.target.nodeName === 'I' && !e.target.classList.contains('fa-plus'))){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
             const childNodes = row.childNodes
@@ -199,7 +199,6 @@ if (modal){
     })
 }
 
-
 // Show filter button
 if (i){
     i.addEventListener('mouseover', function(){
@@ -215,26 +214,57 @@ if (i){
     })
 }
 
-// Input
-if (input){
-    input.addEventListener('mouseover', function(){
-        this.style.width = '75%'
+// Form
+// Is this a good practice? Using event delegation to all the form ChildNodes?
+// Or should they be separate?
+if (form){
+
+    const backedUpData = tbody.innerHTML
+
+    form.addEventListener('mouseover', (e) => {
+
+        if (e.target.nodeName === 'INPUT'){
+            const input = e.target
+            input.style.width = '75%'
+        }
+
+        if (e.target.nodeName === 'BUTTON'){
+            const button = e.target
+            button.classList.add('button-form-hover')
+        }
+
     })
 
-    input.addEventListener('mouseout', function(){
-        this.style.width = ''
+    form.addEventListener('mouseout', (e) => {
+
+        if (e.target.nodeName === 'INPUT'){
+            const input = e.target
+            input.style.width = ''
+        }
+
+        if (e.target.nodeName === 'BUTTON'){
+            const button = e.target
+            button.classList.remove('button-form-hover')
+        }
+
     })
-}
 
-// Button
-if (button){
-    for (let i = 0; i<button.length; i++){
-        button[i].addEventListener('mouseover', function(){
-            this.classList.add('button-form-hover')
-        })
+    form.addEventListener('input', (e) => {
 
-        button[i].addEventListener('mouseout', function(){
-            this.classList.remove('button-form-hover')
-        })
-    }
+        if (e.target.nodeName === 'INPUT'){
+            const url = form.action
+            const method = form.method
+            const input = document.querySelector('[type=text]')
+            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+            const data = new FormData(form)
+            if (input.value !== ''){
+                filterResults(url, method, csrfmiddlewaretoken, data)
+                .then(data => {
+                    tbody.innerHTML = data['html']
+                })
+            } else{
+                tbody.innerHTML = backedUpData
+            }
+        }
+    })
 }
