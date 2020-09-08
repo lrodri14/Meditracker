@@ -210,12 +210,14 @@ if (wrapper){
             const form = e.target
             const url = form.action
             const method = form.method
-            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]')
+            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             const data = new FormData(form)
             filterResultsAW(url, method, csrfmiddlewaretoken, data)
             .then(data => {
                 wrapper.innerHTML = data['html']
-                document.querySelector('.filter-results-form').classList.add('show-form')
+                if(document.querySelector('.filter-results-form')){
+                    document.querySelector('.filter-results-form').classList.add('show-form')
+                }
             })
         }
     })

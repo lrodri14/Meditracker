@@ -1,0 +1,63 @@
+{%load static%}
+ {%if appointments%}
+    <div>
+        <table>
+            <thead>
+                <tr id="heading">
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Date and Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for a in appointments%}
+                    <tr onclick="window.location='{%url 'appointments:consult_details' a.pk%}'">
+                        <td>{{a.patient.id_number}}</td>
+                        <td>{{a.patient.first_names}} {{a.patient.last_names}}</td>
+                        <td>{{a.datetime}}</td>
+                        <td><div id="status-1">Finished</div></td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {% if appointments.has_other_pages %}
+            <div class="list-container">
+              <ul class="pagination">
+                {% if appointments.has_previous %}
+                  <li onclick="window.location='?page={{ appointments.previous_page_number }}'">&laquo;</li>
+                {% else %}
+                  <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in appointments.paginator.page_range %}
+                  {% if appointments.number == i %}
+                    <li id="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li onclick="window.location='?page={{ i }}'">{{i}}</li>
+                  {% endif %}
+                {% endfor %}
+                {% if appointments.has_next %}
+                  <li onclick="window.location='?page={{ appointments.next_page_number }}'">&raquo;</li>
+                {% else %}
+                  <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+              </ul>
+            </div>
+            {% endif %}
+    </div>
+    <div>
+        <i class="fas fa-filter"></i>
+        <form method="POST" action="{%url 'appointments:consults_list'%}">
+            {%csrf_token%}
+            <h2>Filter Results</h2>
+            <p>{{form.date_from.label}}</p>
+            <p>{{form.date_from}}</p>
+            <p>{{form.date_to.label}}</p>
+            <p>{{form.date_to}}</p>
+            <button type="submit">Search</button>
+            <p>{{error}}</p>
+        </form>
+    </div>
+    {%else%}
+        <p id="no-consults">There are no records filled</p>
+    {%endif%}

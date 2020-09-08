@@ -49,8 +49,13 @@ def consults_list(request, pk=None):
         if form.is_valid():
             from_date = form.cleaned_data['date_from']
             to_date = form.cleaned_data['date_to']
-            context['appointments'] = Consults.objects.filter(datetime__date__gte=from_date, datetime__date__lte=to_date, medical_status=True, created_by=request.user)
-            return render(request, template, context)
+            appointments = Consults.objects.filter(datetime__date__gte=from_date, datetime__date__lte=to_date, medical_status=True, created_by=request.user)
+            if len(appointments) > 0:
+                context['appointments'] = appointments
+            else:
+                context['error'] = 'There are no consults for these dates'
+            data = {'html': render_to_string('appointments/partial_consults_list.html', context, request)}
+            return JsonResponse(data)
     return render(request, template, context)
 
 
@@ -141,17 +146,41 @@ def agenda(request):
             from_date = form.cleaned_data['date_from']
             to_date = form.cleaned_data['date_to']
             consults = Consults.objects.filter(datetime__date__gte=from_date, datetime__date__lte=to_date, medical_status=False, created_by=request.user).order_by('datetime')
-            months = []
-            months_names = []
-            for c in consults:
-                if c.datetime.astimezone(tzone).month not in months:
-                    months.append(c.datetime.month)
-                    months_names.append(calendar.month_name[c.datetime.month])
-            context['consults'] = consults
-            context['months'] = months_names
+            if len(consults) > 0:
+                months = []
+                months_names = []
+                for c in consults:
+                    if c.datetime.astimezone(tzone).month not in months:
+                        months.append(c.datetime.month)
+                        months_names.append(calendar.month_name[c.datetime.month])
+                context['consults'] = consults
+                context['months'] = months_names
+            else:
+                context['error'] = 'There are no consults for these dates'
             data = {'html': render_to_string('appointments/partial_consults_register_list.html', context, request)}
             return JsonResponse(data)
     return render(request, template, context)
+
+
+# Filtering
+def filtering_conditional_results(data, user):
+    patient = data[0]
+    month = data[1]
+    year = data[2]
+    if patient == '' and int(month) == 0 and int(year) == 1920:
+        return 'Please select your filters'
+    elif patient != '' and int(month) == 0 and int(year) == 1920:
+        return Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient), created_by=user)
+    elif patient == '' and int(month) != 0 and int(year) == 1920:
+        return Consults.objects.filter(datetime__date__month=month, created_by=user)
+    elif patient == '' and int(month) == 0 and int(year) != 1920:
+        return Consults.objects.filter(datetime__date__year=year, created_by=user)
+    elif patient != '' and int(month) != 0 and int(year) == 1920:
+        return Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient),datetime__date__month=month, created_by=user)
+    elif patient != '' and int(month) == 0 and int(year) != 1920:
+        return Consults.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__year=year, created_by=user)
+    else:
+        return Consults.objects.filter(datetime__date__month=month, datetime__date__year=year, created_by=user)
 
 
 def registers(request):
@@ -175,36 +204,16 @@ def registers(request):
             patient = form.cleaned_data['patient']
             month = form.cleaned_data['month']
             year = form.cleaned_data['year']
-            if patient == '' and int(month) == 0 and int(year) == 1920:
-                context['consults'] = Consults.objects.filter(created_by=request.user).order_by('-datetime')
-                context['error'] = 'You need to provide at least one value in the fields.'
-            elif patient and int(month) == 0 and int(year) == 1920:
-                consults = Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient),
-                                                   created_by=request.user)
-                context['consults'] = consults
-                context['items'] = len(consults)
-            elif month and patient == '' and int(year) == 1920:
-                consults = Consults.objects.filter(datetime__date__month=month,
-                                                   created_by=request.user)
-                context['consults'] = consults
-                context['items'] = len(consults)
-            elif int(year) != 1920 and patient == '' and int(month) == 0:
-                consults = Consults.objects.filter(datetime__date__year=year,
-                                                   created_by=request.user)
-                context['consults'] = consults
-                context['items'] = len(consults)
-            elif patient and int(month) != 0 and int(year)==1920:
-                consults = Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient),
-                                                   datetime__date__month=month,
-                                                   created_by=request.user)
-                context['consults'] = consults
-                context['items'] = len(consults)
-            elif patient and int(year) != 1920 and int(month) == 0:
-                consults = Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient),
-                                                   datetime__date__year=year,
-                                                   created_by=request.user)
-                context['consults'] = consults
-                context['items'] = len(consults)
+            result = filtering_conditional_results([patient, month, year], request.user)
+            if type(result) == str:
+                context['error'] = 'Please select your filters'
+            else:
+                if len(result) == 0:
+                    context['no_match'] = 'No matches were found'
+                else:
+                    context['consults'] = result
+        data = {'html': render_to_string('appointments/partial_registers.html', context, request)}
+        return JsonResponse(data)
     return render(request, template, context)
 
 
