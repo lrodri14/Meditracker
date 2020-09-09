@@ -48,3 +48,56 @@ tr:nth-child(even){
 .fa-plus{
     padding: 10px;
 }
+
+/*Navbar*/
+ul{
+    list-style-type: none;
+    background-color: #12212b;
+}
+
+li{
+    display: inline-block;
+    padding: 20px;
+    margin: 0px;
+    transition: 0.5s;
+}
+
+.li-hover{
+    background-color: cyan;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.li-hover a{
+    color: #12212b;
+}
+
+.li-active{
+    background-color: cyan;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.li-active a{
+    color: #12212b;
+}
+
+/*Modal*/
+
+.modal{
+    background-color: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+}
+
+.modal-content{
+    background-color: #12212b;
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 12%;
+}

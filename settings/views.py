@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
 from patients import forms
 from appointments.forms import DrugsForm
+from .forms import InsuranceForm
 InsuranceCarrier = apps.get_model('patients', 'InsuranceCarrier')
 Drugs = apps.get_model('appointments', 'Drugs')
 Allergies = apps.get_model('patients', 'Allergies')
@@ -29,7 +30,7 @@ def settings(request):
 def insurance_list(request):
     insurances_list = InsuranceCarrier.objects.filter(country=request.user.profile.origin)
     template = 'settings/insurance_list.html'
-    context = {'insurances': insurances_list}
+    context = {'insurances': insurances_list, 'form': InsuranceForm}
     return render(request, template, context)
 
 

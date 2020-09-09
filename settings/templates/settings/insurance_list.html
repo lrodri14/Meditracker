@@ -6,17 +6,32 @@
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'settings/css/insurances_list.css'%}">
     {%if insurances%}
-        <h1>Insurances available in {{user.profile.get_origin_display}}</h1>
+    <div class="box">
+        <div class="table">
+            <h1>Insurance Companies</h1>
             <table>
-                <tr id="heading" style="color:white">
-                    <th>Company</th>
-                </tr>
+                <thead>
+                    <tr id="heading" style="color:white">
+                        <th>Company</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {%for i in insurances%}
                     <tr onclick="window.location='{%url 'settings:insurance_details' i.pk%}'">
                         <td>{{i.company}}</td>
                     </tr>
                 {%endfor%}
+                </tbody>
             </table>
+        </div>
+        <div class="filter-form">
+            <button><i class=""></i></button>
+            <form action="">
+                {%csrf_token%}
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
     {%else%}
         <p id="no-insurance">No insurances listed for {{user.profile.get_origin_display}}</p>
     {%endif%}
