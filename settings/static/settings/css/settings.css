@@ -2,25 +2,19 @@
 table{
     background-color: #12212b;
     border-collapse: collapse;
-    width: 60%;
+    width: 100%;
 }
 
-#heading1{
+#heading{
     background-color: #12212b;
     color: cyan;
     cursor: default;
 }
 
-#heading2{
-    background-color: #12212b;
-    color: cyan;
-    cursor: default;
-}
-
-#heading3{
-    background-color: #12212b;
-    color: cyan;
-    cursor: default;
+tr{
+    transition: 0.5s;
+    line-height: 20px;
+    margin: 10px;
 }
 
 tr th{
@@ -43,6 +37,14 @@ tr:nth-child(odd){
 tr:nth-child(even){
     background-color: #2a465c;
     transition: 0.5s;
+}
+
+.tr-hover{
+    background-color: cyan;
+    transition: 0.5s;
+    cursor: pointer;
+    line-height: 50px;
+    color: #12212b;
 }
 
 .fa-plus{
@@ -82,6 +84,38 @@ li{
     color: #12212b;
 }
 
+/*Wrapper*/
+
+.box{
+    display: grid;
+    grid-template-columns: 80% 19%;
+    grid-gap: 1%;
+}
+
+/*filter forms*/
+.filter-form{
+    text-align: center;
+    background-color: #12212b;
+    padding: 10px;
+    margin-top: -500px;
+    transition: 0.5s;
+}
+
+.show-filter-form{
+    margin-top: 20px;
+    transition: 0.5s;
+}
+
+.fa-filter{
+    transition: 0.5s;
+}
+
+.fa-filter-hover{
+   color: #12212b;
+   cursor: pointer;
+   transition: 0.5s;
+}
+
 /*Modal*/
 
 .modal{
@@ -94,10 +128,106 @@ li{
     left: 0;
 }
 
+.show-modal{
+    display: block;
+    position: fixed;
+}
+
 .modal-content{
-    background-color: #12212b;
-    width: 50%;
-    height: 50%;
     margin-left: 25%;
     margin-top: 12%;
+}
+
+/*Modal Forms*/
+.modal > form{
+    text-align: center;
+    background-color: #12212b;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 60%;
+}
+
+h1{
+    padding: 20px;
+}
+
+p{
+    font-size: 18px;
+}
+
+input{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align: center;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: 2px solid #0ff5fc;
+  border-radius: 15px;
+  height: 30px;
+  width:60%;
+  transition: 0.5s;
+}
+
+.input-hover{
+  width: 75%;
+  transition: 0.5s;
+}
+
+/*Select*/
+select{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align-last:center;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: 2px solid #0ff5fc;
+  border-radius: 15px;
+  height: 30px;
+  width:60%;
+  transition: 0.5s;
+}
+
+
+/*Button*/
+button{
+    margin: 15px;
+    width: 30%;
+    height: 30px;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    background-color: #12212b;
+    border: 2px solid #0ff5fc;
+    border-radius: 10px;
+    color: #0ff5fc;
+    transition: 0.5s;
+
+}
+
+.button-hover{
+    background-color: #0ff5fc;
+    color: #12212b;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+
+/*No Data*/
+.no-data{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.add-data{
+    font-size: 25px;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
 }

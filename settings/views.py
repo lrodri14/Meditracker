@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, reverse
+from django.http import JsonResponse
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
+from django.template.loader import render_to_string
 from patients import forms
 from appointments.forms import DrugsForm
-from .forms import InsuranceForm
 InsuranceCarrier = apps.get_model('patients', 'InsuranceCarrier')
 Drugs = apps.get_model('appointments', 'Drugs')
 Allergies = apps.get_model('patients', 'Allergies')
@@ -12,9 +13,7 @@ Allergies = apps.get_model('patients', 'Allergies')
 
 # Create your views here.
 
-
 # Settings
-
 
 def settings(request):
     template = 'settings/settings.html'
@@ -30,25 +29,28 @@ def settings(request):
 def insurance_list(request):
     insurances_list = InsuranceCarrier.objects.filter(country=request.user.profile.origin)
     template = 'settings/insurance_list.html'
-    context = {'insurances': insurances_list, 'form': InsuranceForm}
-    return render(request, template, context)
+    context = {'insurances': insurances_list, 'form': forms.InsuranceCarrierFilterForm}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def add_insurance_carrier(request):
     insurance_carrier_form = forms.InsuranceCarrierForm
     context = {'insurance_carrier_form': insurance_carrier_form}
     template = 'settings/insurance_add.html'
+    data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
         insurance_form = forms.InsuranceCarrierForm(request.POST)
         if insurance_form.is_valid():
-            try:
-                insurance_form.save()
-            except IntegrityError:
-                context['unique_error'] = '*This company is already registered for this region.'
-                return render(request, template, context)
-            else:
-                return redirect(reverse('settings:settings'))
-    return render(request, template, context)
+            insurance = insurance_form.save(commit=False)
+            insurance.created_by = request.user
+            insurance.save()
+            updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
+            context = {'insurances':updated_insurances, 'form': forms.InsuranceCarrierFilterForm}
+            data = {'html': render_to_string('settings/insurance_list.html', context, request)}
+        else:
+            return redirect(reverse('settings:settings'))
+    return JsonResponse(data)
 
 
 def insurance_details(request, pk):

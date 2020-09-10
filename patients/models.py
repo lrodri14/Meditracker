@@ -66,9 +66,10 @@ class InsuranceCarrier(models.Model):
     company = models.CharField('company', max_length=100, blank=False, null=False, help_text='Insurance Carrier')
     country = models.CharField('country', max_length=100, blank=False, null=True, help_text='Insurance Carrier origin',
                                choices=ORIGIN_CHOICES, default=None)
+    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=False, null=True, help_text='Who created this insurance carrier', verbose_name='created_by', related_name='Author')
 
     class Meta:
-        unique_together = ['company', 'country']
+        unique_together = ['company', 'created_by']
 
     def __str__(self):
         return self.company

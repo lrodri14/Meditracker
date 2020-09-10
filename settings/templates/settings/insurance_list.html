@@ -1,39 +1,44 @@
-<!--Checked-->
-{%extends 'base.html'%}
 {%load static%}
-{%block title%}Insurances{%endblock%}
-{%block return%}<a href="{%url 'settings:settings'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'settings/css/insurances_list.css'%}">
     {%if insurances%}
     <div class="box">
-        <div class="table">
-            <h1>Insurance Companies</h1>
+        <div>
             <table>
                 <thead>
-                    <tr id="heading" style="color:white">
+                    <tr id="heading">
                         <th>Company</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <th><i class="fas fa-plus"></i></th>
                     </tr>
                 </thead>
                 <tbody>
                 {%for i in insurances%}
-                    <tr onclick="window.location='{%url 'settings:insurance_details' i.pk%}'">
-                        <td>{{i.company}}</td>
+                    <tr>
+                        <td><a href="{%url 'settings:insurance_details' i.pk%}" class="view">{{i.company}}</a></td>
+                        <td><i class="fas fa-edit"></i></td>
+                        <td><i class="fas fa-trash"></i></td>
+                        <td></td>
                     </tr>
                 {%endfor%}
                 </tbody>
             </table>
         </div>
-        <div class="filter-form">
-            <button><i class=""></i></button>
-            <form action="">
+        <div>
+            <i class="fas fa-filter"></i>
+            <form action="" class="filter-form" autocomplete="off">
+                <h3>Filter Insurance</h3>
                 {%csrf_token%}
-                <button type="submit">Submit</button>
+                <p>{{form.company.label}}</p>
+                <p>{{form.company}}</p>
+                <p>{{form.country.label}}</p>
+                <p>{{form.country}}</p>
             </form>
         </div>
     </div>
     {%else%}
-        <p id="no-insurance">No insurances listed for {{user.profile.get_origin_display}}</p>
+        <p class="no-data">No insurances listed</p>
+        <a href="{%url 'settings:insurance_add'%}" class="add-data"><i class="fas fa-plus"></i></a>
     {%endif%}
 <script src="{%static 'settings/js/insurance_list.js'%}"></script>
 {%endblock%}

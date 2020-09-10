@@ -5,27 +5,74 @@ if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector
     var wrapper = document.querySelector('.wrapper')
 }
 
-if (document.querySelectorAll('tr') !== 'undefined' && document.querySelectorAll('tr') !== 'null'){
-    var rows = document.querySelectorAll('tr')
+if (document.querySelector('.modal') !== 'undefined' && document.querySelector('.modal') !== 'null'){
+    var modal = document.querySelector('.modal')
+    var modalContent = document.querySelector('.modal-content')
 }
 
 var body = document.querySelector('body')
 
+// Async Functions
+async function displaySettingsAW(url){
+    const result = await fetch(url)
+    const data = await result.json()
+    return data
+}
+
+async function showForm(url){
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+async function addElementAW(url, method, csrfmiddlewaretoken, formData){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
+    const data = result.json()
+    return data
+}
+
+// Functions
+//Add Data
+function addData(){
+    if (document.querySelector('.add-data') !== 'undefined' && document.querySelector('.add-data') !== 'null'){
+        var addData = document.querySelector('.add-data')
+        setInterval(function(){
+        if (addData.style.top == '90%'){
+            addData.style.top = '88%'
+        } else {
+            addData.style.top = '90%'
+        }
+        },500)
+        console.log(addData)
+    }
+}
+
 // Body Event Listeners
 
-
 body.addEventListener('click', (e) => {
-        if (e.target.nodeName === 'A' || e.target.nodeName === 'LI'){
-        items = document.querySelectorAll('ul > li')
+    if (e.target.nodeName === 'A' || e.target.nodeName === 'LI'){
+        const items = document.querySelectorAll('ul > li')
+        const url = e.target.nodeName === 'A' ? e.target.href : e.target.firstElementChild.href
+        const item = e.target.nodeName === 'A' ? e.target.parentNode : e.target
         for (let i = 0; i<items.length; i++){
-            if (items[i].classList.contains('li-active') && items[i] !== e.target){
+            if (items[i].classList.contains('li-active') && items[i] !== item){
                 items[i].classList.remove('li-active')
                 wrapper.innerHTML = ''
             }
         }
-        item = e.target.nodeName === 'A' ? e.target.parentNode : e.target
-        item.classList.contains('li-active') ? item.classList.remove('li-active') : item.classList.add('li-active')
-    }
+        e.preventDefault()
+        e.stopPropagation()
+        if (item.classList.contains('li-active')){
+            item.classList.remove('li-active')
+            wrapper.innerHTML = ''
+        }else{
+            item.classList.add('li-active')
+            displaySettingsAW(url)
+            .then(data => {
+                wrapper.innerHTML = data['html']
+            })
+        }
+}
 })
 
 body.addEventListener('mouseover', (e) => {
@@ -46,62 +93,164 @@ body.addEventListener('mouseout', (e) => {
 
 })
 
+
+// Wrapper Event Listeners
+
 if (wrapper){
 
     var backedUpContent = wrapper.innerHTML
 
     wrapper.addEventListener('mouseover', (e) => {
 
+        if (e.target.nodeName === 'TD'){
+            var rows = document.querySelectorAll('tr')
+                for(let i = 0; i<rows.length; i++){
+                let childNodes = rows[i].childNodes
+                if (rows[i].id === ''){
+                    rows[i].addEventListener('mouseover', function(e){
+                        rows[i].style.backgroundColor = 'cyan'
+                        rows[i].classList.add('tr-hover')
+                        for (let c = 0; c<childNodes.length; c++){
+                            if (childNodes[c].nodeName != '#text'){
+                                childNodes[c].style.color = '#12212b'
+                                if (childNodes[c].children){
+                                    var children = childNodes[c].children
+                                    for (var cc = 0; cc<children.length; cc++){
+                                        children[cc].style.color = '#12212b'
+                                        children[cc].style.transition = '0.5s'
+                                        }
+                                    }
+                                }
+                            }
+                        })
+
+                    rows[i].addEventListener('mouseout', function(){
+                        rows[i].style.backgroundColor = ''
+                        rows[i].classList.remove('tr-hover')
+                        for (let c = 0; c<childNodes.length; c++){
+                            if (childNodes[c].nodeName != '#text'){
+                                childNodes[c].style.color = 'cyan'
+                                if (childNodes[c].children){
+                                        var children = childNodes[c].children
+                                        for (var cc = 0; cc<children.length; cc++){
+                                            children[cc].style.color = ''
+                                        }
+                            }
+                            }
+                            }
+                        })
+                }
+                }
+            }
+
+        if (e.target.classList.contains('fa-filter')){
+            e.target.classList.add('fa-filter-hover')
+        }
+
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.add('input-hover')
+        }
+
     })
 
     wrapper.addEventListener('mouseout', (e) => {
+
+        if (e.target.classList.contains('fa-filter')){
+            e.target.classList.remove('fa-filter-hover')
+        }
+
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.remove('input-hover')
+        }
+
 
     })
 
     wrapper.addEventListener('click', (e) => {
 
+        if (e.target.nodeName === 'TR'){
+            console.log('tr')
+        }
+
+        if (e.target.classList.contains('fa-filter')){
+            const form = document.querySelector('.filter-form')
+            form.classList.contains('show-filter-form') ? form.classList.remove('show-filter-form') : form.classList.add('show-filter-form')
+        }
+
+        if (e.target.classList.contains('fa-plus')){
+
+        }
+
+        if (e.target.classList.contains('fa-edit')){
+
+        }
+
+        if (e.target.classList.contains('fa-trash')){
+
+        }
+
+//        if (e.target.nodeName === 'I'){
+//            e.preventDefault()
+//            e.stopPropagation()
+//            const url = e.target.parentNode.href
+//            showForm(url)
+//            .then(data => {
+//                modalContent.innerHTML = data['html']
+//                modal.classList.add('show-modal')
+//            })
+//        }
     })
 }
 
-//Table Rows
-if (rows){
-    for(let i = 0; i<rows.length; i++){
-        let childNodes = rows[i].childNodes
-        if (rows[i].id === ''){
-            rows[i].addEventListener('mouseover', function(e){
-                rows[i].style.backgroundColor = 'cyan'
-                rows[i].style.cursor = 'pointer'
-                for (let c = 0; c<childNodes.length; c++){
-                    if (childNodes[c].nodeName != '#text'){
-                        childNodes[c].style.color = '#12212b'
-                        if (childNodes[c].children){
-                            var children = childNodes[c].children
-                            for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = '#12212b'
-                                children[cc].style.transition = '0.5s'
-                            }
-                        }
-                        }
-                    }
-        })
 
-        rows[i].addEventListener('mouseout', function(){
-            rows[i].style.backgroundColor = ''
-            rows[i].style.cursor = 'pointer'
-            for (let c = 0; c<childNodes.length; c++){
-                if (childNodes[c].nodeName != '#text'){
-                    childNodes[c].style.color = 'cyan'
-                    if (childNodes[c].children){
-                            var children = childNodes[c].children
-                            for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = 'cyan'
-                            }
-                        }
-                    }
-                }
-        })
+// Modal Event Listeners
+if (modal){
+
+    modal.addEventListener('click', (e) => {
+
+        if (e.target === modal){
+            modal.classList.remove('show-modal')
         }
-    }
+
+    })
+
+    modal.addEventListener('mouseover', (e) => {
+
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.add('button-hover')
+        }
+
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.add('input-hover')
+        }
+
+    })
+
+    modal.addEventListener('mouseout', (e) => {
+
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.remove('button-hover')
+        }
+
+         if (e.target.nodeName === 'INPUT'){
+            e.target.classList.remove('input-hover')
+        }
+
+    })
+
+    modal.addEventListener('submit', (e) => {
+         if (e.target.nodeName === 'FORM'){
+            e.preventDefault()
+            e.stopPropagation()
+            const form = e.target
+            const url = form.action
+            const method = form.method
+            const csrfmiddlewaretoken = document.querySelector('.' + e.target.className + ' > [name=csrfmiddlewaretoken]').value
+            const data = new FormData(form)
+            addElementAW(url, method, csrfmiddlewaretoken, data)
+            .then(data => {
+                wrapper.innerHTML = data['html']
+            })
+         }
+    })
 }
-
-

@@ -13,9 +13,16 @@ class PatientForm(forms.ModelForm):
 
 
 class InsuranceCarrierForm(forms.ModelForm):
+
     class Meta:
         model = InsuranceCarrier
-        fields = '__all__'
+        exclude = ('created_by',)
+
+
+class InsuranceCarrierFilterForm(forms.ModelForm):
+    class Meta:
+        model = InsuranceCarrier
+        exclude = ('country', 'created_by')
 
 
 class InsuranceInformationForm(forms.ModelForm):
