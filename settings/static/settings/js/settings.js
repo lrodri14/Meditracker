@@ -21,13 +21,25 @@ async function displaySettingsAW(url){
 
 async function showForm(url){
     const result = await fetch(url)
-    const data = result.json()
+    const data = await result.json()
     return data
 }
 
-async function addElementAW(url, method, csrfmiddlewaretoken, formData){
+async function addUpdateElementAW(url, method, csrfmiddlewaretoken, formData){
     const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
-    const data = result.json()
+    const data = await result.json()
+    return data
+}
+
+async function deleteItemAW(url, method, csrfmiddlewaretoken){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:{'choice':'yes'}})
+    const data = await result.json()
+    return data
+}
+
+async function viewElementAW(url){
+    const result = await fetch(url)
+    const data = await result.json()
     return data
 }
 
@@ -147,6 +159,10 @@ if (wrapper){
             e.target.classList.add('fa-filter-hover')
         }
 
+        if (e.target.classList.contains('fa-plus')){
+            e.target.classList.add('fa-plus-hover')
+        }
+
         if (e.target.nodeName === 'INPUT'){
             e.target.classList.add('input-hover')
         }
@@ -159,6 +175,10 @@ if (wrapper){
             e.target.classList.remove('fa-filter-hover')
         }
 
+        if (e.target.classList.contains('fa-plus')){
+            e.target.classList.remove('fa-plus-hover')
+        }
+
         if (e.target.nodeName === 'INPUT'){
             e.target.classList.remove('input-hover')
         }
@@ -168,8 +188,13 @@ if (wrapper){
 
     wrapper.addEventListener('click', (e) => {
 
-        if (e.target.nodeName === 'TR'){
-            console.log('tr')
+        if (e.target.nodeName === 'TD'){
+            const url = e.target.parentNode.getAttribute('data-url')
+            viewElementAW(url)
+            .then(data => {
+                modal.classList.add('show-modal')
+                modalContent.innerHTML = data['html']
+            })
         }
 
         if (e.target.classList.contains('fa-filter')){
@@ -178,27 +203,37 @@ if (wrapper){
         }
 
         if (e.target.classList.contains('fa-plus')){
-
+            e.preventDefault()
+            e.stopPropagation()
+            const url = e.target.parentNode.href
+            showForm(url)
+            .then(data => {
+                modal.classList.add('show-modal')
+                modalContent.innerHTML = data['html']
+            })
         }
 
         if (e.target.classList.contains('fa-edit')){
-
+            e.preventDefault()
+            e.stopPropagation()
+            const url = e.target.parentNode.href
+            showForm(url)
+            .then(data => {
+                modal.classList.add('show-modal')
+                modalContent.innerHTML = data['html']
+            })
         }
 
         if (e.target.classList.contains('fa-trash')){
-
+            e.preventDefault()
+            e.stopPropagation()
+            const url = e.target.parentNode.href
+            showForm(url)
+            .then(data => {
+                modal.classList.add('show-modal')
+                modalContent.innerHTML = data['html']
+            })
         }
-
-//        if (e.target.nodeName === 'I'){
-//            e.preventDefault()
-//            e.stopPropagation()
-//            const url = e.target.parentNode.href
-//            showForm(url)
-//            .then(data => {
-//                modalContent.innerHTML = data['html']
-//                modal.classList.add('show-modal')
-//            })
-//        }
     })
 }
 
@@ -209,6 +244,12 @@ if (modal){
     modal.addEventListener('click', (e) => {
 
         if (e.target === modal){
+            modal.classList.remove('show-modal')
+        }
+
+        if (e.target.value === 'no'){
+            e.preventDefault()
+            e.stopPropagation()
             modal.classList.remove('show-modal')
         }
 
@@ -247,10 +288,25 @@ if (modal){
             const method = form.method
             const csrfmiddlewaretoken = document.querySelector('.' + e.target.className + ' > [name=csrfmiddlewaretoken]').value
             const data = new FormData(form)
-            addElementAW(url, method, csrfmiddlewaretoken, data)
-            .then(data => {
-                wrapper.innerHTML = data['html']
-            })
+            if (e.target.classList.contains('add') || e.target.classList.contains('update')){
+                addUpdateElementAW(url, method, csrfmiddlewaretoken, data)
+                .then(data => {
+                    if ('html' in data){
+                        modalContent.innerHTML = data['html']
+                    }else{
+                        wrapper.innerHTML = data['updated_html']
+                        modal.classList.remove('show-modal')
+                    }
+                })
+            } else{
+                deleteItemAW(url, method, csrfmiddlewaretoken)
+                .then(data => {
+                    wrapper.innerHTML = data['updated_html']
+                    modal.classList.remove('show-modal')
+                    }
+                )
+            }
+
          }
     })
 }

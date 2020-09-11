@@ -1,18 +1,11 @@
-<!--Checked-->
-{%extends 'base.html'%}
 {%load static%}
-{%block title%}Add Allergy{%endblock%}
-{%block return%}<a href="{%url 'settings:settings'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'settings/css/add_allergy.css'%}">
-<form method="POST" autocomplete="off">
+<form method="POST" autocomplete="off" action="{%url 'settings:allergy_add'%}" class="add">
     {%csrf_token%}
     <h1>Add Allergy</h1>
     <p>{{allergies_form.allergy_type.label}}</p>
     <p>{{allergies_form.allergy_type}}</p>
-    <a href="{%url 'settings:allergies_list'%}"><button type="button">Allergies List</button></a>
-    <p>{{unique_error}}</p>
+    <p>{{error}}</p>
     <button type="submit">Add Allergy</button>
 </form>
-<script src="{%static 'settings/js/add_allergy.js'%}"></script>
 {%endblock%}

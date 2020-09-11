@@ -1,20 +1,12 @@
-<!--Checked-->
-{%extends 'base.html'%}
-{%load static%}
-{%block title%}Update Insurance{%endblock%}
-{%block return%}<a href="{%url 'settings:settings'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'settings/css/insurance_update.css'%}">
-<form method="POST" autocomplete="off">
+<form method="POST" autocomplete="off" action="{%url 'settings:insurance_update' carrier.pk%}" class="update">
     {%csrf_token%}
     <h1>Update Insurance Carrier</h1>
     <p>{{insurance.company.label}}</p>
     <p>{{insurance.company}}</p>
     <p>{{insurance.country.label}}</p>
     <p>{{insurance.country}}</p>
-    <a href="{%url 'settings:settings'%}"><button type="button">Insurances List</button></a>
-    <p>{{unique_error}}</p>
+    <p>{{error}}</p>
     <button type="submit">Update Carrier</button>
 </form>
-<script src="{%static 'settings/js/insurance_update.js'%}"></script>
 {%endblock%}

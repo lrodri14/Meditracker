@@ -1,14 +1,7 @@
-<!--Checked-->
-{% extends 'base.html' %}
 {%load static%}
-{%block title%}Allergy Details{%endblock%}
-{%block return%}<a href="{%url 'settings:settings'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'settings/css/allergy_details.css'%}">
 <div id="details">
     <h1>Allergy Details</h1>
     <h2>Allergy Type: {{allergy.allergy_type}}</h2>
-    <a href="{%url 'settings:allergies_delete' allergy.pk%}"><i class="fas fa-trash"></i></a>
 </div>
-<script src="{%static 'settings/js/allergy_details.js'%}"></script>
 {%endblock%}

@@ -11,6 +11,10 @@ table{
     cursor: default;
 }
 
+.fa-plus-hover{
+    cursor: pointer;
+}
+
 tr{
     transition: 0.5s;
     line-height: 20px;
@@ -139,7 +143,7 @@ li{
 }
 
 /*Modal Forms*/
-.modal > form{
+.modal-content > form{
     text-align: center;
     background-color: #12212b;
     padding: 20px;
@@ -150,6 +154,32 @@ li{
     transform: translate(-50%, -50%);
     width: 25%;
     height: 60%;
+}
+
+#delete{
+    text-align: center;
+    background-color: #12212b;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 35%;
+}
+
+#details{
+    text-align: center;
+    background-color: #12212b;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 35%;
 }
 
 h1{

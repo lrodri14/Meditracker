@@ -1,24 +1,41 @@
-<!--Checked-->
-{%extends 'base.html'%}
 {%load static%}
-{%block title%}Allergies{%endblock%}
-{%block return%}<a href="{%url 'settings:settings'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'settings/css/allergies_list.css'%}">
-    {%if allergies%}
-        <h1>Allergies Created</h1>
-            <table>
+{%if allergies%}
+<div class="box">
+    <div class="table">
+        <table>
+            <thead>
                 <tr id="heading">
                     <th>Allergy</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th><a href="{%url 'settings:allergy_add'%}"><i class="fas fa-plus"></i></a></th>
                 </tr>
-                {%for a in allergies%}
-                    <tr onclick="window.location='{%url 'settings:allergies_details' a.pk%}'">
-                        <td>{{a.allergy_type}}</td>
-                    </tr>
-                {%endfor%}
-            </table>
-    {%else%}
-        <p id="no-allergies">There are no allergies listed</p>
-    {%endif%}
-<script src="{%static 'settings/js/allergies_list.js'%}"></script>
+            </thead>
+            <tbody>
+             {%for a in allergies%}
+                <tr data-url="{%url 'settings:allergies_details' a.pk%}">
+                    <td>{{a.allergy_type}}</td>
+                    <td><a href="{%url 'settings:allergies_update' a.pk%}"><i class="fas fa-edit"></i></a></td>
+                    <td><a href="{%url 'settings:allergies_delete' a.pk%}"><i class="fas fa-trash"></i></a></td>
+                    <td></td>
+                </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="filter">
+        <i class="fas fa-filter"></i>
+        <form method="POST" action="" class="filter-form">
+            {%csrf_token%}
+            <h3>Filter Allergies</h3>
+            <p>{{form.allergy_type.label}}</p>
+            <p>{{form.allergy_type}}</p>
+        </form>
+    </div>
+</div>
+{%else%}
+    <p id="no-data">There are no allergies listed</p>
+    <a href="{%url 'settings:insurance_add'%}" class="add-data"><i class="fas fa-plus"></i></a>
+{%endif%}
 {%endblock%}

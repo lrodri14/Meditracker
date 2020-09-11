@@ -42,14 +42,17 @@ def add_insurance_carrier(request):
     if request.method == 'POST':
         insurance_form = forms.InsuranceCarrierForm(request.POST)
         if insurance_form.is_valid():
-            insurance = insurance_form.save(commit=False)
-            insurance.created_by = request.user
-            insurance.save()
-            updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
-            context = {'insurances':updated_insurances, 'form': forms.InsuranceCarrierFilterForm}
-            data = {'html': render_to_string('settings/insurance_list.html', context, request)}
-        else:
-            return redirect(reverse('settings:settings'))
+            try:
+                insurance = insurance_form.save(commit=False)
+                insurance.created_by = request.user
+                insurance.save()
+                updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
+                context = {'insurances': updated_insurances, 'form': forms.InsuranceCarrierFilterForm}
+                # How to return an error from the backend to the frontend?
+                data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
+            except IntegrityError:
+                context['error'] = 'This insurance is already listed'
+                data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -57,39 +60,44 @@ def insurance_details(request, pk):
     carrier = InsuranceCarrier.objects.get(pk=pk)
     template = 'settings/insurance_details.html'
     context = {'insurance': carrier}
-    return render(request, template, context)
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def insurance_update(request, pk):
     carrier = InsuranceCarrier.objects.get(pk=pk)
     insurance_form = forms.InsuranceCarrierForm(request.POST or None, instance=carrier)
     template = 'settings/insurance_update.html'
-    context = {'insurance': insurance_form}
+    context = {'insurance': insurance_form, 'carrier':carrier}
+    data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
+        insurance_form = forms.InsuranceCarrierForm(request.POST or None, instance=carrier)
         if insurance_form.is_valid():
             try:
+                # Why do i need to provide again the user?
                 insurance_form.save()
-                return redirect(reverse('settings:settings'))
+                updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
+                context = {'insurances': updated_insurances, 'form': forms.InsuranceCarrierFilterForm}
+                # How to return an error from the backend to the frontend?
+                data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
             except IntegrityError:
-                context['unique_error'] = '*This company is already registered in your location.'
-                return render(request, template, context)
-    return render(request, template, context)
+                context['error'] = 'This insurance is already listed'
+                data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def insurance_delete(request, pk):
-    try:
-        carrier = InsuranceCarrier.objects.get(pk=pk)
-        context = {'insurance': carrier}
-        template = 'settings/insurance_delete.html'
-        if request.method == 'POST':
-            if request.POST['choice'] == 'yes':
-                carrier.delete()
-                return redirect(reverse('settings:settings'))
-            else:
-                return redirect(reverse('settings:settings'))
-        return render(request, template, context)
-    except ObjectDoesNotExist:
-        return redirect(reverse('settings:settings'))
+    carrier = InsuranceCarrier.objects.get(pk=pk)
+    context = {'insurance': carrier}
+    template = 'settings/insurance_delete.html'
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+            carrier.delete()
+            updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
+            context = {'insurances': updated_insurances, 'form': forms.InsuranceCarrierFilterForm}
+            # How to return an error from the backend to the frontend?
+            data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
+    return JsonResponse(data)
 
 
 # Allergies
@@ -97,14 +105,16 @@ def insurance_delete(request, pk):
 def allergies_list(request):
     allergies_created = Allergies.objects.filter(created_by=request.user)
     template = 'settings/allergies_list.html'
-    context = {'allergies': allergies_created}
-    return render(request, template, context)
+    context = {'allergies': allergies_created, 'form': forms.AllergiesFilterForm}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def allergies_create(request):
     allergies_form = forms.AllergiesForm
     template = 'settings/add_allergies.html'
     context = {'allergies_form': allergies_form}
+    data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
         allergies_form = forms.AllergiesForm(request.POST)
         if allergies_form.is_valid():
@@ -112,18 +122,21 @@ def allergies_create(request):
                 allergy = allergies_form.save(commit=False)
                 allergy.created_by = request.user
                 allergy.save()
-                return redirect(reverse('settings:settings'))
+                allergies = Allergies.objects.filter(created_by=request.user)
+                context = {'allergies': allergies,'form': forms.AllergiesFilterForm}
+                data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
             except IntegrityError:
-                context['unique_error'] = 'This allergy is already in your options'
-                return render(request, template, context)
-    return render(request, template, context)
+                context['error'] = 'This allergy is already in your options'
+                data = {'html': render_to_string('settings/allergies_list.html', context, request)}
+    return JsonResponse(data)
 
 
 def allergies_details(request, pk):
     allergy = Allergies.objects.get(pk=pk)
     template = 'settings/allergy_details.html'
     context = {'allergy': allergy}
-    return render(request, template, context)
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def allergies_update(request, pk):
@@ -131,31 +144,34 @@ def allergies_update(request, pk):
     template = 'settings/update_allergy.html'
     allergy_form = forms.AllergiesForm(request.POST or None, instance=allergy)
     context = {'allergy': allergy, 'allergy_form': allergy_form}
+    data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
+        allergy_form = forms.AllergiesForm(request.POST or None, instance=allergy)
         if allergy_form.is_valid():
             try:
-                allergy_form.save()
-                return redirect(reverse('settings:allergies_list'))
+                allergy = allergy_form.save(commit=False)
+                allergy.created_by = request.user
+                allergy.save()
+                allergies = Allergies.objects.filter(created_by=request.user)
+                context = {'allergies': allergies, 'form': forms.AllergiesFilterForm}
+                data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
             except IntegrityError:
-                context['unique_error'] = 'This allergy is already in your options'
-                return render(request, template, context)
-    return render(request, template, context)
+                context['error'] = 'This allergy is already in your options'
+                data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def allergies_delete(request, pk):
-    try:
-        allergy = Allergies.objects.get(pk=pk)
-        template = 'settings/allergy_delete.html'
-        context = {'allergy': allergy}
-        if request.method == 'POST':
-            if request.POST['choice'] == 'yes':
-                allergy.delete()
-                return redirect(reverse('settings:settings'))
-            else:
-                return redirect(reverse('settings:settings'))
-        return render(request, template, context)
-    except ObjectDoesNotExist:
-        return redirect(reverse('settings:settings'))
+    allergy = Allergies.objects.get(pk=pk)
+    template = 'settings/allergy_delete.html'
+    context = {'allergy': allergy}
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+            allergy.delete()
+            allergies = Allergies.objects.filter(created_by=request.user)
+            context = {'allergies': allergies, 'form': forms.AllergiesFilterForm}
+            data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
+    return JsonResponse(data)
 
 
 # Drugs

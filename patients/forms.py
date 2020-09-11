@@ -41,6 +41,13 @@ class AllergiesForm(forms.ModelForm):
         exclude = ('created_by',)
 
 
+class AllergiesFilterForm(forms.ModelForm):
+
+    class Meta:
+        model = Allergies
+        exclude = ('created_by',)
+
+
 class AllergiesInformationForm(forms.ModelForm):
 
     class Meta:
