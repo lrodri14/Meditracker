@@ -78,7 +78,6 @@ def patient_details(request, pk):
 
 def patient_delete(request, pk):
     patient = Patient.objects.get(pk=pk)
-    patients = Patient.objects.filter(created_by=request.user)
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
     consults = Consults.objects.filter(patient=patient, medical_status=True)
@@ -92,6 +91,7 @@ def patient_delete(request, pk):
         else:
             patient.delete()
             context = {'patient_deleted': ' Patient has been deleted successfully'}
+            patients = Patient.objects.filter(created_by=request.user)
             data = {'html': render_to_string(template, context, request=request),
                     'patients': render_to_string('patients/patients_partial_list.html', {'patients': patients, 'doctor': doctor}, request)}
     return JsonResponse(data)

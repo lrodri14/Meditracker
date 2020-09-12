@@ -1,23 +1,41 @@
-{%extends 'base.html'%}
 {%load static%}
-{%block title%}Drugs List{%endblock%}
-{%block return%}<a href="{%url 'settings:settings'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'settings/css/drugs_list.css'%}">
-    {%if drugs%}
-        <h1>Drugs Created</h1>
+{%if drugs%}
+    <div class="box">
+        <div class="table">
             <table>
-                <tr id="heading">
-                    <th>Allergy</th>
-                </tr>
-                {%for d in drugs%}
-                    <tr onclick="window.location='{%url 'settings:drug_details' d.pk%}'">
+                <thead>
+                    <tr id="heading">
+                        <th>Drug</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <th><a href="{%url 'settings:drug_add'%}"><i class="fas fa-plus"></i></a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                 {%for d in drugs%}
+                    <tr data-url="{%url 'settings:drug_details' d.pk%}">
                         <td>{{d.name}}</td>
+                        <td><a href="{%url 'settings:drug_update' d.pk%}"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="{%url 'settings:drug_delete' d.pk%}"><i class="fas fa-trash"></i></a></td>
+                        <td></td>
                     </tr>
                 {%endfor%}
+                </tbody>
             </table>
-    {%else%}
-        <p id="no-drugs">There are no drugs listed</p>
-    {%endif%}
-<script src="{%static 'settings/js/drugs_list.js'%}"></script>
+        </div>
+        <div class="form">
+            <i class="fas fa-filter"></i>
+            <form method="POST" action="" class="filter-form">
+                <h3>Drug Filter</h3>
+                {%csrf_token%}
+                <p>{{form.name.label}}</p>
+                <p>{{form.name}}</p>
+            </form>
+        </div>
+    </div>
+{%else%}
+    <p class="no-data">No drugs listed</p>
+    <a href="{%url 'settings:drug_add'%}" class="add-data"><i class="fas fa-plus"></i></a>
+{%endif%}
 {%endblock%}

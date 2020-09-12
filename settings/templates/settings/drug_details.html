@@ -1,14 +1,7 @@
-<!--Checked-->
-{%extends 'base.html'%}
 {%load static%}
-{%block title%}Drugs List{%endblock%}
-{%block return%}<a href="{%url 'settings:settings'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'settings/css/drug_details.css'%}">
 <div id="details">
     <h1>Drug Details</h1>
     <h2>Name: {{drug.name}}</h2>
-    <a id="delete" href="{%url 'settings:drug_delete' drug.pk%}"><i class="fas fa-trash"></i></a>
 </div>
-<script src="{%static 'settings/js/drug_details.js'%}"></script>
 {%endblock%}

@@ -59,6 +59,7 @@ function addData(){
     }
 }
 
+
 // Body Event Listeners
 
 body.addEventListener('click', (e) => {

@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
 from django.template.loader import render_to_string
 from patients import forms
-from appointments.forms import DrugsForm
+from appointments.forms import DrugsForm, DrugsFilterForm
 InsuranceCarrier = apps.get_model('patients', 'InsuranceCarrier')
 Drugs = apps.get_model('appointments', 'Drugs')
 Allergies = apps.get_model('patients', 'Allergies')
@@ -180,29 +180,38 @@ def allergies_delete(request, pk):
 def drugs_list(request):
     drugs_list = Drugs.objects.filter(created_by=request.user)
     template = 'settings/drugs_list.html'
-    context = {'drugs': drugs_list}
-    return render(request, template, context)
+    context = {'drugs': drugs_list, 'form': DrugsFilterForm}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def create_drug(request):
     drugs_form = DrugsForm
     template = 'settings/create_drug.html'
     context = {'form': drugs_form}
+    data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
         drugs_form = DrugsForm(request.POST)
         if drugs_form.is_valid():
-            drug = drugs_form.save(commit=False)
-            drug.created_by = request.user
-            drug.save()
-            return redirect(reverse('settings:settings'))
-    return render(request, template, context)
+            try:
+                drug = drugs_form.save(commit=False)
+                drug.created_by = request.user
+                drug.save()
+                drugs_list = Drugs.objects.filter(created_by=request.user)
+                context = {'drugs': drugs_list, 'form': DrugsFilterForm}
+                data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
+            except IntegrityError:
+                context['error'] = 'Drug already listed'
+                data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def drug_details(request, pk):
     drug = Drugs.objects.get(pk=pk)
     template = 'settings/drug_details.html'
     context = {'drug': drug}
-    return render(request, template, context)
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def update_drug(request, pk):
@@ -210,26 +219,35 @@ def update_drug(request, pk):
     drug_form = DrugsForm(request.POST or None, instance=drug)
     template = 'settings/update_drug.html'
     context = {'drug': drug, 'form': drug_form}
-    if request.POST:
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        drug = DrugsForm(request.POST or None, instance=drug)
         if drug_form.is_valid():
-            drug_form.save()
-    return render(request, template, context)
+            try:
+                drug.save(commit=False)
+                drug.created_by = request.user
+                drug.save()
+                drugs_list = Drugs.objects.filter(created_by=request.user)
+                context = {'drugs': drugs_list, 'form': DrugsFilterForm}
+                data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
+            except IntegrityError:
+                context['error'] = 'Drug already listed'
+                data = {'html': render_to_string('settings/drugs_list.html', context, request)}
+    return JsonResponse(data)
 
 
 def delete_drug(request, pk):
-    try:
-        drug = Drugs.objects.get(pk=pk)
-        template = 'settings/delete_drug.html'
-        context = {'drug': drug}
-        if request.method == 'POST':
-            if request.POST['choice'] == 'yes':
-                drug.delete()
-                return redirect(reverse('settings:settings'))
-            else:
-                return redirect(reverse('settings:settings'))
-        return render(request, template, context)
-    except ObjectDoesNotExist:
-        return redirect(reverse('settings:settings'))
+    drug = Drugs.objects.get(pk=pk)
+    template = 'settings/delete_drug.html'
+    context = {'drug': drug}
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        drug.delete()
+        drugs_list = Drugs.objects.filter(created_by=request.user)
+        context = {'drugs': drugs_list, 'form': DrugsFilterForm}
+        data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
+    return JsonResponse(data)
+
 
 
 

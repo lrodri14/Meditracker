@@ -92,6 +92,13 @@ class DrugsForm(forms.ModelForm):
         exclude = ('created_by',)
 
 
+class DrugsFilterForm(forms.ModelForm):
+    class Meta:
+        model = Drugs
+        exclude = ('created_by',)
+
+
+
 
 
 

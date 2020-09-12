@@ -34,6 +34,8 @@ if (document.querySelectorAll('.modal') !== 'undefined' && document.querySelecto
     var modalContent = document.querySelector('.modal-content')
 }
 
+var backedUpData = tbody.innerHTML
+
 // Async Functions
 
 // Delete button event
@@ -191,6 +193,7 @@ if (modal){
                 if (data.hasOwnProperty('patients')){
                     modalContent.innerHTML = data['html']
                     tbody.innerHTML = data['patients']
+                    backedUpData = tbody.innerHTML
                 }else{
                     modalContent.innerHTML = data['html']
                 }
@@ -218,8 +221,6 @@ if (i){
 // Is this a good practice? Using event delegation to all the form ChildNodes?
 // Or should they be separate?
 if (form){
-
-    const backedUpData = tbody.innerHTML
 
     form.addEventListener('mouseover', (e) => {
 

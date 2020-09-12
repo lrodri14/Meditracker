@@ -23,6 +23,9 @@ class Drugs(models.Model):
     created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True, help_text='Drug created by',
                                    related_name='created_by', verbose_name='Created By')
 
+    class Meta:
+        unique_together = ['name', 'created_by']
+
     def __str__(self):
         return self.name
 
