@@ -27,10 +27,17 @@ def settings(request):
 
 
 def insurance_list(request):
-    insurances_list = InsuranceCarrier.objects.filter(country=request.user.profile.origin)
+    insurances_list = InsuranceCarrier.objects.filter(created_by=request.user)
     template = 'settings/insurance_list.html'
     context = {'insurances': insurances_list, 'form': forms.InsuranceCarrierFilterForm}
     data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        filter_form = forms.InsuranceCarrierFilterForm(request.POST)
+        if filter_form.is_valid():
+            updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user, company__icontains=filter_form.cleaned_data['company'])
+            if len(updated_insurances) > 0:
+                context['insurances'] = updated_insurances
+                data = {'updated_html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -107,6 +114,13 @@ def allergies_list(request):
     template = 'settings/allergies_list.html'
     context = {'allergies': allergies_created, 'form': forms.AllergiesFilterForm}
     data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        filter_form = forms.AllergiesFilterForm(request.POST)
+        if filter_form.is_valid():
+            updated_allergies = Allergies.objects.filter(created_by=request.user, allergy_type__icontains=filter_form.cleaned_data['allergy_type'])
+            if len(updated_allergies) > 0:
+                context['allergies'] = updated_allergies
+                data = {'updated_html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -182,6 +196,13 @@ def drugs_list(request):
     template = 'settings/drugs_list.html'
     context = {'drugs': drugs_list, 'form': DrugsFilterForm}
     data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        filter_form = DrugsFilterForm(request.POST)
+        if filter_form.is_valid():
+            updated_drugs = Drugs.objects.filter(created_by=request.user, name__icontains=filter_form.cleaned_data['name'])
+            if len(updated_drugs) > 0:
+                context['drugs'] = updated_drugs
+                data = {'updated_html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 

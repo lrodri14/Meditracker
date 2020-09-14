@@ -14,8 +14,21 @@
     <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
 </head>
 <body>
-    {%block return%}<a href=""><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}{%block home%}<a href="{%url 'home:home'%}"><i class="fas fa-home"></i></a>{%endblock%}
+    {%block return%}<a href=""><i class="fas fa-long-arrow-alt-left" id="backwards"></i></a>{%endblock%}{%block home%}<i class="fas fa-bars" id="bars"></i>{%endblock%}
+    <div class="menu">
+        <h2 id="Menu">Menu <span class="close">X</span></h2>
+        <div><p><i class="fas fa-home"></i>Home</p></div>
+        <div><p><i class="fas fa-user-injured"></i>Patients</p></div>
+        <div><p><i class="far fa-calendar-check"></i>Appointments</p></div>
+        <div><p><i class="far fa-clipboard"></i>Records</p></div>
+        <div><p><i class="fas fa-file-invoice"></i>Reports</p></div>
+        <div><p><i class="fas fa-handshake"></i>Providers</p></div>
+        <div><p><i class="fas fa-cog"></i>Settings</p></div>
+        <div><p><i class="fas fa-user"></i>Profile</p></div>
+        <p id="watermark">Telematica</p>
+    </div>
     {%block body_block%}
     {%endblock%}
+    <script src="{%static 'base/js/base.js'%}"></script>
 </body>
 </html>

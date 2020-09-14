@@ -97,6 +97,10 @@ table{
     transition: 0.5;
 }
 
+.fa-plus{
+    padding: 5px 10px 5px 5px;
+}
+
 tr{
     transition: 0.5s;
     line-height: 20px;

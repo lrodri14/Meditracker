@@ -19,7 +19,22 @@ class Cie10Group(models.Model):
 
 
 class Drugs(models.Model):
+    CATEGORY_CHOICES = (
+        ('AP', 'Antipyretics'),
+        ('AG', 'Analgesics'),
+        ('AM', 'Antimalarial'),
+        ('AB', 'Antibiotics'),
+        ('AS', 'Antiseptics'),
+        ('MS', 'Mood Stabilizers'),
+        ('HR', 'Hormone Replacement'),
+        ('OC', 'Oral Contraceptives'),
+        ('S', 'Stimulants'),
+        ('T', 'Tranquilizers'),
+        ('ST', 'Statins'),
+
+    )
     name = models.CharField('drugs', max_length=200, blank=False, null=True, help_text='drugs name')
+    category = models.CharField('category', max_length=50, blank=False, null=True, help_text='Category', choices=CATEGORY_CHOICES)
     created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True, help_text='Drug created by',
                                    related_name='created_by', verbose_name='Created By')
 

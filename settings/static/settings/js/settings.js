@@ -12,6 +12,8 @@ if (document.querySelector('.modal') !== 'undefined' && document.querySelector('
 
 var body = document.querySelector('body')
 
+var backedUpContent
+
 // Async Functions
 async function displaySettingsAW(url){
     const result = await fetch(url)
@@ -43,6 +45,12 @@ async function viewElementAW(url){
     return data
 }
 
+async function filterResultsAW(url, method, csrfmiddlewaretoken, formData){
+    const result = await fetch(url, {method:method, headers: {'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
+    const data = await result.json()
+    return data
+}
+
 // Functions
 //Add Data
 function addData(){
@@ -58,7 +66,6 @@ function addData(){
         console.log(addData)
     }
 }
-
 
 // Body Event Listeners
 
@@ -78,11 +85,13 @@ body.addEventListener('click', (e) => {
         if (item.classList.contains('li-active')){
             item.classList.remove('li-active')
             wrapper.innerHTML = ''
+            backedUpContent = ''
         }else{
             item.classList.add('li-active')
             displaySettingsAW(url)
             .then(data => {
                 wrapper.innerHTML = data['html']
+                backedUpContent = wrapper.innerHTML
             })
         }
 }
@@ -236,8 +245,29 @@ if (wrapper){
             })
         }
     })
-}
 
+    wrapper.addEventListener('input', (e) => {
+        if (e.target.nodeName === 'INPUT'){
+            let form = e.target.parentNode.parentNode
+            let url = form.action
+            let method = form.method
+            let csrfmiddlewaretoken = document.querySelector("." + e.target.classList[0] + ' > [name=csrfmiddlewaretoken]')
+            let data = new FormData(form)
+            filterResultsAW(url, method, csrfmiddlewaretoken, data)
+            .then(data => {
+                var tbody = document.querySelector('tbody')
+                var start = data['updated_html'] ? data['updated_html'].search('<tbody>') : backedUpContent.search('<tbody>')
+                var end = data['updated_html'] ? data['updated_html'].search('</tbody>') : backedUpContent.search('</tbody>')
+                if (data['updated_html']){
+                    var newData = data['updated_html'].slice(start + 8,end)
+                    tbody.innerHTML = newData
+                }else{
+                    var newData = backedUpContent.slice(start + 8,end)
+                    tbody.innerHTML = newData
+                }
+                })
+            }})
+    }
 
 // Modal Event Listeners
 if (modal){

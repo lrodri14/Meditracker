@@ -7,6 +7,7 @@
                 <thead>
                     <tr id="heading">
                         <th>Company</th>
+                        <th>Country</th>
                         <th>Edit</th>
                         <th>Delete</th>
                         <th><a href="{%url 'settings:insurance_add' %}"><i class="fas fa-plus"></i></a></th>
@@ -16,6 +17,7 @@
                 {%for i in insurances%}
                     <tr data-url="{%url 'settings:insurance_details' i.pk%}">
                         <td>{{i.company}}</td>
+                        <td>{{i.get_country_display}}</td>
                         <td><a href="{%url 'settings:insurance_update' i.pk%}"><i class="fas fa-edit"></i></a></td>
                         <td><a href="{%url 'settings:insurance_delete' i.pk%}"><i class="fas fa-trash"></i></a></td>
                         <td></td>
@@ -26,7 +28,7 @@
         </div>
         <div>
             <i class="fas fa-filter"></i>
-            <form action="" class="filter-form" autocomplete="off">
+            <form method="POST" action="{%url 'settings:insurance_list'%}" class="filter-form" autocomplete="off">
                 <h3>Filter Insurance</h3>
                 {%csrf_token%}
                 <p>{{form.company.label}}</p>

@@ -7,6 +7,7 @@
                 <thead>
                     <tr id="heading">
                         <th>Drug</th>
+                        <th>Category</th>
                         <th>Edit</th>
                         <th>Delete</th>
                         <th><a href="{%url 'settings:drug_add'%}"><i class="fas fa-plus"></i></a></th>
@@ -16,6 +17,7 @@
                  {%for d in drugs%}
                     <tr data-url="{%url 'settings:drug_details' d.pk%}">
                         <td>{{d.name}}</td>
+                        <td>{{d.get_category_display}}</td>
                         <td><a href="{%url 'settings:drug_update' d.pk%}"><i class="fas fa-edit"></i></a></td>
                         <td><a href="{%url 'settings:drug_delete' d.pk%}"><i class="fas fa-trash"></i></a></td>
                         <td></td>
@@ -26,7 +28,7 @@
         </div>
         <div class="form">
             <i class="fas fa-filter"></i>
-            <form method="POST" action="" class="filter-form">
+            <form method="POST" action="{%url 'settings:drugs_list'%}" class="filter-form" autocomplete="off">
                 <h3>Drug Filter</h3>
                 {%csrf_token%}
                 <p>{{form.name.label}}</p>
