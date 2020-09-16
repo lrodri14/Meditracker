@@ -1,37 +1,22 @@
 ////Checked
 ////Sound
-if (document.querySelector('#add_patients') !== 'undefined' && document.querySelector('#add_patients') !== 'null'){
-    var addPatient = document.querySelector('#add_patients')
-}
-
-if (document.querySelector('.fa-filter') !== 'undefined' && document.querySelector('.fa-filter') !== 'null'){
+if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
+    var wrapper = document.querySelector('.wrapper')
     var i = document.querySelector('.fa-filter')
-}
-
-if (document.querySelector('form') !== 'undefined' && document.querySelector('form') !== 'null'){
     var form = document.querySelector('form')
-}
-
-if (document.querySelector('#id_patient') !== 'undefined' && document.querySelector('#id_patient') !== 'null'){
     var input = document.querySelector('#id_patient')
-}
-
-if (document.querySelectorAll('button') !== 'undefined' && document.querySelectorAll('button') !== 'null'){
     var button = document.querySelectorAll('button')
-}
-
-if (document.querySelector('table') !== 'undefined' && document.querySelector('table') !== 'null'){
     var table = document.querySelector('table')
     var tbody = document.querySelector('tbody')
-}
-
-if (document.querySelectorAll('.delete') !== 'undefined' && document.querySelectorAll('.delete') !== 'null'){
     var deletion = document.querySelectorAll('.delete')
-}
-
-if (document.querySelectorAll('.modal') !== 'undefined' && document.querySelectorAll('.modal') !== 'null'){
     var modal = document.querySelector('.modal')
     var modalContent = document.querySelector('.modal-content')
+    var info = document.querySelector('.info')
+    var infoContent = document.querySelector('.info-content')
+}
+
+if (document.querySelector('#add_patients') !== 'undefined' && document.querySelector('#add_patients') !== 'null'){
+    var addPatient = document.querySelector('#add_patients')
 }
 
 var backedUpData = tbody.innerHTML
@@ -72,13 +57,12 @@ if (addPatient){
     },500)
 }
 
-// Table
+// Wrapper
+if (wrapper){
 
-if (table){
+    wrapper.addEventListener('mouseover', (e) => {
 
-    table.addEventListener('mouseover', (e) => {
-
-          if (e.target.nodeName === 'TD' || (e.target.nodeName === 'I' && !e.target.classList.contains('fa-plus'))){
+        if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')) && !e.target.classList.contains('fa-plus'))){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
             const childNodes = row.childNodes
@@ -95,9 +79,9 @@ if (table){
                             }
                         }
                     }
-                }
+            }
 
-          }
+        }
         //*********************************************************
         // These deletion elements have a parent with a click event
         // So event delegation can not be set to the table tag, but td and tr's are added dynamically
@@ -105,19 +89,45 @@ if (table){
         let deletion = document.querySelectorAll('.delete')
         for (let i = 0; i<deletion.length; i++){
             deletion[i].addEventListener('click', (e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                deleteAW(deletion[i].href)
-                .then(data => {
-                    modal.classList.add('modal-show')
-                    modalContent.innerHTML = data['html']
-                })
+            e.preventDefault()
+            e.stopPropagation()
+            deleteAW(deletion[i].href)
+            .then(data => {
+                modal.classList.add('modal-show')
+                modalContent.innerHTML = data['html']
+            })
             })
         }
-    })
 
-    table.addEventListener('mouseout', (e) => {
-      if (e.target.nodeName === 'TD' || e.target.nodeName === 'I'){
+        if (e.target.classList.contains('info-tab') || e.target.parentNode.classList.contains('info-tab')){
+            let tab = e.target.classList.contains('info-tab') ? e.target : e.target.parentNode
+            tab.classList.add('tab-hover')
+        }
+
+        if (e.target.classList.contains('quit') || e.target.parentNode.classList.contains('quit')){
+            let tab = e.target.classList.contains('quit') ? e.target : e.target.parentNode
+            tab.classList.add('quit-hover')
+        }
+
+        if (e.target.nodeName === 'INPUT'){
+            const input = e.target
+            input.style.width = '75%'
+        }
+
+        if (e.target.nodeName === 'BUTTON'){
+            const button = e.target
+            button.classList.add('button-form-hover')
+        }
+
+        if (e.target.classList.contains('fa-filter')){
+            e.target.classList.add('button-hover')
+        }
+
+        })
+
+    wrapper.addEventListener('mouseout', (e) => {
+
+      if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')) && !e.target.classList.contains('fa-plus'))){
         let row
         e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
         const childNodes = row.childNodes
@@ -136,7 +146,6 @@ if (table){
                 }
 
       }
-     })
 
     // Elements to open modal not working because of parent, it has a click event too and is being fired.
     // How to deal with this?
@@ -152,12 +161,66 @@ if (table){
         //            })
         //        }
         //    })
-    }
-//}
 
-//Modal event
-if (modal){
-    modal.addEventListener('click', (e) => {
+        if (e.target.classList.contains('info-tab') || e.target.parentNode.classList.contains('info-tab')){
+            let tab = e.target.classList.contains('info-tab') ? e.target : e.target.parentNode
+            tab.classList.remove('tab-hover')
+        }
+
+        if (e.target.classList.contains('quit') || e.target.parentNode.classList.contains('quit')){
+            let tab = e.target.classList.contains('quit') ? e.target : e.target.parentNode
+            tab.classList.remove('quit-hover')
+        }
+
+
+        if (e.target.nodeName === 'INPUT'){
+            const input = e.target
+            input.style.width = ''
+        }
+
+        if (e.target.nodeName === 'BUTTON'){
+            const button = e.target
+            button.classList.remove('button-form-hover')
+        }
+
+        if (e.target.classList.contains('fa-filter')){
+            e.target.classList.remove('button-hover')
+        }
+
+     })
+
+    wrapper.addEventListener('click', (e) => {
+
+        if (e.target.nodeName === 'TD'){
+            let id = e.target.parentNode.getAttribute('data-id')
+            table.classList.add('hide')
+            i.classList.add('hide')
+            info.classList.add('info-display')
+            info.setAttribute('data-id', id)
+            infoContent.classList.add
+        }
+
+        if (e.target.classList.contains('info-tab') || e.target.parentNode.classList.contains('info-tab')){
+            let tab = e.target.classList.contains('info-tab') ? e.target : e.target.parentNode
+            let tabs = document.querySelectorAll('.info-tab')
+            for (let i = 0; i<tabs.length; i++){
+                if (tabs[i].classList.contains('tab-active') && tabs[i] !== tab){
+                    tabs[i].classList.remove('tab-active')
+                }
+            }
+            if (tab.classList.contains('tab-active')){
+                tab.classList.remove('tab-active')
+            } else{
+                tab.classList.add('tab-active')
+            }
+        }
+
+        if (e.target.classList.contains('quit') || e.target.parentNode.classList.contains('quit')){
+            info.classList.remove('info-display')
+            table.classList.remove('hide')
+            i.classList.remove('hide')
+        }
+
         if (e.target === modal){
             modal.classList.remove('modal-show')
         }
@@ -167,23 +230,15 @@ if (modal){
             e.preventDefault()
             modal.classList.remove('modal-show')
         }
-    })
 
-    modal.addEventListener('mouseover', (e) => {
-        if (e.target.nodeName === 'BUTTON'){
-            const button = e.target
-            button.classList.add('button-form-hover')
+        if (e.target.classList.contains('fa-filter')){
+            !form.classList.contains('show-form') ? form.classList.add('show-form') : form.classList.remove('show-form')
         }
+
     })
 
-    modal.addEventListener('mouseout', (e) => {
-        if (e.target.nodeName === 'BUTTON'){
-            const button = e.target
-            button.classList.remove('button-form-hover')
-        }
-    })
+    wrapper.addEventListener('submit', (e) => {
 
-    modal.addEventListener('submit', (e) => {
         const form = document.querySelector('#modal-form')
         const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
         if (e.target === form){
@@ -199,58 +254,10 @@ if (modal){
                 }
             })
         }
-    })
-}
-
-// Show filter button
-if (i){
-    i.addEventListener('mouseover', function(){
-        this.classList.add('button-hover')
-    })
-
-    i.addEventListener('mouseout', function(){
-        this.classList.remove('button-hover')
-    })
-
-    i.addEventListener('click', function(){
-        !form.classList.contains('show-form') ? form.classList.add('show-form') : form.classList.remove('show-form')
-    })
-}
-
-// Form
-// Is this a good practice? Using event delegation to all the form ChildNodes?
-// Or should they be separate?
-if (form){
-
-    form.addEventListener('mouseover', (e) => {
-
-        if (e.target.nodeName === 'INPUT'){
-            const input = e.target
-            input.style.width = '75%'
-        }
-
-        if (e.target.nodeName === 'BUTTON'){
-            const button = e.target
-            button.classList.add('button-form-hover')
-        }
 
     })
 
-    form.addEventListener('mouseout', (e) => {
-
-        if (e.target.nodeName === 'INPUT'){
-            const input = e.target
-            input.style.width = ''
-        }
-
-        if (e.target.nodeName === 'BUTTON'){
-            const button = e.target
-            button.classList.remove('button-form-hover')
-        }
-
-    })
-
-    form.addEventListener('input', (e) => {
+    wrapper.addEventListener('input', (e) => {
 
         if (e.target.nodeName === 'INPUT'){
             const url = form.action
@@ -267,5 +274,7 @@ if (form){
                 tbody.innerHTML = backedUpData
             }
         }
+
     })
+
 }

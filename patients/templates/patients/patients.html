@@ -31,12 +31,24 @@
                     {%include 'patients/patients_partial_list.html'%}
                 </tbody>
             </table>
+
+            <!--Info-->
+            <div class="info">
+                <div class="info-tab"><p>General</p></div><div class="info-tab"><p>Background</p></div><div class="info-tab"><p>Appointments</p></div><div class="info-tab"><p>Exams</p></div><div class="info-tab"><p>Charges</p></div><div class="quit"><p>X</p></div>
+            </div>
+
+            <!--Info Content-->
+            <div class="info-content">
+
+            </div>
+
             <!--Modal-->
             <div class="modal">
                 <div class="modal-content">
 
                 </div>
             </div>
+
             {% if patients.has_other_pages %}
             <div class="list-container">
               <ul class="pagination">
