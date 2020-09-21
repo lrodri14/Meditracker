@@ -11,8 +11,9 @@
     <h2>Date: {{consult.datetime}}</h2>
 </div>
 
-<div class="wrapper">
-    <div>
+<a href="{%url 'appointments:create_pdf' consult.pk%}"><i class="fas fa-print"></i></a>
+<div class="general-info">
+    <div class="general">
         <h1>Appointment General Info</h1>
         <hr>
         <h3>Patient: {{consult.patient.first_names}} {{consult.patient.last_names}}</h3>
@@ -21,8 +22,8 @@
         <h3>Motive: {{consult.motive}}</h3>
         <h3>Suffering: {{consult.suffering}}</h3>
     </div>
-    <div>
-        <h1>Vital Signs <a href="{%url 'appointments:create_pdf' consult.pk%}"><i class="fas fa-download"></i></a></h1>
+    <div class="vital-signs">
+        <h1>Vital Signs</h1>
         <hr>
         <h3>Blood Pressure: {{consult.blood_pressure}}</h3>
         <h3>Temperature: {{consult.temperature}}</h3>
@@ -30,42 +31,54 @@
         <h3>Weight: {{consult.weight}}</h3>
     </div>
 </div>
-<h1>Exams</h1>
-<hr>
-<h3>Exams: {{consult.medical_exams}}</h3>
-<h1>Organ System</h1>
-<hr>
-<h3>Digestive System: {{consult.digestive_system}}</h3>
-<h3>Endocrine System: {{consult.endocrine_system}}</h3>
-<h3>Renal System: {{consult.renal_system}}</h3>
-<h3>Lymphatic System: {{consult.lymphatic_system}}</h3>
-<h3>Respiratory System: {{consult.respiratory_system}}</h3>
-<h3></h3>
-<h1>Physical Exploration</h1>
-<hr>
-<h3>Head Exploration: {{consult.head_exploration}}</h3>
-<h3>Thorax Exploration: {{consult.thorax_exploration}}</h3>
-<h1>Diagnose</h1>
-<hr>
-<h3>CIE-10 Group: {{consult.cie_10_group}}</h3>
-<h3>CIE-10 Detail: {{consult.cie_10_detail}}</h3>
-<h3>Diagnose: {{consult.diagnose}}</h3>
-<h3>Procedure: {{consult.procedure}}</h3>
-<h3>Analysis: {{consult.analysis}}</h3>
-<h3>Notes: {{consult.notes}}</h3>
+<div class="exams">
+    <h1>Exams</h1>
+    <hr>
+    <h3>Exams: <a href="{{MEDIA_URL}}{{consult.medical_exams}}">{{consult.medical_exams}}</a></h3>
+</div>
+<div class="exploration">
+    <div class="organ-systems">
+        <h1>Organ System</h1>
+        <hr>
+        <h3>Digestive System: {{consult.digestive_system}}</h3>
+        <h3>Endocrine System: {{consult.endocrine_system}}</h3>
+        <h3>Renal System: {{consult.renal_system}}</h3>
+        <h3>Lymphatic System: {{consult.lymphatic_system}}</h3>
+        <h3>Respiratory System: {{consult.respiratory_system}}</h3>
+    </div>
+    <div class="physical">
+        <h1>Physical Exploration</h1>
+        <hr>
+        <h3>Head Exploration: {{consult.head_exploration}}</h3>
+        <h3>Thorax Exploration: {{consult.thorax_exploration}}</h3>
+    </div>
+</div>
+<div class="diagnose">
+    <h1>Diagnose</h1>
+    <hr>
+    <h3>CIE-10 Group: {{consult.cie_10_group}}</h3>
+    <h3>CIE-10 Detail: {{consult.cie_10_detail}}</h3>
+    <h3>Diagnose: {{consult.diagnose}}</h3>
+    <h3>Procedure: {{consult.procedure}}</h3>
+    <h3>Analysis: {{consult.analysis}}</h3>
+    <h3>Notes: {{consult.notes}}</h3>
+</div>
+<div class="treatment">
 <h1>Treatment: {{consult.treatment}}</h1>
-<hr>
-<h3>Drugs Used:</h3>
-{%for drug in consult.drugs.all%}
-    <p>{{drug}}</p>
-{%endfor%}
-{%for medicine in consult.medicine.splitlines%}
-    <p>{{medicine}}</p>
-{%endfor%}
-<h3>Actions:</h3>
-{%for actions in consult.actions.splitlines%}
-    <p>{{actions}}</p>
-{%endfor%}
+    <hr>
+    <h3>Drugs Used:</h3>
+    {%for drug in consult.drugs.all%}
+        <p>{{drug}}</p>
+    {%endfor%}
+    {%for medicine in consult.medicine.splitlines%}
+        <p>{{medicine}}</p>
+    {%endfor%}
+    <h3>Actions:</h3>
+    {%for actions in consult.actions.splitlines%}
+        <p>{{actions}}</p>
+    {%endfor%}
+</div>
+
 <script src="{%static 'appointments/js/consult_details.js'%}"></script>
 {%endblock%}
 

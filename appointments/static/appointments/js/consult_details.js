@@ -1,10 +1,10 @@
 //Checked
-var download = document.querySelector('.fa-download')
+var download = document.querySelector('.fa-print')
 
 download.addEventListener('mouseover', function(){
-    this.classList.add('fa-download-hover')
+    this.classList.add('fa-print-hover')
 })
 
 download.addEventListener('mouseout', function(){
-    this.classList.remove('fa-download-hover')
+    this.classList.remove('fa-print-hover')
 })
