@@ -326,6 +326,7 @@ if (modal){
                         modalContent.innerHTML = data['html']
                     }else{
                         wrapper.innerHTML = data['updated_html']
+                        backedUpContent = wrapper.innerHTML
                         modal.classList.remove('show-modal')
                     }
                 })
@@ -334,6 +335,7 @@ if (modal){
                 .then(data => {
                     wrapper.innerHTML = data['updated_html']
                     modal.classList.remove('show-modal')
+                    backedUpContent = wrapper.innerHTML
                     }
                 )
             }

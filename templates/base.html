@@ -17,14 +17,14 @@
     {%block return%}<a href=""><i class="fas fa-long-arrow-alt-left" id="backwards"></i></a>{%endblock%}{%block home%}<i class="fas fa-bars" id="bars"></i>{%endblock%}
     <div class="menu">
         <h2 id="Menu">Menu <span class="close">X</span></h2>
-        <div><p><i class="fas fa-home"></i>Home</p></div>
-        <div><p><i class="fas fa-user-injured"></i>Patients</p></div>
-        <div><p><i class="far fa-calendar-check"></i>Appointments</p></div>
-        <div><p><i class="far fa-clipboard"></i>Records</p></div>
-        <div><p><i class="fas fa-file-invoice"></i>Reports</p></div>
-        <div><p><i class="fas fa-handshake"></i>Providers</p></div>
-        <div><p><i class="fas fa-cog"></i>Settings</p></div>
-        <div><p><i class="fas fa-user"></i>Profile</p></div>
+        <div onclick="window.location='{%url 'home:home'%}'"><p><i class="fas fa-home"></i></p></div>
+        <div onclick="window.location='{%url 'patients:patients'%}'"><p><i class="fas fa-user-injured"></i></p></div>
+        <div onclick="window.location='{%url 'appointments:consults'%}'"><p><i class="far fa-calendar-check"></i></p></div>
+        <div><p><i class="far fa-clipboard"></i></p></div>
+        <div><p><i class="fas fa-file-invoice"></i></p></div>
+        <div><p><i class="fas fa-handshake"></i></p></div>
+        <div onclick="window.location='{%url 'settings:settings'%}'"><p><i class="fas fa-cog"></i></p></div>
+        <div onclick="window.location='{%url 'accounts:profile'%}'"><p><i class="fas fa-user"></i></p></div>
         <p id="watermark">Telematica</p>
     </div>
     {%block body_block%}

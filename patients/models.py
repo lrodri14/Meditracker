@@ -8,6 +8,13 @@ user = get_user_model()
 
 
 class Patient(models.Model):
+
+    GENDER_CHOICES = (
+        ('F', 'Femenine'),
+        ('M', 'Masculine'),
+        ('O', 'Other'),
+    )
+
     CIVIL_STATUS_CHOICES = (
         ('S', 'Single'),
         ('M', 'Married'),
@@ -30,8 +37,10 @@ class Patient(models.Model):
                                 help_text="Patient's Name")
     last_names = models.CharField('patients last name', max_length=50, null=False, blank=False,
                                  help_text="Patient's Last Name")
+    gender = models.CharField("Patient's Gender", max_length=20, null=True, blank=False, help_text='Gender', choices=GENDER_CHOICES)
     birthday = models.DateField('patients birthday', help_text="Patients date of birth")
     phone_number = models.CharField('phone number', max_length=20, blank=True, null=True, help_text='Phone Number')
+    email = models.EmailField("Patient's Email", null=True, blank=True, help_text='Email')
     civil_status = models.CharField(max_length=12, choices=CIVIL_STATUS_CHOICES)
     origin = models.CharField(max_length=50, choices=PROCEDENCE_CHOICES)
     residence = models.CharField(max_length=50, choices=RESIDENCE_CHOICES)

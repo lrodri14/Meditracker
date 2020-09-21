@@ -59,6 +59,11 @@ class AgendaDateFilterForm(forms.Form):
     date_to = forms.DateField(widget=forms.SelectDateWidget(years=years), initial=timezone.now())
 
 
+class ConsultsDetailsFilterForm(forms.Form):
+    date_from = forms.DateField(widget=forms.SelectDateWidget(years=years), initial=timezone.now())
+    date_to = forms.DateField(widget=forms.SelectDateWidget(years=years), initial=timezone.now())
+
+
 MONTH_CHOICES = (
     (0, '-------'),
     (1, 'January'),
@@ -96,10 +101,6 @@ class DrugsFilterForm(forms.ModelForm):
     class Meta:
         model = Drugs
         exclude = ('created_by',)
-
-
-
-
 
 
 

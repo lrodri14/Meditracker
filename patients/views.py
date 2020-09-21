@@ -7,6 +7,8 @@ from .models import *
 from django.db.models import Q
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
+from appointments.forms import ConsultsDetailsFilterForm
+from django.conf import settings
 
 # Create your views here.
 
@@ -72,8 +74,30 @@ def add_patient(request):
 
 def patient_details(request, pk):
     patient = Patient.objects.get(pk=pk)
+    consults = Consults.objects.filter(patient=patient, created_by=request.user)
     template = 'patients/patient_details.html'
-    return render(request, template, context={'patient': patient})
+    context = {'patient': patient, 'consults': consults, 'consults_form': ConsultsDetailsFilterForm}
+    if request.method == 'POST':
+        consults_form = ConsultsDetailsFilterForm(request.POST)
+        if consults_form.is_valid():
+            date_from = consults_form.cleaned_data['date_from']
+            date_to = consults_form.cleaned_data['date_to']
+            updated_consults = Consults.objects.filter(patient=patient, created_by=request.user, datetime__date__gte=date_from, datetime__date__lte=date_to)
+            if len(updated_consults) > 0:
+                context['consults'] = updated_consults
+                for p in updated_consults:
+                    print(p.datetime.date())
+            else:
+                context['error'] = 'No records found'
+            data = dict()
+            if request.headers['Filtertype'] == 'appointments':
+                data = {'html': render_to_string('patients/patient_consults_partial_list.html', context, request)}
+            elif request.headers['Filtertype'] == 'exams':
+                data = {'html': render_to_string('patients/patient_exams_partial_list.html', context, request)}
+            else:
+                data = {'html': render_to_string('patients/patient_charges_partial_list.html', context, request)}
+            return JsonResponse(data)
+    return render(request, template, context)
 
 
 def patient_delete(request, pk):
@@ -103,10 +127,10 @@ def patient_update(request, pk):
     patient_allergies = AllergiesInformation.objects.get(patient=patient)
     patient_insurance = InsuranceInformation.objects.get(patient=patient)
     patient_antecedents = Antecedents.objects.get(patient=patient)
-    patient_form = PatientForm(instance=patient)
-    allergies_form = AllergiesInformationForm(instance=patient_allergies)
-    insurance_form = InsuranceInformationForm(instance=patient_insurance)
-    antecedents_form = AntecedentForm(instance=patient_antecedents)
+    patient_form = PatientForm(request.POST or None, instance=patient)
+    allergies_form = AllergiesInformationForm(request.POST or None, instance=patient_allergies)
+    insurance_form = InsuranceInformationForm(request.POST or None, instance=patient_insurance)
+    antecedents_form = AntecedentForm(request.POST or None, instance=patient_antecedents)
     if request.method == 'POST':
         if patient_form.is_valid() and allergies_form.is_valid() and insurance_form.is_valid() and antecedents_form.is_valid():
             patient_form.save()

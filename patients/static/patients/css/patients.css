@@ -1,4 +1,9 @@
 /*Checked*/
+
+body{
+    overflow-x: hidden;
+}
+
 /*Wrapper*/
 .wrapper{
     display: grid;
@@ -37,11 +42,6 @@ tr{
     transition: 0.5s;
 }
 
-.tr-hide{
-    display:none;
-    transition: 0.5s;
-}
-
 tr th{
     padding-top: 10px;
     padding-bottom: 10px;
@@ -70,61 +70,6 @@ tr:nth-child(even){
     cursor: pointer;
     line-height: 50px;
     color: #12212b;
-}
-
-.info{
-    width: 60%;
-    margin-left: 20%;
-    margin-top: 1%;
-    background-color: #12212b;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.5s;
-}
-
-.info-display{
-    visibility: visible;
-    opacity: 1;
-    transition: 0.5s;
-}
-
-.info-tab{
-    text-align: center;
-    width: 19%;
-    display: inline-block;
-    transition: 0.5s;
-}
-
-.quit{
-    text-align: center;
-    width: 5%;
-    display: inline-block;
-    background-color: #d41e1e;
-    color: #12212b;
-    transition: 0.5s;
-}
-
-.quit-hover{
-    background-color: #ff1100;
-    cursor: pointer;
-}
-
-.tab-hover{
-    background-color: cyan;
-    color: #12212b;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.tab-active{
-    background-color: cyan;
-    color: #12212b;
-    transition: 0.5s;
-}
-
-.info-content{
-    width: 100%;
-    background-color: #12212b;
 }
 
 /*Form*/

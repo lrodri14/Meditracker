@@ -75,8 +75,8 @@ class Consults(models.Model):
     weight = models.FloatField('weight', blank=True, null=True, help_text='weight')
     size = models.FloatField('size', blank=True, null=True, help_text='size')
     # Exams
-    medical_exams = models.FileField('medical exams', blank=True, null=True, help_text='Attach exams if availalble',
-                                     upload_to='appointmens/exams')
+    medical_exams = models.FileField('medical exams', blank=True, null=True, help_text='Attach exams if available',
+                                     upload_to='appointments/exams')
     # Organ System
     digestive_system = models.TextField('digestive system', blank=True, null=True, help_text='digestive system analysis')
     endocrine_system = models.TextField('endocrine system', blank=True, null=True, help_text='endocrine system analysis')

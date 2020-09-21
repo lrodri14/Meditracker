@@ -66,6 +66,7 @@ a {
     top: 0;
     left:0;
     transition: 0.5s;
+    text-align: justify;
 }
 
 .menu-show{
@@ -82,7 +83,7 @@ a {
     border-bottom: 1px solid cyan;
     width: 100%;
     height: 10.5%;
-    text-align: center;
+    text-align: justify;
     transition: 0.5s;
 }
 
@@ -93,10 +94,12 @@ a {
     transition: 0.5s;
 }
 
-
 .menu > div > p > i{
     padding: 10px;
     font-size: 25px;
+    float: left;
+    margin-left: 40%;
+
 }
 
 

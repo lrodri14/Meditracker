@@ -2,7 +2,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Consults Details{%endblock%}
-{%block return%}<a href="{%url 'appointments:consults_list'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
+{%block return%}{%if referer == "details"%}<a href="{%url 'patients:patients_details' consult.patient.pk%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%else%}<a href="{%url 'appointments:consults_list'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endif%}{%endblock%}
 {%block body_block%}
 {%block content%}{%endblock%}
 <link rel="stylesheet" href="{%static 'appointments/css/consults_details.css'%}">

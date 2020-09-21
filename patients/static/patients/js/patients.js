@@ -162,17 +162,6 @@ if (wrapper){
         //        }
         //    })
 
-        if (e.target.classList.contains('info-tab') || e.target.parentNode.classList.contains('info-tab')){
-            let tab = e.target.classList.contains('info-tab') ? e.target : e.target.parentNode
-            tab.classList.remove('tab-hover')
-        }
-
-        if (e.target.classList.contains('quit') || e.target.parentNode.classList.contains('quit')){
-            let tab = e.target.classList.contains('quit') ? e.target : e.target.parentNode
-            tab.classList.remove('quit-hover')
-        }
-
-
         if (e.target.nodeName === 'INPUT'){
             const input = e.target
             input.style.width = ''
@@ -190,36 +179,6 @@ if (wrapper){
      })
 
     wrapper.addEventListener('click', (e) => {
-
-        if (e.target.nodeName === 'TD'){
-            let id = e.target.parentNode.getAttribute('data-id')
-            table.classList.add('hide')
-            i.classList.add('hide')
-            info.classList.add('info-display')
-            info.setAttribute('data-id', id)
-            infoContent.classList.add
-        }
-
-        if (e.target.classList.contains('info-tab') || e.target.parentNode.classList.contains('info-tab')){
-            let tab = e.target.classList.contains('info-tab') ? e.target : e.target.parentNode
-            let tabs = document.querySelectorAll('.info-tab')
-            for (let i = 0; i<tabs.length; i++){
-                if (tabs[i].classList.contains('tab-active') && tabs[i] !== tab){
-                    tabs[i].classList.remove('tab-active')
-                }
-            }
-            if (tab.classList.contains('tab-active')){
-                tab.classList.remove('tab-active')
-            } else{
-                tab.classList.add('tab-active')
-            }
-        }
-
-        if (e.target.classList.contains('quit') || e.target.parentNode.classList.contains('quit')){
-            info.classList.remove('info-display')
-            table.classList.remove('hide')
-            i.classList.remove('hide')
-        }
 
         if (e.target === modal){
             modal.classList.remove('modal-show')

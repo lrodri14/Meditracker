@@ -2,34 +2,62 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}{{patient.first_names}} {{patient.last_names}}{%endblock%}
-{%block return%}<a href="{%url 'patients:patients'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
+{%block return%}<a href="{%url 'patients:patients'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}{%block home%}{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/patient_details.css'%}">
-<div id="heading">
-    <h1 id="name">{{patient.first_names}} {{patient.last_names}}</h1>
+
+<h1 id="title">{{patient.first_names}} {{patient.last_names}}</h1>
+
+<!--Info Navigation-->
+<div class="info">
+    <div class="info-tab tab-active"><p>General</p></div><div class="info-tab"><p>Background</p></div><div class="info-tab"><p>Appointments</p></div><div class="info-tab"><p>Exams</p></div><div class="info-tab"><p>Charges</p></div>
 </div>
-<h1>Personal Info <a href="{%url 'appointments:consults_list' patient.pk%}"><i class="fas fa-book-medical"></i></a></h1>
-<hr>
-<h3>Id Card Number: {{patient.id_number}}</h3>
-<h3>Full Name: {{patient.first_names}} {{patient.last_names}}</h3>
-<h3>Birthday: {{patient.birthday|date:"d M, Y"}}</h3>
-<h3>Age: {{patient.age}}</h3>
-<h3>Phone Number: {{patient.phone_number}}</h3>
-<h3>Civil Status: {{patient.get_civil_status_display}}</h3>
-<h3>Origin: {{patient.get_origin_display}}</h3>
-<h3>Residence: {{patient.get_residence_display}}</h3>
-<h1>Allergies</h1>
-<hr>
-<h3>Allergy Type: {{patient.allergies.allergy_type}}</h3>
-<h3>About: {{patient.allergies.about}}</h3>
-<h1>Antecedents</h1>
-<hr>
-<h3>Antecedent: {{patient.antecedents.antecedent}}</h3>
-<h3>Information: {{patient.antecedents.info}}</h3>
-<h1>Insurance</h1>
-<hr>
-<h3>Insurance Carrier: {{patient.insurance.insurance_carrier}}</h3>
-<h3>Type of Insurnace: {{patient.insurance.type_of_insurance}}</h3>
-<h3>Expiration Date: {{patient.insurance.expiration_date}}</h3>
+
+<div class="wrapper">
+    <div class="general-info">
+        <div class="title">General Information</div>
+        <h3>Id Card Number: {{patient.id_number}}</h3>
+        <h3 class="name">First Name: {{patient.first_names}}</h3>
+        <h3 class="name">Last Name: {{patient.last_names}}</h3>
+        <h3>Gender: {{patient.get_gender_display}}</h3>
+        <h3>Birthday: {{patient.birthday|date:"d M, Y"}}</h3>
+        <h3>Age: {{patient.age}}</h3>
+        <h3>Phone Number: {{patient.phone_number}}</h3>
+        <h3>Email: {{patient.email}}</h3>
+        <h3>Civil Status: {{patient.get_civil_status_display}}</h3>
+        <h3>Origin: {{patient.get_origin_display}}</h3>
+        <h3>Residence: {{patient.get_residence_display}}</h3>
+    </div>
+    <div class="extras">
+        <div class="allergies">
+            <div class="title">Allergies</div>
+            <h3>Allergy Type: {{patient.allergies.allergy_type}}</h3>
+            <h3>About: {{patient.allergies.about}}</h3>
+            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aperiam aspernatur aut corporis culpa dolor doloremque, doloribus ea eius, esse explicabo ipsa laboriosam molestiae possimus quas quis quo vero voluptas.</h3>
+            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque illum perspiciatis porro quo. Dolorem in molestiae possimus. Aperiam consectetur consequatur eos odio rem suscipit, tempora tempore tenetur ullam veniam! Unde?</h3>
+        </div>
+        <div class="antecedents">
+            <div class="title">Antecedents</div>
+            <h3>Antecedent: {{patient.antecedents.antecedent}}</h3>
+            <h3>Information: {{patient.antecedents.info}}</h3>
+        </div>
+        <div class="insurance">
+            <div class="title">Insurance</div>
+            <h3>Insurance Carrier: {{patient.insurance.insurance_carrier}}</h3>
+            <h3>Type of Insurnace: {{patient.insurance.type_of_insurance}}</h3>
+            <h3>Expiration Date: {{patient.insurance.expiration_date}}</h3>
+            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto, aspernatur aut, autem commodi culpa eligendi exercitationem fuga illum inventore ipsam itaque iure quaerat quam quas recusandae unde velit. Itaque?</h3>
+        </div>
+    </div>
+    <div class="filterable appointments">
+        {%include 'patients/patient_consults_partial_list.html'%}
+    </div>
+    <div class="filterable exams">
+        {%include 'patients/patient_exams_partial_list.html'%}
+    </div>
+    <div class="filterable charges">
+        {%include 'patients/patient_charges_partial_list.html'%}
+    </div>
+</div>
 <script src="{%static 'patients/js/patient_details.js'%}"></script>
 {%endblock%}

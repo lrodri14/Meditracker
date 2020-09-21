@@ -29,7 +29,7 @@ def consults(request):
     return render(request, template, context)
 
 
-def consults_list(request, pk=None):
+def consults_list(request):
     appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True).order_by('-datetime')
     paginator = Paginator(appointments_list, 25)
     page = request.GET.get('page')
@@ -37,13 +37,6 @@ def consults_list(request, pk=None):
     form = RecordsDateFilterForm
     template = 'appointments/consults_list.html'
     context = {'appointments': appointments, 'form': form}
-    if pk:
-        patient = Patient.objects.get(pk=pk)
-        appointments = Consults.objects.filter(created_by=request.user, medical_status=True, patient=patient)
-        form = RecordsDateFilterForm
-        template = 'appointments/consults_list.html'
-        context = {'appointments': appointments, 'form': form}
-        return render(request, template, context)
     if request.method == 'POST':
         form = RecordsDateFilterForm(request.POST)
         if form.is_valid():
@@ -70,7 +63,7 @@ def create_consult(request):
             consult = consults_form.save(commit=False)
             consult.created_by = request.user
             consult.save()
-            data = {'success': 'Patient created successfully'}
+            data = {'success': 'Consult created successfully'}
         else:
             context['unique_error'] = 'There is a consult created for that date and time already.'
             data = {'html': render_to_string(template, context, request)}
@@ -81,16 +74,20 @@ def consults_details(request, pk):
     consult = Consults.objects.get(pk=pk)
     template = 'appointments/consult_details.html'
     context = {'consult': consult}
+    if 'patients/details' in request.META.get('HTTP_REFERER'):
+        context['referer'] = 'details'
+    else:
+        context['referer'] = 'appointments'
     return render(request, template, context)
 
 
 def update_consult(request, pk):
     consult = Consults.objects.get(pk=pk)
-    consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
+    consult_form = UpdateConsultsForm(request.user, request.POST or None, request.FILES or None, instance=consult)
     template = 'appointments/update_consult.html'
     context = {'consult': consult, 'consult_form': consult_form}
     if request.method == 'POST':
-        consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
+        consult_form = UpdateConsultsForm(request.user, request.POST or None, request.FILES or None, instance=consult)
         if consult_form.is_valid():
             consult = consult_form.save(commit=False)
             if consult.medicine != '':

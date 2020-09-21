@@ -1,0 +1,40 @@
+{%load static%}
+{%if consults%}
+<div>
+    <table>
+        <thead>
+            <tr class="heading">
+                <th>Date</th>
+                <th>Time</th>
+                <th>Created By</th>
+                <th>Charge</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for c in consults%}
+            <tr onclick="window.location='{%url 'appointments:consult_details' c.pk %}'">
+                <td>{{c.datetime|date}}</td>
+                <td>{{c.datetime|time}}</td>
+                <td>{{c.created_by}}</td>
+                <td>Charges</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+<div>
+    <i class="fas fa-filter charges-filter"></i><i class="fas fa-sync-alt charges-reload"></i>
+    <form method="POST" action="{%url 'patients:patients_details' patient.pk%}" class="charges-form">
+        <h1>Filter Results</h1>
+        {%csrf_token%}
+        <p>{{consults_form.date_from.label}}</p>
+        <p>{{consults_form.date_from}}</p>
+        <p>{{consults_form.date_to.label}}</p>
+        <p>{{consults_form.date_to}}</p>
+        <p>{{error}}</p>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{%else%}
+<p class="no-data">No Charges</p>
+{%endif%}

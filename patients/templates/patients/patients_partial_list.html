@@ -1,7 +1,7 @@
 <!--Included Template in patients.html-->
 {%load static%}
 {%for p in patients%}
-    <tr data-url="{%url 'patients:patients_details' p.pk%}" data-id = {{p.pk}}>
+    <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">
         <td>{{p.id_number}}</td>
         <td>{{p.first_names}}</td>
         <td>{{p.last_names}}</td>

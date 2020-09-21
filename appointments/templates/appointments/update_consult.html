@@ -10,7 +10,7 @@
 <h4>Time: {{consult.datetime|time}}</h4>
 <h4>Motive: {{consult.motive}}</h4>
 <h4>Suffering: {{consult.suffering}}</h4>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {%csrf_token%}
     <hr>
     <div class="wrapper">
