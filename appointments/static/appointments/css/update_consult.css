@@ -1,41 +1,35 @@
 .wrapper{
     display: grid;
-    grid-template-columns: 40% 50%;
+    grid-template-columns: 30% 69%;
+    grid-gap: 1%;
 }
 
-#diagnose{
-    text-align: center;
-}
-
-#diagnose textarea{
-    float: right;
-}
-
-body{
+.general-info{
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
+    height: 95vh;
     background-color: #12212b;
-}
-
-form{
-    margin-top: -25px;
-    background-color: #12212b;
-    text-align: center;
-}
-
-h1{
-    text-align: center;
-}
-
-h2{
-    text-align: center;
+    padding: 10px;
+    text-align: justify;
 }
 
 h4{
-    margin-bottom: 3%;
-    margin-top: 3%;
+    text-decoration: underline;
+}
+
+#charge-label{
+    text-decoration: none;
+    text-align: center;
+}
+
+#id_charge{
+    margin-left: 30%;
+    height: 20px;
+    width: 40%;
+    border-radius: 0px;
 }
 
 .fa-book-medical{
-    font-size: 35px;
+    font-size: 30px;
     float: right;
     transition: 0.5s;
 }
@@ -45,127 +39,84 @@ h4{
   color: green;
 }
 
-p{
-    font-size: 20px;
-}
-
-p a{
-    display: none;
-}
-
-#medical_exams{
-    border: 1px solid cyan;
-    padding: 2%;
-    border-radius: 15px;
+.fa-file-medical-alt{
+    float: right;
     transition: 0.5s;
 }
 
-.medical-exams-hover{
-    color: #12212b;
-    background-color: cyan;
+.fa-file-medical-alt-hover{
+    font-size: 40px;
+    transition: 0.5s;
     cursor: pointer;
 }
 
-
-p input[type=number]{
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width:60%;
-  transition: 0.5s;
+button{
+    width: 30%;
+    height: 30px;
+    background-color: #12212b;
+    border: 2px solid #0ff5fc;
+    border-radius: 10px;
+    color: #0ff5fc;
+    margin-left: 35%;
 }
 
-textarea{
-    float: right;
+.button-hover{
+    background-color: #0ff5fc;
+    color: #12212b;
+    transition: 0.5s;
+    cursor: pointer;
 }
 
-hr{
-    border: 1px solid cyan;
+.diagnose{
+    display: grid;
+    grid-template-columns: 99% 99% 99% 99% 99%;
+    grid-gap: 1%;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
+    height: 95vh;
+    max-width: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    background-color: #12212b;
+    padding: 10px;
 }
 
-input[type=text]{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width:60%;
-  transition: 0.5s;
+.data{
+    text-align: center;
+    margin-top: 10%;
+    padding: 20px;
 }
 
-input[type=password]{
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width: 60%;
-  transition: 0.5s;
+.data > p{
+    margin: 3%;
 }
 
-input[type=email]{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width: 60%;
-  transition: 0.5s;
+.fa-angle-left{
+    font-size: 35px;
+    position: fixed;
+    transition: 0.5s;
 }
 
-input[type=text]:hover{
-  width: 75%;
-  transition: 0.5s;
+.fa-angle-right{
+    font-size: 35px;
+    position: fixed;
+    margin-left: 65.5%;
+    transition: 0.5s;
 }
 
-input[type=password]:hover{
-  width: 75%;
-  transition: 0.5s;
+.angle-active{
+    font-size: 45px;
+    cursor: pointer;
 }
 
-input[type=text]:focus{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=password]:focus{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=email]:hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-input[type=email]:focus{
-  width: 75%;
-  transition: 0.5s;
-}
-
-textarea{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  transition: 0.5s;
+#id_medical_exams{
+    display: none;
 }
 
 #drugs{
     max-height: 120px;
     width: 20%;
     border: 1px solid cyan;
-    overflow: scroll;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: auto;
     text-align: left;
     margin: auto;
 }
@@ -176,6 +127,27 @@ textarea{
 
 #drugs ul{
     list-style: none;
+}
+
+p input[type=number]{
+  text-align: center;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: 2px solid #0ff5fc;
+  border-radius: 15px;
+  height: 30px;
+  width:40%;
+  transition: 0.5s;
+}
+
+textarea{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: 2px solid #0ff5fc;
+  transition: 0.5s;
+  width: 60%;
+  float: right;
 }
 
 select{
@@ -191,28 +163,164 @@ select{
   transition: 0.5s;
 }
 
-button{
-    margin: 20px;
-    width: 30%;
-    height: 30px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border: 2px solid #0ff5fc;
-    border-radius: 10px;
-    color: #0ff5fc;
-}
-
-.button-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
 #add-allergies{
     padding-left: 3%;
 }
 
 #add-insurance{
     padding-left: 3%;
+}
+
+.navigation{
+    list-style: none;
+    margin-left: 27.5%;
+    width: 10%;
+    height: 10px;
+    position: fixed;
+    margin-top: 50%;
+}
+
+.navigation > li{
+    margin: 2%;
+    width: 10px;
+    height: 10px;
+    border: 1px solid cyan;
+    border-radius: 10px;
+    transition: 0.5s;
+    list-style: none;
+    display: inline-block;
+}
+
+.navigator-active{
+    width: 14px;
+    height: 14px;
+    background-color: cyan;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.exams-modal{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+}
+
+.exams-modal-show{
+    display: block;
+}
+
+.exams-data{
+    width: 70%;
+    height: 40%;
+    margin-left: 15%;
+    margin-top: 15%;
+    background-color: #12212b;
+    text-align: center;
+    padding: 10px;
+}
+
+.exams-list{
+    height: 180px;
+    max-height: 180px;
+    overflow: auto;
+}
+
+.exams-table{
+    padding: 10px;
+    height: 150px;
+    margin-left: 15%;
+    width: 70%;
+    max-width: 70%;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.form-hide{
+    display: none;
+}
+
+.exams-table th{
+    padding: 10px;
+}
+
+.exams-table input[type=file]{
+    display: none;
+}
+
+.exams-table select{
+    width: 100%;
+}
+
+.filename{
+    max-width: 100px;
+    overflow: auto;
+    overflow-y: hidden;
+}
+
+.fa-plus{
+    transition: 0.5s;
+}
+
+.fa-plus-hover{
+    color: green;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-trash{
+    transition: 0.5s;
+}
+
+.fa-trash-hover{
+    color: red;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.delete-form{
+    visibility: hidden;
+}
+
+#save{
+    width: 15%;
+    margin-top: 3%;
+    margin-left: 0%;
+}
+
+.add-exam{
+    border: 1px solid cyan;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+
+.add-exam-hover{
+    background-color: cyan;
+    color: #12212b;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.modal{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    display: none;
+}
+
+.modal-show{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    display: none;
 }

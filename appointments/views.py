@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from .models import Consults
 from patients.models import Patient
-from .forms import ConsultsForm, UpdateConsultsForm, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
+from .forms import ConsultsForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.db.models import Q
@@ -29,7 +29,7 @@ def consults(request):
     return render(request, template, context)
 
 
-def consults_list(request):
+def consults_list(request, pk=None):
     appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True).order_by('-datetime')
     paginator = Paginator(appointments_list, 25)
     page = request.GET.get('page')
@@ -84,18 +84,26 @@ def consults_details(request, pk):
 def update_consult(request, pk):
     consult = Consults.objects.get(pk=pk)
     consult_form = UpdateConsultsForm(request.user, request.POST or None, request.FILES or None, instance=consult)
+    medical_exams_form = MedicalExamsFormset(queryset=Consults.objects.none())
     template = 'appointments/update_consult.html'
-    context = {'consult': consult, 'consult_form': consult_form}
+    context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form}
     if request.method == 'POST':
-        consult_form = UpdateConsultsForm(request.user, request.POST or None, request.FILES or None, instance=consult)
-        if consult_form.is_valid():
+        consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
+        medical_exams_form = MedicalExamsFormset(request.POST, request.FILES)
+        if consult_form.is_valid() and medical_exams_form.is_valid():
             consult = consult_form.save(commit=False)
-            if consult.medicine != '':
-                save_new_drug.delay(drugs=list(consult.medicine.splitlines()), user_id=request.user.id)
-            consult.medical_status = True
+            exam_instances = medical_exams_form.save(commit=False)
+            for exam in exam_instances:
+                if exam in medical_exams_form.deleted_objects:
+                    exam.delete()
+                else:
+                    exam.consult = consult
+                    exam.date = timezone.localtime()
+                    exam.save()
             consult.save()
             consult_form.save_m2m()
-            return redirect('appointments:consults')
+        else:
+            context['error'] = 'You did not fill your exams correctly. "Type" & "Image" must be provided.'
     return render(request, template, context)
 
 # Cancel Consult

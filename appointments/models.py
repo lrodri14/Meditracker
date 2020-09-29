@@ -66,6 +66,7 @@ class Consults(models.Model):
                               help_text='The motive of your assistance to the consult')
     suffering = models.TextField('suffering', blank=False, null=True,
                                  help_text='What is the patient suffering?')
+    charge = models.DecimalField('charge', blank=False, null=True, max_digits=10, decimal_places=2, help_text='Charge Amount')
     created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True,
                                    help_text='Creator of the consult', verbose_name='created by', related_name='author')
     # Consult Content
@@ -74,9 +75,6 @@ class Consults(models.Model):
     temperature = models.FloatField('temperature', blank=True, null=True, help_text='body temperature')
     weight = models.FloatField('weight', blank=True, null=True, help_text='weight')
     size = models.FloatField('size', blank=True, null=True, help_text='size')
-    # Exams
-    medical_exams = models.FileField('medical exams', blank=True, null=True, help_text='Attach exams if available',
-                                     upload_to='appointments/exams')
     # Organ System
     digestive_system = models.TextField('digestive system', blank=True, null=True, help_text='digestive system analysis')
     endocrine_system = models.TextField('endocrine system', blank=True, null=True, help_text='endocrine system analysis')
@@ -112,3 +110,16 @@ class Consults(models.Model):
 
     class Meta:
         unique_together = ['patient', 'datetime']
+
+
+class MedicalExams(models.Model):
+    EXAMS_CHOICES = (
+        ('T', 'Test'),
+    )
+    consult = models.ForeignKey(Consults, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Medical Exams', help_text='Medical Exams', related_name='exams')
+    date = models.DateField('date', blank=True, null=True, help_text='Date the exams were presented')
+    type = models.CharField('type of exams', max_length=100, blank=False, null=True, help_text='Type of exams', choices=EXAMS_CHOICES)
+    image = models.ImageField('exam', blank=True, null=True, help_text='Exam IMG')
+
+    def __str__(self):
+        return self.type + ' ' + str(self.date)

@@ -1,7 +1,7 @@
 /*Checked*/
 /*Body*/
 body{
-    font-family: 'Alegreya Sans SC', sans-serif;
+    font-family: 'Nunito', sans-serif;
     background-color: #3e5278;
     color: #0ff5fc;
 }
@@ -99,10 +99,7 @@ a {
     font-size: 25px;
     float: left;
     margin-left: 40%;
-
 }
-
-
 
 #menu{
     float: left;

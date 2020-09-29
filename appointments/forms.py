@@ -1,8 +1,10 @@
-from .models import Consults, Drugs
+from .models import Consults, MedicalExams, Drugs
 from django import forms
+from django.forms import modelformset_factory
 from django.utils import timezone
 from dateutil import relativedelta
 from patients.models import Patient
+from django.core.exceptions import ValidationError
 
 
 class ConsultsForm(forms.ModelForm):
@@ -18,11 +20,11 @@ class ConsultsForm(forms.ModelForm):
 
 
 class UpdateConsultsForm(forms.ModelForm):
-
     class Meta:
         model = Consults
         exclude = ('patient', 'datetime', 'motive', 'suffering', 'created_by', 'status', 'medical_status')
         widgets = {
+            'charge': forms.NumberInput(attrs={'placeholder': '0.00'}),
             'digestive_system': forms.Textarea(attrs={'rows': 2, 'cols': 70}),
             'endocrine_system': forms.Textarea(attrs={'rows': 2, 'cols': 70}),
             'lymphatic_system': forms.Textarea(attrs={'rows': 2, 'cols': 70}),
@@ -36,14 +38,30 @@ class UpdateConsultsForm(forms.ModelForm):
             'analysis': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'notes': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'drugs': forms.CheckboxSelectMultiple(),
-            'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 150, 'placeholder': 'Use this widget to create drugs that are not listed *(One per line), '
-                                                                                     '\nDrug #1 \nDrug #2 \nDrug #3'}),
-            'actions': forms.Textarea(attrs={'rows': 5, 'cols': 150, 'placeholder': 'e.j \nDrug #1 - 2 pills every 12 hours.'}),
+            'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 10}),
+            'actions': forms.Textarea(attrs={'rows': 5, 'cols': 10}),
         }
 
     def __init__(self, user, *args, **kwargs):
         super(UpdateConsultsForm, self).__init__(*args, **kwargs)
         self.fields['drugs'].queryset = Drugs.objects.filter(created_by=user)
+
+
+class MedicalExamsForm(forms.ModelForm):
+    class Meta:
+        model = MedicalExams
+        fields = ('type', 'image',)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        type = cleaned_data.get('type')
+        image = cleaned_data.get('image')
+
+        if type and not image or image and not type:
+            raise ValidationError('You did not fill your exams correctly. "Type" & "Image" must be provided.')
+
+
+MedicalExamsFormset = modelformset_factory(model=MedicalExams, form=MedicalExamsForm, can_delete=True)
 
 
 years = [y for y in range(1920, timezone.now().year+1)]
