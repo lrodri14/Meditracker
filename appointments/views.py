@@ -100,8 +100,10 @@ def update_consult(request, pk):
                     exam.consult = consult
                     exam.date = timezone.localtime()
                     exam.save()
+            consult.medical_status = True
             consult.save()
             consult_form.save_m2m()
+            return redirect('appointments:consults')
         else:
             context['error'] = 'You did not fill your exams correctly. "Type" & "Image" must be provided.'
     return render(request, template, context)
