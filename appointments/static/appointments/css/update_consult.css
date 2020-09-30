@@ -202,8 +202,8 @@ select{
 .exams-modal{
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
+    top: 0%;
+    left: 0%;
     position: fixed;
     background-color: rgba(0,0,0,0.7);
     display: none;
@@ -221,6 +221,23 @@ select{
     background-color: #12212b;
     text-align: center;
     padding: 10px;
+    transition: 1s;
+}
+
+.exams-data-preview-set{
+    margin-left: 2%;
+    transition: 1s;
+}
+
+.fa-eye{
+    float: right;
+    transition: 0.5s;
+}
+
+.fa-eye-hover{
+    color: gray;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
 .exams-list{
@@ -305,22 +322,32 @@ select{
     cursor: pointer;
 }
 
-.modal{
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.7);
+.preview-image{
+    width: 25%;
+    height: 70%;
     position: absolute;
-    display: none;
+    left: 100%;
+    top: 10%;
+    visibility: hidden;
+    transition: 1.5s;
 }
 
-.modal-show{
-    top: 0;
-    left: 0;
+.preview-image-display{
+    visibility: visible;
+    left: 74%;
+    transition: 1.5s;
+    transition-delay: visibility 1.5s, left 0.5s;
+}
+
+.previewed-image{
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.7);
-    position: absolute;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.previewed-image-show{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
 }

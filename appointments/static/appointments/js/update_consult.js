@@ -5,6 +5,8 @@ var diagnose = document.querySelector('.diagnose')
 var navigation = document.querySelector('.navigation')
 var exams = document.querySelector('.fa-file-medical-alt')
 var examsModal = document.querySelector('.exams-modal')
+var examsData = document.querySelector('.exams-data')
+var previewImg = document.querySelector('.preview-image')
 var addForm = document.querySelector('.fa-plus')
 var remExam = document.querySelector('.fa-trash')
 var prevSlide = document.querySelector('.fa-angle-left')
@@ -76,6 +78,10 @@ if (examsModal){
     examsModal.addEventListener('click', function(e){
         if (e.target.classList.contains('exams-modal') || e.target.innerText === 'Save'){
             this.classList.remove('exams-modal-show')
+            if (examsData.classList.contains('exams-data-preview-set') && previewImg.classList.contains('preview-image-display')){
+                examsData.classList.remove('exams-data-preview-set')
+                previewImg.classList.remove('preview-image-display')
+            }
         }
 
         if (e.target.classList.contains('fa-trash')){
@@ -90,10 +96,14 @@ if (examsModal){
             parentNode.classList.add('form-hide')
         }
 
+        if (e.target.classList.contains('fa-eye')){
+            examsData.classList.contains('exams-data-preview-set') ? examsData.classList.remove('exams-data-preview-set') : examsData.classList.add('exams-data-preview-set')
+            previewImg.classList.contains('preview-image-display') ? previewImg.classList.remove('preview-image-display') : previewImg.classList.add('preview-image-display')
+        }
+
     })
 
     examsModal.addEventListener('change', function(e){
-        console.log(e.target)
         if (e.target.nodeName === 'INPUT' && e.target.type === 'file'){
             var parent = e.target.parentNode.parentNode
             var filenameSpace
@@ -120,6 +130,27 @@ if (examsModal){
         if (e.target.classList.contains('fa-trash')){
             e.target.classList.add('fa-trash-hover')
         }
+
+        if (e.target.classList.contains('fa-eye')){
+            e.target.classList.add('fa-eye-hover')
+        }
+
+        if (e.target.classList.contains('filename') && e.target.innerText !== ''){
+            let imagePreview = document.querySelector('.previewed-image')
+            let file
+            for (let i = 0; i<e.target.parentNode.childNodes.length; i++){
+                if (e.target.parentNode.childNodes[i].firstChild && e.target.parentNode.childNodes[i].firstChild.type === 'file'){
+                    file = e.target.parentNode.childNodes[i].firstChild.files[0]
+                }
+            }
+            let reader = new FileReader()
+            reader.addEventListener('load', (e) => {
+                imagePreview.src = e.target.result
+                imagePreview.classList.add('previewed-image-show')
+            })
+            reader.readAsDataURL(file);
+        }
+
     })
 
     examsModal.addEventListener('mouseout', function(e){
@@ -133,6 +164,16 @@ if (examsModal){
 
         if (e.target.classList.contains('fa-trash')){
             e.target.classList.remove('fa-trash-hover')
+        }
+
+        if (e.target.classList.contains('fa-eye')){
+            e.target.classList.remove('fa-eye-hover')
+        }
+
+         if (e.target.classList.contains('filename') && e.target.innerText !== ''){
+            let imagePreview = document.querySelector('.previewed-image')
+            imagePreview.classList.remove('previewed-image-show')
+            imagePreview.src = ''
         }
     })
 
