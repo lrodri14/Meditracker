@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from .models import Consults
 from patients.models import Patient
-from .forms import ConsultsForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
+from .forms import ConsultsForm, DrugsForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.db.models import Q
@@ -30,14 +30,15 @@ def consults(request):
 
 
 def consults_list(request, pk=None):
-    appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True).order_by('-datetime')
+    appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True,).order_by('-datetime') if pk == None else Consults.objects.filter(created_by=request.user, medical_status=True, patient=Patient.objects.get(pk=pk)).order_by('-datetime')
     paginator = Paginator(appointments_list, 25)
     page = request.GET.get('page')
     appointments = paginator.get_page(page)
     form = RecordsDateFilterForm
     template = 'appointments/consults_list.html'
     context = {'appointments': appointments, 'form': form}
-    if request.method == 'POST':
+    context['referer'] = request.META['HTTP_REFERER'] if 'update_consult' in request.META['HTTP_REFERER'] else None
+    if request.method == 'POST' and not pk:
         form = RecordsDateFilterForm(request.POST)
         if form.is_valid():
             from_date = form.cleaned_data['date_from']
@@ -86,7 +87,7 @@ def update_consult(request, pk):
     consult_form = UpdateConsultsForm(request.user, request.POST or None, request.FILES or None, instance=consult)
     medical_exams_form = MedicalExamsFormset(queryset=Consults.objects.none())
     template = 'appointments/update_consult.html'
-    context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form}
+    context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form, 'drug_form': DrugsForm}
     if request.method == 'POST':
         consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
         medical_exams_form = MedicalExamsFormset(request.POST, request.FILES)

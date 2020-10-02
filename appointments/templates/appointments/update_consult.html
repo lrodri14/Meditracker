@@ -67,10 +67,14 @@
                     <p>{{consult_form.notes.label}} {{consult_form.notes}}</p>
                 </div>
             </div>
-            <div class="data">
+            <div class="data treatment">
                 <h2>Treatment</h2>
-                <p>{{consult_form.drugs.label}}</p>
-                <div id="drugs">{{consult_form.drugs}}</div>
+                <p>{{drug_form.category.label}}</p>
+                <p>{{drug_form.category}}</p>
+                <p>{{consult_form.drugs.label}} <i class="fas fa-plus add-drug"></i></p>
+                <div id="drugs">
+                    <p>{{consult_form.drugs}}</p>
+                </div>
                 <p>{{consult_form.medicine.label}} {{consult_form.medicine}}</p><br>
                 <p>{{consult_form.actions.label}} {{consult_form.actions}}</p>
             </div>
@@ -88,7 +92,7 @@
                         <th>Type</th>
                         <th>File</th>
                         <th>Filename</th>
-                        <th><i class="fas fa-plus"></i></th>
+                        <th><i class="fas fa-plus add-form"></i></th>
                     </thead>
                     <tbody>
                         {%for form in medical_exams_form%}

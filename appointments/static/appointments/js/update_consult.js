@@ -7,14 +7,22 @@ var exams = document.querySelector('.fa-file-medical-alt')
 var examsModal = document.querySelector('.exams-modal')
 var examsData = document.querySelector('.exams-data')
 var previewImg = document.querySelector('.preview-image')
-var addForm = document.querySelector('.fa-plus')
+var addForm = document.querySelector('.add-form')
 var remExam = document.querySelector('.fa-trash')
+var addDrug = document.querySelector('.add-drug')
 var prevSlide = document.querySelector('.fa-angle-left')
 var nextSlide = document.querySelector('.fa-angle-right')
 var controllers = [prevSlide, nextSlide]
 
 navigation.innerHTML = '<li></li>'.repeat(document.querySelectorAll('.diagnose > div').length)
 navigation.childNodes[0].classList.add('navigator-active')
+
+// Async Functions
+async function addDrugAsync(url){
+    const result = await fetch(url)
+    const data = await result.json()
+    return data
+}
 
 // Functions
 function diagnoseScroll(elScrollLeft, elScrollWidth, distance, element, eTarget, navigation){
@@ -36,11 +44,6 @@ function diagnoseScroll(elScrollLeft, elScrollWidth, distance, element, eTarget,
     }
 }
 
-
-body.addEventListener('submit', (e) => {
-
-})
-
 medicalBook.addEventListener('mouseover', function(){
     this.classList.add('fa-book-medical-hover')
 })
@@ -58,7 +61,6 @@ for (let i = 0; i<button.length; i++){
         this.classList.remove('button-hover')
     })
 }
-
 
 exams.addEventListener('mouseover', function(){
     this.classList.add('fa-file-medical-alt-hover')
@@ -146,7 +148,9 @@ if (examsModal){
             let reader = new FileReader()
             reader.addEventListener('load', (e) => {
                 imagePreview.src = e.target.result
-                imagePreview.classList.add('previewed-image-show')
+                if (imagePreview.parentNode.classList.contains('preview-image-display')){
+                    imagePreview.classList.add('previewed-image-show')
+                }
             })
             reader.readAsDataURL(file);
         }
@@ -178,7 +182,6 @@ if (examsModal){
     })
 
 }
-
 
 addForm.addEventListener('click', function(){
     let formAmount = document.querySelectorAll('.form-container')
@@ -229,15 +232,22 @@ for (let i = 0; i<controllers.length; i++){
     })
 }
 
+if (diagnose){
 
-diagnose.addEventListener('scroll', function(){
-    let navigationDots = navigation.childNodes
-    let distance = diagnose.scrollWidth/navigationDots.length
-    let activeElement = Math.round(diagnose.scrollLeft/distance)
-    for (let i = 0; i<navigationDots.length; i++){
-        if (navigationDots[i] !== navigationDots[activeElement]){
-            navigationDots[i].classList.remove('navigator-active')
+    diagnose.addEventListener('scroll', function(){
+        let navigationDots = navigation.childNodes
+        let distance = diagnose.scrollWidth/navigationDots.length
+        let activeElement = Math.round(diagnose.scrollLeft/distance)
+        for (let i = 0; i<navigationDots.length; i++){
+            if (navigationDots[i] !== navigationDots[activeElement]){
+                navigationDots[i].classList.remove('navigator-active')
+            }
+            navigationDots[activeElement].classList.add('navigator-active')
         }
-        navigationDots[activeElement].classList.add('navigator-active')
-    }
-})
+    })
+
+    diagnose.addEventListener('click', function(e){
+        if (e.target.classList.contains('add-drug'))
+    })
+
+}
