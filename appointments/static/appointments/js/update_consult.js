@@ -299,6 +299,7 @@ if (addDrugModal){
                 addDrugModal.classList.remove('modal-show')
                 document.querySelector('#error').innerText = ''
                 addDrugForm.reset()
+                document.querySelector('#id_drugs').innerHTML = data['updated_drugs_list']
             }
         })
     })
