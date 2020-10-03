@@ -67,11 +67,11 @@
                     <p>{{consult_form.notes.label}} {{consult_form.notes}}</p>
                 </div>
             </div>
-            <div class="data treatment">
+            <div class="data">
                 <h2>Treatment</h2>
                 <p>{{drug_form.category.label}}</p>
                 <p>{{drug_form.category}}</p>
-                <p>{{consult_form.drugs.label}} <i class="fas fa-plus add-drug"></i></p>
+                <p>{{consult_form.drugs.label}}<i class="fas fa-plus add-drug"></i></p>
                 <div id="drugs">
                     <p>{{consult_form.drugs}}</p>
                 </div>
@@ -79,40 +79,57 @@
                 <p>{{consult_form.actions.label}} {{consult_form.actions}}</p>
             </div>
             <ul class="navigation">
-
             </ul>
         </div>
     </div>
-    <div class="exams-modal">
-        <div class="exams-data">
-            <h2>Exams <i class="far fa-eye" id="show-preview"></i></h2>
-            <div class="exams-list">
-                <table class="exams-table">
-                    <thead>
-                        <th>Type</th>
-                        <th>File</th>
-                        <th>Filename</th>
-                        <th><i class="fas fa-plus add-form"></i></th>
-                    </thead>
-                    <tbody>
-                        {%for form in medical_exams_form%}
-                            <tr class="form-container">
-                                <td>{{form.type}}</td>
-                                <td>{{form.image}}<label class="add-exam" for="id_form-{{forloop.counter0}}-image">Add Image</label></td>
-                                <td class="filename"></td>
-                                <td><i class="fas fa-trash"></i></td>
-                                <td class="delete-form">{{form.DELETE}}</td>
-                            </tr>
-                        {%endfor%}
-                    </tbody>
-                </table>
-            </div>
-            <button type="button" id="save">Save</button>
-        </div>
-    </div>
-    <div class="preview-image">
-        <img class="previewed-image" src="" alt="">
-    </div>
 </form>
+
+<div class="exams-modal">
+    <div class="exams-data">
+        <h2>Exams <i class="far fa-eye" id="show-preview"></i></h2>
+        <div class="exams-list">
+            <table class="exams-table">
+                <thead>
+                    <th>Type</th>
+                    <th>File</th>
+                    <th>Filename</th>
+                    <th><i class="fas fa-plus add-form"></i></th>
+                </thead>
+                <tbody>
+                    {%for form in medical_exams_form%}
+                        <tr class="form-container">
+                            <td>{{form.type}}</td>
+                            <td>{{form.image}}<label class="add-exam" for="id_form-{{forloop.counter0}}-image">Add Image</label></td>
+                            <td class="filename"></td>
+                            <td><i class="fas fa-trash"></i></td>
+                            <td class="delete-form">{{form.DELETE}}</td>
+                        </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <button type="button" id="save">Save</button>
+    </div>
+</div>
+
+<div class="preview-image">
+    <img class="previewed-image" src="" alt="">
+</div>
+
+<div class="add-drug-modal">
+    <div class="add-drug-modal-content">
+        <form method="POST" action="{%url 'settings:drug_add'%}" autocomplete="off" class="add-drug-form">
+            {%csrf_token%}
+            <h1>Add Drug</h1>
+            <p>{{drug_form.name.label}}</p>
+            <p>{{drug_form.name}}</p>
+            <p>{{drug_form.category.label}}</p>
+            <p>{{drug_form.category}}</p>
+            <p id="error"></p>
+            <p><button type="submit" id="drug-submit">Add Drug</button></p>
+        </form>
+    </div>
+</div>
+
 <script src="{%static 'appointments/js/update_consult.js'%}"></script>
 {%endblock%}

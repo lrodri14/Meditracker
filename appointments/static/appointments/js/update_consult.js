@@ -10,6 +10,9 @@ var previewImg = document.querySelector('.preview-image')
 var addForm = document.querySelector('.add-form')
 var remExam = document.querySelector('.fa-trash')
 var addDrug = document.querySelector('.add-drug')
+var addDrugModal = document.querySelector('.add-drug-modal')
+var addDrugModalContent = document.querySelector('.add-drug-modal-content')
+var addDrugForm = document.querySelector('.add-drug-modal-content form')
 var prevSlide = document.querySelector('.fa-angle-left')
 var nextSlide = document.querySelector('.fa-angle-right')
 var controllers = [prevSlide, nextSlide]
@@ -18,8 +21,8 @@ navigation.innerHTML = '<li></li>'.repeat(document.querySelectorAll('.diagnose >
 navigation.childNodes[0].classList.add('navigator-active')
 
 // Async Functions
-async function addDrugAsync(url){
-    const result = await fetch(url)
+async function addDrugAsync(url, method, formData, csrfmiddlewaretoken){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
     const data = await result.json()
     return data
 }
@@ -232,22 +235,73 @@ for (let i = 0; i<controllers.length; i++){
     })
 }
 
-if (diagnose){
+diagnose.addEventListener('scroll', function(){
+    let navigationDots = navigation.childNodes
+    let distance = diagnose.scrollWidth/navigationDots.length
+    let activeElement = Math.round(diagnose.scrollLeft/distance)
+    for (let i = 0; i<navigationDots.length; i++){
+        if (navigationDots[i] !== navigationDots[activeElement]){
+            navigationDots[i].classList.remove('navigator-active')
+        }
+        navigationDots[activeElement].classList.add('navigator-active')
+    }
+})
 
-    diagnose.addEventListener('scroll', function(){
-        let navigationDots = navigation.childNodes
-        let distance = diagnose.scrollWidth/navigationDots.length
-        let activeElement = Math.round(diagnose.scrollLeft/distance)
-        for (let i = 0; i<navigationDots.length; i++){
-            if (navigationDots[i] !== navigationDots[activeElement]){
-                navigationDots[i].classList.remove('navigator-active')
-            }
-            navigationDots[activeElement].classList.add('navigator-active')
+
+if (addDrug){
+    addDrug.addEventListener('mouseover', function(e){
+        this.classList.add('add-drug-hover')
+    })
+
+    addDrug.addEventListener('mouseout', function(e){
+        this.classList.remove('add-drug-hover')
+    })
+
+    addDrug.addEventListener('click', function(e){
+        addDrugModal.classList.add('modal-show')
+    })
+}
+
+if (addDrugModal){
+    addDrugModal.addEventListener('click', function(e){
+        if (e.target.classList.contains('add-drug-modal')){
+            document.querySelector('#error').innerText = ''
+            addDrugForm.reset()
+            this.classList.remove('modal-show')
         }
     })
 
-    diagnose.addEventListener('click', function(e){
-        if (e.target.classList.contains('add-drug'))
+    addDrugModal.addEventListener('mouseover', function(e){
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.add('button-hover')
+        }
     })
 
+    addDrugModal.addEventListener('mouseout', function(e){
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.remove('button-hover')
+        }
+    })
+
+    addDrugModal.addEventListener('submit', function(e){
+        e.preventDefault()
+        e.stopPropagation()
+        const url = addDrugForm.action
+        const method = addDrugForm.method
+        const data = new FormData(addDrugForm)
+        const csrfmiddlewaretoken = document.querySelector('.add-drug-form > [name=csrfmiddlewaretoken]').value
+        addDrugAsync(url, method, data, csrfmiddlewaretoken)
+        .then(data => {
+            if (data['html']){
+                const error = document.querySelector('#error')
+                error.innerText = 'This drug is already listed.'
+            }else{
+                addDrugModal.classList.remove('modal-show')
+                document.querySelector('#error').innerText = ''
+                addDrugForm.reset()
+            }
+        })
+    })
 }
+
+

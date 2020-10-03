@@ -86,8 +86,9 @@ def update_consult(request, pk):
     consult = Consults.objects.get(pk=pk)
     consult_form = UpdateConsultsForm(request.user, request.POST or None, request.FILES or None, instance=consult)
     medical_exams_form = MedicalExamsFormset(queryset=Consults.objects.none())
+    drug_form = DrugsForm
     template = 'appointments/update_consult.html'
-    context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form, 'drug_form': DrugsForm}
+    context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form, 'drug_form': drug_form}
     if request.method == 'POST':
         consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
         medical_exams_form = MedicalExamsFormset(request.POST, request.FILES)
