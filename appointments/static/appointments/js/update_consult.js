@@ -9,10 +9,13 @@ var examsData = document.querySelector('.exams-data')
 var previewImg = document.querySelector('.preview-image')
 var addForm = document.querySelector('.add-form')
 var remExam = document.querySelector('.fa-trash')
+var drugCategoryFilter = document.querySelector('#id_category')
+var drugList = document.querySelector('#drugs')
 var addDrug = document.querySelector('.add-drug')
 var addDrugModal = document.querySelector('.add-drug-modal')
 var addDrugModalContent = document.querySelector('.add-drug-modal-content')
 var addDrugForm = document.querySelector('.add-drug-modal-content form')
+var medicineText = document.querySelector('#id_medicine')
 var prevSlide = document.querySelector('.fa-angle-left')
 var nextSlide = document.querySelector('.fa-angle-right')
 var controllers = [prevSlide, nextSlide]
@@ -23,6 +26,12 @@ navigation.childNodes[0].classList.add('navigator-active')
 // Async Functions
 async function addDrugAsync(url, method, formData, csrfmiddlewaretoken){
     const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
+    const data = await result.json()
+    return data
+}
+
+async function retrieveDrugsFilterAsync(url){
+    const result = await fetch(url)
     const data = await result.json()
     return data
 }
@@ -244,6 +253,32 @@ diagnose.addEventListener('scroll', function(){
             navigationDots[i].classList.remove('navigator-active')
         }
         navigationDots[activeElement].classList.add('navigator-active')
+    }
+})
+
+
+drugCategoryFilter.addEventListener('change', function(e){
+    const data = e.target.options[e.target.selectedIndex].value
+    const url = e.target.parentNode.getAttribute('data-url') + '?category=' + data
+    retrieveDrugsFilterAsync(url)
+    .then(data => {
+        document.querySelector('#id_drugs').innerHTML = data['updated_drugs']
+    })
+})
+
+let checkedDrugs = []
+drugList.addEventListener('change', function(e){
+    medicineText.value = ''
+    let checkedDrug = e.target.parentNode.innerText
+    if (checkedDrugs.indexOf(checkedDrug + ' -') === -1){
+        checkedDrugs.push(checkedDrug + ' -')
+    }else{
+        checkedDrugs.splice(checkedDrugs.indexOf(checkedDrug + ' -'), 1)
+    }
+    for (let i = 0; i<checkedDrugs.length; i++){
+        if (medicineText.value.split('\n').indexOf(checkedDrugs[i]) === -1){
+            medicineText.value += checkedDrugs[i] + '\n'
+        }
     }
 })
 

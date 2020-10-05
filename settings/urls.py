@@ -15,6 +15,7 @@ urlpatterns = [
     path('allergies_update/<int:pk>', allergies_update, name='allergies_update'),
     path('allergies_delete/<int:pk>', allergies_delete, name='allergies_delete'),
     path('drugs_list/', drugs_list, name='drugs_list'),
+    path('drug_category_filter/', drug_category_filter, name='drug_category'),
     path('drug_add/', create_drug, name='drug_add'),
     path('drug_details/<int:pk>', drug_details, name='drug_details'),
     path('update_drug/<int:pk>', update_drug, name='drug_update'),

@@ -1,8 +1,12 @@
-{%for drug in drugs%}
-<li>
-    <label for="id_drugs_{{forloop.counter0}}">
-        <input type="checkbox" name="drugs" value="{{drug.pk}}" id="id_drugs_{{forloop.counter0}}">
-        {{drug.name}}
-    </label>
-</li>
-{%endfor%}
+{%if drugs%}
+    {%for drug in drugs%}
+    <li>
+        <label for="id_drugs_{{forloop.counter0}}">
+            <input type="checkbox" name="drugs" value="{{drug.pk}}" id="id_drugs_{{forloop.counter0}}">
+            {{drug.name}}
+        </label>
+    </li>
+    {%endfor%}
+{%else%}
+    <p>No drugs for this category</p>
+{%endif%}

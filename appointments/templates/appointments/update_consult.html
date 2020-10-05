@@ -70,7 +70,7 @@
             <div class="data">
                 <h2>Treatment</h2>
                 <p>{{drug_form.category.label}}</p>
-                <p>{{drug_form.category}}</p>
+                <p data-url="{%url 'settings:drug_category'%}">{{drug_form.category}}</p>
                 <p>{{consult_form.drugs.label}}<i class="fas fa-plus add-drug"></i></p>
                 <div id="drugs">
                     <p>{{consult_form.drugs}}</p>

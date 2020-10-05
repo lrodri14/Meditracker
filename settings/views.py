@@ -206,6 +206,17 @@ def drugs_list(request):
     return JsonResponse(data)
 
 
+def drug_category_filter(request):
+    if request.method == 'GET':
+        category = request.GET.get('category')
+        if category != '':
+            drugs = Drugs.objects.filter(created_by=request.user, category=category)
+        else:
+            drugs = Drugs.objects.filter(created_by=request.user)
+        data = {'updated_drugs': render_to_string('appointments/partial_drugs_selection.html', context={'drugs': drugs}, request=request)}
+        return JsonResponse(data)
+
+
 def create_drug(request):
     drugs_form = DrugsForm
     template = 'settings/create_drug.html'

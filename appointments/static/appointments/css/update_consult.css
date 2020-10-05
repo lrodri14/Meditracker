@@ -118,6 +118,7 @@ button{
 
 #drugs{
     max-height: 120px;
+    height: 120px;
     width: 30%;
     border: 1px solid cyan;
     overflow: auto;

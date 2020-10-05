@@ -38,8 +38,8 @@ class UpdateConsultsForm(forms.ModelForm):
             'analysis': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'notes': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'drugs': forms.CheckboxSelectMultiple(),
-            'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 10}),
-            'actions': forms.Textarea(attrs={'rows': 5, 'cols': 10}),
+            'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Indications Here'}),
+            'actions': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Extra Considerations'}),
         }
 
     def __init__(self, user, *args, **kwargs):
