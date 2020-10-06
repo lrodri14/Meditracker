@@ -134,7 +134,7 @@ if (rows){
             rows[i].classList.remove('tr-hover')
             for (let c = 0; c<childNodes.length; c++){
                 if (childNodes[c].nodeName != '#text'){
-                    childNodes[c].style.color = 'cyan'
+                    childNodes[c].style.color = ''
                     if (childNodes[c].children){
                             var children = childNodes[c].children
                             for (var cc = 0; cc<children.length; cc++){

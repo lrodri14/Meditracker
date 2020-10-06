@@ -182,13 +182,6 @@ button{
 }
 
 #status-0{
-    background-color: yellow;
+    background-color: #ffe100;
     color: #12212b;
-    height: 100%;
-}
-
-#status-1{
-    background-color: green;
-    color: #12212b;
-    height: 100%;
 }

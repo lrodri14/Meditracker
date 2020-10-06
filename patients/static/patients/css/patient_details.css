@@ -6,7 +6,6 @@ body{
     transition: 0.5s;
 }
 
-
 .body-color-change{
     background-color: #3e5278;
     transition: 0.5s;
@@ -122,7 +121,7 @@ tr:nth-child(even){
 }
 
 .Open{
-    background-color: yellow;
+    background-color: #ffe100;
     color: #12212b !important;
     height: 100%;
 }
@@ -134,7 +133,7 @@ tr:nth-child(even){
 }
 
 .Canceled{
-    background-color: gray;
+    background-color: #b5b3a7;
     color: #12212b !important;
     height: 100%;
 }

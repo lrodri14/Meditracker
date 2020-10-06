@@ -21,15 +21,15 @@
                         <td>{{c.patient.id_number}}</td>
                         <td>{{c.patient.first_names}} {{c.patient.last_names}}</td>
                         <td>{{c.datetime}}</td>
-                        <td>
-                            {%if c.status == 'OPEN'%}<div id="Open">Open</div>
-                            {%elif c.status == 'CONFIRMED'%}
-                                <div id="Confirmed">Confirmed</div>
-                            {%elif c.status == 'CANCELLED'%}
-                                <div id="Canceled">Cancelled</div>
-                            {%elif c.status == 'CLOSED'%}
-                                <div id="Closed">Closed</div>
-                            {%endif%}
+                        {%if c.status == 'OPEN'%}
+                            <td id="Open">Open</td>
+                        {%elif c.status == 'CONFIRMED'%}
+                             <td id="Confirmed">Confirmed</td>
+                        {%elif c.status == 'CANCELLED'%}
+                            <td id="Canceled">Cancelled</td>
+                        {%elif c.status == 'CLOSED'%}
+                            <td id="Closed">Closed</td>
+                        {%endif%}
                         </td>
                         <td>{%if c.status == 'OPEN'%}<a class="update" href="{%url 'appointments:consult_date_update' c.pk%}"><i class="fas fa-edit"></i></a>{%endif%}</td>
                         <td>{%if c.status == 'OPEN'%}<a href="{%url 'appointments:consult_confirm' c.pk%}"><i class="fas fa-check"></i></a>{%endif%}</td>

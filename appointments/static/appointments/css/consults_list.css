@@ -176,14 +176,8 @@ button{
     transform: translate(-50%, -50%);
 }
 
-#status-0{
-    background-color: yellow;
-    color: #12212b;
-    height: 100%;
-}
-
 #status-1{
-    background-color: green;
+    background-color: #32a852;
     color: #12212b;
     height: 100%;
 }

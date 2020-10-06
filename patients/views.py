@@ -74,7 +74,7 @@ def add_patient(request):
 
 def patient_details(request, pk):
     patient = Patient.objects.get(pk=pk)
-    consults = Consults.objects.filter(patient=patient, created_by=request.user)
+    consults = Consults.objects.filter(patient=patient, created_by=request.user).order_by('-datetime')
     template = 'patients/patient_details.html'
     context = {'patient': patient, 'consults': consults, 'consults_form': ConsultsDetailsFilterForm}
     if request.method == 'POST':

@@ -32,7 +32,7 @@
                     <td>{{a.patient.id_number}}</td>
                     <td>{{a.patient.first_names}} {{a.patient.last_names}}</td>
                     <td>{{a.datetime}}</td>
-                    <td><div id="status-0">Pending...</div></td>
+                    <td id="status-0">Pending...</td>
                     {%if doctor%}<td><a href="{%url 'appointments:update_consult' a.pk%}"><i class="fas fa-edit"></i></a></td>{%endif%}
                     <td></td>
                 </tr>

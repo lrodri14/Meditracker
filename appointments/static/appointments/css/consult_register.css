@@ -28,25 +28,25 @@ tr{
 }
 
 #Open{
-    background-color: yellow;
+    background-color: #ffe100;
     color: #12212b;
     height: 100%;
 }
 
 #Confirmed{
-    background-color: green;
+    background-color: #32a852;
     color: #12212b;
     height: 100%;
 }
 
 #Canceled{
-    background-color: gray;
+    background-color: #b5b3a7;
     color: #12212b;
     height: 100%;
 }
 
 #Closed{
-    background-color: red;
+    background-color: #a83632;
     color: #12212b;
     height: 100%;
 }
