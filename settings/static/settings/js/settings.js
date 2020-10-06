@@ -90,6 +90,7 @@ body.addEventListener('click', (e) => {
             item.classList.add('li-active')
             displaySettingsAW(url)
             .then(data => {
+                console.log(data['html'])
                 wrapper.innerHTML = data['html']
                 backedUpContent = wrapper.innerHTML
             })
@@ -255,6 +256,7 @@ if (wrapper){
             let data = new FormData(form)
             filterResultsAW(url, method, csrfmiddlewaretoken, data)
             .then(data => {
+                console.log(data)
                 var tbody = document.querySelector('tbody')
                 var start = data['updated_html'] ? data['updated_html'].search('<tbody>') : backedUpContent.search('<tbody>')
                 var end = data['updated_html'] ? data['updated_html'].search('</tbody>') : backedUpContent.search('</tbody>')

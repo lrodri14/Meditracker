@@ -138,6 +138,11 @@ class DrugsForm(forms.ModelForm):
 
 
 class DrugsFilterForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].required = False
+
     class Meta:
         model = Drugs
         exclude = ('created_by',)

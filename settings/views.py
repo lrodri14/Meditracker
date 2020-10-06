@@ -199,6 +199,7 @@ def drugs_list(request):
     if request.method == 'POST':
         filter_form = DrugsFilterForm(request.POST)
         if filter_form.is_valid():
+            print(type(filter_form.cleaned_data))
             updated_drugs = Drugs.objects.filter(created_by=request.user, name__icontains=filter_form.cleaned_data['name'])
             if len(updated_drugs) > 0:
                 context['drugs'] = updated_drugs
