@@ -257,6 +257,7 @@ diagnose.addEventListener('scroll', function(){
 })
 
 // Check for a better way to improve this code.
+// Better way to take control of the already checked checkboxes
 let drugsPrescribed = []
 let checkedDrugs = []
 drugList.addEventListener('change', function(e){
@@ -282,6 +283,7 @@ drugCategoryFilter.addEventListener('change', function(e){
     retrieveDrugsFilterAsync(url)
     .then(data => {
         document.querySelector('#id_drugs').innerHTML = data['updated_drugs']
+        // Better way to take control of the already checked checkboxes
         let checkboxes = document.querySelectorAll('input[type=checkbox]')
         for (let i = 0; i<checkedDrugs.length; i++){
             let checkedDrug = checkedDrugs[i]
@@ -346,6 +348,7 @@ if (addDrugModal){
                 document.querySelector('#error').innerText = ''
                 addDrugForm.reset()
                 document.querySelector('#id_drugs').innerHTML = data['updated_drugs_list']
+                // Better way to take control of the already checked checkboxes
                 let checkboxes = document.querySelectorAll('input[type=checkbox]')
                 for (let i = 0; i<checkedDrugs.length; i++){
                     let checkedDrug = checkedDrugs[i]

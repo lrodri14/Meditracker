@@ -47,11 +47,6 @@ h1{
     cursor: pointer;
 }
 
-.tile-fade-out{
-    opacity: 0.5;
-    transition: 0.5s;
-}
-
 a{
     color: inherit;
 }

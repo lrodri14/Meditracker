@@ -10,20 +10,10 @@ for (let i = 0; i<tiles.length; i++){
         icons[i].classList.add('i-hover')
         title[i].classList.add('h3-hover')
         sound.play()
-        for (let x = 0; x<tiles.length; x++){
-            if (tiles[x] !== tiles[i]){
-                tiles[x].classList.add('tile-fade-out')
-            }
-        }
     })
     tiles[i].addEventListener('mouseout', function(){
         tiles[i].classList.remove('tile-hover')
         icons[i].classList.remove('i-hover')
         title[i].classList.remove('h3-hover')
-        for (let x = 0; x<tiles.length; x++){
-            if (tiles[x] !== tiles[i]){
-                tiles[x].classList.remove('tile-fade-out')
-            }
-        }
     })
 }
