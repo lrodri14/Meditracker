@@ -109,15 +109,32 @@ class RegistersFilter(forms.Form):
     year = forms.ChoiceField(choices=YEARS_CHOICES, required=False)
 
 
+class DrugCategoryFilterForm(forms.Form):
+
+    CATEGORY_CHOICES = (
+        ('', '---------'),
+        ('AP', 'Antipyretics'),
+        ('AG', 'Analgesics'),
+        ('AM', 'Antimalarial'),
+        ('AB', 'Antibiotics'),
+        ('AS', 'Antiseptics'),
+        ('MS', 'Mood Stabilizers'),
+        ('HR', 'Hormone Replacement'),
+        ('OC', 'Oral Contraceptives'),
+        ('S', 'Stimulants'),
+        ('T', 'Tranquilizers'),
+        ('ST', 'Statins'),
+
+    )
+
+    category = forms.CharField(max_length=50,  widget=forms.Select(choices=CATEGORY_CHOICES))
+
+
 class DrugsForm(forms.ModelForm):
 
     class Meta:
         model = Drugs
         exclude = ('created_by',)
-
-
-
-
 
 
 class DrugsFilterForm(forms.ModelForm):

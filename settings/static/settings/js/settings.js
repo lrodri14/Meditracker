@@ -326,6 +326,7 @@ if (modal){
                         modalContent.innerHTML = data['html']
                     }else{
                         wrapper.innerHTML = data['updated_html']
+                        console.log(data['updated_html'])
                         backedUpContent = wrapper.innerHTML
                         modal.classList.remove('show-modal')
                     }

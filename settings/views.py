@@ -231,7 +231,7 @@ def create_drug(request):
                 drug.save()
                 drugs_list = Drugs.objects.filter(created_by=request.user)
                 context = {'drugs': drugs_list, 'form': DrugsFilterForm}
-                data = {'updated_html': render_to_string('settings/drugs_list.html', context, request), 'updated_drugs_list':render_to_string('appointments/partial_drugs_selection.html', {'drugs': drugs_list}, request)}
+                data = {'updated_html': render_to_string('settings/drugs_list.html', context, request), 'updated_drugs_list': render_to_string('appointments/partial_drugs_selection.html', {'drugs': drugs_list}, request)}
             except IntegrityError:
                 context['error'] = 'Drug already listed'
                 data = {'html': render_to_string(template, context, request)}

@@ -256,6 +256,25 @@ diagnose.addEventListener('scroll', function(){
     }
 })
 
+// Check for a better way to improve this code.
+let drugsPrescribed = []
+let checkedDrugs = []
+drugList.addEventListener('change', function(e){
+    medicineText.value = ''
+    let drugPrescribed = e.target.parentNode.innerText
+    if (drugsPrescribed.indexOf(drugPrescribed + ' -') === -1){
+        drugsPrescribed.push(drugPrescribed + ' -')
+        checkedDrugs.push(e.target)
+    }else{
+        drugsPrescribed.splice(drugsPrescribed.indexOf(drugPrescribed + ' -'), 1)
+        checkedDrugs.splice(checkedDrugs.indexOf(e.target), 1)
+    }
+    for (let i = 0; i<drugsPrescribed.length; i++){
+        if (medicineText.value.split('\n').indexOf(drugsPrescribed[i]) === -1){
+            medicineText.value += drugsPrescribed[i] + '\n'
+        }
+    }
+})
 
 drugCategoryFilter.addEventListener('change', function(e){
     const data = e.target.options[e.target.selectedIndex].value
@@ -263,25 +282,17 @@ drugCategoryFilter.addEventListener('change', function(e){
     retrieveDrugsFilterAsync(url)
     .then(data => {
         document.querySelector('#id_drugs').innerHTML = data['updated_drugs']
+        let checkboxes = document.querySelectorAll('input[type=checkbox]')
+        for (let i = 0; i<checkedDrugs.length; i++){
+            let checkedDrug = checkedDrugs[i]
+            for (let j = 0; j<checkboxes.length; j++){
+                if (checkedDrug.value === checkboxes[j].value){
+                    checkboxes[j].checked = true
+                }
+            }
+        }
     })
 })
-
-let checkedDrugs = []
-drugList.addEventListener('change', function(e){
-    medicineText.value = ''
-    let checkedDrug = e.target.parentNode.innerText
-    if (checkedDrugs.indexOf(checkedDrug + ' -') === -1){
-        checkedDrugs.push(checkedDrug + ' -')
-    }else{
-        checkedDrugs.splice(checkedDrugs.indexOf(checkedDrug + ' -'), 1)
-    }
-    for (let i = 0; i<checkedDrugs.length; i++){
-        if (medicineText.value.split('\n').indexOf(checkedDrugs[i]) === -1){
-            medicineText.value += checkedDrugs[i] + '\n'
-        }
-    }
-})
-
 
 if (addDrug){
     addDrug.addEventListener('mouseover', function(e){
@@ -335,6 +346,15 @@ if (addDrugModal){
                 document.querySelector('#error').innerText = ''
                 addDrugForm.reset()
                 document.querySelector('#id_drugs').innerHTML = data['updated_drugs_list']
+                let checkboxes = document.querySelectorAll('input[type=checkbox]')
+                for (let i = 0; i<checkedDrugs.length; i++){
+                    let checkedDrug = checkedDrugs[i]
+                    for (let j = 0; j<checkboxes.length; j++){
+                        if (checkedDrug.value === checkboxes[j].value){
+                            checkboxes[j].checked = true
+                        }
+                    }
+                }
             }
         })
     })

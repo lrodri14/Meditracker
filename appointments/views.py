@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from .models import Consults
 from patients.models import Patient
-from .forms import ConsultsForm, DrugsForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
+from .forms import ConsultsForm, DrugsForm, DrugCategoryFilterForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.db.models import Q
@@ -87,8 +87,9 @@ def update_consult(request, pk):
     consult_form = UpdateConsultsForm(request.user, request.POST or None, request.FILES or None, instance=consult)
     medical_exams_form = MedicalExamsFormset(queryset=Consults.objects.none())
     drug_form = DrugsForm
+    drug_category_filter_form = DrugCategoryFilterForm()
     template = 'appointments/update_consult.html'
-    context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form, 'drug_form': drug_form}
+    context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form, 'drug_form': drug_form, 'drug_category_filter_form': drug_category_filter_form}
     if request.method == 'POST':
         consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
         medical_exams_form = MedicalExamsFormset(request.POST, request.FILES)
