@@ -9,7 +9,7 @@
     {{medical_exams_form.management_form}}
     <div class="wrapper">
         <div class="general-info">
-            <a href="{%url 'appointments:consults'%}"><i class="fas fa-long-arrow-alt-left"></i></a><a href="{%url 'appointments:consults_list' consult.patient.pk%}"><i class="fas fa-book-medical"></i></a>
+            <a href="{%url 'appointments:consults'%}"><i class="fas fa-long-arrow-alt-left"></i></a><a href="{%url 'records:records_list' consult.patient.pk%}"><i class="fas fa-book-medical"></i></a>
             <h1 id="heading">Consult <i class="fas fa-file-medical-alt"></i></h1>
             <h4>Patient</h4>
             <p>{{consult.patient.first_names}} {{consult.patient.last_names}}</p>

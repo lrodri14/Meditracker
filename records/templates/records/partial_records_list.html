@@ -47,7 +47,7 @@
     </div>
     <div>
         <i class="fas fa-filter"></i>
-        <form method="POST" action="{%url 'appointments:consults_list'%}">
+        <form method="POST" action="{%url 'records:records_list'%}">
             {%csrf_token%}
             <h2>Filter Results</h2>
             <p>{{form.date_from.label}}</p>
