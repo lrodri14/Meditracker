@@ -31,15 +31,15 @@ class Patient(models.Model):
         ('HND', 'Honduras'),
     )
 
-    id_number = models.CharField('ID number', max_length=20, null=True, blank=True,
+    id_number = models.CharField('ID Number', max_length=20, null=True, blank=True,
                                  help_text='Provide you ID Card Number')
-    first_names = models.CharField('patients name', max_length=50, null=False, blank=False,
+    first_names = models.CharField("Patient's Name", max_length=50, null=False, blank=False,
                                 help_text="Patient's Name")
-    last_names = models.CharField('patients last name', max_length=50, null=False, blank=False,
+    last_names = models.CharField("Patient's Last Name", max_length=50, null=False, blank=False,
                                  help_text="Patient's Last Name")
     gender = models.CharField("Patient's Gender", max_length=20, null=True, blank=False, help_text='Gender', choices=GENDER_CHOICES)
-    birthday = models.DateField('patients birthday', help_text="Patients date of birth")
-    phone_number = models.CharField('phone number', max_length=20, blank=True, null=True, help_text='Phone Number')
+    birthday = models.DateField("Patient's Birthday", help_text="Patients date of birth")
+    phone_number = models.CharField('Phone Number', max_length=20, blank=True, null=True, help_text='Phone Number')
     email = models.EmailField("Patient's Email", null=True, blank=True, help_text='Email')
     civil_status = models.CharField(max_length=12, choices=CIVIL_STATUS_CHOICES)
     origin = models.CharField(max_length=50, choices=PROCEDENCE_CHOICES)

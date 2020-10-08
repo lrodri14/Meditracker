@@ -2,64 +2,109 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}Add Patient{%endblock%}
-{%block return%}<a href="{%url 'patients:patients'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}{%block home%}{%endblock%}
+{%block return%}{%endblock%}{%block home%}{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/add_patient.css'%}">
     <form method="POST" autocomplete="off">
+        {{allergies_form.management_form}}
+        {{antecedent_form.management_form}}
         {%csrf_token%}
-        <h1>Add Patient</h1>
         <div class="wrapper">
-            <div>
-                <h2>Patient</h2>
-                <p>{{patient_form.id_number.label}}</p>
-                <p>{{patient_form.id_number}}</p>
-                <p>{{patient_form.first_names.label}}</p>
-                <p>{{patient_form.first_names}}</p>
-                <p>{{patient_form.last_names.label}}</p>
-                <p>{{patient_form.last_names}}</p>
-                <p>{{patient_form.gender.label}}</p>
-                <p>{{patient_form.gender}}</p>
-                <p>{{patient_form.birthday.label}}</p>
-                <p>{{patient_form.birthday}}</p>
-                <p>{{patient_form.phone_number.label}}</p>
-                <p>{{patient_form.phone_number}}</p>
-                <p>{{patient_form.email.label}}</p>
-                <p>{{patient_form.email}}</p>
-                <p>{{patient_form.civil_status.label}}</p>
-                <p>{{patient_form.civil_status}}</p>
-                <p>{{patient_form.origin.label}}</p>
-                <p>{{patient_form.origin}}</p>
-                <p>{{patient_form.residence.label}}</p>
-                <p>{{patient_form.residence}}</p>
-                {%if patient_form.errors%}
-                    {%for error in patient_form.errors%}
-                        {{error}}
-                    {%endfor%}
-                {%endif%}
+            <div class="general-info">
+                <a href="{%url 'patients:patients'%}"><i class="fas fa-long-arrow-alt-left"></i></a>
+                <h1>Add Patient</h1>
+                <div class="info">
+                    <p>{{patient_form.id_number.label}}</p>
+                    <p>{{patient_form.id_number}}</p>
+                    <p>{{patient_form.first_names.label}}</p>
+                    <p>{{patient_form.first_names}}</p>
+                    <p>{{patient_form.last_names.label}}</p>
+                    <p>{{patient_form.last_names}}</p>
+                    <p>{{patient_form.gender.label}}</p>
+                    <p>{{patient_form.gender}}</p>
+                    <p>{{patient_form.birthday.label}}</p>
+                    <p>{{patient_form.birthday}}</p>
+                    <p>{{patient_form.phone_number.label}}</p>
+                    <p>{{patient_form.phone_number}}</p>
+                    <p>{{patient_form.email.label}}</p>
+                    <p>{{patient_form.email}}</p>
+                    <p>{{patient_form.civil_status.label}}</p>
+                    <p>{{patient_form.civil_status}}</p>
+                    <p>{{patient_form.origin.label}}</p>
+                    <p>{{patient_form.origin}}</p>
+                    <p>{{patient_form.residence.label}}</p>
+                    <p>{{patient_form.residence}}</p>
+                    {%if patient_form.errors%}
+                        {%for error in patient_form.errors%}
+                            {{error}}
+                        {%endfor%}
+                    {%endif%}
+                </div>
+                <button type="submit">Save</button>
             </div>
-            <div>
-                <h2>Antecedents</h2>
-                <p>{{antecedents_form.antecedent.label}}</p>
-                <p>{{antecedents_form.antecedent}}</p>
-                <p>{{antecedents_form.info.label}}</p>
-                <p>{{antecedents_form.info}}</p>
+            <div class="extra-info">
+                <h1>Extra Information</h1>
                 <h2>Allergies</h2>
-                <p>{{allergies_form.allergy_type.label}}</p>
-                <p>{{allergies_form.allergy_type}}</p>
-                <p>{{allergies_form.about.label}}</p>
-                <p>{{allergies_form.about}}</p>
-            </div>
-            <div>
+                    <div class="allergies-form">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>About</th>
+                                    <th><i class="fas fa-plus"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {%for allergy_form in allergies_form%}
+                                <tr>
+                                    <td>{{allergy_form.allergy_type}} <i class="fas fa-plus"></i></td>
+                                    <td>{{allergy_form.about}}</td>
+                                    <td><i class="fas fa-trash"></i></td>
+                                </tr>
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                <h2>Antecedents</h2>
+                    <div class="antecedents-form">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Antecedent</th>
+                                    <th>Info</th>
+                                    <th><i class="fas fa-plus"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {%for antecedent_form in antecedents_form%}
+                                <tr>
+                                    <td>{{antecedent_form.antecedent}}</td>
+                                    <td>{{antecedent_form.info}}</td>
+                                    <td><i class="fas fa-trash"></i></td>
+                                </tr>
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
                 <h2>Insurance</h2>
-                <p>{{insurance_form.insurance_carrier.label}}</p>
-                <p>{{insurance_form.insurance_carrier}}</p>
-                <p>{{insurance_form.type_of_insurance.label}}</p>
-                <p>{{insurance_form.type_of_insurance}}</p>
-                <p>{{insurance_form.expiration_date.label}}</p>
-                <p>{{insurance_form.expiration_date}}</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Insurance Carrier</th>
+                            <th>Insurance Type</th>
+                            <th>Expiration Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{insurance_form.insurance_carrier}} <i class="fas fa-plus"></i></td>
+                            <td>{{insurance_form.type_of_insurance}}</td>
+                            <td>{{insurance_form.expiration_date}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <button type="submit">Save</button>
     </form>
 <script src="{%static 'patients/js/add_patient.js'%}"></script>
 {%endblock%}

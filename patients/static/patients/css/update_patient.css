@@ -1,29 +1,64 @@
 /*Checked*/
 /*Body*/
 body{
-    margin: 0;
-    background-color: #12212b;
+    background-color: #3e5278;
 }
 
 /*Wrapper*/
 .wrapper{
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 30% 69%;
+    grid-gap: 1%;
+    height: 98vh;
 }
+
+.fa-long-arrow-alt-left{
+    float: left;
+}
+
+.general-info{
+    background-color: #12212b;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
+    padding: 10px;
+}
+
+.info{
+    height: 69vh;
+    overflow: auto;
+}
+
+.extra-info{
+    background-color: #12212b;
+    padding: 10px;
+}
+
 
 /*Form*/
 form{
-    margin-top: -25px;
     text-align: center;
-    background-color: #12212b;
+}
+
+.allergies-form{
+    overflow: auto;
+    max-height: 150px;
+}
+
+.antecedents-form{
+    overflow: auto;
+    max-height: 150px;
 }
 
 h1{
+    overflow: auto;
     padding: 25px;
 }
 
-p{
-    font-size: 20px;
+table{
+    margin: auto;
+}
+
+td{
+    width: 20%;
 }
 
 input{
@@ -32,7 +67,6 @@ input{
   color: #0ff5fc;
   background-color: #12212b;
   border: 2px solid #0ff5fc;
-  border-radius: 15px;
   height: 30px;
   width:60%;
   transition: 0.5s;

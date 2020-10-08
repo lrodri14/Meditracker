@@ -41,8 +41,8 @@ def patients(request):
 def add_patient(request):
     if request.method == 'POST':
         patient_form = PatientForm(request.POST)
-        allergies_form = AllergiesInformationForm(request.POST)
-        antecedents_form = AntecedentForm(request.POST)
+        allergies_form = AllergiesInformationFormset(request.POST)
+        antecedents_form = AntecedentFormset(request.POST)
         insurance_form = InsuranceInformationForm(request.POST)
         if patient_form.is_valid() and allergies_form.is_valid() and antecedents_form.is_valid() and insurance_form.is_valid():
             patient = patient_form.save(commit=False)
@@ -63,8 +63,8 @@ def add_patient(request):
             return redirect('patients:patients')
     else:
         patient_form = PatientForm
-        allergies_form = AllergiesInformationForm
-        antecedents_form = AntecedentForm
+        allergies_form = AllergiesInformationFormset(queryset=Patient.objects.none())
+        antecedents_form = AntecedentFormset(queryset=Patient.objects.none())
         insurance_form = InsuranceInformationForm
     return render(request, 'patients/add_patient.html', context={'patient_form': patient_form,
                                                                  'allergies_form': allergies_form,
@@ -140,9 +140,9 @@ def patient_update(request, pk):
             return redirect('patients:patients_details', pk=patient.pk)
     else:
         patient_form = PatientForm(instance=patient)
-        allergies_form = AllergiesInformationForm(instance=patient_allergies)
+        allergies_form = AllergiesInformationFormset(queryset=Patient.objects.none())
         insurance_form = InsuranceInformationForm(instance=patient_insurance)
-        antecedents_form = AntecedentForm(instance=patient_antecedents)
+        antecedents_form = AntecedentFormset(queryset=Patient.objects.none())
     return render(request, template, context={'patient_form': patient_form, 'allergies_form': allergies_form,
                                                                             'insurance_form': insurance_form,
                                                                             'antecedents_form': antecedents_form})

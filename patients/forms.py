@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import modelformset_factory
 from .models import *
 
 years = [years for years in range(1920, 2101)]
@@ -10,6 +11,10 @@ class PatientForm(forms.ModelForm):
     class Meta:
         model = Patient
         exclude = ('created_by',)
+
+
+class PatientFilter(forms.Form):
+    patient = forms.CharField(widget=forms.TextInput)
 
 
 class InsuranceCarrierForm(forms.ModelForm):
@@ -33,7 +38,6 @@ class InsuranceInformationForm(forms.ModelForm):
         model = InsuranceInformation
         exclude = ('patient',)
 
-
 class AllergiesForm(forms.ModelForm):
 
     class Meta:
@@ -53,13 +57,21 @@ class AllergiesInformationForm(forms.ModelForm):
     class Meta:
         model = AllergiesInformation
         exclude = ('patient',)
+        widgets = {
+            'about': forms.widgets.Textarea(attrs={'rows': 2, 'columns': 2})
+        }
+
+
+AllergiesInformationFormset = modelformset_factory(model=AllergiesInformation, form=AllergiesInformationForm, can_delete=True)
 
 
 class AntecedentForm(forms.ModelForm):
     class Meta:
         model = Antecedents
         exclude = ('patient',)
-
-
-class PatientFilter(forms.Form):
-    patient = forms.CharField(widget=forms.TextInput)
+        widgets = {
+            'info': forms.widgets.Textarea(attrs={'rows': 2, 'columns': 2})
+        }
+        
+        
+AntecedentFormset = modelformset_factory(model=Antecedents, form=AntecedentForm, can_delete=True)
