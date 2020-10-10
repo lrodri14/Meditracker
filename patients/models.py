@@ -128,10 +128,10 @@ class Allergies(models.Model):
 
 
 class AllergiesInformation(models.Model):
-    allergy_type = models.OneToOneField(Allergies, on_delete=models.CASCADE, null=True, blank=True, verbose_name='allergy type',
+    allergy_type = models.ForeignKey(Allergies, on_delete=models.CASCADE, null=True, blank=True, verbose_name='allergy type',
                                         help_text='Allergy type of the patient', related_name='allergy')
     about = models.TextField('about allergy', help_text='Tell us about what you suffer', blank=True, null=True)
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
                                                                                             related_name='allergies')
 
     def __str__(self):
@@ -147,7 +147,7 @@ class AllergiesInformation(models.Model):
 class Antecedents(models.Model):
     antecedent = models.CharField('antecedent', max_length=150, blank=True, null=True, help_text='Antecedent Type')
     info = models.TextField('antecedent info', blank=True, null=True, help_text='About this antecedent')
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
                                                                                             related_name='antecedents')
 
     def __str__(self):

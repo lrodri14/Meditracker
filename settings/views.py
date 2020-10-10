@@ -56,7 +56,7 @@ def add_insurance_carrier(request):
                 updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
                 context = {'insurances': updated_insurances, 'form': forms.InsuranceCarrierFilterForm}
                 # How to return an error from the backend to the frontend?
-                data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
+                data = {'updated_html': render_to_string('settings/insurance_list.html', context, request), 'updated_selections': render_to_string('settings/insurance_partial_select.html', context=context, request=request)}
             except IntegrityError:
                 context['error'] = 'This insurance is already listed'
                 data = {'html': render_to_string(template, context, request)}
@@ -138,10 +138,10 @@ def allergies_create(request):
                 allergy.save()
                 allergies = Allergies.objects.filter(created_by=request.user)
                 context = {'allergies': allergies,'form': forms.AllergiesFilterForm}
-                data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
+                data = {'updated_html': render_to_string('settings/allergies_list.html', context, request), 'updated_selections': render_to_string('settings/allergies_partial_select.html', context=context, request=request)}
             except IntegrityError:
                 context['error'] = 'This allergy is already in your options'
-                data = {'html': render_to_string('settings/allergies_list.html', context, request)}
+                data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 

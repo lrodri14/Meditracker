@@ -66,7 +66,7 @@ td{
 }
 
 .fa-plus-hover{
-    color: #32a852;
+    color: #37cc27;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -76,7 +76,7 @@ td{
 }
 
 .fa-trash-hover{
-    color: #a83632;
+    color: #cc2727;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -118,6 +118,18 @@ select{
   transition: 0.5s;
 }
 
+.allergy-delete-check{
+    display: none;
+}
+
+.antecedent-delete-check{
+    display: none;
+}
+
+.form-hide{
+    display: none;
+}
+
 button{
     margin: 20px;
     width: 30%;
@@ -135,4 +147,36 @@ button{
     color: #12212b;
     transition: 0.5s;
     cursor: pointer;
+}
+
+.modal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.8);
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.modal-show{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+/*Modal Forms*/
+.modal-content > form{
+    text-align: center;
+    background-color: #12212b;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 60%;
 }

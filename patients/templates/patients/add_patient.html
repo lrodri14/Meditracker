@@ -6,8 +6,12 @@
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/add_patient.css'%}">
     <form method="POST" autocomplete="off">
-        {{allergies_form.management_form}}
-        {{antecedent_form.management_form}}
+        <div class="allergies_management_form">
+            {{allergies_form.management_form}}
+        </div>
+        <div class="antecedents_management_form">
+            {{antecedents_form.management_form}}
+        </div>
         {%csrf_token%}
         <div class="wrapper">
             <div class="general-info">
@@ -51,15 +55,16 @@
                                 <tr>
                                     <th>Type</th>
                                     <th>About</th>
-                                    <th><i class="fas fa-plus"></i></th>
+                                    <th><i class="fas fa-plus add-allergy-form"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                             {%for allergy_form in allergies_form%}
-                                <tr>
-                                    <td>{{allergy_form.allergy_type}} <i class="fas fa-plus"></i></td>
+                                <tr class="form-container">
+                                    <td>{{allergy_form.allergy_type}} <i class="fas fa-plus add-allergy" data-url="{%url 'settings:allergy_add'%}"></i></td>
                                     <td>{{allergy_form.about}}</td>
-                                    <td><i class="fas fa-trash"></i></td>
+                                    <td><i class="fas fa-trash delete-allergy-form"></i></td>
+                                    <td class="allergy-delete-check">{{allergy_form.DELETE}}</td>
                                 </tr>
                             {%endfor%}
                             </tbody>
@@ -72,39 +77,47 @@
                                 <tr>
                                     <th>Antecedent</th>
                                     <th>Info</th>
-                                    <th><i class="fas fa-plus"></i></th>
+                                    <th><i class="fas fa-plus add-antecedent-form"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                             {%for antecedent_form in antecedents_form%}
-                                <tr>
+                                <tr class="form-container">
                                     <td>{{antecedent_form.antecedent}}</td>
                                     <td>{{antecedent_form.info}}</td>
-                                    <td><i class="fas fa-trash"></i></td>
+                                    <td><i class="fas fa-trash delete-antecedent-form"></i></td>
+                                    <td class="antecedent-delete-check">{{antecedent_form.DELETE}}</td>
                                 </tr>
                             {%endfor%}
                             </tbody>
                         </table>
                     </div>
                 <h2>Insurance</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Insurance Carrier</th>
-                            <th>Insurance Type</th>
-                            <th>Expiration Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{insurance_form.insurance_carrier}} <i class="fas fa-plus"></i></td>
-                            <td>{{insurance_form.type_of_insurance}}</td>
-                            <td>{{insurance_form.expiration_date}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="insurance-form">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Insurance Carrier</th>
+                                <th>Insurance Type</th>
+                                <th>Expiration Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{insurance_form.insurance_carrier}} <i class="fas fa-plus add-insurance" data-url="{%url 'settings:insurance_add'%}"></i></td>
+                                <td>{{insurance_form.type_of_insurance}}</td>
+                                <td>{{insurance_form.expiration_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </form>
+    <div class="modal">
+        <div class="modal-content">
+
+        </div>
+    </div>
 <script src="{%static 'patients/js/add_patient.js'%}"></script>
 {%endblock%}

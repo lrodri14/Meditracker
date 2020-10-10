@@ -1,6 +1,6 @@
 {%load static%}
 {%block body_block%}
-<form method="POST" autocomplete="off" action="{%url 'settings:allergy_add'%}" class="add">
+<form method="POST" autocomplete="off" action="{%url 'settings:allergy_add'%}" class="add add-allergy">
     {%csrf_token%}
     <h1>Add Allergy</h1>
     <p>{{allergies_form.allergy_type.label}}</p>

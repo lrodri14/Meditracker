@@ -1,6 +1,6 @@
 {%load static%}
 {%block body_block%}
-<form method="POST" autocomplete="off" action="{%url 'settings:insurance_add'%}" class="add">
+<form method="POST" autocomplete="off" action="{%url 'settings:insurance_add'%}" class="add add-insurance">
     {%csrf_token%}
     <h1>Add Insurance Carrier</h1>
     <p>{{insurance_carrier_form.company.label}}</p>
