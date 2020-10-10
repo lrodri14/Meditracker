@@ -49,32 +49,28 @@ def add_patient(request):
             allergies_instances = allergies_form.save(commit=False)
             antecedents_instances = antecedents_form.save(commit=False)
             insurance = insurance_form.save(commit=False)
-            #
-            # print(len(allergies_instances))
 
-            # patient.created_by = request.user
-            # patient.save()
+            patient.created_by = request.user
+            patient.save()
 
-            # for allergy_form in allergies_instances:
-            #     if allergy_form in allergies_form.deleted_objects:
-            #         allergy_form.delete()
-            #     else:
-            #         allergies_form.save(commit=False)
-            #         allergy_form.patient = patient
-            #         allergy_form.save()
-            #
-            # for antecedent_form in antecedents_instances:
-            #     if antecedent_form in antecedents_form.deleted_objects:
-            #         antecedent_form.delete()
-            #     else:
-            #         antecedent_form.save(commit=False)
-            #         antecedent_form.patient = patient
-            #         antecedent_form.save()
-            #
-            # insurance.patient = patient
-            # insurance.save()
-            #
-            # return redirect('patients:patients')
+            for allergy_form in allergies_instances:
+                if allergy_form in allergies_form.deleted_objects:
+                    allergy_form.delete()
+                else:
+                    allergy_form.patient = patient
+                    allergy_form.save()
+
+            for antecedent_form in antecedents_instances:
+                if antecedent_form in antecedents_form.deleted_objects:
+                    antecedent_form.delete()
+                else:
+                    antecedent_form.patient = patient
+                    antecedent_form.save()
+
+            insurance.patient = patient
+            insurance.save()
+
+            return redirect('patients:patients')
     else:
         patient_form = PatientForm
         allergies_form = AllergiesInformationFormset(queryset=Patient.objects.none())

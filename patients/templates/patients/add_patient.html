@@ -5,15 +5,21 @@
 {%block return%}{%endblock%}{%block home%}{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/add_patient.css'%}">
+
     <form method="POST" autocomplete="off">
-        <div class="allergies_management_form">
-            {{allergies_form.management_form}}
-        </div>
+
+        {%csrf_token%}
+
         <div class="antecedents_management_form">
             {{antecedents_form.management_form}}
         </div>
-        {%csrf_token%}
+
+        <div class="allergies_management_form">
+            {{allergies_form.management_form}}
+        </div>
+
         <div class="wrapper">
+
             <div class="general-info">
                 <a href="{%url 'patients:patients'%}"><i class="fas fa-long-arrow-alt-left"></i></a>
                 <h1>Add Patient</h1>
@@ -46,7 +52,10 @@
                 </div>
                 <button type="submit">Save</button>
             </div>
+
+
             <div class="extra-info">
+
                 <h1>Extra Information</h1>
                 <h2>Allergies</h2>
                     <div class="allergies-form">
@@ -70,6 +79,8 @@
                             </tbody>
                         </table>
                     </div>
+
+
                 <h2>Antecedents</h2>
                     <div class="antecedents-form">
                         <table>
@@ -92,6 +103,8 @@
                             </tbody>
                         </table>
                     </div>
+
+
                 <h2>Insurance</h2>
                 <div class="insurance-form">
                     <table>
@@ -111,13 +124,25 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
+
         </div>
+
     </form>
+
+
     <div class="modal">
         <div class="modal-content">
 
         </div>
     </div>
+
+
+
+
+
+
+
 <script src="{%static 'patients/js/add_patient.js'%}"></script>
 {%endblock%}
