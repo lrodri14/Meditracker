@@ -40,7 +40,7 @@ h4{
 
 .fa-book-medical-hover{
   transition: 0.5s;
-  color: green;
+  color: #37cc27;
 }
 
 .fa-file-medical-alt{
@@ -120,7 +120,7 @@ button{
     max-height: 120px;
     height: 120px;
     width: 30%;
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     overflow: auto;
     text-align: left;
     margin: auto;
@@ -189,7 +189,7 @@ select{
     margin: 2%;
     width: 10px;
     height: 10px;
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     border-radius: 10px;
     transition: 0.5s;
     list-style: none;
@@ -199,7 +199,7 @@ select{
 .navigator-active{
     width: 14px;
     height: 14px;
-    background-color: cyan;
+    background-color: #0ff5fc;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -299,7 +299,7 @@ select{
 }
 
 .add-drug-hover{
-    color: green;
+    color: #37cc27;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -309,7 +309,7 @@ select{
 }
 
 .fa-trash-hover{
-    color: red;
+    color: #cc2727;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -325,14 +325,14 @@ select{
 }
 
 .add-exam{
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     padding: 5px;
     border-radius: 10px;
     transition: 0.5s;
 }
 
 .add-exam-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
     cursor: pointer;

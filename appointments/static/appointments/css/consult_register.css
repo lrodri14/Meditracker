@@ -74,7 +74,7 @@ tr:nth-child(even){
 }
 
 .tr-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;;
     transition: 0.5s;
     cursor: pointer;
     line-height: 50px;
@@ -192,7 +192,7 @@ button{
 }
 
 .button-form-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
     cursor: pointer;
@@ -210,7 +210,7 @@ button{
 }
 
 .all-registers-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
     cursor: pointer;
@@ -229,7 +229,7 @@ button{
 }
 
 .registers-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
     cursor: pointer;
@@ -242,26 +242,26 @@ button{
 
 .disabled{
     color: #12212b;
-    background-color: cyan;
+    background-color: #0ff5fc;
     cursor: not-allowed;
 }
 
 #active{
     color: #12212b;
-    background-color: cyan;
+    background-color: #0ff5fc;
     cursor: not-allowed;
 }
 
 .pagination li{
     display: inline;
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     margin: 1%;
     padding: 1%;
 }
 
 .pagination li:hover{
     color: #12212b;
-    background-color:cyan;
+    background-color: #0ff5fc;
     transition: 0.5s;
     cursor: pointer;
 }

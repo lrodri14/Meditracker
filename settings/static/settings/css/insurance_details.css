@@ -21,6 +21,6 @@ a{
 }
 
 .link-hover{
-    color: red;
+    color: #cc2727;
     transition: 0.5s;
 }

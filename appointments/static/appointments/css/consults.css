@@ -92,7 +92,7 @@ table{
 
 #heading{
     background-color: #12212b;
-    color: cyan;
+    color: #0ff5fc;
     cursor: default;
     transition: 0.5;
 }
@@ -130,7 +130,7 @@ tr:nth-child(even){
 }
 
 .tr-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     transition: 0.5s;
     cursor: pointer;
     line-height: 50px;

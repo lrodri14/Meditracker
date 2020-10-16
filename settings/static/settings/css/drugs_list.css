@@ -8,7 +8,7 @@ table{
 
 #heading{
     background-color: #12212b;
-    color: cyan;
+    color: #0ff5fc;
     cursor: default;
 }
 
@@ -21,7 +21,7 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: cyan;
+    color: #0ff5fc;
 }
 
 tr:nth-child(odd){

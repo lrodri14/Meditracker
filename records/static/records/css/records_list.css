@@ -16,7 +16,7 @@ table{
 
 #heading{
     background-color: #12212b;
-    color: cyan;
+    color: #0ff5fc;
     line-height: 25px;
     cursor: default;
 }
@@ -36,7 +36,7 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: cyan;
+    color: #0ff5fc;
 }
 
 tr:nth-child(odd){
@@ -118,7 +118,7 @@ button{
 }
 
 .button-form-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
     cursor: pointer;
@@ -137,26 +137,26 @@ button{
 
 .disabled{
     color: #12212b;
-    background-color: cyan;
+    background-color: #0ff5fc;
     cursor: not-allowed;
 }
 
 #active{
     color: #12212b;
-    background-color: cyan;
+    background-color: #0ff5fc;
     cursor: not-allowed;
 }
 
 .pagination li{
     display: inline;
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     margin: 1%;
     padding: 1%;
 }
 
 .pagination li:hover{
     color: #12212b;
-    background-color:cyan;
+    background-color: #0ff5fc;
     transition: 0.5s;
     cursor: pointer;
 }

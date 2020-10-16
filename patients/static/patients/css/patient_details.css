@@ -53,7 +53,7 @@ body{
 .title{
     padding: 5px;
     width: 95%;
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     font-size: 20px;
     margin-top: 5%;
@@ -82,7 +82,7 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: cyan;
+    color: #0ff5fc;
 }
 
 tr:nth-child(odd){
@@ -96,7 +96,7 @@ tr:nth-child(even){
 }
 
 .tr-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     transition: 0.5s;
     cursor: pointer;
     line-height: 50px;
@@ -105,7 +105,7 @@ tr:nth-child(even){
 
 .heading{
     background-color: #12212b !important;
-    color: cyan;
+    color: #0ff5fc;
     line-height: 25px;
     cursor: default;
 }
@@ -226,7 +226,7 @@ button{
 }
 
 .button-form-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
     cursor: pointer;
@@ -269,14 +269,14 @@ button{
 }
 
 .tab-hover{
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     cursor: pointer;
     transition: 0.5s;
 }
 
 .tab-active{
-    background-color: cyan;
+    background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
 }

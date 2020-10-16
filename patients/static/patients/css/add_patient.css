@@ -38,6 +38,10 @@ form{
     text-align: center;
 }
 
+.error{
+    color: #cc2727;
+}
+
 .allergies-form{
     overflow: auto;
     max-height: 150px;
@@ -127,6 +131,10 @@ select{
 }
 
 .form-hide{
+    display: none;
+}
+
+.hidden{
     display: none;
 }
 

@@ -19,26 +19,26 @@ body{
 }
 
 .general{
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     padding: 10px;
     max-height: 320px;
     overflow: auto;
 }
 
 .vital-signs{
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     padding: 10px;
 }
 
 .organ-systems{
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     padding: 10px;
     max-height: 320px;
     overflow: auto;
 }
 
 .physical{
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
     padding: 10px;
     max-height: 320px;
     overflow: auto;
@@ -59,7 +59,7 @@ body{
 }
 
 hr{
-    border: 1px solid cyan;
+    border: 1px solid #0ff5fc;
 }
 
 .fa-print{

@@ -53,7 +53,7 @@ input{
 }
 
 label[for=id_profile_pic]{
-    border: 2px solid cyan;
+    border: 2px solid #0ff5fc;
     border-radius: 15px;
     padding: 5px;
 }
