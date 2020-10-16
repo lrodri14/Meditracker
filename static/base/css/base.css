@@ -1,4 +1,44 @@
 /*Checked*/
+
+/*
+    Color Listing
+    -------------
+    -------------
+
+    Base
+    -----
+
+    Background Color: #3e5278;
+    Text Color: #0ff5fc;
+    Hovers: #0ff5fc;
+    Borders: #0ff5fc;
+    Forms:  #12212b;
+
+    Scroll
+    --------
+    Scroll bar track: #288aad;
+    Scroll bar thumb: #0ff5fc;
+
+
+    Status
+    ------
+    Open: #ffe100;
+    Confirmed: #32a852;
+    Closed: #a83632;
+    Cancelled: #b5b3a7;
+    Pending: #ffe100;
+    Attended: #32a852;
+    Never Attended: #a83632;
+
+    Operations
+    ----------
+
+    Add: #32a852;
+    Delete: #a83632;
+    Update: #ffe100;
+
+*/
+
 /*Body*/
 body{
     font-family: 'Nunito', sans-serif;
@@ -16,7 +56,7 @@ body{
 }
 
 ::-webkit-scrollbar-thumb {
-    background: cyan;
+    background: #0ff5fc;
 }
 
 /*Icons*/
