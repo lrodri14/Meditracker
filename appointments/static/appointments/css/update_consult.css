@@ -211,11 +211,15 @@ select{
     left: 0%;
     position: fixed;
     background-color: rgba(0,0,0,0.7);
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
 }
 
 .exams-modal-show{
-    display: block;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
 }
 
 .exams-data{

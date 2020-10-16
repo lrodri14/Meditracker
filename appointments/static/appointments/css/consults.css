@@ -8,11 +8,15 @@
     height: 100%;
     top: 0;
     left: 0;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
 }
 
 .modal-show{
-    display: block;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
 }
 
 /*Modal Form*/

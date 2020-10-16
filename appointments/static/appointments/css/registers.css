@@ -113,9 +113,12 @@ form{
     padding: 10px;
     margin-top: -200%;
     transition: 0.5s;
+    visibility: hidden;
+    transition: 0.5s;
 }
 
 .show-form{
+    visibility: visible;
     margin-top: 30%;
     transition: 0.5s;
 }
