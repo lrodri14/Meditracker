@@ -82,9 +82,12 @@ def add_patient(request):
 
 def patient_details(request, pk):
     patient = Patient.objects.get(pk=pk)
+    allergies = AllergiesInformation.objects.filter(patient=patient)
+    antecedents = Antecedents.objects.filter(patient=patient)
+    insurance = InsuranceInformation.objects.get(patient=patient)
     consults = Consults.objects.filter(patient=patient, created_by=request.user).order_by('-datetime')
     template = 'patients/patient_details.html'
-    context = {'patient': patient, 'consults': consults, 'consults_form': ConsultsDetailsFilterForm}
+    context = {'patient': patient, 'consults': consults, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'consults_form': ConsultsDetailsFilterForm}
     if request.method == 'POST':
         consults_form = ConsultsDetailsFilterForm(request.POST)
         if consults_form.is_valid():

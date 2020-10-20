@@ -28,6 +28,10 @@ body{
     grid-gap: 1%;
 }
 
+.no-background{
+    margin-left: 45%;
+}
+
 .allergies{
     text-align: justify;
     overflow: auto;

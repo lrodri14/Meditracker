@@ -31,22 +31,36 @@
     <div class="extras">
         <div class="allergies">
             <div class="title">Allergies</div>
-            <h3>Allergy Type: {{patient.allergies.allergy_type}}</h3>
-            <h3>About: {{patient.allergies.about}}</h3>
-            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aperiam aspernatur aut corporis culpa dolor doloremque, doloribus ea eius, esse explicabo ipsa laboriosam molestiae possimus quas quis quo vero voluptas.</h3>
-            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque illum perspiciatis porro quo. Dolorem in molestiae possimus. Aperiam consectetur consequatur eos odio rem suscipit, tempora tempore tenetur ullam veniam! Unde?</h3>
+                {%if allergies%}
+                    {%for allergy in allergies%}
+                        <h3>Allergy Type: {{allergy.allergy_type}}</h3>
+                        <h3>About: {{allergy.about}}</h3>
+                        <hr>
+                    {%endfor%}
+                {%else%}
+                    <p class="no-background">No Allergies</p>
+                {%endif%}
         </div>
         <div class="antecedents">
             <div class="title">Antecedents</div>
-            <h3>Antecedent: {{patient.antecedents.antecedent}}</h3>
-            <h3>Information: {{patient.antecedents.info}}</h3>
+                {%if antecedents%}
+                    {%for antecedent in antecedents%}
+                        <h3>Antecedent: {{antecedent.antecedent}}</h3>
+                        <h3>Information: {{antecedent.info}}</h3>
+                    {%endfor%}
+                {%else%}
+                    <p class="no-background">No Antecedents</p>
+                {%endif%}
         </div>
         <div class="insurance">
             <div class="title">Insurance</div>
-            <h3>Insurance Carrier: {{patient.insurance.insurance_carrier}}</h3>
-            <h3>Type of Insurnace: {{patient.insurance.type_of_insurance}}</h3>
-            <h3>Expiration Date: {{patient.insurance.expiration_date}}</h3>
-            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto, aspernatur aut, autem commodi culpa eligendi exercitationem fuga illum inventore ipsam itaque iure quaerat quam quas recusandae unde velit. Itaque?</h3>
+                {%if insurance%}
+                    <h3>Insurance Carrier: {{insurance.insurance_carrier}}</h3>
+                    <h3>Type of Insurnace: {{insurance.type_of_insurance}}</h3>
+                    <h3>Expiration Date: {{insurance.expiration_date}}</h3>
+                {%else%}
+                    <p class="no-background">No Insurance Information</p>
+                {%endif%}
         </div>
     </div>
     <div class="filterable appointments">
