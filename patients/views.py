@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
 from appointments.forms import ConsultsDetailsFilterForm
-from django.conf import settings
 
 # Create your views here.
 
@@ -73,13 +72,12 @@ def add_patient(request):
             return redirect('patients:patients')
     else:
         patient_form = PatientForm
-        allergies_form = AllergiesInformationFormset(queryset=Patient.objects.none())
-        antecedents_form = AntecedentFormset(queryset=Patient.objects.none())
-        insurance_form = InsuranceInformationForm
-    return render(request, 'patients/add_patient.html', context={'patient_form': patient_form,
-                                                                 'allergies_form': allergies_form,
-                                                                 'insurance_form': insurance_form,
-                                                                 'antecedents_form': antecedents_form})
+        allergies_form = AllergiesInformationFormset(queryset=AllergiesInformation.objects.none())
+        antecedents_form = AntecedentFormset(queryset=Antecedents.objects.none())
+        insurance_form = InsuranceInformationForm()
+        template = 'patients/add_patient.html'
+        context_data = {'patient_form': patient_form, 'allergies_form': allergies_form, 'insurance_form': insurance_form, 'antecedents_form': antecedents_form}
+        return render(request, template, context=context_data)
 
 
 def patient_details(request, pk):
@@ -134,25 +132,22 @@ def patient_delete(request, pk):
 def patient_update(request, pk):
     template = 'patients/patients_update.html'
     patient = Patient.objects.get(pk=pk)
-    patient_allergies = AllergiesInformation.objects.get(patient=patient)
     patient_insurance = InsuranceInformation.objects.get(patient=patient)
-    patient_antecedents = Antecedents.objects.get(patient=patient)
     patient_form = PatientForm(request.POST or None, instance=patient)
-    allergies_form = AllergiesInformationForm(request.POST or None, instance=patient_allergies)
+    allergies_form = AllergiesInformationUpdateFormset(instance=patient)
     insurance_form = InsuranceInformationForm(request.POST or None, instance=patient_insurance)
-    antecedents_form = AntecedentForm(request.POST or None, instance=patient_antecedents)
+    antecedents_form = AntecedentUpdateFormset(instance=patient)
     if request.method == 'POST':
+        patient_form = PatientForm(request.POST or None, instance=patient)
+        allergies_form = AllergiesInformationUpdateFormset(request.POST, instance=patient)
+        insurance_form = InsuranceInformationForm(request.POST, instance=patient_insurance)
+        antecedents_form = AntecedentUpdateFormset(request.POST, instance=patient)
         if patient_form.is_valid() and allergies_form.is_valid() and insurance_form.is_valid() and antecedents_form.is_valid():
             patient_form.save()
             allergies_form.save()
             insurance_form.save()
             antecedents_form.save()
             return redirect('patients:patients_details', pk=patient.pk)
-    else:
-        patient_form = PatientForm(instance=patient)
-        allergies_form = AllergiesInformationFormset(queryset=Patient.objects.none())
-        insurance_form = InsuranceInformationForm(instance=patient_insurance)
-        antecedents_form = AntecedentFormset(queryset=Patient.objects.none())
     return render(request, template, context={'patient_form': patient_form, 'allergies_form': allergies_form,
                                                                             'insurance_form': insurance_form,
                                                                             'antecedents_form': antecedents_form})

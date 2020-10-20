@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory, inlineformset_factory
 from .models import *
 
 years = [years for years in range(1920, 2101)]
@@ -38,6 +38,7 @@ class InsuranceInformationForm(forms.ModelForm):
         model = InsuranceInformation
         exclude = ('patient',)
 
+
 class AllergiesForm(forms.ModelForm):
 
     class Meta:
@@ -61,8 +62,17 @@ class AllergiesInformationForm(forms.ModelForm):
             'about': forms.widgets.Textarea(attrs={'rows': 2, 'columns': 2})
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        allergy_type = cleaned_data.get('allergy_type')
+        about = cleaned_data.get('about')
+        if (allergy_type and not about) or (about and not allergy_type):
+            self._errors['Allergies'] = self.error_class(["Both 'Type' and 'About' fields must be provided."])
+        return cleaned_data
 
-AllergiesInformationFormset = modelformset_factory(model=AllergiesInformation, form=AllergiesInformationForm, can_delete=True)
+
+AllergiesInformationFormset = modelformset_factory(model=AllergiesInformation, form=AllergiesInformationForm, can_delete=True, extra=1)
+AllergiesInformationUpdateFormset = inlineformset_factory(parent_model=Patient, model=AllergiesInformation, form=AllergiesInformationForm, can_delete=True, extra=1)
 
 
 class AntecedentForm(forms.ModelForm):
@@ -72,6 +82,16 @@ class AntecedentForm(forms.ModelForm):
         widgets = {
             'info': forms.widgets.Textarea(attrs={'rows': 2, 'columns': 2})
         }
-        
-        
+
+    def clean(self):
+        cleaned_data = super().clean()
+        antecedent = cleaned_data.get('antecedent')
+        info = cleaned_data.get('info')
+        if (antecedent and not info) or (info and not antecedent):
+            self._errors['Antecedents'] = self.error_class(["Both 'Antecedent' and 'Info' fields must be provided."])
+        return cleaned_data
+
+
 AntecedentFormset = modelformset_factory(model=Antecedents, form=AntecedentForm, can_delete=True)
+AntecedentUpdateFormset = inlineformset_factory(parent_model=Patient, model=Antecedents, form=AntecedentForm, can_delete=True, extra=1)
+

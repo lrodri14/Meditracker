@@ -19,7 +19,10 @@ if (document.querySelector('#add_patients') !== 'undefined' && document.querySel
     var addPatient = document.querySelector('#add_patients')
 }
 
-var backedUpData = tbody.innerHTML
+if (tbody){
+    var backedUpData = tbody.innerHTML
+}
+
 
 // Async Functions
 

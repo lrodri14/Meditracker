@@ -1,18 +1,47 @@
 <!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
-{%block title%}Add Patient{%endblock%}
+{%block title%}Update Patient{%endblock%}
 {%block return%}{%endblock%}{%block home%}{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'patients/css/add_patient.css'%}">
+<link rel="stylesheet" href="{%static 'patients/css/update_patient.css'%}">
+
     <form method="POST" autocomplete="off">
-        {{allergies_form.management_form}}
+
         {%csrf_token%}
+
+        <div class="allergies_management_form">
+            {{allergies_form.management_form}}
+        </div>
+
+        <div class="antecedents_management_form">
+            {{antecedents_form.management_form}}
+        </div>
+
         <div class="wrapper">
+
             <div class="general-info">
                 <a href="{%url 'patients:patients'%}"><i class="fas fa-long-arrow-alt-left"></i></a>
-                <h1>Add Patient</h1>
+                <h1>Update Patient</h1>
                 <div class="info">
+                    {%if error in patient_form.errors%}
+                        {%for error in patient_form.errors%}
+                            <p class="error">{{error.as_text}}</p>
+                        {%endfor%}
+                    {%endif%}
+
+                    {%if allergies_form.errors%}
+                        {%for error in allergies_form.errors%}
+                            <p class="error">{{error.as_text}}</p>
+                        {%endfor%}
+                    {%endif%}
+
+                    {%if antecedents_form.errors%}
+                        {%for error in antecedents_form.errors%}
+                            <p class="error">{{error.as_text}}</p>
+                        {%endfor%}
+                    {%endif%}
+
                     <p>{{patient_form.id_number.label}}</p>
                     <p>{{patient_form.id_number}}</p>
                     <p>{{patient_form.first_names.label}}</p>
@@ -41,7 +70,10 @@
                 </div>
                 <button type="submit">Save</button>
             </div>
+
+
             <div class="extra-info">
+
                 <h1>Extra Information</h1>
                 <h2>Allergies</h2>
                     <div class="allergies-form">
@@ -50,20 +82,24 @@
                                 <tr>
                                     <th>Type</th>
                                     <th>About</th>
-                                    <th><i class="fas fa-plus"></i></th>
+                                    <th><i class="fas fa-plus add-allergy-form"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                             {%for allergy_form in allergies_form%}
-                                <tr>
-                                    <td>{{allergy_form.allergy_type}}</td>
+                                <tr class="form-container">
+                                    <td>{{allergy_form.allergy_type}} <i class="fas fa-plus add-allergy" data-url="{%url 'settings:allergy_add'%}"></i></td>
                                     <td>{{allergy_form.about}}</td>
-                                    <td><i class="fas fa-trash"></i></td>
+                                    <td><i class="fas fa-trash delete-allergy-form"></i></td>
+                                    <td class="allergy-delete-check">{{allergy_form.DELETE}}</td>
+                                    <td class="hidden">{{allergy_form.id}}</td>
                                 </tr>
                             {%endfor%}
                             </tbody>
                         </table>
                     </div>
+
+
                 <h2>Antecedents</h2>
                     <div class="antecedents-form">
                         <table>
@@ -71,39 +107,56 @@
                                 <tr>
                                     <th>Antecedent</th>
                                     <th>Info</th>
-                                    <th><i class="fas fa-plus"></i></th>
+                                    <th><i class="fas fa-plus add-antecedent-form"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                             {%for antecedent_form in antecedents_form%}
-                                <tr>
+                                <tr class="form-container">
                                     <td>{{antecedent_form.antecedent}}</td>
                                     <td>{{antecedent_form.info}}</td>
-                                    <td><i class="fas fa-trash"></i></td>
+                                    <td><i class="fas fa-trash delete-antecedent-form"></i></td>
+                                    <td class="antecedent-delete-check">{{antecedent_form.DELETE}}</td>
+                                    <td class="hidden">{{antecedent_form.id}}</td>
                                 </tr>
                             {%endfor%}
                             </tbody>
                         </table>
                     </div>
+
+
                 <h2>Insurance</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Insurance Carrier</th>
-                            <th>Insurance Type</th>
-                            <th>Expiration Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{insurance_form.insurance_carrier}}</td>
-                            <td>{{insurance_form.type_of_insurance}}</td>
-                            <td>{{insurance_form.expiration_date}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="insurance-form">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Insurance Carrier</th>
+                                <th>Insurance Type</th>
+                                <th>Expiration Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{insurance_form.insurance_carrier}} <i class="fas fa-plus add-insurance" data-url="{%url 'settings:insurance_add'%}"></i></td>
+                                <td>{{insurance_form.type_of_insurance}}</td>
+                                <td>{{insurance_form.expiration_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
+
         </div>
+
     </form>
-<script src="{%static 'patients/js/add_patient.js'%}"></script>
+
+
+    <div class="modal">
+        <div class="modal-content">
+
+        </div>
+    </div>
+
+<script src="{%static 'patients/js/update_patient.js'%}"></script>
 {%endblock%}

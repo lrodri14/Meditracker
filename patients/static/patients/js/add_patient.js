@@ -4,7 +4,6 @@ var antecedentsTotalForms = document.querySelector('.antecedents_management_form
 var inputs = document.querySelectorAll('input')
 var button = document.querySelector('button')
 var extraInfo = document.querySelector('.extra-info')
-var allergySelection = document.querySelectorAll('.allergies-form select')
 var insuranceSelection = document.querySelectorAll('.insurance-form select')
 var allergiesFormBlueprint = document.querySelector('.allergies-form .form-container').cloneNode(true)
 var antecedentsFormBlueprint = document.querySelector('.antecedents-form .form-container').cloneNode(true)
@@ -191,6 +190,7 @@ if (modal){
     modal.addEventListener('submit', (e) => {
         e.preventDefault()
         e.stopPropagation()
+        var allergySelection = document.querySelectorAll('.allergies-form select')
         const form = e.target
         const url = form.action
         const method = form.method
@@ -202,9 +202,7 @@ if (modal){
                 if (data['html']){
                     modalContent.innerHTML = data['html']
                 }else{
-                    for (let i = 0; i<allergySelection.length; i++){
-                        allergySelection[i].innerHTML = data['updated_selections']
-                    }
+                    allergySelection[allergySelection.length - 1].innerHTML = data['updated_selections']
                     modal.classList.remove('modal-show')
                 }
             })

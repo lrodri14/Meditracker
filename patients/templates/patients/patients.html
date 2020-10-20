@@ -70,7 +70,7 @@
         </div>
         <div>
             <i class="fas fa-filter"></i>
-            <form method="POST" action="{%url 'patients:patients'%}" autocomplete="off" class="result-filter">
+            <form method="POST" action="{%url 'patients:patients'%}" autocomplete="off" class="result-filter filter-form">
                 {%csrf_token%}
                 <h1>Filter Results</h1>
                 <p>{{form.patient.label}} Name</p>
