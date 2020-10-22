@@ -275,7 +275,6 @@ if (exams){
         if (e.target.classList.contains('exam-filename')){
             previewImg.classList.add('image-preview-show')
             image.src = e.target.getAttribute('data-img-src')
-            console.log(image.src)
             document.querySelector('.exams-form').classList.remove('show-form')
         }
     })
