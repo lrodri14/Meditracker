@@ -1,5 +1,5 @@
 {%load static%}
-{%if consults%}
+{%if exams%}
 <div>
     <table>
         <thead>
@@ -12,13 +12,13 @@
             </tr>
         </thead>
         <tbody>
-            {%for c in consults%}
-            <tr onclick="window.location='{%url 'appointments:consult_details' c.pk %}'">
-                <td>{{c.datetime|date}}</td>
-                <td>{{c.datetime|time}}</td>
-                <td>{{c.created_by}}</td>
-                <td>Type</td>
-                <td><a href="{{MEDIA_URL}}{{c.medical_exams}}">{{c.medical_exams}}</a></td>
+            {%for e in exams%}
+            <tr onclick="window.location='{%url 'appointments:consult_details' e.consult.pk%}'">
+                <td>{{e.consult.datetime|date}}</td>
+                <td>{{e.consult.datetime|time}}</td>
+                <td>{{e.consult.created_by}}</td>
+                <td>{{e.get_type_display}}</td>
+                <td data-img-src="{{MEDIA_URL}}{{e.image}}" class="exam-filename">{{e}}</td>
             </tr>
             {%endfor%}
         </tbody>

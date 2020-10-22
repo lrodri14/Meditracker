@@ -43,6 +43,14 @@ hr{
     border: 1px solid #0ff5fc;
 }
 
+hr:last-child{
+    display: none;
+}
+
+a{
+    text-decoration: underline;
+}
+
 .antecedents{
     text-align: justify;
     overflow: auto;
@@ -178,7 +186,6 @@ i{
     transition: 0.5s;
 }
 
-
 form{
     text-align: center;
     background-color: #12212b;
@@ -289,4 +296,26 @@ button{
     background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
+}
+
+.image-preview{
+    position: fixed;
+    margin-left: 78.5%;
+    margin-top: -39.5%;
+    max-width: 20%;
+    max-height: 70%;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.image-preview-show{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.previewed-image{
+    width: 100%;
+    height: auto;
 }

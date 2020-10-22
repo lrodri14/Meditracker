@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from appointments.models import Consults
+from appointments.models import Consults, MedicalExams
 from django.template.loader import render_to_string
 from .forms import *
 from .models import *
@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
 from appointments.forms import ConsultsDetailsFilterForm
-
 # Create your views here.
 
 
@@ -86,8 +85,9 @@ def patient_details(request, pk):
     antecedents = Antecedents.objects.filter(patient=patient)
     insurance = InsuranceInformation.objects.get(patient=patient)
     consults = Consults.objects.filter(patient=patient, created_by=request.user).order_by('-datetime')
+    exams = MedicalExams.objects.filter(consult__patient=patient)
     template = 'patients/patient_details.html'
-    context = {'patient': patient, 'consults': consults, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'consults_form': ConsultsDetailsFilterForm}
+    context = {'patient': patient, 'consults': consults, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'exams': exams, 'consults_form': ConsultsDetailsFilterForm}
     if request.method == 'POST':
         consults_form = ConsultsDetailsFilterForm(request.POST)
         if consults_form.is_valid():

@@ -60,7 +60,7 @@ def consults_details(request, pk):
 
 def update_consult(request, pk):
     consult = Consults.objects.get(pk=pk)
-    consult_form = UpdateConsultsForm(request.user, request.POST or None, request.FILES or None, instance=consult)
+    consult_form = UpdateConsultsForm(request.user, request.POST or None, instance=consult)
     medical_exams_form = MedicalExamsFormset(queryset=Consults.objects.none())
     drug_form = DrugsForm
     drug_category_filter_form = DrugCategoryFilterForm()

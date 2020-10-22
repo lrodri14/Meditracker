@@ -47,6 +47,7 @@
                     {%for antecedent in antecedents%}
                         <h3>Antecedent: {{antecedent.antecedent}}</h3>
                         <h3>Information: {{antecedent.info}}</h3>
+                        <hr>
                     {%endfor%}
                 {%else%}
                     <p class="no-background">No Antecedents</p>
@@ -73,5 +74,10 @@
         {%include 'patients/patient_charges_partial_list.html'%}
     </div>
 </div>
+
+<div class="image-preview">
+    <img class="previewed-image" src="" alt="">
+</div>
+
 <script src="{%static 'patients/js/patient_details.js'%}"></script>
 {%endblock%}

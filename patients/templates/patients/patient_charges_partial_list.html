@@ -7,7 +7,7 @@
                 <th>Date</th>
                 <th>Time</th>
                 <th>Created By</th>
-                <th>Charge</th>
+                <th>$</th>
             </tr>
         </thead>
         <tbody>
@@ -16,7 +16,7 @@
                 <td>{{c.datetime|date}}</td>
                 <td>{{c.datetime|time}}</td>
                 <td>{{c.created_by}}</td>
-                <td>Charges</td>
+                <td>{{c.charge}}</td>
             </tr>
             {%endfor%}
         </tbody>

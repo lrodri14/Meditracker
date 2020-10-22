@@ -48,6 +48,8 @@ let appointments = document.querySelector('.appointments')
 let exams = document.querySelector('.exams')
 let charges = document.querySelector('.charges')
 let title = document.querySelector('#title')
+let previewImg = document.querySelector('.image-preview')
+let image = document.querySelector('.previewed-image')
 let titleOriginalContent = title.innerText
 let appointmentsBackUp = document.querySelector('.appointments').innerHTML
 let examsBackUp = document.querySelector('.exams').innerHTML
@@ -266,6 +268,25 @@ body.addEventListener('submit', (e) => {
         })
     }
 })
+
+// Exams
+if (exams){
+    exams.addEventListener('mouseover', (e) => {
+        if (e.target.classList.contains('exam-filename')){
+            previewImg.classList.add('image-preview-show')
+            image.src = e.target.getAttribute('data-img-src')
+            console.log(image.src)
+            document.querySelector('.exams-form').classList.remove('show-form')
+        }
+    })
+
+    exams.addEventListener('mouseout', (e) => {
+        if (e.target.classList.contains('exam-filename')){
+            previewImg.classList.remove('image-preview-show')
+            image.src = ''
+        }
+    })
+}
 
 window.addEventListener('scroll', (e) => {
     if(window.scrollX > 1440){
