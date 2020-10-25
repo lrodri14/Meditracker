@@ -73,6 +73,10 @@ form{
     transition: 0.5s;
 }
 
+.error{
+    color: #a83632;
+}
+
 .show-form{
     visibility: visible;
     margin-top: 10%;

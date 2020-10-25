@@ -25,7 +25,7 @@ def records_list(request, pk=None):
             if len(appointments) > 0:
                 context['appointments'] = appointments
             else:
-                context['error'] = 'There are no consults for these dates'
+                context['error'] = 'No records found'
             data = {'html': render_to_string('records/partial_records_list.html', context, request)}
             return JsonResponse(data)
     return render(request, template, context)
