@@ -1,10 +1,11 @@
+from django.core.exceptions import ValidationError
+
 from .models import Consults, MedicalExams, Drugs
 from django import forms
 from django.forms import modelformset_factory
 from django.utils import timezone
 from dateutil import relativedelta
 from patients.models import Patient
-from django.core.exceptions import ValidationError
 
 
 class ConsultsForm(forms.ModelForm):
@@ -13,10 +14,21 @@ class ConsultsForm(forms.ModelForm):
     class Meta:
         model = Consults
         fields = ('patient', 'datetime', 'motive', 'suffering',)
+        widgets = {
+            'motive': forms.Textarea(attrs={'rows': 8, 'columns': 5}),
+            'suffering': forms.Textarea(attrs={'rows': 8, 'columns': 5})
+        }
 
     def __init__(self, user, *args, **kwargs):
         super(ConsultsForm, self).__init__(*args, **kwargs)
         self.fields['patient'].queryset = Patient.objects.filter(created_by=user)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        datetime = cleaned_data.get('datetime')
+        if datetime.date() < timezone.localtime().date():
+            raise ValidationError('Unable to create a consult for this date.', code='invalid_date')
+        return cleaned_data
 
 
 class UpdateConsultsForm(forms.ModelForm):
@@ -46,6 +58,14 @@ class UpdateConsultsForm(forms.ModelForm):
         super(UpdateConsultsForm, self).__init__(*args, **kwargs)
         self.fields['drugs'].queryset = Drugs.objects.filter(created_by=user)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        cie_group = cleaned_data.get('cie_10_group')
+        cie_detail = cleaned_data.get('cie_10_detail')
+        if (cie_group and not cie_detail) or (cie_detail and not cie_group):
+            raise ValidationError("CIE-10 diagnose details are not completed.", code='invalid_cie_10_details')
+        return cleaned_data
+
 
 class MedicalExamsForm(forms.ModelForm):
     class Meta:
@@ -54,11 +74,12 @@ class MedicalExamsForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        type = cleaned_data.get('type')
+        exam_type = cleaned_data.get('type')
         image = cleaned_data.get('image')
 
-        if type and not image or image and not type:
-            raise ValidationError('You did not fill your exams correctly. "Type" & "Image" must be provided.')
+        if (exam_type and not image) or (image and not exam_type):
+            raise ValidationError("'Type' and 'Image', both must be provided in your exams.", code='invalid_exams')
+        return cleaned_data
 
 
 MedicalExamsFormset = modelformset_factory(model=MedicalExams, form=MedicalExamsForm, can_delete=True)
@@ -128,6 +149,10 @@ class DrugCategoryFilterForm(forms.Form):
     )
 
     category = forms.CharField(max_length=50,  widget=forms.Select(choices=CATEGORY_CHOICES))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].required = False
 
 
 class DrugsForm(forms.ModelForm):

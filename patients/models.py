@@ -95,16 +95,15 @@ class InsuranceInformation(models.Model):
     INSURANCE_TYPE_CHOICES = (
         ('MEDICAL', 'Medical'),
     )
-    insurance_carrier = models.OneToOneField(InsuranceCarrier, on_delete=models.CASCADE, blank=True, null=True,
-                                             verbose_name='insurance carrier', related_name='insurance', unique=True)
+    insurance_carrier = models.ForeignKey(InsuranceCarrier, on_delete=models.CASCADE, blank=True, null=True,
+                                             verbose_name='insurance carrier', related_name='insurance')
     type_of_insurance = models.CharField('insurance type', max_length=50, blank=True, null=True,
                                          help_text='Type of insurance', choices=INSURANCE_TYPE_CHOICES)
     expiration_date = models.DateField('insurance date expiration', help_text='insurance date expiration')
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=True, null=True,
-                                   verbose_name='insurance owner', related_name='insurance')
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='insurance owner', related_name='insurance')
 
     def __str__(self):
-        return str(self.patient)+ "'s" + ' ' + 'Insurance Information'
+        return str(self.patient) + "'s" + ' ' + 'Insurance Information'
 
 # Allergies Information
 

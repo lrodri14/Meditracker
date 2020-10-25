@@ -12,7 +12,7 @@ button.addEventListener('mouseout', function(){
 })
 
 anchor[anchor.length - 1].addEventListener('mouseover', function(){
-    this.style.fontSize = '16px'
+    this.style.fontSize = '12px'
 })
 
 anchor[anchor.length - 1].addEventListener('mouseout', function(){

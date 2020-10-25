@@ -196,6 +196,10 @@ form{
     width: 90%;
 }
 
+.error{
+    color: #a83632;
+}
+
 .show-form{
     visibility: visible;
     margin-top: 2%;

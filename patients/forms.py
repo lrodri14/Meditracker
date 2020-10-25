@@ -1,4 +1,7 @@
+from gettext import gettext
+
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import modelformset_factory, inlineformset_factory
 from .models import *
 
@@ -31,12 +34,22 @@ class InsuranceCarrierFilterForm(forms.ModelForm):
 
 
 class InsuranceInformationForm(forms.ModelForm):
-    # insurance_carrier = forms.ModelChoiceField(queryset=InsuranceCarrier.objects.filter())
     expiration_date = forms.DateField(widget=forms.SelectDateWidget(years=years))
 
     class Meta:
         model = InsuranceInformation
         exclude = ('patient',)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        carrier = cleaned_data.get('insurance_carrier')
+        insurance_type = cleaned_data.get('type_of_insurance')
+        expiration_date = cleaned_data.get('expiration_date')
+        if (carrier and not insurance_type) or (insurance_type and not carrier):
+            raise ValidationError("Insurance information incomplete")
+        elif (carrier and insurance_type) and (expiration_date <= timezone.localtime().date()):
+            raise ValidationError('Insurance has already expired')
+        return cleaned_data
 
 
 class AllergiesForm(forms.ModelForm):
@@ -67,7 +80,7 @@ class AllergiesInformationForm(forms.ModelForm):
         allergy_type = cleaned_data.get('allergy_type')
         about = cleaned_data.get('about')
         if (allergy_type and not about) or (about and not allergy_type):
-            self._errors['Allergies'] = self.error_class(["Both 'Type' and 'About' fields must be provided."])
+            raise ValidationError("Both 'Type' and 'About' fields must be provided", code='incomplete_data')
         return cleaned_data
 
 
@@ -88,7 +101,7 @@ class AntecedentForm(forms.ModelForm):
         antecedent = cleaned_data.get('antecedent')
         info = cleaned_data.get('info')
         if (antecedent and not info) or (info and not antecedent):
-            self._errors['Antecedents'] = self.error_class(["Both 'Antecedent' and 'Info' fields must be provided."])
+            raise ValidationError("Both 'Antecedent' and 'Info' fields must be provided", code='incomplete_data')
         return cleaned_data
 
 

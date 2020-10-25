@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -32,18 +33,17 @@ def consults(request):
 def create_consult(request):
     consults_form = ConsultsForm(user=request.user)
     template = 'appointments/create_consult.html'
-    context = {'consults_form': consults_form}
-    data = {'html': render_to_string(template, context, request)}
+    context = {}
+    data = {}
     if request.method == 'POST':
         consults_form = ConsultsForm(request.user, request.POST)
         if consults_form.is_valid():
             consult = consults_form.save(commit=False)
             consult.created_by = request.user
             consult.save()
-            data = {'success': 'Consult created successfully'}
-        else:
-            context['unique_error'] = 'There is a consult created for that date and time already.'
-            data = {'html': render_to_string(template, context, request)}
+            data['success'] = 'Consult created successfully'
+    context['consults_form'] = consults_form
+    data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 
 
@@ -83,7 +83,7 @@ def update_consult(request, pk):
             consult.save()
             consult_form.save_m2m()
             return redirect('appointments:consults')
-        else:
+        elif not medical_exams_form.is_valid():
             context['error'] = 'You did not fill your exams correctly. "Type" & "Image" must be provided.'
     return render(request, template, context)
 
@@ -204,17 +204,18 @@ def registers(request):
 
 
 def consult_date_update(request, pk):
+    today = timezone.localtime()
+    tzone = timezone.get_current_timezone()
     consult = Consults.objects.get(pk=pk)
+    form = AgendaDateFilterForm
     consult_form = ConsultsForm(request.user, request.POST or None, instance=consult)
     template = 'appointments/consult_date_update.html'
     context = {'consult_form': consult_form, 'consult':consult}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
+        consult_form = ConsultsForm(request.user, request.POST or None, instance=consult)
         if consult_form.is_valid():
             consult_form.save()
-            today = timezone.localtime()
-            tzone = timezone.get_current_timezone()
-            form = AgendaDateFilterForm
             updated_consults = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
             months = []
             months_names = []
@@ -222,9 +223,7 @@ def consult_date_update(request, pk):
                 if c.datetime.astimezone(tzone).month not in months:
                     months.append(c.datetime.month)
                     months_names.append(calendar.month_name[c.datetime.month])
-            data = {'html': render_to_string('appointments/partial_consults_register_list.html', {'consults': updated_consults, 'months': months_names, 'form': form}, request=request)}
-        else:
-            context['error'] = 'Please insert all the valid values.'
+            data = {'updated_html': render_to_string('appointments/partial_consults_register_list.html', {'consults': updated_consults, 'months': months_names, 'form': form}, request=request)}
     return JsonResponse(data)
 
 

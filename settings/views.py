@@ -58,7 +58,7 @@ def add_insurance_carrier(request):
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/insurance_list.html', context, request), 'updated_selections': render_to_string('settings/insurance_partial_select.html', context=context, request=request)}
             except IntegrityError:
-                context['error'] = 'This insurance is already listed'
+                context['error'] = 'This insurance is already listed in your options'
                 data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -88,7 +88,7 @@ def insurance_update(request, pk):
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
             except IntegrityError:
-                context['error'] = 'This insurance is already listed'
+                context['error'] = 'This insurance is already listed in your options'
                 data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -145,14 +145,6 @@ def allergies_create(request):
     return JsonResponse(data)
 
 
-def allergies_details(request, pk):
-    allergy = Allergies.objects.get(pk=pk)
-    template = 'settings/allergy_details.html'
-    context = {'allergy': allergy}
-    data = {'html': render_to_string(template, context, request)}
-    return JsonResponse(data)
-
-
 def allergies_update(request, pk):
     allergy = Allergies.objects.get(pk=pk)
     template = 'settings/update_allergy.html'
@@ -172,6 +164,14 @@ def allergies_update(request, pk):
             except IntegrityError:
                 context['error'] = 'This allergy is already in your options'
                 data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def allergies_details(request, pk):
+    allergy = Allergies.objects.get(pk=pk)
+    template = 'settings/allergy_details.html'
+    context = {'allergy': allergy}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -234,7 +234,7 @@ def create_drug(request):
                 context = {'drugs': drugs_list, 'form': DrugsFilterForm}
                 data = {'updated_html': render_to_string('settings/drugs_list.html', context, request), 'updated_drugs_list': render_to_string('appointments/partial_drugs_selection.html', {'drugs': drugs_list}, request)}
             except IntegrityError:
-                context['error'] = 'Drug already listed'
+                context['error'] = 'This drug is already listed in your options'
                 data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -254,18 +254,18 @@ def update_drug(request, pk):
     context = {'drug': drug, 'form': drug_form}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
-        drug = DrugsForm(request.POST or None, instance=drug)
+        drug_form = DrugsForm(request.POST or None, instance=drug)
         if drug_form.is_valid():
             try:
-                drug.save(commit=False)
+                drug = drug_form.save(commit=False)
                 drug.created_by = request.user
                 drug.save()
                 drugs_list = Drugs.objects.filter(created_by=request.user)
                 context = {'drugs': drugs_list, 'form': DrugsFilterForm}
                 data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
             except IntegrityError:
-                context['error'] = 'Drug already listed'
-                data = {'html': render_to_string('settings/drugs_list.html', context, request)}
+                context['error'] = 'This drug is already listed in your options'
+                data = {'html': render_to_string('settings/update_drug.html', context, request)}
     return JsonResponse(data)
 
 

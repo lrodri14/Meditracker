@@ -90,7 +90,6 @@ body.addEventListener('click', (e) => {
             item.classList.add('li-active')
             displaySettingsAW(url)
             .then(data => {
-                console.log(data['html'])
                 wrapper.innerHTML = data['html']
                 backedUpContent = wrapper.innerHTML
             })
@@ -319,7 +318,7 @@ if (modal){
             const form = e.target
             const url = form.action
             const method = form.method
-            const csrfmiddlewaretoken = document.querySelector('.' + e.target.className + ' > [name=csrfmiddlewaretoken]').value
+            const csrfmiddlewaretoken = document.querySelector('.' + e.target.classList[0] + ' > [name=csrfmiddlewaretoken]').value
             const data = new FormData(form)
             if (e.target.classList.contains('add') || e.target.classList.contains('update')){
                 addUpdateElementAW(url, method, csrfmiddlewaretoken, data)
@@ -328,7 +327,6 @@ if (modal){
                         modalContent.innerHTML = data['html']
                     }else{
                         wrapper.innerHTML = data['updated_html']
-                        console.log(data['updated_html'])
                         backedUpContent = wrapper.innerHTML
                         modal.classList.remove('show-modal')
                     }

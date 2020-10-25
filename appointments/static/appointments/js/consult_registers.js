@@ -202,9 +202,13 @@ if (wrapper){
             const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             submitUpdateAW(url, method, csrfmiddlewaretoken, data)
             .then(data => {
-                wrapper.innerHTML = data['html']
+                if (data['updated_html']){
+                    wrapper.innerHTML = data['updated_html']
+                    modal.classList.remove('modal-show')
+                }else{
+                    retrieveItems()['modalContent'].innerHTML = data['html']
+                }
             })
-            modal.classList.remove('modal-show')
         } else{
             e.preventDefault()
             const form = e.target

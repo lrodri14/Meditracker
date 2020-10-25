@@ -37,6 +37,11 @@ def patients(request):
 
 
 def add_patient(request):
+    patient_form = PatientForm
+    allergies_form = AllergiesInformationFormset(queryset=AllergiesInformation.objects.none())
+    antecedents_form = AntecedentFormset(queryset=Antecedents.objects.none())
+    insurance_form = InsuranceInformationForm()
+    template = 'patients/add_patient.html'
     if request.method == 'POST':
         patient_form = PatientForm(request.POST)
         allergies_form = AllergiesInformationFormset(request.POST)
@@ -69,14 +74,9 @@ def add_patient(request):
             insurance.save()
 
             return redirect('patients:patients')
-    else:
-        patient_form = PatientForm
-        allergies_form = AllergiesInformationFormset(queryset=AllergiesInformation.objects.none())
-        antecedents_form = AntecedentFormset(queryset=Antecedents.objects.none())
-        insurance_form = InsuranceInformationForm()
-        template = 'patients/add_patient.html'
-        context_data = {'patient_form': patient_form, 'allergies_form': allergies_form, 'insurance_form': insurance_form, 'antecedents_form': antecedents_form}
-        return render(request, template, context=context_data)
+
+    context_data = {'patient_form': patient_form, 'allergies_form': allergies_form, 'insurance_form': insurance_form, 'antecedents_form': antecedents_form}
+    return render(request, template, context=context_data)
 
 
 def patient_details(request, pk):
@@ -94,8 +94,10 @@ def patient_details(request, pk):
             date_from = consults_form.cleaned_data['date_from']
             date_to = consults_form.cleaned_data['date_to']
             updated_consults = Consults.objects.filter(patient=patient, created_by=request.user, datetime__date__gte=date_from, datetime__date__lte=date_to)
+            updated_exams = MedicalExams.objects.filter(consult__patient=patient, consult__datetime__date__gte=date_from, consult__datetime__date__lte=date_to)
             if len(updated_consults) > 0:
                 context['consults'] = updated_consults
+                context['exams'] = updated_exams
                 for p in updated_consults:
                     print(p.datetime.date())
             else:

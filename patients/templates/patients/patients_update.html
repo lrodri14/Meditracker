@@ -24,23 +24,28 @@
                 <a href="{%url 'patients:patients'%}"><i class="fas fa-long-arrow-alt-left"></i></a>
                 <h1>Update Patient</h1>
                 <div class="info">
-                    {%if error in patient_form.errors%}
-                        {%for error in patient_form.errors%}
-                            <p class="error">{{error.as_text}}</p>
-                        {%endfor%}
-                    {%endif%}
+                {%if patient_form.errors%}
+                    {%for error in patient_form.errors%}
+                        <p class="error">{{error.as_text}}</p>
+                    {%endfor%}
+                {%endif%}
 
-                    {%if allergies_form.errors%}
-                        {%for error in allergies_form.errors%}
-                            <p class="error">{{error.as_text}}</p>
-                        {%endfor%}
+                {%for form in allergies_form%}
+                    {%if form.non_field_errors%}
+                        <p class="error">{{form.non_field_errors.as_text}}</p>
                     {%endif%}
+                {%endfor%}
 
-                    {%if antecedents_form.errors%}
-                        {%for error in antecedents_form.errors%}
-                            <p class="error">{{error.as_text}}</p>
-                        {%endfor%}
+                {%for form in antecedents_form%}
+                    {%if form.non_field_errors%}
+                        <p class="error">{{form.non_field_errors.as_text}}</p>
                     {%endif%}
+                {%endfor%}
+
+
+                {%if insurance_form.non_field_errors%}
+                    <p class="error">{{insurance_form.non_field_errors.as_text}}</p>
+                {%endif%}
 
                     <p>{{patient_form.id_number.label}}</p>
                     <p>{{patient_form.id_number}}</p>

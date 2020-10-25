@@ -16,6 +16,10 @@ body{
     text-align: justify;
 }
 
+.error{
+    color: #a83632;
+}
+
 h4{
     text-decoration: underline;
 }

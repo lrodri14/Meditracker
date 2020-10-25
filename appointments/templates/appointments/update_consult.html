@@ -21,10 +21,13 @@
             <p>{{consult.motive}}</p>
             <h4>Suffering</h4>
             <p>{{consult.suffering}}</p>
+            {%if consult_form.errors%}
+                <p class="error">{{consult_form.non_field_errors.as_text}}</p>
+            {%endif%}
+            <p class="error">{{error}}</p>
             <h4 id="charge-label">{{consult_form.charge.label}}</h4>
             <p>{{consult_form.charge}}</p>
             <button type="submit">Save</button>
-            <p>{{error}}</p>
         </div>
         <div class="diagnose">
             <i class="fas fa-angle-left"></i><i class="fas fa-angle-right"></i>

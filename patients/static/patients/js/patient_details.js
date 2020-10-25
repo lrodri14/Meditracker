@@ -217,10 +217,10 @@ body.addEventListener('click', (e) => {
         document.querySelector('.appointments-filter').classList.remove('fa-filter-hover')
     } else if (e.target.classList.contains('fa-sync-alt') && e.target.classList.contains('exams-reload')){
         exams.innerHTML = examsBackUp
-        document.querySelector('.appointments-filter').classList.remove('fa-filter-hover')
+        document.querySelector('.exams-filter').classList.remove('fa-filter-hover')
     }else if (e.target.classList.contains('fa-sync-alt') && e.target.classList.contains('charges-reload')){
         charges.innerHTML = chargesBackUp
-        document.querySelector('.appointments-filter').classList.remove('fa-filter-hover')
+        document.querySelector('.charges-filter').classList.remove('fa-filter-hover')
     }
 
 
