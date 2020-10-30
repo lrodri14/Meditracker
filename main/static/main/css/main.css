@@ -3,7 +3,6 @@
 body{
     margin: 0px;
     padding: 0px;
-    font-size: 20px;
     color: white;
 }
 
@@ -67,7 +66,156 @@ img{
 .hover-over{
     background-color: #3e5278;
     color: #0ff5fc;
-    font-size: 28px;
     cursor: pointer;
-    transition: background-color 0.7s;
+    transition: background-color 0.5s;
+}
+
+.login-btn-hide{
+    opacity: 0;
+    transition: 0.5s;
+}
+
+/*Form*/
+
+form{
+    text-align: center;
+    background-color: #12212b;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 60%;
+    color: #0ff5fc;
+}
+
+h1{
+    padding: 25px;
+}
+
+.advice{
+    font-size: 14px;
+    color: #ffe100;
+}
+
+/*Inputs*/
+input{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align: center;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: none;
+  border-bottom: 1px solid cyan;
+  height: 30px;
+  width:60%;
+  transition: 0.5s;
+}
+
+input[type=password]{
+    font: small-caption;
+}
+
+input:focus{
+    outline: none;
+}
+
+.input-hover{
+  width: 75%;
+  transition: 0.5s;
+}
+
+.error{
+    color: #a83632;
+}
+
+/*Buttons and Links*/
+button{
+    margin: 5px;
+    width: 30%;
+    height: 30px;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    background-color: #12212b;
+    border: 2px solid #0ff5fc;
+    border-radius: 10px;
+    color: #0ff5fc;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.button-hover{
+    background-color: #0ff5fc;
+    color: #12212b;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.button-fadeIn{
+    opacity: 1;
+    transition: 0.3s;
+}
+
+/*Links*/
+form a{
+   font-size: 12px;
+   text-decoration: underline;
+   transition:0.5s;
+}
+
+.update-password-hover{
+    font-size: 15px;
+    transition:0.5s;
+}
+
+/*Password Reset Done*/
+.password-reset-done{
+    color: #0ff5fc;
+    background-color: #12212b;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    max-width: 50%;
+    padding: 15px;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.continue{
+    text-align: center;
+    transition: 0.5s;
+}
+
+.continue-hover{
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.5s;
+}
+
+.password-reset-done a{
+    text-decoration: underline;
+}
+
+.new-password-reset{
+    transition:0.5s;
+}
+
+.new-password-reset-hover{
+    font-size: 20px;
+    transition:0.5s;
+}
+
+
+/*Modal*/
+.modal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.modal-show{
+    opacity: 1;
 }

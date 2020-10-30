@@ -12,14 +12,21 @@
         <div id="wrapper">
             <img id="logo" src="{%static 'main/logo/logo.png'%}">
             <ul>
-                <li onclick="window.location='{%url 'accounts:login'%}'">
-                    Login
+                <li data-url="{%url 'accounts:login'%}" class="login">
+                    Log In
                 </li>
-                <li onclick="window.location='{%url 'accounts:signup'%}'">
+                <li data-url="{%url 'accounts:signup'%}" class="sign-up">
                     Sign Up
                 </li>
             </ul>
         </div>
     </div>
+
+    <div class="modal">
+        <div class="modal-content">
+
+        </div>
+    </div>
+
     <script src="{%static 'main/js/main.js'%}"></script>
 {%endblock%}

@@ -1,19 +1,7 @@
 //Checked
-var username = document.querySelector('#id_username')
-var password = document.querySelector('#id_password')
 var loginBtn = document.querySelector('button')
 if (document.querySelector('a') !== 'undefined' && document.querySelector('a') !== 'null'){
     var passwordChange = document.querySelector('a')
-}
-inputs = [username, password]
-
-// Inputs
-function usernameFocusHover(){
-    this.classList.add('input-hover')
-}
-
-function usernameFocusHoverOut(){
-    this.classList.remove('input-hover')
 }
 
 username.addEventListener('mouseover', usernameFocusHover)

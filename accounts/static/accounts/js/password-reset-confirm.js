@@ -1,47 +1,27 @@
 // Checked
-if ( document.querySelectorAll('input') !== 'undefined' && document.querySelectorAll('input') !== 'null'
-    && document.querySelectorAll('button') !== 'undefined' && document.querySelectorAll('input') !== 'null'){
-        var inputs = document.querySelectorAll('input')
-        var reset = document.querySelector('button')
+let newPassword1 = document.querySelector('#id_new_password1')
+let newPassword2 = document.querySelector('#id_new_password2')
+let reset = document.querySelector('button')
+let body = document.querySelector('body')
+
+body.addEventListener('input', (e) => {
+    if (e.target === newPassword1 || e.target === newPassword2){
+        if (newPassword1.value.length > 0 && newPassword2.value.length > 0){
+            reset.classList.add('button-fadeIn')
+        }else{
+            reset.classList.remove('button-fadeIn')
+        }
     }
-if (document.querySelector('a') !== 'undefined' && document.querySelector('a') !== 'null'){
-    var invalidLink = document.querySelector('a')
-}
-
-// Inputs
-if (inputs){
-    for (let i = 0; i<inputs.length; i++){
-    inputs[i].addEventListener('mouseover', function(){
-        this.classList.add('input-hover')
-    })
-
-    inputs[i].addEventListener('mouseout', function(){
-        this.classList.remove('input-hover')
-    })
-}
-}
-
-// Reset
-
-if (reset){
-    reset.addEventListener('mouseover', function(){
-        this.classList.add('button-hover')
-    })
-
-    reset.addEventListener('mouseout', function(){
-        this.classList.remove('button-hover')
 })
-}
 
+body.addEventListener('mouseover', (e) => {
+    if (e.target === reset){
+        reset.classList.add('button-hover')
+    }
+})
 
-
-// Invalid Link
-if (invalidLink){
-    invalidLink.addEventListener('mouseover', function(){
-        this.classList.add('link-hover')
-    })
-
-    invalidLink.addEventListener('mouseout', function(){
-        this.classList.remove('link-hover')
-    })
-}
+body.addEventListener('mouseout', (e) => {
+    if (e.target === reset){
+        reset.classList.remove('button-hover')
+    }
+})
