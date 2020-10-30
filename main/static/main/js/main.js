@@ -30,6 +30,12 @@ async function loginAW(formData, url, method, csrfmiddlewaretoken){
     return data
 }
 
+async function signUpFormAW(url){
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
 // Functions
 
 function usernameFocusHover(){
@@ -57,6 +63,7 @@ if (loginBtn){
         e.preventDefault()
         e.stopPropagation()
         e.target.classList.add('login-btn-hide')
+        signUpBtn.classList.remove('signup-btn-hide')
         const url = e.target.getAttribute('data-url')
         loginFormAW(url)
         .then(data => {
@@ -69,13 +76,28 @@ if (loginBtn){
     })
 }
 
-
+if (signUpBtn){
+    signUpBtn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        let url = e.target.getAttribute('data-url')
+        signUpFormAW(url)
+        .then(data => {
+            loginBtn.classList.remove('login-btn-hide')
+            signUpBtn.classList.add('signup-btn-hide')
+            modal.classList.add('modal-show')
+            modalContent.innerHTML = data['html']
+        })
+    })
+}
 
 if (modal){
     modal.addEventListener('click', (e) =>{
         if (e.target == modal){
             modal.classList.remove('modal-show')
             loginBtn.classList.remove('login-btn-hide')
+            signUpBtn.classList.remove('signup-btn-hide')
+            modalContent.innerHTML = ''
         }
 
         if (e.target.classList.contains('password-reset')){

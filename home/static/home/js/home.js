@@ -4,6 +4,8 @@ var icons = document.querySelectorAll('i')
 var title = document.querySelectorAll('h3')
 var sound = document.querySelector('audio')
 
+document.querySelector('body').click()
+
 for (let i = 0; i<tiles.length; i++){
     tiles[i].addEventListener('mouseover', function(){
         tiles[i].classList.add('tile-hover')

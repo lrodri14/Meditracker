@@ -1,47 +1,37 @@
-<!--Checked-->
-{%extends 'base.html'%}
 {%load static%}
-{%block title%}Sign Up{%endblock%}
-{%block return%}{%endblock%}{%block home%}{%endblock%}
-{% block body_block %}
-<link rel="stylesheet" href="{% static 'accounts/css/signup.css'%}">
-<form method="POST" autocomplete="off">
+<form method="POST" autocomplete="off" class="signup-form">
     {%csrf_token%}
-    <h1>Sign Up</h1>
-    <p>{{form.username.label}}</p>
-    <p>{{form.username}}</p>
-    <p>{{form.roll.label}}</p>
-    <p><small>{{form.roll.help_text}}</small></p>
-    <p>{{form.roll}}</p>
-    <p id="speciality-label">{{form.speciality.label}}</p>
-    <p>{{form.speciality}}</p>
-    {%if form.errors%}
-        {%for error in form.speciality.errors%}
-            <p><small><span>*</span>{{error}}</small></p>
-        {%endfor%}
-    {%endif%}
-    <p>{{form.first_name.label}}</p>
-    <p>{{form.first_name}}</p>
-    <p>{{form.last_name.label}}</p>
-    <p>{{form.last_name}}</p>
-    <p>{{form.email.label}}</p>
-    <p>{{form.email}}</p>
-    <p>{{form.password1.label}}</p>
-    <p>{{form.password1}}</p>
-    <p>Password Confirmation</p>
-    <p>{{form.password2}}</p>
-    {%if form.errors%}
-        {%for error in form.username.errors%}
-            <p>{{error}}</p>
-        {%endfor%}
-        {%for error in form.password2.errors%}
-            <p>{{error}}</p>
-        {%endfor%}
-    {%endif%}
-    {%if profile_form.errors%}
-        {{profile_form.errors}}
-    {%endif%}
-    <button type="submit">Sign Up</button>
+    <div class="wrapper">
+        <div class="personal-info">
+            <h1>Sign Up</h1>
+            <p>{{form.first_name.label}}</p>
+            <p>{{form.first_name}}</p>
+            <p>{{form.last_name.label}}</p>
+            <p>{{form.last_name}}</p>
+            <p>{{form.email.label}}</p>
+            <p>{{form.email}}</p>
+            <p id="speciality-label">{{form.speciality.label}}</p>
+            <p>{{form.speciality}}</p>
+            {%if profile_form.errors%}
+                {{profile_form.errors}}
+            {%endif%}
+        </div>
+        <div class="account-info">
+            <p>{{form.username.label}}</p>
+            <p>{{form.username}}</p>
+            <p>{{form.password1.label}}</p>
+            <p>{{form.password1}}</p>
+            <p>Password Confirmation</p>
+            <p>{{form.password2}}</p>
+            {%if form.errors%}
+                {%for error in form.username.errors%}
+                    <p>{{error}}</p>
+                {%endfor%}
+                {%for error in form.password2.errors%}
+                    <p>{{error}}</p>
+                {%endfor%}
+            {%endif%}
+            <button type="submit">Sign Up</button>
+        </div>
+    </div>
 </form>
-<script src="{%static 'accounts/js/signup.js'%}"></script>
-{% endblock %}

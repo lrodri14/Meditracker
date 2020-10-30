@@ -75,6 +75,11 @@ img{
     transition: 0.5s;
 }
 
+.signup-btn-hide{
+    opacity: 0;
+    transition: 0.5s;
+}
+
 /*Form*/
 
 form{
@@ -107,7 +112,7 @@ input{
   color: #0ff5fc;
   background-color: #12212b;
   border: none;
-  border-bottom: 1px solid cyan;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:60%;
   transition: 0.5s;
@@ -140,7 +145,6 @@ button{
     border: 2px solid #0ff5fc;
     border-radius: 10px;
     color: #0ff5fc;
-    opacity: 0;
     transition: 0.5s;
 }
 
@@ -205,6 +209,48 @@ form a{
     transition:0.5s;
 }
 
+/*Sign Up Form*/
+.signup-form{
+    text-align: center;
+    background-color: rgba(0,0,0,0);
+    margin: auto;
+    width: 70%;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 40% 59%;
+    grid-gap: 1%;
+}
+
+.personal-info{
+    background-color: #12212b;
+    padding-bottom: 10%;
+}
+
+.account-info{
+    background-color: #12212b;
+    padding-top: 20%;
+}
+
+select{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align-last:center;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
+  height: 30px;
+  transition: 0.5s;
+}
+
+select:focus{
+    outline: none;
+}
+
+.signup-form button{
+    width: 20%;
+}
 
 /*Modal*/
 .modal{

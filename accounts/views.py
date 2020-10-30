@@ -88,7 +88,7 @@ def signup(request):
             user.save()
             return redirect('accounts:login')
     else:
-        form = SignUpForm()
+        form = SignUpForm
         context['form'] = form
         data['html'] = render_to_string('accounts/signup.html', context, request)
     return JsonResponse(data)
