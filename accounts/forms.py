@@ -18,25 +18,39 @@ class UserChangeForm(ChangeForm):
         model = CustomUser
 
 
-class SignUpForm(CreationForm):
-    first_name = forms.CharField(max_length=100, required=True)
-    last_name = forms.CharField(max_length=100, required=True)
-    email = forms.EmailField()
-    roll = forms.Select()
-    speciality = forms.Select()
+class DoctorSignUpForm(CreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'roll', 'speciality')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'speciality')
+        widgets = {
+            'email': forms.widgets.EmailInput(),
+            'speciality': forms.widgets.Select()
+        }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        roll = cleaned_data.get('roll')
-        speciality = cleaned_data.get('speciality')
+    def __init__(self, *args, **kwargs):
+        super(DoctorSignUpForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['email'].required = True
+        self.fields['speciality'].required = True
 
-        if roll == 'Doctor' and speciality == '':
-            msg = 'You must specify your area'
-            self.add_error('speciality', msg)
+
+class AssistantSignUpForm(CreationForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        widgets = {
+            'email': forms.widgets.EmailInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(AssistantSignUpForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['email'].required = True
+
 
 
 

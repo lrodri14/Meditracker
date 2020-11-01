@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import Group, Permission
 # Create your models here.
+
 
 class CustomUser(AbstractUser):
 
@@ -33,7 +33,7 @@ class CustomUser(AbstractUser):
         ('SURGERY', 'SURGERY'),
         ('UROLOGY', 'UROLOGY'),
     )
-
+    email = models.EmailField(blank=False, unique=True)
     roll = models.CharField('Roll', max_length=25, blank=False,
                             help_text='Choose the roll you will acquire in this account.', choices=ROLL_CHOICES)
     speciality = models.CharField('Speciality', max_length=100, blank=True,

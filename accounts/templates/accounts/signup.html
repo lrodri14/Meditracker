@@ -1,5 +1,5 @@
 {%load static%}
-<form method="POST" autocomplete="off" class="signup-form">
+<form method="POST" autocomplete="off" class="signup-form" action="{%url 'accounts:signup'%}">
     {%csrf_token%}
     <div class="wrapper">
         <div class="personal-info">
@@ -12,9 +12,6 @@
             <p>{{form.email}}</p>
             <p id="speciality-label">{{form.speciality.label}}</p>
             <p>{{form.speciality}}</p>
-            {%if profile_form.errors%}
-                {{profile_form.errors}}
-            {%endif%}
         </div>
         <div class="account-info">
             <p>{{form.username.label}}</p>
@@ -23,15 +20,18 @@
             <p>{{form.password1}}</p>
             <p>Password Confirmation</p>
             <p>{{form.password2}}</p>
+            <button type="submit">Sign Up</button>
             {%if form.errors%}
+                {%for error in form.email.errors%}
+                    <p class="error"><small>{{error}}</small></p>
+                {%endfor%}
                 {%for error in form.username.errors%}
-                    <p>{{error}}</p>
+                    <p class="error"><small>{{error}}</small></p>
                 {%endfor%}
                 {%for error in form.password2.errors%}
-                    <p>{{error}}</p>
+                    <p class="error"><small>{{error}}</small></p>
                 {%endfor%}
             {%endif%}
-            <button type="submit">Sign Up</button>
         </div>
     </div>
 </form>

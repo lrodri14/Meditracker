@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
-from .forms import SignUpForm, ProfileForm
+from .forms import DoctorSignUpForm, AssistantSignUpForm, ProfileForm
 from django.contrib.auth.models import Group
 from .models import UsersProfile
 from django.views.generic import View
@@ -75,22 +75,27 @@ class PasswordResetComplete(PasswordResetCompleteView):
 def signup(request):
     context = {}
     data = {}
+    account_type = request.META.get('HTTP_TYPE')
+    form = DoctorSignUpForm if account_type == 'doctor' else AssistantSignUpForm
+    context['form'] = form
     if request.method == 'POST':
         doctor = Group.objects.get(name='Doctor')
         assistant = Group.objects.get(name='Assistant')
-        form = SignUpForm(data=request.POST)
+        form = DoctorSignUpForm(request.POST) if 'speciality' in request.POST else AssistantSignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            if user.roll == 'Assistant':
-                user.groups.add(assistant)
-            else:
+            user = form.save(commit=False)
+            if form.cleaned_data.get('speciality'):
+                user.roll = 'Doctor'
+                user.save()
                 user.groups.add(doctor)
-            user.save()
-            return redirect('accounts:login')
-    else:
-        form = SignUpForm
-        context['form'] = form
-        data['html'] = render_to_string('accounts/signup.html', context, request)
+            else:
+                user.roll = 'Assistant'
+                user.save()
+                user.groups.add(assistant)
+        else:
+            context['form'] = form
+            data['error'] = 'Invalid Information'
+    data['html'] = render_to_string('accounts/signup.html', context, request)
     return JsonResponse(data)
 
 

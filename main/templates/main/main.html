@@ -15,7 +15,7 @@
                 <li data-url="{%url 'accounts:login'%}" class="login">
                     Log In
                 </li>
-                <li data-url="{%url 'accounts:signup'%}" class="sign-up">
+                <li class="sign-up">
                     Sign Up
                 </li>
             </ul>
@@ -25,6 +25,17 @@
     <div class="modal">
         <div class="modal-content">
 
+        </div>
+    </div>
+
+    <div class="account-type-selector">
+        <div class="doctor-type" data-url="{%url 'accounts:signup'%}" data-type="doctor">
+            <i class="fas fa-user-md"></i>
+            Doctor
+        </div>
+        <div class="assistant-type" data-url="{%url 'accounts:signup'%}" data-type="assistant">
+            <i class="fas fa-user-nurse"></i>
+            Assistant
         </div>
     </div>
 

@@ -145,6 +145,8 @@ button{
     border: 2px solid #0ff5fc;
     border-radius: 10px;
     color: #0ff5fc;
+    visibility: hidden;
+    opacity: 0;
     transition: 0.5s;
 }
 
@@ -156,6 +158,7 @@ button{
 }
 
 .button-fadeIn{
+    visibility: visible;
     opacity: 1;
     transition: 0.3s;
 }
@@ -264,4 +267,36 @@ select:focus{
 
 .modal-show{
     opacity: 1;
+}
+
+/*Account type selector*/
+.account-type-selector{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    background-color: #3e5278;
+    color: #0ff5fc;
+    position: absolute;
+    height: 20%;
+    width: 40%;
+    top: 40%;
+    left: 30%;
+    text-align: center;
+    visibility: hidden;
+}
+
+.account-type-selector-show{
+    visibility: visible;
+}
+
+.account-type-selector-hover{
+    background-color: #f2f1ed;
+    transition: background-color 0.5s;
+    color: #3e5278;
+    cursor: pointer;
+}
+
+.account-type-selector i{
+    margin-top: 15%;
+    font-size: 50px;
+    pointer-events: none;
 }

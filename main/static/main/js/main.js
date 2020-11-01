@@ -4,12 +4,21 @@ var loginBtn = document.querySelector('.login')
 var signUpBtn = document.querySelector('.sign-up')
 var modal = document.querySelector('.modal')
 var modalContent = document.querySelector('.modal-content')
+var accountType = document.querySelector('.account-type-selector')
+var doctorType = document.querySelector('.doctor-type')
+var assistantType = document.querySelector('.assistant-type')
 
 // Login Inputs
 let username
 let password
-let submit
 let passwordResetEmail
+
+// Sign Up Inputs
+let signUpInputs = []
+
+// Submit Button
+let submit
+
 
 // Async Functions
 async function loginFormAW(url){
@@ -30,8 +39,14 @@ async function loginAW(formData, url, method, csrfmiddlewaretoken){
     return data
 }
 
-async function signUpFormAW(url){
-    const result = await fetch(url)
+async function signUpFormAW(url, type){
+    const result = await fetch(url, {headers: {'Type':type}})
+    const data = result.json()
+    return data
+}
+
+async function signUpAW(formData, url, method, csrfmiddlewaretoken){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
     const data = result.json()
     return data
 }
@@ -64,6 +79,7 @@ if (loginBtn){
         e.stopPropagation()
         e.target.classList.add('login-btn-hide')
         signUpBtn.classList.remove('signup-btn-hide')
+        accountType.classList.remove('account-type-selector-show')
         const url = e.target.getAttribute('data-url')
         loginFormAW(url)
         .then(data => {
@@ -76,18 +92,43 @@ if (loginBtn){
     })
 }
 
+if (accountType){
+    accountType.addEventListener('mouseover', (e) => {
+        if (e.target === doctorType || e.target === assistantType){
+            e.target.classList.add('account-type-selector-hover')
+        }
+    })
+
+    accountType.addEventListener('mouseout', (e) => {
+        if (e.target === doctorType || e.target === assistantType){
+            e.target.classList.remove('account-type-selector-hover')
+        }
+    })
+
+    accountType.addEventListener('click', (e) => {
+        if (e.target === doctorType || e.target === assistantType){
+            let type = e.target.getAttribute('data-type')
+            let url = e.target.getAttribute('data-url')
+            signUpFormAW(url, type)
+            .then(data => {
+                accountType.classList.remove('account-type-selector-show')
+                modal.classList.add('modal-show')
+                modalContent.innerHTML = data['html']
+                signUpInputs = document.querySelectorAll('input,select')
+                submit = document.querySelector('button')
+            })
+        }
+    })
+}
+
 if (signUpBtn){
     signUpBtn.addEventListener('click', (e) => {
         e.stopPropagation()
         e.preventDefault()
-        let url = e.target.getAttribute('data-url')
-        signUpFormAW(url)
-        .then(data => {
-            loginBtn.classList.remove('login-btn-hide')
-            signUpBtn.classList.add('signup-btn-hide')
-            modal.classList.add('modal-show')
-            modalContent.innerHTML = data['html']
-        })
+        signUpBtn.classList.add('signup-btn-hide')
+        loginBtn.classList.remove('login-btn-hide')
+        modal.classList.remove('modal-show')
+        accountType.classList.add('account-type-selector-show')
     })
 }
 
@@ -97,6 +138,7 @@ if (modal){
             modal.classList.remove('modal-show')
             loginBtn.classList.remove('login-btn-hide')
             signUpBtn.classList.remove('signup-btn-hide')
+            accountType.classList.remove('account-type-selector-show')
             modalContent.innerHTML = ''
         }
 
@@ -151,6 +193,16 @@ if (modal){
                 submit.classList.remove('button-fadeIn')
             }
         }
+
+        if (e.target.nodeName === 'INPUT' || e.target.nodeName === 'SELECT'){
+            for (let i = 0; i<signUpInputs.length; i++){
+                if (signUpInputs[i].value && signUpInputs.length - i === 1){
+                    submit.classList.add('button-fadeIn')
+                }else{
+                   submit.classList.remove('button-fadeIn')
+                }
+            }
+        }
     })
 
     modal.addEventListener('mouseover', (e) => {
@@ -192,6 +244,7 @@ if (modal){
     modal.addEventListener('submit', (e) => {
         e.preventDefault()
         e.stopPropagation()
+
         if (e.target.nodeName === 'FORM' && e.target.classList.contains('login-form')){
             let form = e.target
             let formData = new FormData(form)
@@ -221,6 +274,23 @@ if (modal){
             .then(data => {
                 if (data['html']){
                     modalContent.innerHTML = data['html']
+                }
+            })
+        }
+
+        if (e.target.nodeName === 'FORM' && e.target.classList.contains('signup-form')){
+            let form = e.target
+            let formData = new FormData(form)
+            let url = form.action
+            let method = form.method
+            let csrfmiddlewaretoken = document.querySelector('input[type=hidden]').value
+            signUpAW(formData, url, method, csrfmiddlewaretoken)
+            .then(data => {
+                if (data['html'] && data['error']){
+                    modalContent.innerHTML = data['html']
+                }else{
+                    modal.classList.remove('modal-show')
+                    loginBtn.click()
                 }
             })
         }
