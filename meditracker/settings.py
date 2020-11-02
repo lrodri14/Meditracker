@@ -150,7 +150,7 @@ STATICFILES_DIRS = [
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = '/'
 

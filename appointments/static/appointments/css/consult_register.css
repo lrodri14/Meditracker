@@ -150,6 +150,21 @@ form{
     transition: 0.5s;
 }
 
+#add_new_patient{
+    text-decoration: underline;
+    transition: 0.5s;
+}
+
+.add_new_patient_hover{
+    font-size: 16px;
+    transition: 0.5s;
+}
+
+
+.link-hover{
+    font-size: 16px;
+}
+
 .error{
     color: #a83632;
 }
@@ -169,8 +184,8 @@ input{
   text-align: center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:60%;
   transition: 0.5s;
@@ -186,8 +201,8 @@ select{
   text-align-last:center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:60%;
   margin: 5px;

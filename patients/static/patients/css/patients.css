@@ -106,11 +106,15 @@ input{
   text-align: center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:60%;
   transition: 0.5s;
+}
+
+input:focus{
+    outline: none;
 }
 
 .input-hover{

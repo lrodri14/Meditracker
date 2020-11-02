@@ -1,6 +1,8 @@
-var body = document.querySelector('body')
+var form = document.querySelector('form')
+var formInputs = document.querySelectorAll('input:not([type=checkbox]):not([type=hidden]):not([type=file]):not(#id_name), textarea')
 var medicalBook = document.querySelector('.fa-book-medical')
 var button = document.querySelectorAll('button')
+var generalInfo = document.querySelector('.general-info')
 var diagnose = document.querySelector('.diagnose')
 var navigation = document.querySelector('.navigation')
 var exams = document.querySelector('.fa-file-medical-alt')
@@ -20,6 +22,7 @@ var medicineText = document.querySelector('#id_medicine')
 var prevSlide = document.querySelector('.fa-angle-left')
 var nextSlide = document.querySelector('.fa-angle-right')
 var controllers = [prevSlide, nextSlide]
+var modal = document.querySelector('.modal')
 
 navigation.innerHTML = '<li></li>'.repeat(document.querySelectorAll('.diagnose > div').length)
 navigation.childNodes[0].classList.add('navigator-active')
@@ -56,6 +59,24 @@ function diagnoseScroll(elScrollLeft, elScrollWidth, distance, element, eTarget,
         })
     }
 }
+
+//Wrapper
+if (form){
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        let unfilledInputs = 0
+        for (let i = 0; i<formInputs.length; i++){
+            if (formInputs[i].value !== ''){
+                continue
+            }else{
+                unfilledInputs++
+            }
+        }
+        unfilledInputs === 0 ? form.submit() : modal.classList.add('modal-show')
+    })
+}
+
 
 medicalBook.addEventListener('mouseover', function(){
     this.classList.add('fa-book-medical-hover')
@@ -119,6 +140,7 @@ if (examsModal){
     })
 
     examsModal.addEventListener('change', function(e){
+
         if (e.target.nodeName === 'INPUT' && e.target.type === 'file'){
             var parent = e.target.parentNode.parentNode
             var filenameSpace
@@ -131,9 +153,11 @@ if (examsModal){
             }
             filenameSpace.innerText = e.target.files[0]['name']
         }
+
     })
 
     examsModal.addEventListener('mouseover', function(e){
+
         if (e.target.classList.contains('add-exam')){
             e.target.classList.add('add-exam-hover')
         }
@@ -232,6 +256,7 @@ addForm.addEventListener('click', function(){
 
 
 for (let i = 0; i<controllers.length; i++){
+
     controllers[i].addEventListener('mouseover', function(){
         this.classList.add('angle-active')
     })
@@ -243,9 +268,11 @@ for (let i = 0; i<controllers.length; i++){
     controllers[i].addEventListener('click', function(e){
         diagnoseScroll(diagnose.scrollLeft, diagnose.scrollWidth, diagnose.scrollWidth/navigation.childNodes.length, diagnose, e.target, navigation)
     })
+
 }
 
 diagnose.addEventListener('scroll', function(){
+
     let navigationDots = navigation.childNodes
     let distance = diagnose.scrollWidth/navigationDots.length
     let activeElement = Math.round(diagnose.scrollLeft/distance)
@@ -255,6 +282,7 @@ diagnose.addEventListener('scroll', function(){
         }
         navigationDots[activeElement].classList.add('navigator-active')
     }
+
 })
 
 // Check for a better way to improve this code.
@@ -262,6 +290,7 @@ diagnose.addEventListener('scroll', function(){
 let drugsPrescribed = []
 let checkedDrugs = []
 drugList.addEventListener('change', function(e){
+
     medicineText.value = ''
     let drugPrescribed = e.target.parentNode.innerText
     if (drugsPrescribed.indexOf(drugPrescribed + ' -') === -1){
@@ -276,6 +305,7 @@ drugList.addEventListener('change', function(e){
             medicineText.value += drugsPrescribed[i] + '\n'
         }
     }
+
 })
 
 drugCategoryFilter.addEventListener('change', function(e){
@@ -298,6 +328,7 @@ drugCategoryFilter.addEventListener('change', function(e){
 })
 
 if (addDrug){
+
     addDrug.addEventListener('mouseover', function(e){
         this.classList.add('add-drug-hover')
     })
@@ -309,9 +340,11 @@ if (addDrug){
     addDrug.addEventListener('click', function(e){
         addDrugModal.classList.add('modal-show')
     })
+
 }
 
 if (addDrugModal){
+
     addDrugModal.addEventListener('click', function(e){
         if (e.target.classList.contains('add-drug-modal')){
             document.querySelector('#error').innerText = ''
@@ -362,6 +395,19 @@ if (addDrugModal){
             }
         })
     })
+
 }
 
+// Modal
+if (modal){
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal || (e.target.nodeName === 'BUTTON' && e.target.textContent === 'No')){
+            modal.classList.remove('modal-show')
+        }
+
+        if (e.target.nodeName === 'BUTTON' && e.target.textContent === 'Yes'){
+            form.submit()
+        }
+    })
+}
 

@@ -1,13 +1,13 @@
 //Checked
-var allergiesTotalForms = document.querySelector('.allergies_management_form > #id_form-TOTAL_FORMS')
-var antecedentsTotalForms = document.querySelector('.antecedents_management_form > #id_form-TOTAL_FORMS')
+var allergiesTotalForms = document.querySelector('.allergies_management_form > #id_allergies-TOTAL_FORMS')
+var antecedentsTotalForms = document.querySelector('.antecedents_management_form > #id_antecedents-TOTAL_FORMS')
 var inputs = document.querySelectorAll('input')
 var button = document.querySelector('button')
 var extraInfo = document.querySelector('.extra-info')
-var allergySelection = document.querySelectorAll('.allergies-form select')
+var allergySelection
 var insuranceSelection = document.querySelectorAll('.insurance-form select')
-var allergiesFormBlueprint = document.querySelector('.allergies-form .form-container').cloneNode(true)
-var antecedentsFormBlueprint = document.querySelector('.antecedents-form .form-container').cloneNode(true)
+var allergiesFormBlueprint = document.querySelectorAll('.allergies-form .form-container')[document.querySelectorAll('.allergies-form .form-container').length - 1].cloneNode(true)
+var antecedentsFormBlueprint = document.querySelectorAll('.antecedents-form .form-container')[document.querySelectorAll('.antecedents-form .form-container').length - 1].cloneNode(true)
 var allergiesFormsContainer = document.querySelector('.allergies-form tbody')
 var antecedentsFormsContainer = document.querySelector('.antecedents-form tbody')
 var modal = document.querySelector('.modal')
@@ -72,6 +72,7 @@ if (extraInfo){
     extraInfo.addEventListener('click', (e) =>{
         if (e.target.classList.contains('add-allergy')){
             const url = e.target.getAttribute('data-url')
+            allergySelection = e.target.parentNode.firstChild
             elementAdditionFormAsync(url)
             .then(data => {
                 modal.classList.add('modal-show')
@@ -90,7 +91,7 @@ if (extraInfo){
 
         if (e.target.classList.contains('add-allergy-form')){
             let formAmount = document.querySelectorAll('.allergies-form .form-container')
-            let allergyTotalForms = document.querySelector('.allergies_management_form #id_form-TOTAL_FORMS')
+            let allergyTotalForms = document.querySelector('.allergies_management_form #id_allergies-TOTAL_FORMS')
             let clonedNode = allergiesFormBlueprint.cloneNode(true)
             for (let i = 0; i<clonedNode.childNodes.length; i++){
                 if (clonedNode.childNodes[i].firstChild){
@@ -124,7 +125,7 @@ if (extraInfo){
 
         if (e.target.classList.contains('add-antecedent-form')){
             let formAmount = document.querySelectorAll('.antecedents-form .form-container')
-            let antecedentsTotalForms = document.querySelector('.antecedents_management_form #id_form-TOTAL_FORMS')
+            let antecedentsTotalForms = document.querySelector('.antecedents_management_form #id_antecedents-TOTAL_FORMS')
             let clonedNode = antecedentsFormBlueprint.cloneNode(true)
             for (let i = 0; i<clonedNode.childNodes.length; i++){
                 if (clonedNode.childNodes[i].firstChild){
@@ -191,19 +192,18 @@ if (modal){
     modal.addEventListener('submit', (e) => {
         e.preventDefault()
         e.stopPropagation()
-        var allergySelection = document.querySelectorAll('.allergies-form select')
         const form = e.target
         const url = form.action
         const method = form.method
         const csrfmiddlewaretoken = e.target.childNodes[0].value
         const formData = new FormData(form)
-        if (e.target.classList.contains('add-allergy')){
+        if (e.target.id = 'add-allergy'){
             addElementAsync(url, method, csrfmiddlewaretoken, formData)
             .then(data => {
                 if (data['html']){
                     modalContent.innerHTML = data['html']
                 }else{
-                    allergySelection[allergySelection.length - 1].innerHTML = data['updated_selections']
+                    allergySelection.innerHTML = data['updated_selections']
                     modal.classList.remove('modal-show')
                 }
             })

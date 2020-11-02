@@ -4,7 +4,8 @@ var antecedentsTotalForms = document.querySelector('.antecedents_management_form
 var inputs = document.querySelectorAll('input')
 var button = document.querySelector('button')
 var extraInfo = document.querySelector('.extra-info')
-var insuranceSelection = document.querySelectorAll('.insurance-form select')
+var allergySelection
+var insuranceSelection = document.querySelector('.insurance-form select')
 var allergiesFormBlueprint = document.querySelector('.allergies-form .form-container').cloneNode(true)
 var antecedentsFormBlueprint = document.querySelector('.antecedents-form .form-container').cloneNode(true)
 var allergiesFormsContainer = document.querySelector('.allergies-form tbody')
@@ -24,17 +25,6 @@ async function addElementAsync(url, method, csrfmiddlewaretoken, formData){
     const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
     const data = await result.json()
     return data
-}
-
-// Inputs
-for (var i = 0; i<inputs.length; i++){
-    inputs[i].addEventListener('mouseover', function(){
-        this.classList.add('input-hover')
-    })
-
-    inputs[i].addEventListener('mouseout', function(){
-        this.classList.remove('input-hover')
-    })
 }
 
 // Button
@@ -71,6 +61,7 @@ if (extraInfo){
     extraInfo.addEventListener('click', (e) =>{
         if (e.target.classList.contains('add-allergy')){
             const url = e.target.getAttribute('data-url')
+            allergySelection = e.target.parentNode.firstChild
             elementAdditionFormAsync(url)
             .then(data => {
                 modal.classList.add('modal-show')
@@ -190,19 +181,19 @@ if (modal){
     modal.addEventListener('submit', (e) => {
         e.preventDefault()
         e.stopPropagation()
-        var allergySelection = document.querySelectorAll('.allergies-form select')
         const form = e.target
         const url = form.action
         const method = form.method
         const csrfmiddlewaretoken = e.target.childNodes[0].value
         const formData = new FormData(form)
-        if (e.target.classList.contains('add-allergy')){
+        if (e.target.id = 'add-allergy'){
             addElementAsync(url, method, csrfmiddlewaretoken, formData)
             .then(data => {
+                console.log(data)
                 if (data['html']){
                     modalContent.innerHTML = data['html']
                 }else{
-                    allergySelection[allergySelection.length - 1].innerHTML = data['updated_selections']
+                    allergySelection.innerHTML = data['updated_selections']
                     modal.classList.remove('modal-show')
                 }
             })
@@ -213,7 +204,7 @@ if (modal){
                     modalContent.innerHTML = data['html']
                 }else{
                     for (let i = 0; i<insuranceSelection.length; i++){
-                        insuranceSelection[i].innerHTML = data['updated_selections']
+                        insuranceSelection.innerHTML = data['updated_selections']
                     }
                     modal.classList.remove('modal-show')
                 }

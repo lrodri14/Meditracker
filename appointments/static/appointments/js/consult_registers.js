@@ -7,6 +7,12 @@ if (document.querySelector('.registers') !== 'undefined' && document.querySelect
     var registers = document.querySelector('.registers')
 }
 
+if (document.querySelector('.modal') !== 'undefined' && document.querySelector('.modal') !== 'null'){
+    var modal = document.querySelector('.modal')
+}
+
+
+
 // Async functions
 async function cancelAW(url){
     const result = await fetch(url)
@@ -226,6 +232,22 @@ if (wrapper){
         }
     })
 
+}
+
+// Modal
+
+if (modal){
+    modal.addEventListener('mouseover', (e) => {
+        if (e.target.id === 'add_new_patient'){
+            e.target.classList.add('add_new_patient_hover')
+        }
+    })
+
+    modal.addEventListener('mouseout', (e) => {
+        if (e.target.id === 'add_new_patient'){
+            e.target.classList.remove('add_new_patient_hover')
+        }
+    })
 }
 
 //Registers

@@ -90,15 +90,15 @@ input{
   text-align: center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:60%;
   transition: 0.5s;
 }
 
-.input-hover{
-  width: 75%;
-  transition: 0.5s;
+input:focus{
+    outline: none;
 }
 
 textarea{
@@ -114,12 +114,16 @@ select{
   text-align-last:center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:60%;
   margin: 5px;
   transition: 0.5s;
+}
+
+select:focus{
+    outline: none;
 }
 
 .allergy-delete-check{

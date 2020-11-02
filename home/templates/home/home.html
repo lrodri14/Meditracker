@@ -40,10 +40,19 @@
             <i class="fas fa-user"></i>
             <h3>Profile</h3>
         </div>
-        <div class="tile" onclick="window.location='{%url 'accounts:logout'%}'">
+        <div class="tile" id="logout">
             <i class="fas fa-sign-out-alt"></i>
             <h3>Log Out</h3>
         </div>
+    </div>
+</div>
+
+<div class="modal">
+    <div class="modal-content">
+        <h2>Are you sure you want to log out?</h2>
+        <button type="button" onclick="window.location='{%url 'accounts:logout'%}'">Yes</button>
+        <button type="button">No</button>
+
     </div>
 </div>
 <script src="{%static 'home/js/home.js'%}"></script>

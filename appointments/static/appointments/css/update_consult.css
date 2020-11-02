@@ -142,11 +142,15 @@ p input[type=number]{
   text-align: center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:40%;
   transition: 0.5s;
+}
+
+p input[type=number]:focus{
+    outline: none;
 }
 
 textarea{
@@ -164,12 +168,16 @@ select{
   text-align-last:center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:20%;
   margin: 5px;
   transition: 0.5s;
+}
+
+select:focus{
+    outline: none;
 }
 
 #add-allergies{
@@ -377,10 +385,14 @@ select{
   text-align: center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:60%;
+}
+
+#id_name:focus{
+    outline: none;
 }
 
 .add-drug-modal-content select{
@@ -388,13 +400,19 @@ select{
   text-align-last:center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   height: 30px;
   width:60%;
   margin: 5px;
   transition: 0.5s;
 }
+
+.add-drug-modal-content select:focus{
+    outline: none;
+}
+
+
 
 #drug-submit{
     margin-top: 1%;
@@ -437,4 +455,41 @@ select{
     visibility: visible;
     opacity: 1;
     transition: 0.5s;
+}
+
+/*Modal*/
+.modal{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+}
+
+.modal-show{
+    opacity: 1;
+    visibility: visible;
+    transition: 0.5s;
+}
+
+.modal-content{
+    background-color: #12212b;
+    text-align: center;
+    padding: 2%;
+    width: 50%;
+    margin-top: 20%;
+    margin-left: 25%;
+}
+
+.modal-content button{
+    margin: 0;
+    width: 20%;
+}
+
+.reminder{
+    color: #ffe100;
 }
