@@ -1,8 +1,10 @@
 //Checked
+var form = document.querySelector('form')
 var allergiesTotalForms = document.querySelector('.allergies_management_form > #id_allergies-TOTAL_FORMS')
 var antecedentsTotalForms = document.querySelector('.antecedents_management_form > #id_antecedents-TOTAL_FORMS')
+var generalInfoInputs = document.querySelectorAll('.general-info input, .general-info select')
 var inputs = document.querySelectorAll('input')
-var button = document.querySelector('button')
+var button = document.querySelectorAll('button')
 var extraInfo = document.querySelector('.extra-info')
 var allergySelection
 var insuranceSelection = document.querySelectorAll('.insurance-form select')
@@ -12,7 +14,7 @@ var allergiesFormsContainer = document.querySelector('.allergies-form tbody')
 var antecedentsFormsContainer = document.querySelector('.antecedents-form tbody')
 var modal = document.querySelector('.modal')
 var modalContent = document.querySelector('.modal-content')
-
+var saveConfirmationModal = document.querySelector('.save-confirmation-modal')
 // Async Functions
 
 async function elementAdditionFormAsync(url){
@@ -27,6 +29,33 @@ async function addElementAsync(url, method, csrfmiddlewaretoken, formData){
     return data
 }
 
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    unfilledInputs = 0
+    for (let i = 0; i<generalInfoInputs.length; i++){
+        if (generalInfoInputs[i].value !== ''){
+            continue
+        }else{
+            unfilledInputs++
+        }
+    }
+    unfilledInputs === 0 ? form.submit() : saveConfirmationModal.classList.add('save-confirmation-modal-show')
+})
+
+
+// Button
+for (let i = 0; i<button.length; i++){
+    button[i].addEventListener('mouseover', function(){
+        this.classList.add('button-hover')
+    })
+
+    button[i].addEventListener('mouseout', function(){
+        this.classList.remove('button-hover')
+    })
+}
+
+
 // Inputs
 for (var i = 0; i<inputs.length; i++){
     inputs[i].addEventListener('mouseover', function(){
@@ -37,15 +66,6 @@ for (var i = 0; i<inputs.length; i++){
         this.classList.remove('input-hover')
     })
 }
-
-// Button
-button.addEventListener('mouseover', function(){
-    this.classList.add('button-hover')
-})
-
-button.addEventListener('mouseout', function(){
-    this.classList.remove('button-hover')
-})
 
 
 if (extraInfo){
@@ -219,6 +239,20 @@ if (modal){
                     modal.classList.remove('modal-show')
                 }
             })
+        }
+    })
+}
+
+// Confirmation Modal
+
+if (saveConfirmationModal){
+    saveConfirmationModal.addEventListener('click', (e) => {
+        if (e.target === saveConfirmationModal || (e.target.nodeName === 'BUTTON' && e.target.textContent === 'No')){
+            saveConfirmationModal.classList.remove('save-confirmation-modal-show')
+        }
+
+        if (e.target.nodeName === 'BUTTON' && e.target.textContent === 'Yes'){
+            form.submit()
         }
     })
 }
