@@ -23,7 +23,7 @@
                 <th>Date and Time</th>
                 <th>Status</th>
                 {%if doctor%}<th>Complete</th>{%endif%}
-                <th><a href="{%url 'appointments:create_consult'%}" class="create-consult-modal"><i class="fas fa-plus"></i></a></th>
+                <th><i class="fas fa-plus create-consult-modal" data-url="{%url 'appointments:create_consult'%}"></i></th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
                     <td>{{a.patient.first_names}} {{a.patient.last_names}}</td>
                     <td>{{a.datetime}}</td>
                     <td id="status-0">Pending...</td>
-                    {%if doctor%}<td><a href="{%url 'appointments:update_consult' a.pk%}"><i class="fas fa-edit"></i></a></td>{%endif%}
+                    {%if doctor%}<td><i class="fas fa-edit" onclick="window.location='{%url 'appointments:update_consult' a.pk%}'"></i></td>{%endif%}
                     <td></td>
                 </tr>
             {%endfor%}

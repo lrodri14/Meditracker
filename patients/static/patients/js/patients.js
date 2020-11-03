@@ -58,6 +58,15 @@ if (addPatient){
             addPatient.style.top = '90%'
         }
     },500)
+
+    addPatient.addEventListener('mouseover', () => {
+        addPatient.classList.add('add-patient-hover')
+    })
+
+    addPatient.addEventListener('mouseout', () => {
+        addPatient.classList.remove('add-patient-hover')
+    })
+
 }
 
 // Wrapper
@@ -65,26 +74,18 @@ if (wrapper){
 
     wrapper.addEventListener('mouseover', (e) => {
 
-        if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')) && !e.target.classList.contains('fa-plus'))){
+        if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
             let row
-            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
-            const childNodes = row.childNodes
-            row.style.backgroundColor = 'cyan'
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = '#0ff5fc'
             row.classList.add('tr-hover')
-            for (let c = 0; c<childNodes.length; c++){
-                if (childNodes[c].nodeName != '#text'){
-                    childNodes[c].style.color = '#12212b'
-                    if (childNodes[c].children){
-                        var children = childNodes[c].children
-                        for (var cc = 0; cc<children.length; cc++){
-                            children[cc].style.color = '#12212b'
-                            children[cc].style.transition = '0.5s'
-                            }
-                        }
-                    }
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.add('td-hover')
+                }
             }
-
         }
+
         //*********************************************************
         // These deletion elements have a parent with a click event
         // So event delegation can not be set to the table tag, but td and tr's are added dynamically
@@ -94,11 +95,20 @@ if (wrapper){
             deletion[i].addEventListener('click', (e) => {
             e.preventDefault()
             e.stopPropagation()
-            deleteAW(deletion[i].href)
+            deleteAW(deletion[i].getAttribute('data-url'))
             .then(data => {
                 modal.classList.add('modal-show')
                 modalContent.innerHTML = data['html']
             })
+            })
+        }
+
+        let update = document.querySelectorAll('.update')
+        for (let i = 0; i<update.length; i++){
+            update[i].addEventListener('click', (e) => {
+                e.stopPropagation()
+                let url = e.target.classList.contains('fa-edit') ? e.target.parentNode.getAttribute('data-url') : e.target.getAttribute('data-url')
+                window.location.href = url
             })
         }
 
@@ -122,6 +132,18 @@ if (wrapper){
             button.classList.add('button-form-hover')
         }
 
+       if (e.target.classList.contains('fa-plus')){
+            e.target.classList.add('fa-plus-hover')
+        }
+
+       if (e.target.classList.contains('fa-trash')){
+            e.target.classList.add('fa-trash-hover')
+        }
+
+       if (e.target.classList.contains('fa-edit')){
+            e.target.classList.add('fa-edit-hover')
+        }
+
         if (e.target.classList.contains('fa-filter')){
             e.target.classList.add('button-hover')
         }
@@ -130,24 +152,16 @@ if (wrapper){
 
     wrapper.addEventListener('mouseout', (e) => {
 
-      if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')) && !e.target.classList.contains('fa-plus'))){
+      if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
         let row
-        e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
-        const childNodes = row.childNodes
+        e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
         row.style.backgroundColor = ''
         row.classList.remove('tr-hover')
-        for (let c = 0; c<childNodes.length; c++){
-            if (childNodes[c].nodeName != '#text'){
-                childNodes[c].style.color = 'cyan'
-                if (childNodes[c].children){
-                        var children = childNodes[c].children
-                        for (var cc = 0; cc<children.length; cc++){
-                            children[cc].style.color = 'cyan'
-                            }
-                        }
-                    }
-                }
-
+        for (let i = 0; i<row.childNodes.length; i++){
+            if (row.childNodes[i].nodeName === 'TD'){
+                row.childNodes[i].classList.remove('td-hover')
+            }
+        }
       }
 
     // Elements to open modal not working because of parent, it has a click event too and is being fired.
@@ -173,6 +187,18 @@ if (wrapper){
         if (e.target.nodeName === 'BUTTON'){
             const button = e.target
             button.classList.remove('button-form-hover')
+        }
+
+       if (e.target.classList.contains('fa-plus')){
+            e.target.classList.remove('fa-plus-hover')
+        }
+
+       if (e.target.classList.contains('fa-trash')){
+            e.target.classList.remove('fa-trash-hover')
+        }
+
+       if (e.target.classList.contains('fa-edit')){
+            e.target.classList.remove('fa-edit-hover')
         }
 
         if (e.target.classList.contains('fa-filter')){

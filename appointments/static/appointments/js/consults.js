@@ -1,6 +1,6 @@
 //Checked
 if (document.querySelectorAll('tr') !== 'undefined' && document.querySelectorAll('tr') !== 'null'){
-    var rows = document.querySelectorAll('tr')
+    var table = document.querySelector('table')
 }
 
 if (document.querySelectorAll('button') !== 'undefined' && document.querySelectorAll('button') !== 'null'){
@@ -18,6 +18,10 @@ if (document.querySelector('.modal') !== 'undefined' && document.querySelector('
 
 }
 
+// Icons
+var plus = document.querySelector('.fa-plus')
+var edit = document.querySelector('.fa-edit')
+
 var createConsultModal = document.querySelector('.create-consult-modal')
 
 //Async Functions
@@ -31,6 +35,30 @@ async function submitConsultAW(url, csrfmiddlewaretoken, formData, method){
     const result = await fetch(url, {method: method, headers: {'X-CSRFTOKEN':csrfmiddlewaretoken}, body: formData})
     const data = result.json()
     return data
+}
+
+if (plus){
+
+    plus.addEventListener('mouseover', () => {
+        plus.classList.add('fa-plus-hover')
+    })
+
+    plus.addEventListener('mouseout', () => {
+        plus.classList.remove('fa-plus-hover')
+    })
+
+}
+
+if (edit){
+
+    edit.addEventListener('mouseover', () => {
+        edit.classList.add('fa-edit-hover')
+    })
+
+    edit.addEventListener('mouseout', () => {
+        edit.classList.remove('fa-edit-hover')
+    })
+
 }
 
 //Modal
@@ -72,7 +100,7 @@ modal.addEventListener('mouseover', (e) => {
 createConsultModal.addEventListener('click', (e) => {
     e.preventDefault()
     e.stopPropagation()
-    addConsultAW(e.target.parentNode.href)
+    addConsultAW(e.target.getAttribute('data-url'))
     .then(data => {
         modal.classList.add('modal-show')
         modalContent.innerHTML = data['html']
@@ -108,46 +136,79 @@ modalContent.addEventListener('submit', (e) => {
 })
 
 //Table Rows
-if (rows){
-    for(let i = 0; i<rows.length; i++){
-        let childNodes = rows[i].childNodes
-        if (rows[i].id === ''){
-            rows[i].addEventListener('mouseover', function(e){
-                rows[i].style.backgroundColor = 'cyan'
-                rows[i].classList.add('tr-hover')
-                for (let c = 0; c<childNodes.length; c++){
-                    if (childNodes[c].nodeName != '#text'){
-                        childNodes[c].style.color = '#12212b'
-                        if (childNodes[c].children){
-                            var children = childNodes[c].children
-                            for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = '#12212b'
-                                children[cc].style.transition = '0.5s'
-                                }
-                            }
-                        }
-                    }
-                })
+//if (rows){
+//    for(let i = 0; i<rows.length; i++){
+//        let childNodes = rows[i].childNodes
+//        if (rows[i].id === ''){
+//            rows[i].addEventListener('mouseover', function(e){
+//                rows[i].style.backgroundColor = 'cyan'
+//                rows[i].classList.add('tr-hover')
+//                for (let c = 0; c<childNodes.length; c++){
+//                    if (childNodes[c].nodeName != '#text'){
+//                        childNodes[c].style.color = '#12212b'
+//                        if (childNodes[c].children){
+//                            var children = childNodes[c].children
+//                            for (var cc = 0; cc<children.length; cc++){
+//                                children[cc].style.color = '#12212b'
+//                                children[cc].style.transition = '0.5s'
+//                                }
+//                            }
+//                        }
+//                    }
+//                })
+//
+//        rows[i].addEventListener('mouseout', function(){
+//            rows[i].style.backgroundColor = ''
+//            rows[i].classList.remove('tr-hover')
+//            for (let c = 0; c<childNodes.length; c++){
+//                if (childNodes[c].nodeName != '#text'){
+//                    childNodes[c].style.color = ''
+//                    if (childNodes[c].children){
+//                            var children = childNodes[c].children
+//                            for (var cc = 0; cc<children.length; cc++){
+//                                children[cc].style.color = ''
+//                                }
+//                            }
+//                        }
+//                    }
+//                })
+//        }
+//    }
+//}
+if (table){
 
-        rows[i].addEventListener('mouseout', function(){
-            rows[i].style.backgroundColor = ''
-            rows[i].classList.remove('tr-hover')
-            for (let c = 0; c<childNodes.length; c++){
-                if (childNodes[c].nodeName != '#text'){
-                    childNodes[c].style.color = ''
-                    if (childNodes[c].children){
-                            var children = childNodes[c].children
-                            for (var cc = 0; cc<children.length; cc++){
-                                children[cc].style.color = ''
-                                }
-                            }
-                        }
-                    }
-                })
+    table.addEventListener('mouseover', (e) => {
+
+        if (e.target.nodeName === 'TD' ||  e.target.classList.contains('fa-edit')){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = '#0ff5fc'
+            row.classList.add('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.add('td-hover')
+                }
+            }
         }
-    }
-}
 
+    })
+
+    table.addEventListener('mouseout', (e) => {
+
+          if (e.target.nodeName === 'TD' ||  e.target.classList.contains('fa-edit')){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = ''
+            row.classList.remove('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.remove('td-hover')
+                }
+            }
+          }
+    })
+
+}
 
 // Button
 if (button){
@@ -171,4 +232,13 @@ if (addConsult){
             addConsult.style.top = '90%'
         }
     },500)
+
+    addConsult.addEventListener('mouseover', () => {
+        addConsult.classList.add('add-consult-hover')
+    })
+
+    addConsult.addEventListener('mouseout', () => {
+        addConsult.classList.remove('add-consult-hover')
+    })
+
 }

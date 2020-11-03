@@ -3,10 +3,6 @@ if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector
     var wrapper = document.querySelector('.wrapper')
 }
 
-if (document.querySelector('.registers') !== 'undefined' && document.querySelector('.registers') !== 'null'){
-    var registers = document.querySelector('.registers')
-}
-
 if (document.querySelector('.modal') !== 'undefined' && document.querySelector('.modal') !== 'null'){
     var modal = document.querySelector('.modal')
 }
@@ -75,45 +71,28 @@ if (wrapper){
             e.target.classList.add('button-hover')
         }
 
-        if (e.target.nodeName === 'TD'){
-            var rows = document.querySelectorAll('tr')
-                for(let i = 0; i<rows.length; i++){
-                let childNodes = rows[i].childNodes
-                if (rows[i].id === ''){
-                    rows[i].addEventListener('mouseover', function(e){
-                        rows[i].style.backgroundColor = 'cyan'
-                        rows[i].classList.add('tr-hover')
-                        for (let c = 0; c<childNodes.length; c++){
-                            if (childNodes[c].nodeName != '#text'){
-                                childNodes[c].style.color = '#12212b'
-                                if (childNodes[c].children){
-                                    var children = childNodes[c].children
-                                    for (var cc = 0; cc<children.length; cc++){
-                                        children[cc].style.color = '#12212b'
-                                        children[cc].style.transition = '0.5s'
-                                        }
-                                    }
-                                }
-                            }
-                        })
+        if (e.target.nodeName === 'TD' || (e.target.classList.contains('fa-edit') || e.target.classList.contains('fa-check') || e.target.classList.contains('fa-times-circle'))){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = '#0ff5fc'
+            row.classList.add('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.add('td-hover')
+                }
+            }
+        }
 
-                    rows[i].addEventListener('mouseout', function(){
-                        rows[i].style.backgroundColor = ''
-                        rows[i].classList.remove('tr-hover')
-                        for (let c = 0; c<childNodes.length; c++){
-                            if (childNodes[c].nodeName != '#text'){
-                                childNodes[c].style.color = ''
-                                if (childNodes[c].children){
-                                        var children = childNodes[c].children
-                                        for (var cc = 0; cc<children.length; cc++){
-                                            children[cc].style.color = ''
-                                        }
-                            }
-                            }
-                            }
-                        })
-                }
-                }
+        if (e.target.classList.contains('fa-edit')){
+
+        }
+
+        if (e.target.classList.contains('fa-check')){
+
+        }
+
+        if (e.target.classList.contains('fa-times-circle')){
+
         }
 
     })
@@ -128,6 +107,31 @@ if (wrapper){
         if (e.target.nodeName === 'I'){
             e.target.classList.remove('button-hover')
         }
+
+        if (e.target.nodeName === 'TD' || (e.target.classList.contains('fa-edit') || e.target.classList.contains('fa-check') || e.target.classList.contains('fa-times-circle'))){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = ''
+            row.classList.remove('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.remove('td-hover')
+                }
+            }
+        }
+
+        if (e.target.classList.contains('fa-edit')){
+
+        }
+
+        if (e.target.classList.contains('fa-check')){
+
+        }
+
+        if (e.target.classList.contains('fa-times-circle')){
+
+        }
+
     })
 
     //Wrapper Click
@@ -247,17 +251,5 @@ if (modal){
         if (e.target.id === 'add_new_patient'){
             e.target.classList.remove('add_new_patient_hover')
         }
-    })
-}
-
-//Registers
-
-if (registers){
-    registers.addEventListener('mouseover', function(){
-        this.classList.add('registers-hover')
-    })
-
-    registers.addEventListener('mouseout', function(){
-        this.classList.remove('registers-hover')
     })
 }

@@ -31,9 +31,9 @@
                             <td id="Closed">Closed</td>
                         {%endif%}
                         </td>
-                        <td>{%if c.status == 'OPEN'%}<a class="update" href="{%url 'appointments:consult_date_update' c.pk%}"><i class="fas fa-edit"></i></a>{%endif%}</td>
-                        <td>{%if c.status == 'OPEN'%}<a href="{%url 'appointments:consult_confirm' c.pk%}"><i class="fas fa-check"></i></a>{%endif%}</td>
-                        <td>{%if c.status == 'OPEN'%}<a class="cancel" href="{%url 'appointments:cancel_consult' c.pk%}"><i class="fas fa-times-circle"></i></a>{%endif%}</td>
+                        <td>{%if c.status == 'OPEN'%}<i class="fas fa-edit update" data-url="{%url 'appointments:consult_date_update' c.pk%}"></i>{%endif%}</td>
+                        <td>{%if c.status == 'OPEN'%}<i class="fas fa-check" data-url="{%url 'appointments:consult_confirm' c.pk%}"></i>{%endif%}</td>
+                        <td>{%if c.status == 'OPEN'%}<i class="fas fa-times-circle" data-url="{%url 'appointments:cancel_consult' c.pk%}"></i>{%endif%}</td>
                     </tr>
                 {%endif%}
             {%endfor%}
