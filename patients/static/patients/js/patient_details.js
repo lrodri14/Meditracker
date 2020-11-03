@@ -60,25 +60,16 @@ let wrappers = [generalInfo, extras, appointments, exams, charges]
 
 body.addEventListener('mouseover', (e) => {
 
-    if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')) && !e.target.classList.contains('fa-plus'))){
+    if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
         let row
-        e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
-        const childNodes = row.childNodes
-        row.style.backgroundColor = 'cyan'
+        e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+        row.style.backgroundColor = '#0ff5fc'
         row.classList.add('tr-hover')
-        for (let c = 0; c<childNodes.length; c++){
-            if (childNodes[c].nodeName != '#text'){
-                childNodes[c].style.color = '#12212b'
-                if (childNodes[c].children){
-                    var children = childNodes[c].children
-                    for (var cc = 0; cc<children.length; cc++){
-                        children[cc].style.color = '#12212b'
-                        children[cc].style.transition = '0.5s'
-                        }
-                    }
-                }
+        for (let i = 0; i<row.childNodes.length; i++){
+            if (row.childNodes[i].nodeName === 'TD'){
+                row.childNodes[i].classList.add('td-hover')
+            }
         }
-
     }
 
     if (e.target.classList.contains('info-tab') || e.target.parentNode.classList.contains('info-tab')){
@@ -103,24 +94,16 @@ body.addEventListener('mouseover', (e) => {
 
 body.addEventListener('mouseout', (e) => {
 
-  if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')) && !e.target.classList.contains('fa-plus'))){
+  if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
     let row
-    e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode.parentNode
-    const childNodes = row.childNodes
+    e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
     row.style.backgroundColor = ''
     row.classList.remove('tr-hover')
-    for (let c = 0; c<childNodes.length; c++){
-        if (childNodes[c].nodeName != '#text'){
-            childNodes[c].style.color = 'cyan'
-            if (childNodes[c].children){
-                    var children = childNodes[c].children
-                    for (var cc = 0; cc<children.length; cc++){
-                        children[cc].style.color = 'cyan'
-                        }
-                    }
-                }
-            }
-
+    for (let i = 0; i<row.childNodes.length; i++){
+        if (row.childNodes[i].nodeName === 'TD'){
+            row.childNodes[i].classList.remove('td-hover')
+        }
+    }
   }
 
   if (e.target.classList.contains('info-tab') || e.target.parentNode.classList.contains('info-tab')){

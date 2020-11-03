@@ -124,46 +124,17 @@ if (wrapper){
 
     wrapper.addEventListener('mouseover', (e) => {
 
-        if (e.target.nodeName === 'TD'){
-            var rows = document.querySelectorAll('tr')
-                for(let i = 0; i<rows.length; i++){
-                let childNodes = rows[i].childNodes
-                if (rows[i].id === ''){
-                    rows[i].addEventListener('mouseover', function(e){
-                        rows[i].style.backgroundColor = 'cyan'
-                        rows[i].classList.add('tr-hover')
-                        for (let c = 0; c<childNodes.length; c++){
-                            if (childNodes[c].nodeName != '#text'){
-                                childNodes[c].style.color = '#12212b'
-                                if (childNodes[c].children){
-                                    var children = childNodes[c].children
-                                    for (var cc = 0; cc<children.length; cc++){
-                                        children[cc].style.color = '#12212b'
-                                        children[cc].style.transition = '0.5s'
-                                        }
-                                    }
-                                }
-                            }
-                        })
-
-                    rows[i].addEventListener('mouseout', function(){
-                        rows[i].style.backgroundColor = ''
-                        rows[i].classList.remove('tr-hover')
-                        for (let c = 0; c<childNodes.length; c++){
-                            if (childNodes[c].nodeName != '#text'){
-                                childNodes[c].style.color = 'cyan'
-                                if (childNodes[c].children){
-                                        var children = childNodes[c].children
-                                        for (var cc = 0; cc<children.length; cc++){
-                                            children[cc].style.color = ''
-                                        }
-                            }
-                            }
-                            }
-                        })
-                }
+        if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = '#0ff5fc'
+            row.classList.add('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.add('td-hover')
                 }
             }
+        }
 
         if (e.target.classList.contains('fa-filter')){
             e.target.classList.add('fa-filter-hover')
@@ -171,6 +142,14 @@ if (wrapper){
 
         if (e.target.classList.contains('fa-plus')){
             e.target.classList.add('fa-plus-hover')
+        }
+
+        if (e.target.classList.contains('fa-edit')){
+            e.target.classList.add('fa-edit-hover')
+        }
+
+        if (e.target.classList.contains('fa-trash')){
+            e.target.classList.add('fa-trash-hover')
         }
 
         if (e.target.nodeName === 'INPUT'){
@@ -181,12 +160,32 @@ if (wrapper){
 
     wrapper.addEventListener('mouseout', (e) => {
 
+      if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
+        let row
+        e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+        row.style.backgroundColor = ''
+        row.classList.remove('tr-hover')
+        for (let i = 0; i<row.childNodes.length; i++){
+            if (row.childNodes[i].nodeName === 'TD'){
+                row.childNodes[i].classList.remove('td-hover')
+            }
+        }
+      }
+
         if (e.target.classList.contains('fa-filter')){
             e.target.classList.remove('fa-filter-hover')
         }
 
         if (e.target.classList.contains('fa-plus')){
             e.target.classList.remove('fa-plus-hover')
+        }
+
+        if (e.target.classList.contains('fa-edit')){
+            e.target.classList.remove('fa-edit-hover')
+        }
+
+        if (e.target.classList.contains('fa-trash')){
+            e.target.classList.remove('fa-trash-hover')
         }
 
         if (e.target.nodeName === 'INPUT'){
@@ -226,7 +225,7 @@ if (wrapper){
         if (e.target.classList.contains('fa-edit')){
             e.preventDefault()
             e.stopPropagation()
-            const url = e.target.parentNode.href
+            const url = e.target.parentNode.getAttribute('data-url')
             showForm(url)
             .then(data => {
                 modal.classList.add('show-modal')
@@ -237,7 +236,7 @@ if (wrapper){
         if (e.target.classList.contains('fa-trash')){
             e.preventDefault()
             e.stopPropagation()
-            const url = e.target.parentNode.href
+            const url = e.target.parentNode.getAttribute('data-url')
             showForm(url)
             .then(data => {
                 modal.classList.add('show-modal')

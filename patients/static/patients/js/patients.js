@@ -90,12 +90,12 @@ if (wrapper){
         // These deletion elements have a parent with a click event
         // So event delegation can not be set to the table tag, but td and tr's are added dynamically
         // How to deal with these situations?
-        let deletion = document.querySelectorAll('.delete')
+        let deletion = document.querySelectorAll('.fa-trash')
         for (let i = 0; i<deletion.length; i++){
             deletion[i].addEventListener('click', (e) => {
             e.preventDefault()
             e.stopPropagation()
-            deleteAW(deletion[i].getAttribute('data-url'))
+            deleteAW(deletion[i].parentNode.getAttribute('data-url'))
             .then(data => {
                 modal.classList.add('modal-show')
                 modalContent.innerHTML = data['html']
@@ -103,11 +103,11 @@ if (wrapper){
             })
         }
 
-        let update = document.querySelectorAll('.update')
+        let update = document.querySelectorAll('.fa-edit')
         for (let i = 0; i<update.length; i++){
             update[i].addEventListener('click', (e) => {
                 e.stopPropagation()
-                let url = e.target.classList.contains('fa-edit') ? e.target.parentNode.getAttribute('data-url') : e.target.getAttribute('data-url')
+                let url = e.target.parentNode.getAttribute('data-url')
                 window.location.href = url
             })
         }

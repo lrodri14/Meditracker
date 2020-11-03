@@ -93,6 +93,33 @@ tr:nth-child(even){
     color: #12212b;
 }
 
+.fa-edit{
+    transition: 0.5s;
+}
+
+.fa-edit-hover{
+    color: #ffe100;
+    transition: 0.5s;
+}
+
+.fa-check{
+    transition: 0.5s;
+}
+
+.fa-check-hover{
+    color: #32a852;
+    transition: 0.5s;
+}
+
+.fa-times-circle{
+    transition: 0.5s;
+}
+
+.fa-times-circle-hover{
+    color: #a83632;
+    transition: 0.5s;
+}
+
 /*Modal*/
 .modal{
     background-color: rgba(0,0,0,0.3);

@@ -16,8 +16,8 @@
              {%for a in allergies%}
                 <tr data-url="{%url 'settings:allergies_details' a.pk%}">
                     <td>{{a.allergy_type}}</td>
-                    <td><a href="{%url 'settings:allergies_update' a.pk%}"><i class="fas fa-edit"></i></a></td>
-                    <td><a href="{%url 'settings:allergies_delete' a.pk%}"><i class="fas fa-trash"></i></a></td>
+                    <td data-url="{%url 'settings:allergies_update' a.pk%}"><i class="fas fa-edit"></i></td>
+                    <td data-url="{%url 'settings:allergies_delete' a.pk%}"><i class="fas fa-trash"></i></td>
                     <td></td>
                 </tr>
             {%endfor%}

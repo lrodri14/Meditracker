@@ -18,8 +18,8 @@
                     <tr data-url="{%url 'settings:insurance_details' i.pk%}">
                         <td>{{i.company}}</td>
                         <td>{{i.get_country_display}}</td>
-                        <td><a href="{%url 'settings:insurance_update' i.pk%}"><i class="fas fa-edit"></i></a></td>
-                        <td><a href="{%url 'settings:insurance_delete' i.pk%}"><i class="fas fa-trash"></i></a></td>
+                        <td data-url="{%url 'settings:insurance_update' i.pk%}"><i class="fas fa-edit"></i></td>
+                        <td data-url="{%url 'settings:insurance_delete' i.pk%}"><i class="fas fa-trash"></i></td>
                         <td></td>
                     </tr>
                 {%endfor%}

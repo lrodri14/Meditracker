@@ -49,49 +49,20 @@ if (wrapper){
             e.target.classList.add('button-hover')
         }
 
-        if (e.target.nodeName === 'TD'){
-            var rows = document.querySelectorAll('tr')
-                for(let i = 0; i<rows.length; i++){
-                let childNodes = rows[i].childNodes
-                if (rows[i].id === ''){
-                    rows[i].addEventListener('mouseover', function(e){
-                        rows[i].style.backgroundColor = 'cyan'
-                        rows[i].classList.add('tr-hover')
-                        for (let c = 0; c<childNodes.length; c++){
-                            if (childNodes[c].nodeName != '#text'){
-                                childNodes[c].style.color = '#12212b'
-                                if (childNodes[c].children){
-                                    var children = childNodes[c].children
-                                    for (var cc = 0; cc<children.length; cc++){
-                                        children[cc].style.color = '#12212b'
-                                        children[cc].style.transition = '0.5s'
-                                        }
-                                    }
-                                }
-                            }
-                        })
-
-                    rows[i].addEventListener('mouseout', function(){
-                        rows[i].style.backgroundColor = ''
-                        rows[i].classList.remove('tr-hover')
-                        for (let c = 0; c<childNodes.length; c++){
-                            if (childNodes[c].nodeName != '#text'){
-                                childNodes[c].style.color = ''
-                                if (childNodes[c].children){
-                                        var children = childNodes[c].children
-                                        for (var cc = 0; cc<children.length; cc++){
-                                            children[cc].style.color = ''
-                                        }
-                            }
-                            }
-                            }
-                        })
-                }
-                }
-        }
-
         if (e.target.nodeName === 'BUTTON'){
             e.target.classList.add('button-form-hover')
+        }
+
+        if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = '#0ff5fc'
+            row.classList.add('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.add('td-hover')
+                }
+            }
         }
 
     })
@@ -105,6 +76,18 @@ if (wrapper){
 
         if (e.target.nodeName === 'BUTTON'){
             e.target.classList.remove('button-form-hover')
+        }
+
+        if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = ''
+            row.classList.remove('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.remove('td-hover')
+                }
+            }
         }
 
     })

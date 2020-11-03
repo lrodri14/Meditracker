@@ -67,7 +67,7 @@ if (wrapper){
             e.target.classList.add('button-form-hover')
         }
 
-        if (e.target.nodeName === 'I'){
+        if (e.target.nodeName === 'I' && e.target.classList.contains('fa-filter')){
             e.target.classList.add('button-hover')
         }
 
@@ -84,15 +84,15 @@ if (wrapper){
         }
 
         if (e.target.classList.contains('fa-edit')){
-
+            e.target.classList.add('fa-edit-hover')
         }
 
         if (e.target.classList.contains('fa-check')){
-
+            e.target.classList.add('fa-check-hover')
         }
 
         if (e.target.classList.contains('fa-times-circle')){
-
+            e.target.classList.add('fa-times-circle-hover')
         }
 
     })
@@ -104,11 +104,11 @@ if (wrapper){
             e.target.classList.remove('button-form-hover')
         }
 
-        if (e.target.nodeName === 'I'){
+        if (e.target.nodeName === 'I' && e.target.classList.contains('fa-filter')){
             e.target.classList.remove('button-hover')
         }
 
-        if (e.target.nodeName === 'TD' || (e.target.classList.contains('fa-edit') || e.target.classList.contains('fa-check') || e.target.classList.contains('fa-times-circle'))){
+        if (e.target.nodeName === 'TD' || !e.target.classList.contains('fa-filter')){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
             row.style.backgroundColor = ''
@@ -121,15 +121,15 @@ if (wrapper){
         }
 
         if (e.target.classList.contains('fa-edit')){
-
+            e.target.classList.remove('fa-edit-hover')
         }
 
         if (e.target.classList.contains('fa-check')){
-
+            e.target.classList.remove('fa-check-hover')
         }
 
         if (e.target.classList.contains('fa-times-circle')){
-
+            e.target.classList.remove('fa-times-circle-hover')
         }
 
     })
@@ -151,7 +151,8 @@ if (wrapper){
             var modalContent = retrieveItems()['modalContent']
             e.preventDefault()
             e.stopPropagation()
-            updateAW(e.target.parentNode.href)
+            let url = e.target.parentNode.getAttribute('data-url')
+            updateAW(url)
             .then(data => {
                 modalContent.innerHTML = data['html']
                 modal.classList.add('modal-show')
@@ -161,7 +162,7 @@ if (wrapper){
         if (e.target.classList.contains('fa-check')){
             e.preventDefault()
             e.stopPropagation()
-            confirmAW(e.target.parentNode.href)
+            confirmAW(e.target.parentNode.getAttribute('data-url'))
             .then(data => {
                 wrapper.innerHTML = data['html']
             })
@@ -172,7 +173,7 @@ if (wrapper){
             var modalContent = retrieveItems()['modalContent']
             e.stopPropagation()
             e.preventDefault()
-            cancelAW(e.target.parentNode.href)
+            cancelAW(e.target.parentNode.getAttribute('data-url'))
             .then(data => {
                 modalContent.innerHTML = data['html']
                 modal.classList.add('modal-show')

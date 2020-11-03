@@ -8,7 +8,7 @@
 <h1>Consults Pending for Today</h1>
 <h3>Date: {{ today|date}}</h3>
 <a href="{%url 'appointments:agenda'%}"><button type="button">Agenda</button></a>
-<a href="{%url 'appointments:registers'%}"><button type="button" class="all-registers">Registers</button></a>
+<a href="{%url 'appointments:registers'%}"><button type="button" class="all-registers">All Registers</button></a>
 <div class="modal">
     <div class="modal-content">
 
@@ -41,7 +41,7 @@
     </table>
 {%else%}
     <p id="no-consults">There are no consults for today's date</p>
-    <a id="add-consult" class="create-consult-modal" href="{%url 'appointments:create_consult'%}"><i class="fas fa-plus"></i></a>
+    <i class="fas fa-plus create-consult-modal" id="add-consult" data-url="{%url 'appointments:create_consult'%}"></i>
 {%endif%}
 <script src="{%static 'appointments/js/consults.js'%}"></script>
 {%endblock%}

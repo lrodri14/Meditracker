@@ -44,17 +44,47 @@ tr:nth-child(even){
 }
 
 .tr-hover{
-    background-color: cyan;
-    transition: 0.5s;
+    background-color: #0ff5fc;
     cursor: pointer;
     line-height: 50px;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+.td-hover{
     color: #12212b;
 }
 
 .fa-plus{
     padding: 10px;
+    transition: 0.5s;
 }
 
+.fa-plus-hover{
+    color: #32a852;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-trash{
+    transition: 0.5s;
+}
+
+.fa-edit{
+    transition: 0.5s;
+}
+
+.fa-trash-hover{
+    color: #a83632;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-edit-hover{
+    color: #ffe100;
+    cursor: pointer;
+    transition: 0.5s;
+}
 /*Navbar*/
 ul{
     list-style-type: none;

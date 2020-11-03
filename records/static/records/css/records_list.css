@@ -50,10 +50,14 @@ tr:nth-child(even){
 }
 
 .tr-hover{
-    background-color: cyan;
-    transition: 0.5s;
+    background-color: #0ff5fc;
     cursor: pointer;
     line-height: 50px;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+.td-hover{
     color: #12212b;
 }
 
