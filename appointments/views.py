@@ -2,7 +2,7 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Consults
-from .forms import ConsultsForm, DrugsForm, DrugCategoryFilterForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
+from .forms import ConsultsForm, DrugsForm, DrugCategoryFilterForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter, MedicalExams
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.db.models import Q
@@ -52,8 +52,9 @@ def create_consult(request):
 
 def consults_details(request, pk):
     consult = Consults.objects.get(pk=pk)
+    exams = MedicalExams.objects.filter(consult=consult) if len(MedicalExams.objects.filter(consult=consult)) > 0 else None
     template = 'appointments/consult_details.html'
-    context = {'consult': consult}
+    context = {'consult': consult, 'exams': exams}
     if 'patients/details' in request.META.get('HTTP_REFERER'):
         context['referer'] = 'details'
     else:

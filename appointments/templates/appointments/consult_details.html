@@ -25,16 +25,18 @@
     <div class="vital-signs">
         <h1>Vital Signs</h1>
         <hr>
-        <h3>Blood Pressure: {{consult.blood_pressure}}</h3>
-        <h3>Temperature: {{consult.temperature}}</h3>
-        <h3>Size: {{consult.size}}</h3>
-        <h3>Weight: {{consult.weight}}</h3>
+        <h3>Blood Pressure: {%if consult.blood_pressure%}{{consult.blood_pressure}}{%endif%}</h3>
+        <h3>Temperature: {%if consult.temperature%}{{consult.temperature}}{%endif%}</h3>
+        <h3>Size: {%if consult.size%}{{consult.size}}{%endif%}</h3>
+        <h3>Weight: {%if consult.weight%}{{consult.weight}}{%endif%}</h3>
     </div>
 </div>
 <div class="exams">
     <h1>Exams</h1>
     <hr>
-    <h3>Exams: <a href="{{MEDIA_URL}}{{consult.medical_exams}}">{{consult.medical_exams}}</a></h3>
+    {%for exam in exams%}
+        <p><a href="{{MEDIA_URL}}{{exam.image}}">{{exam}}</a></p>
+    {%endfor%}
 </div>
 <div class="exploration">
     <div class="organ-systems">
@@ -77,6 +79,10 @@
     {%for actions in consult.actions.splitlines%}
         <p>{{actions}}</p>
     {%endfor%}
+</div>
+
+<div class="exam-preview">
+    <img src="" alt="" id="exam-image">
 </div>
 
 <script src="{%static 'appointments/js/consult_details.js'%}"></script>

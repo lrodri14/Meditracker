@@ -73,3 +73,29 @@ hr{
     color: green;
     transition: 0.5s;
 }
+
+/*Exam Preview*/
+
+.exam-preview{
+    position: fixed;
+    max-width: 45vh;
+    max-height: 50vh;
+    top: 0;
+    right: 0;
+    margin-right: 5%;
+    margin-top: 5%;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.exam-preview-show{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+#exam-image{
+    width: 100%;
+    height: auto;
+}
