@@ -7,6 +7,7 @@
     <p>{{consult_form.patient}}</p>
     <small>Patient not in listing? <a href="{%url 'patients:add_patient'%}" id="add_new_patient">Add new one</a></small>
     <p>{{consult_form.datetime.label}}</p>
+    <p class="error">{{error}}</p>
     {%if consult_form.errors%}
         <p class="error">{{consult_form.non_field_errors.as_text}}</p>
     {%endif%}

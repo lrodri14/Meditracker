@@ -61,7 +61,6 @@ class Patient(models.Model):
         self.last_names = self.last_names.title()
         super(Patient, self).save(*args, **kwargs)
 
-
 # Insurance Companies Model
 
 

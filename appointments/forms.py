@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-
 from .models import Consults, MedicalExams, Drugs
 from django import forms
 from django.forms import modelformset_factory
@@ -19,9 +18,10 @@ class ConsultsForm(forms.ModelForm):
             'suffering': forms.Textarea(attrs={'rows': 8, 'columns': 5})
         }
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
         super(ConsultsForm, self).__init__(*args, **kwargs)
-        self.fields['patient'].queryset = Patient.objects.filter(created_by=user)
+        self.fields['patient'].queryset = Patient.objects.filter(created_by=self.user)
 
     def clean(self):
         cleaned_data = super().clean()

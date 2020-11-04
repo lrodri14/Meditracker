@@ -3,7 +3,6 @@ from patients.models import Patient
 from django.contrib.auth import get_user_model
 user = get_user_model()
 
-
 # Create your models here.
 
 
@@ -109,7 +108,7 @@ class Consults(models.Model):
         super(Consults, self).save(*args, **kwargs)
 
     class Meta:
-        unique_together = ['patient', 'datetime']
+        unique_together = ['created_by', 'datetime']
 
 
 class MedicalExams(models.Model):

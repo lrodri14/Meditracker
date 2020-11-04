@@ -55,7 +55,7 @@
         </div>
         <div class="insurance">
             <div class="title">Insurance</div>
-                {%if insurance%}
+                {%if insurance and insurance.insurance_carrier and insurance.type_of_insurance%}
                     <h3>Insurance Carrier: {{insurance.insurance_carrier}}</h3>
                     <h3>Type of Insurnace: {{insurance.type_of_insurance}}</h3>
                     <h3>Expiration Date: {{insurance.expiration_date}}</h3>

@@ -20,7 +20,7 @@ if (document.querySelector('.modal') !== 'undefined' && document.querySelector('
 
 // Icons
 var plus = document.querySelector('.fa-plus')
-var edit = document.querySelector('.fa-edit')
+var edit = document.querySelectorAll('.fa-edit')
 
 var createConsultModal = document.querySelector('.create-consult-modal')
 
@@ -51,13 +51,17 @@ if (plus){
 
 if (edit){
 
-    edit.addEventListener('mouseover', () => {
-        edit.classList.add('fa-edit-hover')
-    })
+    for (let i = 0; i<edit.length; i++){
 
-    edit.addEventListener('mouseout', () => {
-        edit.classList.remove('fa-edit-hover')
-    })
+        edit[i].addEventListener('mouseover', () => {
+            edit[i].classList.add('fa-edit-hover')
+        })
+
+        edit[i].addEventListener('mouseout', () => {
+            edit[i].classList.remove('fa-edit-hover')
+        })
+
+    }
 
 }
 

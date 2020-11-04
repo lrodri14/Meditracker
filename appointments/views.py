@@ -1,9 +1,7 @@
 from django.db import IntegrityError
 from django.shortcuts import render
-from django.urls import reverse
 from django.shortcuts import redirect
 from .models import Consults
-from patients.models import Patient
 from .forms import ConsultsForm, DrugsForm, DrugCategoryFilterForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter
 from django.utils import timezone
 from django.contrib.auth.models import Group
@@ -36,12 +34,17 @@ def create_consult(request):
     context = {}
     data = {}
     if request.method == 'POST':
-        consults_form = ConsultsForm(request.user, request.POST)
+        consults_form = ConsultsForm(request.POST, user=request.user)
         if consults_form.is_valid():
-            consult = consults_form.save(commit=False)
-            consult.created_by = request.user
-            consult.save()
-            data['success'] = 'Consult created successfully'
+            try:
+                consult = consults_form.save(commit=False)
+                consult.created_by = request.user
+                consult.save()
+                data['success'] = 'Consult created successfully'
+            except IntegrityError:
+                date = consults_form.cleaned_data.get('datetime').date()
+                time = consults_form.cleaned_data.get('datetime').time().strftime('%I:%M:%S %p')
+                context['error'] = 'There is already a reservation for {} at {}'.format(date, time)
     context['consults_form'] = consults_form
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
@@ -208,22 +211,28 @@ def consult_date_update(request, pk):
     tzone = timezone.get_current_timezone()
     consult = Consults.objects.get(pk=pk)
     form = AgendaDateFilterForm
-    consult_form = ConsultsForm(request.user, request.POST or None, instance=consult)
+    consult_form = ConsultsForm(request.POST or None, instance=consult, user=request.user)
     template = 'appointments/consult_date_update.html'
     context = {'consult_form': consult_form, 'consult':consult}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
-        consult_form = ConsultsForm(request.user, request.POST or None, instance=consult)
+        consult_form = ConsultsForm(request.POST or None, instance=consult, user=request.user)
         if consult_form.is_valid():
-            consult_form.save()
-            updated_consults = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-            months = []
-            months_names = []
-            for c in updated_consults:
-                if c.datetime.astimezone(tzone).month not in months:
-                    months.append(c.datetime.month)
-                    months_names.append(calendar.month_name[c.datetime.month])
-            data = {'updated_html': render_to_string('appointments/partial_consults_register_list.html', {'consults': updated_consults, 'months': months_names, 'form': form}, request=request)}
+            try:
+                consult_form.save()
+                updated_consults = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
+                months = []
+                months_names = []
+                for c in updated_consults:
+                    if c.datetime.astimezone(tzone).month not in months:
+                        months.append(c.datetime.month)
+                        months_names.append(calendar.month_name[c.datetime.month])
+                data = {'updated_html': render_to_string('appointments/partial_consults_register_list.html', {'consults': updated_consults, 'months': months_names, 'form': form}, request=request)}
+            except IntegrityError:
+                date = consult_form.cleaned_data.get('datetime').date()
+                time = consult_form.cleaned_data.get('datetime').time().strftime('%I:%M:%S %p')
+                context['error'] = 'There is already a reservation for {} at {}'.format(date, time)
+                data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
