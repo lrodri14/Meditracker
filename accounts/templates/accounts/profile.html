@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{%static 'accounts/css/profile.css'%}">
     <div class="wrapper">
         <div class="first">
+            <i class="fas fa-angle-left"></i>
             {% if user.profile.profile_pic.url != ''%}
                 <img src="{{user.profile.profile_pic.url}}" alt="">
             {% else %}
@@ -16,6 +17,7 @@
                     <img src="{%static 'accounts/avatars/male_doctor.jpg'%}" alt="">
                 {% endif %}
             {% endif %}
+            <i class="fas fa-angle-right"></i>
             <h3>@{{user}}</h3>
             <h3>{{user.first_name}} {{user.last_name}}</h3>
             <h3>Date Joined - {{user.date_joined|date:"d M, Y"}}</h3>
@@ -28,7 +30,7 @@
             <p><small>Last Connection: {{user.last_login|date:"g:i a"}}</small></p>
             {%if user.is_authenticated%}
                 <small><a href="{%url 'accounts:profile_change' %}">Edit Profile</a></small>
-                <small><a href="{%url 'accounts:change_password' %}">Change Password</a></small>
+                <small><a href="{%url 'accounts:change_password' %}" class="change-password">Change Password</a></small>
             {%endif%}
         </div>
         <div id="second">

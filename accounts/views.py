@@ -37,6 +37,21 @@ class ChangePassword(PasswordChangeView):
     template_name = 'accounts/change_password.html'
     success_url = reverse_lazy('accounts:change_password_done')
 
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        data = {'html': render_to_string(self.template_name, context=context, request=self.request)}
+        return JsonResponse(data)
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        data = {'success': True}
+        return JsonResponse(data)
+
+    def form_invalid(self, form):
+        context = super().get_context_data()
+        data = {'html': render_to_string(self.template_name, context, self.request)}
+        return JsonResponse(data)
+
 
 class ChangePasswordDone(PasswordChangeDoneView):
     template_name = 'accounts/change_password_done.html'
@@ -105,26 +120,12 @@ def profile(request):
 
 def profile_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
+    form = ProfileForm(instance=user_profile)
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
-            if form.cleaned_data['profile_pic']:
-                user_profile.profile_pic = form.cleaned_data['profile_pic']
-            elif 'profile_pic-clear' in request.POST and request.POST['profile_pic-clear']:
-                user_profile.profile_pic = None
-            else:
-                user_profile.profile_pic = user_profile.profile_pic
-                user_profile.bio = form.cleaned_data['bio']
-                user_profile.phone_number = form.cleaned_data['phone_number']
-                user_profile.birth_date = form.cleaned_data['birth_date']
-                user_profile.origin = form.cleaned_data['origin']
-                user_profile.gender = form.cleaned_data['gender']
-                user_profile.location = form.cleaned_data['location']
-                user_profile.address = form.cleaned_data['address']
-                user_profile.tzone = form.cleaned_data['tzone']
-                user_profile.save()
-                return redirect('accounts:profile')
-    else:
-        form = ProfileForm(instance=user_profile)
+            form.save()
+        else:
+            print('Error')
     return render(request, 'accounts/profile_change.html', context={'form': form, 'user': request.user})
 

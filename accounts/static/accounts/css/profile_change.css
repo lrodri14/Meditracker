@@ -1,25 +1,40 @@
 /*Checked*/
 /*Form*/
-form{
-    text-align: center;
+
+/*Checked*/
+/*First Div*/
+.wrapper{
+    display: grid;
+    grid-template-columns: 30% 69%;
+    grid-gap: 5px;
+    margin: auto;
+    margin-top: 3%;
+    width: 80%;
     background-color: #12212b;
-    padding: 20px;
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -30%);
 }
 
-h1{
-    padding: 25px;
+.wrapper :not(button i){
+    display: inline-block;
+    font-size: 25px;
 }
 
-p{
-    font-size: 20px;
+.first{
+    background-color: #0ff5fc;
+    color: #12212b;
+    padding: 10px;
+    text-align: center;
 }
 
-/*Image*/
+.first textarea{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #12212b;
+  background-color: #0ff5fc;
+  border: 2px solid #12212b;
+  width: 100%;
+  transition: 0.5s;
+}
+
+/*Images*/
 img{
     width: 200px;
     height: 200px;
@@ -29,39 +44,75 @@ img{
 }
 
 .img-hover{
-    width: 230px;
-    height: 230px;
+    cursor: pointer;
+    filter: brightness(50%);
+}
+
+.fa-angle-left, .fa-angle-right{
+    font-size: 35px;
     transition: 0.5s;
 }
 
+.controller-hover{
+    color: #32a852;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/*Links*/
+.first a{
+    color: #12212b;
+    border-bottom: 1px solid #12211b;
+    transition: 0.5s;
+}
+
+.link-hover{
+    font-size: 16px;
+    transition: 0.5s;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #12211b;
+}
+
+
+/*Second Div*/
+#second .personal-info{
+    display: grid;
+    grid-template-columns: 45% 45%;
+}
+
+#second h1{
+    text-align: center;
+    padding: 5px;
+    border-bottom: 0.5px solid #0ff5fc;
+}
+
+#second li{
+    list-style: none;
+}
+
+h1{
+    padding: 25px;
+}
 /*Inputs*/
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width:60%;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
   transition: 0.5s;
+  margin-left: 5px;
 }
 
-.input-hover{
-  width: 75%;
-  transition: 0.5s;
+input:focus{
+    outline: none;
 }
 
-label[for=id_profile_pic]{
-    border: 2px solid #0ff5fc;
-    border-radius: 15px;
-    padding: 5px;
-}
-
-label[for=id_profile_pic]:hover{
-    background-color: #0ff5fc;
-    color: #12212b;
-    transition: 0.5s;
+label i {
+    margin: auto;
 }
 
 input[type=file]{
@@ -72,8 +123,15 @@ textarea{
   font-family: 'Alegreya Sans SC', sans-serif;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  transition: 0.5s;
+  text-align: justify;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
+}
+
+textarea:focus{
+    outline: none;
 }
 
 select{
@@ -81,28 +139,33 @@ select{
   text-align-last:center;
   color: #0ff5fc;
   background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  border-radius: 15px;
-  height: 30px;
-  width:60%;
-  margin: 5px;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
+  margin-left: 5px;
   transition: 0.5s;
+}
+
+select:focus{
+    outline: none;
 }
 
 /*Button*/
 button{
-    margin: 20px;
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border: 2px solid #0ff5fc;
-    border-radius: 10px;
-    color: #0ff5fc;
+    background-color: #0ff5fc;
+    border: none;
+    color: #12212b;
+    transition: 0.5s;
 }
 
 .button-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
+    cursor: pointer;
+    color: #32a852;
     transition: 0.5s;
+}
+
+button i{
+    font-size: 25px;
 }

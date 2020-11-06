@@ -8,12 +8,10 @@
     margin-top: 3%;
     width: 80%;
     background-color: #12212b;
-    border-radius: 10px;
 }
 
 .first{
     background-color: #0ff5fc;
-    border-radius: 10px;
     color: #12212b;
     padding: 10px;
     text-align: center;
@@ -34,6 +32,16 @@ img{
     transition: 0.5s;
 }
 
+.fa-angle-left, .fa-angle-right{
+    font-size: 35px;
+    transition: 0.5s;
+}
+
+.controller-hover{
+    color: #32a852;
+    cursor: pointer;
+    transition: 0.5s;
+}
 
 /*Links*/
 .first a{
@@ -76,5 +84,57 @@ img{
 
 #second li{
     list-style: none;
+}
+
+
+/*Form*/
+
+.fa-times{
+    float: left;
+    font-size: 30px;
+    transition: 0.5s;
+}
+
+.fa-times-hover{
+    cursor: pointer;
+    color: #a83632;
+    transition: 0.5s;
+}
+
+form input{
+    text-align: center;
+    margin: 20px;
+    background-color: #0ff5fc;
+    border: none;
+    border-bottom: 1px solid #12211b;
+    color: #12211b;
+}
+
+form input:focus{
+    outline: none;
+}
+
+.error{
+    color: #a83632;
+}
+
+.change-password-submit{
+    background-color: #0ff5fc;
+    border: none;
+}
+
+.change-password-submit:focus{
+    outline: none;
+}
+
+.fa-check{
+    font-size: 30px;
+    transition: 0.5s;
+}
+
+.fa-check-hover{
+    cursor: pointer;
+    color: #32a852;
+    transition: 0.5s;
 }
 

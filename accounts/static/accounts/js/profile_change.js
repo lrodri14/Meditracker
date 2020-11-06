@@ -3,6 +3,7 @@ var button = document.querySelector('button')
 var changeProfileButton = document.querySelector('#id_profile_pic')
 var inputs = document.querySelectorAll('input')
 var img = document.querySelector('img')
+var controllers = document.querySelectorAll('.fa-angle-left, .fa-angle-right')
 
 
 // Img
@@ -30,6 +31,16 @@ for (let i = 0; i<inputs.length; i++){
     })
     inputs[i].addEventListener('mouseout', function(){
         this.classList.remove('input-hover')
+    })
+}
+
+// Controllers
+for (let i = 0; i<controllers.length; i++){
+    controllers[i].addEventListener('mouseover', function(){
+        this.classList.add('controller-hover')
+    })
+    controllers[i].addEventListener('mouseout', function(){
+        this.classList.remove('controller-hover')
     })
 }
 

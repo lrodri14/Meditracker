@@ -115,6 +115,7 @@ textarea{
   color: #0ff5fc;
   background-color: #12212b;
   border: 2px solid #0ff5fc;
+  resize: none;
   transition: 0.5s;
 }
 

@@ -161,6 +161,7 @@ textarea{
   transition: 0.5s;
   width: 60%;
   float: right;
+  resize: none;
 }
 
 select{

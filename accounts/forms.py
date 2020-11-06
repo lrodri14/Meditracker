@@ -52,8 +52,6 @@ class AssistantSignUpForm(CreationForm):
         self.fields['email'].required = True
 
 
-
-
 class ProfileForm(forms.ModelForm):
     profile_pic = forms.ImageField(widget=forms.FileInput, required=None)
     birth_date = forms.DateField(widget=forms.SelectDateWidget(years=[x for x in range(1920, 2101)]), required=None)
@@ -62,6 +60,9 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = UsersProfile
         exclude = ('user',)
+        widgets = {
+            'address': forms.widgets.Textarea(attrs={'rows': 1, 'cols': 80, 'wrap': 'off'})
+        }
 
 
 
