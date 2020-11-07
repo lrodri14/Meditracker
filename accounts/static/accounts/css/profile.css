@@ -10,11 +10,26 @@
     background-color: #12212b;
 }
 
+.wrapper :not(button i){
+    display: inline-block;
+    font-size: 25px;
+}
+
+
 .first{
     background-color: #0ff5fc;
     color: #12212b;
     padding: 10px;
     text-align: center;
+}
+
+.first textarea{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #12212b;
+  background-color: #0ff5fc;
+  border: 2px solid #12212b;
+  width: 100%;
+  transition: 0.5s;
 }
 
 /*Images*/
@@ -30,6 +45,11 @@ img{
     width: 230px;
     height: 230px;
     transition: 0.5s;
+}
+
+.img-edit-hover{
+    cursor: pointer;
+    filter: brightness(50%);
 }
 
 .fa-angle-left, .fa-angle-right{
@@ -71,18 +91,18 @@ img{
 
 
 /*Second Div*/
-#second .personal-info{
+.second .personal-info{
     display: grid;
     grid-template-columns: 45% 45%;
 }
 
-#second h1{
+.second h1{
     text-align: center;
     padding: 5px;
     border-bottom: 0.5px solid #0ff5fc;
 }
 
-#second li{
+.second li{
     list-style: none;
 }
 
@@ -101,7 +121,7 @@ img{
     transition: 0.5s;
 }
 
-form input{
+.password-form input{
     text-align: center;
     margin: 20px;
     background-color: #0ff5fc;
@@ -110,7 +130,7 @@ form input{
     color: #12211b;
 }
 
-form input:focus{
+.password-form input:focus{
     outline: none;
 }
 
@@ -138,3 +158,59 @@ form input:focus{
     transition: 0.5s;
 }
 
+/*Profile Form*/
+.profile-edit-form input{
+    text-align: center;
+    margin: 20px;
+    background-color: #12212b;
+    border: none;
+    border-bottom: 1px solid #0ff5fc;
+    color: #0ff5fc;
+}
+
+input:focus{
+    outline: none;
+}
+
+label i {
+    margin: auto;
+}
+
+input[type=file]{
+    display: none;
+}
+
+textarea{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #0ff5fc;
+  background-color: #12212b;
+  text-align: justify;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
+}
+
+textarea:focus{
+    outline: none;
+}
+
+select{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align-last:center;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
+  margin-left: 5px;
+  transition: 0.5s;
+}
+
+select:focus{
+    outline: none;
+}
+
+button{
+    background-color: #0ff5fc;
+    border: none;
+}

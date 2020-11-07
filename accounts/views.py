@@ -115,17 +115,23 @@ def signup(request):
 
 
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    user_profile = get_object_or_404(UsersProfile, user=request.user)
+    context = {'user_profile': user_profile}
+    return render(request, 'accounts/profile.html', context)
 
 
 def profile_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
     form = ProfileForm(instance=user_profile)
+    template = 'accounts/profile_change.html'
+    context = {}
+    data = {}
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             form.save()
-        else:
-            print('Error')
-    return render(request, 'accounts/profile_change.html', context={'form': form, 'user': request.user})
-
+            context['user_profile'] = user_profile
+            data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
+    context['form'] = form
+    data['html'] = render_to_string(template, context, request)
+    return JsonResponse(data)
