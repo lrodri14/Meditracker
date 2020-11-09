@@ -1,10 +1,9 @@
 {%load static%}
 {%block body_block%}
 <div class="first">
-     <i class="fas fa-angle-left"></i>
         <label for="id_profile_pic">
             {% if user.profile.profile_pic.url != ''%}
-                <img src="{{user.profile.profile_pic.url}}" alt="" class="edit-profile-picture">
+                <img src="{{user.profile.profile_pic.url}}" alt="" class="edit-profile-picture" class="portrait-profile-picture">
             {% else %}
                 {% if user.profile.gender == 'Femenine' %}
                     <img src="{%static 'accounts/avatars/female_doctor.jpg'%}" alt="" class="edit-profile-picture">
@@ -13,7 +12,6 @@
                 {% endif %}
             {% endif %}
         </label>
-    <i class="fas fa-angle-right"></i>
     <p>{{form.profile_pic}}</p>
     <h3>@{{user}}</h3>
     <h3>{{user.first_name}} {{user.last_name}}</h3>

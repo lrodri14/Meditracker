@@ -1,5 +1,5 @@
 /*Checked*/
-/*First Div*/
+
 .wrapper{
     display: grid;
     grid-template-columns: 30% 69%;
@@ -15,55 +15,12 @@
     font-size: 25px;
 }
 
-
 .first{
-    background-color: #0ff5fc;
-    color: #12212b;
-    padding: 10px;
+    background-color: #12212b;
+    color: #0ff5fc;
     text-align: center;
 }
 
-.first textarea{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  color: #12212b;
-  background-color: #0ff5fc;
-  border: 2px solid #12212b;
-  width: 100%;
-  transition: 0.5s;
-}
-
-/*Images*/
-img{
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 5px solid #3262a8;
-    transition: 0.5s;
-}
-
-.image-hover{
-    width: 230px;
-    height: 230px;
-    transition: 0.5s;
-}
-
-.img-edit-hover{
-    cursor: pointer;
-    filter: brightness(50%);
-}
-
-.fa-angle-left, .fa-angle-right{
-    font-size: 35px;
-    transition: 0.5s;
-}
-
-.controller-hover{
-    color: #32a852;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-/*Links*/
 .first a{
     color: #12212b;
     border-bottom: 1px solid #12211b;
@@ -73,6 +30,61 @@ img{
 .link-hover{
     font-size: 16px;
     transition: 0.5s;
+}
+
+.first input{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  background-color: #0ff5fc;
+  margin-top: 10%;
+  color: #12212b;
+  border: none;
+  border-bottom: 1px solid #12212b;
+}
+
+.first textarea{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #12212b;
+  background-color: #0ff5fc;
+  border: 2px solid #12212b;
+  width: 95%;
+  resize: none;
+}
+
+.change-password-submit{
+    background-color: #0ff5fc;
+    border: none;
+}
+
+.change-password-submit:focus{
+    outline: none;
+}
+
+.fa-check{
+    font-size: 30px;
+    transition: 0.5s;
+}
+
+.fa-check-hover{
+    cursor: pointer;
+    color: #32a852;
+    transition: 0.5s;
+}
+
+/*Images*/
+
+.portrait-profile-picture{
+    width: auto;
+    height: 200px;
+    margin-top: 10px;
+}
+
+.image-hover{
+    transition: 0.5s;
+}
+
+.img-edit-hover{
+    cursor: pointer;
+    filter: brightness(50%);
 }
 
 #bio{
@@ -121,45 +133,12 @@ img{
     transition: 0.5s;
 }
 
-.password-form input{
-    text-align: center;
-    margin: 20px;
-    background-color: #0ff5fc;
-    border: none;
-    border-bottom: 1px solid #12211b;
-    color: #12211b;
-}
-
-.password-form input:focus{
-    outline: none;
-}
-
 .error{
     color: #a83632;
 }
 
-.change-password-submit{
-    background-color: #0ff5fc;
-    border: none;
-}
-
-.change-password-submit:focus{
-    outline: none;
-}
-
-.fa-check{
-    font-size: 30px;
-    transition: 0.5s;
-}
-
-.fa-check-hover{
-    cursor: pointer;
-    color: #32a852;
-    transition: 0.5s;
-}
-
 /*Profile Form*/
-.profile-edit-form input{
+.second input{
     text-align: center;
     margin: 20px;
     background-color: #12212b;
@@ -180,15 +159,16 @@ input[type=file]{
     display: none;
 }
 
-textarea{
+.second textarea{
   font-family: 'Alegreya Sans SC', sans-serif;
   color: #0ff5fc;
   background-color: #12212b;
-  text-align: justify;
-  resize: none;
-  overflow: hidden;
   border: none;
   border-bottom: 1px solid #0ff5fc;
+  resize: none;
+  overflow: hidden;
+  width: 80%;
+  margin-left: 10px;
 }
 
 textarea:focus{
@@ -202,7 +182,7 @@ select{
   background-color: #12212b;
   border: none;
   border-bottom: 1px solid #0ff5fc;
-  margin-left: 5px;
+  margin-left: 10px;
   transition: 0.5s;
 }
 
@@ -213,4 +193,73 @@ select:focus{
 button{
     background-color: #0ff5fc;
     border: none;
+}
+
+/*Test*/
+.background{
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    height: 40%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: -1;
+    overflow: hidden;
+    padding: 0px;
+}
+
+.background .fa-camera{
+    font-size: 32px;
+    margin-top: 10%;
+    transition: 0.5s;
+}
+
+.fa-camera:hover{
+    background-color: #32a852;
+    transition: 0.5s;
+}
+
+.background fa-edit{
+    float: right;
+}
+
+.profile-picture{
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 10%;
+    margin-left: 5%;
+}
+
+img{
+    width: 200px;
+    height: auto;
+}
+
+.background-image{
+    width: 100%;
+    height: 40%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.information{
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 60%;
+    background-color: #12212b;
+    top: 40%;
+    left: 0;
+}
+
+/*Modal*/
+
+.modal{
+    position: absolute;
+    background-color: rgba(0,0,0,0.7);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
