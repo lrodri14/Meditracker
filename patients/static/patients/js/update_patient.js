@@ -7,7 +7,7 @@ var inputs = document.querySelectorAll('input')
 var button = document.querySelectorAll('button')
 var extraInfo = document.querySelector('.extra-info')
 var allergySelection
-var insuranceSelection = document.querySelectorAll('.insurance-form select')
+var insuranceSelection = document.querySelector('.insurance-form select')
 var allergiesFormBlueprint = document.querySelectorAll('.allergies-form .form-container')[document.querySelectorAll('.allergies-form .form-container').length - 1].cloneNode(true)
 var antecedentsFormBlueprint = document.querySelectorAll('.antecedents-form .form-container')[document.querySelectorAll('.antecedents-form .form-container').length - 1].cloneNode(true)
 var allergiesFormsContainer = document.querySelector('.allergies-form tbody')

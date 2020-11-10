@@ -118,7 +118,7 @@ class MedicalExams(models.Model):
     consult = models.ForeignKey(Consults, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Medical Exams', help_text='Medical Exams', related_name='exams')
     date = models.DateField('date', blank=True, null=True, help_text='Date the exams were presented')
     type = models.CharField('type of exams', max_length=100, blank=False, null=True, help_text='Type of exams', choices=EXAMS_CHOICES)
-    image = models.ImageField('exam', blank=True, null=True, help_text='Exam IMG')
+    image = models.ImageField('exam', blank=True, null=True, help_text='Exam IMG', upload_to='appointments/exams')
 
     def __str__(self):
         return self.type + ' ' + str(self.date)

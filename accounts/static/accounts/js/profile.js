@@ -1,165 +1,118 @@
-//Checked
-//var generalInfo = document.querySelector('.first')
-//var generalInfoBackUp = document.querySelector('.first').innerHTML
-//var wrapper = document.querySelector('.wrapper')
-//var profileBackUp = document.querySelector('.wrapper').innerHTML
-//var editProfileForm = document.querySelector('form')
-//var body = document.querySelector('body')
-//var
-
-//Async Functions
-//async function changePasswordFormAW(url){
-//    const result = await fetch(url)
-//    const data = result.json()
-//    return data
-//}
-//
-//async function editProfileFormAW(url){
-//    const result = await fetch(url)
-//    const data = result.json()
-//    return data
-//}
-//
-//async function editProfileAW(url, method, csrfmiddlewaretoken, formData){
-//    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
-//    const data = result.json()
-//    return data
-//}
-//
-//async function changePasswordAW(url, method, csrfmiddlewaretoken, body){
-//    const result = await fetch(url, {method: method, headers: {'X-CSRFToken': csrfmiddlewaretoken}, body:body})
-//    const data = result.json()
-//    return data
-//}
-//
-//
-////General Info
-//if (body){
-//
-//    body.addEventListener('click', (e) => {
-//        if (e.target.classList.contains('fa-times')){
-//            generalInfo.innerHTML = generalInfoBackUp
-//        }
-//
-//        if (e.target.classList.contains('change-password')){
-//            e.preventDefault()
-//            e.stopPropagation()
-//            let url = e.target.href
-//            changePasswordFormAW(url)
-//            .then(data => {
-//                generalInfo.innerHTML = data['html']
-//        })
-//       }
-//
-//       if (e.target.classList.contains('edit-profile')){
-//            e.preventDefault()
-//            e.stopPropagation()
-//            let url = e.target.href
-//            editProfileFormAW(url)
-//            .then(data => {
-//                wrapper.innerHTML = data['html']
-//        })
-//       }
-//    })
-//
-//
-//    body.addEventListener('mouseover', (e) => {
-//        if (e.target.classList.contains('fa-times')){
-//            e.target.classList.add('fa-times-hover')
-//        }
-//
-//        if (e.target.nodeName === 'A'){
-//            e.target.classList.add('link-hover')
-//        }
-//
-//        if (e.target.classList.contains('profile-picture')){
-//            e.target.classList.add('image-hover')
-//        }
-//
-//        if (e.target.classList.contains('edit-profile-picture')){
-//            e.target.classList.add('img-edit-hover')
-//        }
-//
-//        if (e.target.classList.contains('fa-check')){
-//            e.target.classList.add('fa-check-hover')
-//        }
-//    })
-//
-//
-//    body.addEventListener('mouseout', (e) => {
-//
-//        if (e.target.classList.contains('fa-times')){
-//            e.target.classList.remove('fa-times-hover')
-//        }
-//
-//        if (e.target.nodeName === 'A'){
-//            e.target.classList.remove('link-hover')
-//        }
-//
-//        if (e.target.classList.contains('profile-picture')){
-//            e.target.classList.remove('image-hover')
-//        }
-//
-//        if (e.target.classList.contains('edit-profile-picture')){
-//            e.target.classList.remove('img-edit-hover')
-//        }
-//
-//        if (e.target.classList.contains('fa-check')){
-//            e.target.classList.remove('fa-check-hover')
-//        }
-//
-//    })
-//
-//    body.addEventListener('submit', (e) => {
-//        e.preventDefault()
-//        e.stopPropagation()
-//        if (e.target.nodeName === 'FORM' && e.target.classList.contains('password-form')){
-//            let url = e.target.action
-//            let method = e.target.method
-//            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-//            let body = new FormData(e.target)
-//            changePasswordAW(url, method, csrfmiddlewaretoken, body)
-//            .then(data => {
-//                if (data['html']){
-//                    generalInfo.innerHTML = data['html']
-//                }else{
-//                    generalInfo.innerHTML = generalInfoBackUp
-//                }
-//            })
-//        }else{
-//            let form = editProfileForm
-//            let url = form.action
-//            let method = form.method
-//            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-//            let formData = new FormData(form)
-//            editProfileAW(url, method, csrfmiddlewaretoken, formData)
-//            .then(data => {
-//                if (data['success']){
-//                    wrapper.innerHTML = data['success']
-//                    generalInfo = document.querySelector('.first')
-//                    generalInfoBackUp = document.querySelector('.first').innerHTML
-//                    wrapper = document.querySelector('.wrapper')
-//                    profileBackUp = document.querySelector('.wrapper').innerHTML
-//                }else{
-//                    editProfileForm.innerHTML = data['html']
-//                }
-//            })
-//        }
-//    })
-//
-//}
-
+var body = document.querySelector('body')
+var content = document.querySelector('.content')
 var img = document.querySelector('img')
 var edit = document.querySelector('.edit-profile-picture-modal')
 var profile = document.querySelector('.profile-picture')
-profile.addEventListener('mouseover', (e) =>{
-    if (e.target === img || e.target === edit || e.target.classList.contains('fa-pen')){
-        edit.classList.add('edit-profile-picture-modal-show')
-    }
-})
+var modal = document.querySelector('.modal')
+var modalContent = document.querySelector('.modal-content')
 
-profile.addEventListener('mouseout', (e) =>{
-    if (e.target === img || e.target === edit){
-        edit.classList.remove('edit-profile-picture-modal-show')
-    }
-})
+// Async Functions
+
+async function editFormAW(url){
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+async function editProfileAW(url, method, csrfmiddlewaretoken, formData){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
+    const data = result.json()
+    return data
+}
+
+if (body){
+
+    body.addEventListener('mouseover', (e) => {
+        if (e.target === img || e.target === edit || e.target.classList.contains('fa-pen')){
+            edit.classList.add('edit-profile-picture-modal-show')
+        }
+
+        if (e.target.classList.contains('fa-edit')){
+            e.target.classList.add('fa-edit-hover')
+        }
+
+        if (e.target.classList.contains('fa-camera')){
+            e.target.classList.add('fa-camera-hover')
+        }
+
+        if (e.target.classList.contains('fa-pen')){
+            e.target.classList.add('fa-pen-hover')
+        }
+
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.add('button-hover')
+        }
+
+    })
+
+    body.addEventListener('mouseout', (e) => {
+        if (e.target === img || e.target === edit){
+            edit.classList.remove('edit-profile-picture-modal-show')
+        }
+
+        if (e.target.classList.contains('fa-edit')){
+            e.target.classList.remove('fa-edit-hover')
+        }
+
+        if (e.target.classList.contains('fa-camera')){
+            e.target.classList.remove('fa-camera-hover')
+        }
+
+        if (e.target.classList.contains('fa-pen')){
+            e.target.classList.remove('fa-pen-hover')
+        }
+
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.remove('button-hover')
+        }
+
+    })
+
+    body.addEventListener('click', (e) => {
+
+        if (e.target.classList.contains('fa-edit') || e.target.classList.contains('fa-pen') || e.target.classList.contains('fa-camera')){
+            modal.classList.add('modal-show')
+            edit.classList.remove('edit-profile-picture-modal-show')
+            let url = e.target.getAttribute('data-url')
+            let type = e.target.getAttribute('data-type')
+            editFormAW(url, type)
+            .then(data => {
+                modalContent.innerHTML = data['html']
+            })
+        }
+
+        if (e.target.classList.contains('modal')){
+            modal.classList.remove('modal-show')
+        }
+
+    })
+
+
+}
+
+if (modal){
+    modal.addEventListener('submit', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        if (e.target.nodeName === 'FORM'){
+            let form = e.target
+            let url = form.action
+            let method = form.method
+            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+            let formData = new FormData(form)
+            editProfileAW(url, method, csrfmiddlewaretoken, formData)
+            .then(data => {
+                if (data['success']){
+                    modalContent.innerHTML = ''
+                    modal.classList.remove('modal-show')
+                    content.innerHTML = data['success']
+                    img = document.querySelector('img')
+                    edit = document.querySelector('.edit-profile-picture-modal')
+                    profile = document.querySelector('.profile-picture')
+                }else{
+                    modalContent.innerHTML = data['html']
+                }
+            })
+        }
+    })
+}

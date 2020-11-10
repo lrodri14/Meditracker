@@ -1,72 +1,61 @@
 {%load static%}
-{%block body_block%}
-<div class="first">
-        <label for="id_profile_pic">
-            {% if user.profile.profile_pic.url != ''%}
-                <img src="{{user.profile.profile_pic.url}}" alt="" class="edit-profile-picture" class="portrait-profile-picture">
-            {% else %}
-                {% if user.profile.gender == 'Femenine' %}
-                    <img src="{%static 'accounts/avatars/female_doctor.jpg'%}" alt="" class="edit-profile-picture">
-                {% else %}
-                    <img src="{%static 'accounts/avatars/male_doctor.jpg'%}" alt="" class="edit-profile-picture">
-                {% endif %}
-            {% endif %}
-        </label>
-    <p>{{form.profile_pic}}</p>
-    <h3>@{{user}}</h3>
-    <h3>{{user.first_name}} {{user.last_name}}</h3>
-    <h3>Date Joined - {{user.date_joined|date:"d M, Y"}}</h3>
-    <p>Biography</p>
-    <p>{{form.bio}}</p>
-    {%if form.errors%}
-        {%for error in form.errors%}
-            <p class="error">{{error}}</p>
-        {%endfor%}
-    {%endif%}
-    <button type="submit"><i class="fas fa-check"></i></button>
-</div>
-
-<div class="second">
-    <h1>Personal Information</h1>
-    <div class="personal-info">
+<form action="{%url 'accounts:profile_change'%}" method="POST" class="edit-profile">
+    {%csrf_token%}
+    <div class="form-wrapper">
         <div>
-            <ul>
-                <li><h3>Name: {{user.first_name}} {{user.last_name}}</h3></li>
-                <li><h3>Contact: {{form.phone_number}}</h3></li>
-                <li><h3>Email: {{user.email}}</h3></li>
-            </ul>
+            <div class="profile-general-information">
+                {%if user_profile.gender == 'Femenine'%}
+                    <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="">
+                {%else%}
+                    <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="">
+                {%endif%}
+                <p>@{{user}}</p>
+                <p>{{user.first_name}} {{user.last_name}}</p>
+                {%if form.errors%}
+                    {%for error in form.errors%}
+                        <p class="error">{{error}}</p>
+                    {%endfor%}
+                {%endif%}
+                <p>Biography</p>
+                <p>{{form.bio}}</p>
+                <button type="submit">Update</button>
+            </div>
         </div>
-        <div>
-            <ul>
-                <li><h3>Birth Date: {{form.birth_date}}</h3></li>
-                <li><h3>Gender: {{form.gender}}</h3></li>
-                <li><h3>Origin: {{form.origin}}</h3></li>
-            </ul>
+
+        <div class="profile-information">
+            <h4>Personal</h4>
+            <hr>
+            <div class="personal-info-edit">
+                <div>
+                    <p>Name: {{user.first_name}} {{user.last_name}}</p>
+                    <p>Contact: {{form.phone_number}}</p>
+                    <p>Email: {{user.email}}</p>
+                </div>
+                <div>
+                    <p>Birth Date: {{form.birth_date}}</p>
+                    <p>Gender: {{form.gender}}</p>
+                    <p>Origin: {{form.origin}}</p>
+                </div>
+            </div>
+
+            <div class="professional-info-edit">
+                <h4>Professional</h4>
+                <hr>
+                <p>Roll: {{user.roll}}</p>
+                <p>Speciality: {{user.speciality}}</p>
+            </div>
+
+            <div class="addressing-info-edit">
+                <h4>Addressing</h4>
+                <hr>
+                <p>Timezone</p>
+                <p>{{form.tzone}}</p>
+                <p>Location</p>
+                <p>{{form.location}}</p>
+                <p>{{form.address.label}}</p>
+                <p>{{form.address}}</p>
+            </div>
         </div>
     </div>
+</form>
 
-    <h1>Medical Information</h1>
-        <ul>
-            <li>
-                <h3>Roll: {{user.roll}}</h3>
-            </li>
-            <li>
-                <h3>Speciality: {{user.speciality}}</h3>
-            </li>
-        </ul>
-
-    <h1>Address Information</h1>
-    <ul>
-        <li>
-            <h3>Timezone: {{form.tzone}}</h3>
-        </li>
-        <li>
-            <h3>Location: {{form.location}}</h3>
-        </li>
-        <li>
-            <h3>Address: {{form.address}}</h3>
-        </li>
-    </ul>
-</div>
-
-{%endblock%}

@@ -69,6 +69,8 @@ class UsersProfile(models.Model):
                                 related_name='profile')
     profile_pic = models.ImageField('profile picture', blank=True, null=True,
                                     help_text='Let us see you! Upload a profile picture', upload_to='accounts/profile_pictures')
+    background_pic = models.ImageField('profile picture', blank=True, null=True,
+                                    help_text='Let us see you! Upload a profile picture', upload_to='accounts/background_pictures')
     phone_number = models.CharField('phone number', max_length=15, null=True, blank=True,
                                     help_text='Provide your phone number')
     bio = models.TextField('biography', blank=True, null=True, help_text='Let us know about you')

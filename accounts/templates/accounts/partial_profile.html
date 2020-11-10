@@ -1,63 +1,73 @@
-<!--{%load static%}-->
-<!--<div class="first">-->
-<!--   {% if user_profile.profile_pic.url != ''%}-->
-<!--    <img src="{{user_profile.profile_pic.url}}" alt="" class="portrait-profile-picture">-->
-<!--    {% else %}-->
-<!--        {% if user_profile.gender == 'Femenine' %}-->
-<!--            <img src="{%static 'accounts/avatars/female_doctor.jpg'%}" alt="" class="profile-picture">-->
-<!--        {% else %}-->
-<!--            <img src="{%static 'accounts/avatars/male_doctor.jpg'%}" alt="" class="profile-picture">-->
-<!--        {% endif %}-->
-<!--    {% endif %}-->
-<!--    <h3>@{{user}}</h3>-->
-<!--    <h3>{{user.first_name}} {{user.last_name}}</h3>-->
-<!--    <h3>Date Joined - {{user.date_joined|date:"d M, Y"}}</h3>-->
-<!--    {%if user_profile.bio == None or user_profile.bio == ''%}-->
-<!--        <p>Biography not available</p>-->
-<!--    {%else%}-->
-<!--        <p>Biography</p>-->
-<!--    <p id="bio">{{user_profile.bio}}</p>-->
-<!--    {%endif%}-->
-<!--    <p><small>Last Connection: {{user.last_login|date:"g:i a"}}</small></p>-->
-<!--    {%if user.is_authenticated%}-->
-<!--        <small><a href="{%url 'accounts:profile_change' %}" class="edit-profile">Edit Profile</a></small>-->
-<!--        <small><a href="{%url 'accounts:change_password' %}" class="change-password">Change Password</a></small>-->
-<!--    {%endif%}-->
-<!--</div>-->
-<!--<div class="second">-->
-<!--    <h1>Personal Information</h1>-->
-<!--    <div class="personal-info">-->
-<!--        <div>-->
-<!--            <ul>-->
-<!--                <li><h3>Name: {{user.first_name}} {{user.last_name}}</h3></li>-->
-<!--                <li><h3>Contact: {%if user_profile.phone_number%}{{user_profile.phone_number}}{%else%}Not available{%endif%}</h3></li>-->
-<!--                <li><h3>Email: {{user.email}}</h3></li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <ul>-->
-<!--                <li><h3>Birth Date: {%if user_profile.birth_date%}{{user_profile.birth_date}}{%else%}Not Available{%endif%}</h3></li>-->
-<!--                <li><h3>Gender: {%if user_profile.gender%}{{user_profile.gender}}{%else%}Not Available{%endif%}</h3></li>-->
-<!--                <li><h3>Origin: {%if user_profile.origin%}{{user_profile.get_origin_display}}{%else%}Not Available{%endif%}</h3></li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <h1>Medical Information</h1>-->
-<!--        <ul>-->
-<!--            <li>-->
-<!--                <h3>Roll: {{user.roll}}</h3>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <h3>Speciality: {{user.speciality}}</h3>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    <h1>Address Information</h1>-->
-<!--    <ul>-->
-<!--        <li>-->
-<!--            <h3>Location: {%if user_profile.location%}{{user_profile.get_location_display}}{%else%}Not Available{%endif%}</h3>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <h3>Address: {%if user_profile.address%}{{user_profile.address}}{%else%}No Address available{%endif%}</h3>-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--</div>-->
+{%load static%}
+<div class="background">
+    {% if user_profile.profile_pic.url == ''%}
+        <img src="{{user_profile.profile_pic.url}}" alt="" class="portrait-profile-picture">
+    {% else %}
+        <i class="fas fa-camera" data-url="{%url 'accounts:profile_change'%}" data-type="background-pic"></i>
+    {% endif %}
+</div>
+<div class="profile-picture">
+    {%if user_profile.gender == 'Femenine'%}
+        <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="">
+    {%else%}
+        <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="">
+    {%endif%}
+    <div class="edit-profile-picture-modal">
+        <i class="fas fa-pen" data-url="{%url 'accounts:profile_change'%}" data-type="profile-pic"></i>
+    </div>
+</div>
+<div class="information">
+    <div class="biography">
+        <h4>@{{user}}</h4>
+        <h3>About Me</h3>
+        <p class="biography-content">{{user_profile.bio}}</p>
+    </div>
+    <div class="activity-information">
+        <p class="last-seen"><small>Last Seen - {{user.last_login|date:"g:i a"}}</small></p>
+        <p class="member-since"><small>Member Since - {{user.date_joined|date}}</small></p>
+    </div>
+    <div class="personal-information">
+        <h4>Personal Information<i class="fas fa-edit" data-url="{%url 'accounts:profile_change'%}" data-type="profile"></i></h4>
+        <hr>
+        <div class="personal">
+        <div>
+            <ul>
+                <li><h5>Name: {{user.first_name}} {{user.last_name}}</h5></li>
+                <li><h5>Contact: {%if user_profile.phone_number%}{{user_profile.phone_number}}{%else%}Not available{%endif%}</h5></li>
+                <li><h5>Email: {{user.email}}</h5></li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li><h5>Birth Date: {%if user_profile.birth_date%}{{user_profile.birth_date}}{%else%}Not Available{%endif%}</h5></li>
+                <li><h5>Gender: {%if user_profile.gender%}{{user_profile.gender}}{%else%}Not Available{%endif%}</h5></li>
+                <li><h5>Origin: {%if user_profile.origin%}{{user_profile.get_origin_display}}{%else%}Not Available{%endif%}</h5></li>
+            </ul>
+        </div>
+        </div>
+        <h4>Professional Information</h4>
+        <hr>
+        <div class="medical">
+            <ul>
+                <li>
+                    <h5>Roll: {{user.roll}}</h5>
+                </li>
+                <li>
+                    <h5>Speciality: {{user.speciality}}</h5>
+                </li>
+            </ul>
+        </div>
+        <h4>Addressing Information</h4>
+        <hr>
+        <div class="addressing">
+            <ul>
+                <li>
+                    <h5>Location: {%if user_profile.location%}{{user_profile.get_location_display}}{%else%}Not Available{%endif%}</h5>
+                </li>
+                <li>
+                    <h5>Address: {%if user_profile.address%}{{user_profile.address}}{%else%}No Address available{%endif%}</h5>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

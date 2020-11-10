@@ -4,78 +4,10 @@
 {%block title%}Profile{%endblock%}
 {%block return%}<a href="{%url 'home:home'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
-<link rel="stylesheet" href="{%static 'accounts/css/test.css'%}">
-<div class="background">
-    {% if user_profile.profile_pic.url == ''%}
-        <img src="{{user_profile.profile_pic.url}}" alt="" class="portrait-profile-picture">
-    {% else %}
-        <i class="fas fa-camera"></i>
-    {% endif %}
-</div>
-<div class="profile-picture">
-    {%if user_profile.gender == 'Femenine'%}
-        <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="">
-    {%else%}
-        <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="">
-    {%endif%}
-    <div class="edit-profile-picture-modal">
-        <i class="fas fa-pen"></i>
-    </div>
-</div>
-<div class="information">
-    <div class="biography">
-        <h4>@{{user}}</h4>
-        <h3>About Me</h3>
-        <p class="biography-content">{{user_profile.bio}}</p>
-    </div>
-    <div class="activity-information">
-        <p class="last-seen"><small>Last Seen - {{user.last_login|date:"g:i a"}}</small></p>
-        <p class="member-since"><small>Member Since - {{user.date_joined|date}}</small></p>
-    </div>
-    <div class="personal-information">
-        <h4>Personal Information<i class="fas fa-edit"></i></h4>
-        <hr>
-        <div class="personal">
-        <div>
-            <ul>
-                <li><h5>Name: {{user.first_name}} {{user.last_name}}</h5></li>
-                <li><h5>Contact: {%if user_profile.phone_number%}{{user_profile.phone_number}}{%else%}Not available{%endif%}</h5></li>
-                <li><h5>Email: {{user.email}}</h5></li>
-            </ul>
-        </div>
-        <div>
-            <ul>
-                <li><h5>Birth Date: {%if user_profile.birth_date%}{{user_profile.birth_date}}{%else%}Not Available{%endif%}</h5></li>
-                <li><h5>Gender: {%if user_profile.gender%}{{user_profile.gender}}{%else%}Not Available{%endif%}</h5></li>
-                <li><h5>Origin: {%if user_profile.origin%}{{user_profile.get_origin_display}}{%else%}Not Available{%endif%}</h5></li>
-            </ul>
-        </div>
-        </div>
-        <h4>Professional Information</h4>
-        <hr>
-        <div class="medical">
-            <ul>
-                <li>
-                    <h5>Roll: {{user.roll}}</h5>
-                </li>
-                <li>
-                    <h5>Speciality: {{user.speciality}}</h5>
-                </li>
-            </ul>
-        </div>
-        <h4>Addressing Information</h4>
-        <hr>
-        <div class="addressing">
-            <ul>
-                <li>
-                    <h5>Location: {%if user_profile.location%}{{user_profile.get_location_display}}{%else%}Not Available{%endif%}</h5>
-                </li>
-                <li>
-                    <h5>Address: {%if user_profile.address%}{{user_profile.address}}{%else%}No Address available{%endif%}</h5>
-                </li>
-            </ul>
-        </div>
-    </div>
+<link rel="stylesheet" href="{%static 'accounts/css/profile.css'%}">
+
+<div class="content">
+    {%include 'accounts/partial_profile.html'%}
 </div>
 
 <div class="modal">

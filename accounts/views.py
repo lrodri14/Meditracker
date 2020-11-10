@@ -1,12 +1,11 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
-from .forms import DoctorSignUpForm, AssistantSignUpForm, ProfileForm
+from .forms import DoctorSignUpForm, AssistantSignUpForm, ProfileForm, ProfilePictureForm, ProfileBackgroundForm
 from django.contrib.auth.models import Group
 from .models import UsersProfile
-from django.views.generic import View
 # Create your views here.
 
 
@@ -122,16 +121,29 @@ def profile(request):
 
 def profile_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
+    # if request.META.get('HTTP_FORM_TYPE') == 'profile':
     form = ProfileForm(instance=user_profile)
     template = 'accounts/profile_change.html'
+    # elif request.META.get('HTTP_FORM_TYPE') == 'profile-picture':
+    #     form = ProfilePictureForm(instance=user_profile)
+    #     template = 'accounts/profile_change.html'
+    # else:
+    #     form = ProfileBackgroundForm(instance=user_profile)
+    #     template = 'accounts/profile_change.html'
     context = {}
     data = {}
     if request.method == 'POST':
+        # if request.POST['profile_pic']:
+        #     form = ProfilePictureForm(request.POST, request.FILES, instance=user_profile)
+        # elif request.POST['background_pic']:
+        #     form = ProfileBackgroundForm(request.POST, request.FILES, instance=user_profile)
+        # else:
         form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             form.save()
             context['user_profile'] = user_profile
             data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
     context['form'] = form
+    context['user_profile'] = user_profile
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
