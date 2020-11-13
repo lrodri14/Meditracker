@@ -85,16 +85,19 @@ i:not(.fa-camera){
     z-index: 1;
     width: 200px;
     height: 200px;
+    border: none;
     border-radius: 50%;
     margin-top: 5%;
     margin-left: 5%;
     overflow: hidden;
+    border-color:transparent;
 }
 
 .profile-picture-container-modal{
     position: static;
     width: 200px;
     height: 200px;
+    border: none;
     border-radius: 50%;
     overflow: hidden;
     margin: auto;
@@ -111,7 +114,7 @@ i:not(.fa-camera){
     height: 200px;
     border-radius: 50%;
     margin-top: 0%;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.3);
     visibility: hidden;
     opacity: 0;
     transition: 0.5s;

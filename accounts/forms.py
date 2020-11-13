@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm as CreationForm
 from django.contrib.auth.forms import UserChangeForm as ChangeForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import CustomUser, UsersProfile
-from PIL import Image
+from PIL import Image, ExifTags
 import pytz
 
 
@@ -83,9 +83,20 @@ class ProfilePictureForm(forms.ModelForm):
         width = self.cleaned_data.get('width')
         height = self.cleaned_data.get('height')
 
+        if x < 1:
+            x = 1
+        if y < 1:
+            y = 1
+
         image = Image.open(profile_picture.profile_pic)
-        cropped_image = image.crop((x, y, width + x, height + y))
-        cropped_image.save(profile_picture.profile_pic.path)
+        try:
+            exif = dict((ExifTags.TAGS[k], v) for k, v in image._getexif().items() if k in ExifTags.TAGS)
+            if exif['Orientation'] == 6:
+                image = image.rotate(270, expand=True)
+        except AttributeError:
+            pass
+        image = image.crop((x, y, width + x, height + y))
+        image.save(profile_picture.profile_pic.path, quality=120)
 
         return profile_picture
 

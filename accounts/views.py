@@ -131,8 +131,6 @@ def profile_picture_change(request):
             form.save()
             context['user_profile'] = user_profile
             data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
-        else:
-            print(form.errors)
     context['form'] = form
     context['user_profile'] = user_profile
     data['html'] = render_to_string(template, context, request)
@@ -141,12 +139,12 @@ def profile_picture_change(request):
 
 def profile_background_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
-    form = ProfilePictureForm(instance=user_profile)
+    form = ProfileBackgroundForm(instance=user_profile)
     template = 'accounts/profile_picture_change.html'
     context = {}
     data = {}
     if request.method == 'POST':
-        form = ProfilePictureForm(request.POST, request.FILES, instance=user_profile)
+        form = ProfileBackgroundForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             form.save()
             context['user_profile'] = user_profile
@@ -159,23 +157,11 @@ def profile_background_change(request):
 
 def profile_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
-    # if request.META.get('HTTP_FORM_TYPE') == 'profile':
     form = ProfileForm(instance=user_profile)
     template = 'accounts/profile_change.html'
-    # elif request.META.get('HTTP_FORM_TYPE') == 'profile-picture':
-    #     form = ProfilePictureForm(instance=user_profile)
-    #     template = 'accounts/profile_change.html'
-    # else:
-    #     form = ProfileBackgroundForm(instance=user_profile)
-    #     template = 'accounts/profile_change.html'
     context = {}
     data = {}
     if request.method == 'POST':
-        # if request.POST['profile_pic']:
-        #     form = ProfilePictureForm(request.POST, request.FILES, instance=user_profile)
-        # elif request.POST['background_pic']:
-        #     form = ProfileBackgroundForm(request.POST, request.FILES, instance=user_profile)
-        # else:
         form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             form.save()
