@@ -1,0 +1,4 @@
+{%load static%}
+<form method="POST" action="{%url 'accounts:profile_background_change'%}" enctype="multipart/form-data">
+    {%csrf_token%}
+</form>

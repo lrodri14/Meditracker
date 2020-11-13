@@ -2,7 +2,8 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import Login, Logout, ChangePassword, ChangePasswordDone, PasswordReset, PasswordResetDone, \
-    PasswordResetConfirm, PasswordResetComplete, signup, profile_change, profile
+    PasswordResetConfirm, PasswordResetComplete, signup, profile_change,profile_picture_change, \
+    profile_background_change, profile
 
 app_name = 'accounts'
 urlpatterns = [
@@ -16,5 +17,7 @@ urlpatterns = [
     path('password_reset_complete/', PasswordResetComplete.as_view(), name='password_reset_complete'),
     path('signup/', signup, name='signup'),
     path('profile/', profile, name='profile'),
+    path('profile_picture_change', profile_picture_change, name='profile_picture_change'),
+    path('profile_background_change', profile_background_change, name='profile_background_change'),
     path('profile_change/', profile_change, name='profile_change'),
 ]

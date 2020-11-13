@@ -43,6 +43,10 @@ if (body){
             e.target.classList.add('button-hover')
         }
 
+        if (e.target === document.querySelector('label[for=id_profile_pic]')){
+            e.target.classList.add('label-hover')
+        }
+
     })
 
     body.addEventListener('mouseout', (e) => {
@@ -66,6 +70,10 @@ if (body){
             e.target.classList.remove('button-hover')
         }
 
+        if (e.target === document.querySelector('label[for=id_profile_pic]')){
+            e.target.classList.remove('label-hover')
+        }
+
     })
 
     body.addEventListener('click', (e) => {
@@ -83,11 +91,40 @@ if (body){
 
         if (e.target.classList.contains('modal')){
             modal.classList.remove('modal-show')
+            modalContent.innerHTML = ''
         }
 
     })
 
+    body.addEventListener('change', (e) => {
 
+        if (e.target.id === 'id_profile_pic'){
+            let imageInput = e.target
+            let imageSelected = document.querySelector('.profile-pic-selected')
+            let file = imageInput.files[0]
+            let x = document.querySelector('#id_x')
+            let y = document.querySelector('#id_y')
+            let width = document.querySelector('#id_width')
+            let height = document.querySelector('#id_height')
+            document.querySelector('label[for=id_profile_pic]').innerHTML = file.name
+            let reader = new FileReader();
+            reader.addEventListener('load', (e) => {
+                imageSelected.classList.add('profile-pic-selected-show')
+                imageSelected.src = e.target.result
+                image = imageSelected
+                let cropper = new Cropper(image, {
+                  aspectRatio: 1 / 1,
+                  crop(event) {
+                    x.value = event.detail.x
+                    y.value = event.detail.y
+                    width.value = event.detail.width
+                    height.value  = event.detail.height
+                  },
+                });
+            })
+            reader.readAsDataURL(file)
+        }
+    })
 }
 
 if (modal){

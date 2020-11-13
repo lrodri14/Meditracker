@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm as CreationForm
 from django.contrib.auth.forms import UserChangeForm as ChangeForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import CustomUser, UsersProfile
+from PIL import Image
 import pytz
 
 
@@ -53,7 +54,6 @@ class AssistantSignUpForm(CreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    profile_pic = forms.ImageField(widget=forms.FileInput, required=None)
     birth_date = forms.DateField(widget=forms.SelectDateWidget(years=[x for x in range(1920, 2101)]), required=None)
     tzone = forms.ChoiceField(choices=[(x, x) for x in pytz.common_timezones])
 
@@ -66,10 +66,28 @@ class ProfileForm(forms.ModelForm):
 
 
 class ProfilePictureForm(forms.ModelForm):
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    width = forms.FloatField(widget=forms.HiddenInput())
+    height = forms.FloatField(widget=forms.HiddenInput())
 
     class Meta:
         model = UsersProfile
         fields = ('profile_pic',)
+
+    def save(self, *args, **kwargs):
+        profile_picture = super().save()
+
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        width = self.cleaned_data.get('width')
+        height = self.cleaned_data.get('height')
+
+        image = Image.open(profile_picture.profile_pic)
+        cropped_image = image.crop((x, y, width + x, height + y))
+        cropped_image.save(profile_picture.profile_pic.path)
+
+        return profile_picture
 
 
 class ProfileBackgroundForm(forms.ModelForm):

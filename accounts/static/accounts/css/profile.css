@@ -1,6 +1,6 @@
 /*Test*/
 
-/*Content*/
+/*Main Content*/
 body{
     overflow:hidden;
 }
@@ -74,17 +74,35 @@ i:not(.fa-camera){
     transition: 0.5s;
 }
 
-
 .background fa-edit{
     float: right;
 }
 
-.profile-picture{
+/*Profile Picture*/
+.profile-picture-container{
+    background-color: white;
     position: absolute;
     z-index: 1;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
     margin-top: 5%;
     margin-left: 5%;
     overflow: hidden;
+}
+
+.profile-picture-container-modal{
+    position: static;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.profile-picture{
+    width: 200px;
+    height: 200px;
 }
 
 .edit-profile-picture-modal{
@@ -104,16 +122,6 @@ i:not(.fa-camera){
     visibility: visible;
     opacity: 1;
     transition: 0.5s;
-}
-
-img{
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-}
-
-img:hover .edit-profile-picture-modal{
-    margin-top: -100%;
 }
 
 .information{
@@ -233,6 +241,26 @@ form{
     padding: 10px;
 }
 
+button{
+    width: 30%;
+    height: 30px;
+    background-color: #12212b;
+    border: 2px solid #0ff5fc;
+    border-radius: 10px;
+    color: #0ff5fc;
+    transition: 0.5s;
+}
+
+.button-hover{
+    cursor: pointer;
+    background-color: #0ff5fc;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+
+/*Profile Update Form*/
+
 .edit-profile{
     width: 80%;
     height: 60%;
@@ -289,12 +317,6 @@ form{
     border-bottom: 1px solid cyan;
 }
 
-button{
-    border: 1px solid cyan;
-    background-color: #12212b;
-    margin: auto;
-}
-
 .personal-info-edit{
     display: grid;
     grid-template-columns: 50% 50%;
@@ -327,19 +349,45 @@ button{
     text-align-last: center;
 }
 
-button{
-    width: 30%;
-    height: 30px;
-    background-color: #12212b;
-    border: 2px solid #0ff5fc;
-    border-radius: 10px;
-    color: #0ff5fc;
+/*Edit Profile Picture Form*/
+
+.edit-profile-picture{
+    width: 50%;
+    height: 70%;
+    margin-left: 25%;
+    text-align: center;
+}
+
+#profile-pic-input{
+    display: none;
+}
+
+.selected-picture{
+    max-width: 300px;
+    overflow: hidden;
+    margin: auto;
+}
+
+.profile-pic-selected{
+    width: 100%;
+    height: auto;
+}
+
+label[for=id_profile_pic]{
+    padding: 5px;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #0ff5fc;
     transition: 0.5s;
 }
 
-.button-hover{
+.label-hover{
     cursor: pointer;
     background-color: #0ff5fc;
     color: #12212b;
     transition: 0.5s;
+}
+
+.edit-profile-picture button{
+    width: 20%;
 }

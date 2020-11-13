@@ -119,6 +119,44 @@ def profile(request):
     return render(request, 'accounts/profile.html', context)
 
 
+def profile_picture_change(request):
+    user_profile = get_object_or_404(UsersProfile, user=request.user)
+    form = ProfilePictureForm(instance=user_profile)
+    template = 'accounts/profile_picture_change.html'
+    context = {}
+    data = {}
+    if request.method == 'POST':
+        form = ProfilePictureForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            context['user_profile'] = user_profile
+            data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
+        else:
+            print(form.errors)
+    context['form'] = form
+    context['user_profile'] = user_profile
+    data['html'] = render_to_string(template, context, request)
+    return JsonResponse(data)
+
+
+def profile_background_change(request):
+    user_profile = get_object_or_404(UsersProfile, user=request.user)
+    form = ProfilePictureForm(instance=user_profile)
+    template = 'accounts/profile_picture_change.html'
+    context = {}
+    data = {}
+    if request.method == 'POST':
+        form = ProfilePictureForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            context['user_profile'] = user_profile
+            data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
+    context['form'] = form
+    context['user_profile'] = user_profile
+    data['html'] = render_to_string(template, context, request)
+    return JsonResponse(data)
+
+
 def profile_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
     # if request.META.get('HTTP_FORM_TYPE') == 'profile':

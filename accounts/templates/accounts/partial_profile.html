@@ -6,14 +6,18 @@
         <i class="fas fa-camera" data-url="{%url 'accounts:profile_change'%}" data-type="background-pic"></i>
     {% endif %}
 </div>
-<div class="profile-picture">
-    {%if user_profile.gender == 'Femenine'%}
-        <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="">
+<div class="profile-picture-container">
+    {%if user_profile.profile_pic.url == '' %}
+        {%if user_profile.gender == 'Femenine'%}
+            <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="" class="profile-picture">
+        {%else%}
+            <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="" class="profile-picture">
+        {%endif%}
     {%else%}
-        <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="">
+        <img src="{{MEDIA_URL}}{{user_profile.profile_pic}}" alt="" class="profile-picture">
     {%endif%}
     <div class="edit-profile-picture-modal">
-        <i class="fas fa-pen" data-url="{%url 'accounts:profile_change'%}" data-type="profile-pic"></i>
+        <i class="fas fa-pen" data-url="{%url 'accounts:profile_picture_change'%}" data-type="profile-pic"></i>
     </div>
 </div>
 <div class="information">
