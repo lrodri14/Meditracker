@@ -91,7 +91,7 @@ class ProfilePictureForm(forms.ModelForm):
         image = Image.open(profile_picture.profile_pic)
         try:
             exif = dict((ExifTags.TAGS[k], v) for k, v in image._getexif().items() if k in ExifTags.TAGS)
-            if exif['Orientation'] == 6:
+            if exif.get('Orientation') == 6:
                 image = image.rotate(270, expand=True)
         except AttributeError:
             pass
@@ -120,9 +120,9 @@ class ProfileBackgroundForm(forms.ModelForm):
         height = self.cleaned_data.get('height')
 
         image = Image.open(background_image.background_pic)
-        exif = dict((ExifTags.TAGS[k], v) for k, v in image._getexif().items() if k in ExifTags.TAGS)
         try:
-            if exif['Orientation'] == 6:
+            exif = dict((ExifTags.TAGS[k], v) for k, v in image._getexif().items() if k in ExifTags.TAGS)
+            if exif.get('Orientation') == 6:
                 image = image.rotate(270, expand=True)
         except AttributeError:
             pass
