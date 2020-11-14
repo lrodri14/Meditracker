@@ -28,9 +28,15 @@ i:not(.fa-camera){
     transition: 0.5s;
 }
 
-.fa-pen{
+.edit-profile-picture-modal .fa-pen{
     margin-top: 50%;
     margin-left: 45%;
+}
+
+.background-edit-modal .fa-pen{
+    font-size: 24px;
+    margin-top: 10%;
+    transition: 0.5s;
 }
 
 .fa-pen-hover{
@@ -55,11 +61,39 @@ i:not(.fa-camera){
     padding: 0px;
 }
 
+.background-container{
+    position: absolute;
+    text-align: center;
+    max-width: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.7);
+    overflow: hidden;
+    padding: 0px;
+}
+
 .background-image{
     width: 100%;
-    height: 35%;
-    object-fit: cover;
-    object-position: center center;
+    height: auto;
+}
+
+.background-edit-modal{
+    position: absolute;
+    background-color: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    margin-top: 20%;
+    visibility: hidden;
+    opacity: 0;
+    text-align: center;
+    transition: 0.5s;
+}
+
+.background-edit-modal-show{
+    margin-top: 0%;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
 }
 
 .background .fa-camera{
@@ -244,6 +278,13 @@ form{
     padding: 10px;
 }
 
+.label-hover{
+    cursor: pointer;
+    background-color: #0ff5fc;
+    color: #12212b;
+    transition: 0.5s;
+}
+
 button{
     width: 30%;
     height: 30px;
@@ -392,5 +433,41 @@ label[for=id_profile_pic]{
 }
 
 .edit-profile-picture button{
+    width: 20%;
+}
+
+/*Edit Profile Background Form*/
+
+.edit-background-picture{
+    width: 50%;
+    height: 70%;
+    margin-left: 25%;
+    text-align: center;
+}
+
+#background-pic-input{
+    display: none;
+}
+
+.selected-picture{
+    max-width: 300px;
+    overflow: hidden;
+    margin: auto;
+}
+
+.background-pic-selected{
+    width: 100%;
+    height: auto;
+}
+
+label[for=id_background_pic]{
+    padding: 5px;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #0ff5fc;
+    transition: 0.5s;
+}
+
+.edit-background-picture button{
     width: 20%;
 }

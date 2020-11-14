@@ -102,11 +102,34 @@ class ProfilePictureForm(forms.ModelForm):
 
 
 class ProfileBackgroundForm(forms.ModelForm):
+    x = forms.FloatField(widget=forms.widgets.HiddenInput())
+    y = forms.FloatField(widget=forms.widgets.HiddenInput())
+    width = forms.FloatField(widget=forms.widgets.HiddenInput())
+    height = forms.FloatField(widget=forms.widgets.HiddenInput())
 
     class Meta:
         model = UsersProfile
         fields = ('background_pic',)
 
+    def save(self, *args, **kwargs):
+        background_image = super().save()
+
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        width = self.cleaned_data.get('width')
+        height = self.cleaned_data.get('height')
+
+        image = Image.open(background_image.background_pic)
+        exif = dict((ExifTags.TAGS[k], v) for k, v in image._getexif().items() if k in ExifTags.TAGS)
+        try:
+            if exif['Orientation'] == 6:
+                image = image.rotate(270, expand=True)
+        except AttributeError:
+            pass
+        cropped_image = image.crop((x, y, x + width, y + height))
+        cropped_image.save(background_image.background_pic.path)
+
+        return background_image
 
 
 

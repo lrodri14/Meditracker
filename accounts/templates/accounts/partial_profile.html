@@ -1,10 +1,15 @@
 {%load static%}
 <div class="background">
-    {% if user_profile.profile_pic.url == ''%}
-        <img src="{{user_profile.profile_pic.url}}" alt="" class="portrait-profile-picture">
-    {% else %}
-        <i class="fas fa-camera" data-url="{%url 'accounts:profile_change'%}" data-type="background-pic"></i>
-    {% endif %}
+    <div class="background-container">
+        {% if user_profile.profile_pic.url == ''%}
+            <i class="fas fa-camera" data-url="{%url 'accounts:profile_background_change'%}" data-type="background-pic"></i>
+        {% else %}
+            <img src="{{user_profile.background_pic.url}}" alt="" class="background-picture">
+        {% endif %}
+    </div>
+    <div class="background-edit-modal">
+        <i class="fas fa-pen background-edit-button" data-url="{%url 'accounts:profile_background_change'%}"></i>
+    </div>
 </div>
 <div class="profile-picture-container">
     {%if user_profile.profile_pic.url == '' %}
@@ -17,7 +22,7 @@
         <img src="{{MEDIA_URL}}{{user_profile.profile_pic}}" alt="" class="profile-picture">
     {%endif%}
     <div class="edit-profile-picture-modal">
-        <i class="fas fa-pen" data-url="{%url 'accounts:profile_picture_change'%}" data-type="profile-pic"></i>
+        <i class="fas fa-pen profile-picture-edit-button" data-url="{%url 'accounts:profile_picture_change'%}"></i>
     </div>
 </div>
 <div class="information">

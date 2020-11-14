@@ -140,7 +140,7 @@ def profile_picture_change(request):
 def profile_background_change(request):
     user_profile = get_object_or_404(UsersProfile, user=request.user)
     form = ProfileBackgroundForm(instance=user_profile)
-    template = 'accounts/profile_picture_change.html'
+    template = 'accounts/profile_background_change.html'
     context = {}
     data = {}
     if request.method == 'POST':
