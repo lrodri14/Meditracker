@@ -147,7 +147,7 @@ if (body){
                 imageSelected.src = e.target.result
                 image = imageSelected
                 let cropper = new Cropper(image, {
-                  aspectRatio: 4 / 1,
+                  aspectRatio: 364 / 70,
                   crop(event) {
                     x.value = event.detail.x
                     y.value = event.detail.y

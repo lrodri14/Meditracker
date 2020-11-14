@@ -124,6 +124,8 @@ class ProfileBackgroundForm(forms.ModelForm):
             exif = dict((ExifTags.TAGS[k], v) for k, v in image._getexif().items() if k in ExifTags.TAGS)
             if exif.get('Orientation') == 6:
                 image = image.rotate(270, expand=True)
+            elif exif.get('Orientation') == 8:
+                image = image.rotate(90, expand=True)
         except AttributeError:
             pass
         cropped_image = image.crop((x, y, x + width, y + height))
