@@ -1,0 +1,371 @@
+/*No Data*/
+#no-providers{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.add-providers{
+    font-size: 25px;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
+}
+
+.add-providers-hide{
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.add-providers-hover{
+    cursor: pointer;
+    color: #32a852;
+    transition: 0.5s;
+}
+
+/*Data*/
+.wrapper{
+    display: grid;
+    grid-template-columns: 80% 19%;
+    grid-gap: 1%;
+}
+
+/*Navigator*/
+ul{
+    list-style-type: none;
+    line-height: 3;
+    width: 25%;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+li{
+    display: inline;
+    padding: 15px;
+    background-color: #12212b;
+    transition: 0.5s;
+}
+
+.tab-active{
+    background-color: #0ff5fc;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+.tab-hover{
+    cursor: pointer;
+    background-color: #0ff5fc;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+
+
+/*Data Table*/
+/*No providers listed for a category*/
+.no-providers{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+table{
+    background-color: #12212b;
+    border-collapse: collapse;
+    margin: auto;
+    width: 100%;
+}
+
+#heading{
+    background-color: #12212b;
+    color: #0ff5fc;
+    line-height: 25px;
+    cursor: default;
+}
+
+.fa-plus{
+    padding: 5px 10px 5px 5px;
+    transition: 0.5s;
+}
+
+.fa-plus-hover{
+    color: #32a852;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-trash{
+    transition: 0.5s;
+}
+
+.fa-trash-hover{
+    color: #a83632;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-edit{
+    transition: 0.5s;
+}
+
+.fa-edit-hover{
+    color: #ffe100;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-envelope{
+    transition: 0.5s;
+}
+
+.fa-envelope-hover{
+    cursor: pointer;
+    color: white;
+    transition: 0.5s;
+}
+
+tr{
+    transition: 0.5s;
+    line-height: 20px;
+    margin: 10px;
+    transition: 0.5s;
+}
+
+.tr-hover{
+    background-color: #0ff5fc;
+    cursor: pointer;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+tr th{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+tr td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    color: #0ff5fc;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.td-hover{
+    color: #12212b;
+}
+
+tr:nth-child(odd){
+    background-color: #3d6685;
+    transition: 0.5s;
+}
+
+tr:nth-child(even){
+    background-color: #2a465c;
+    transition: 0.5s;
+}
+
+.fa-filter{
+    transition: 0.5s;
+}
+
+.fa-filter-hover{
+    cursor: pointer;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+/*Forms*/
+
+/*Initial Model Provider Type Input Hidden*/
+#id_provider_type{
+    display: none;
+}
+
+.error{
+    color: #a83632;
+}
+
+/*Filter form*/
+.filter-form{
+    position: static;
+    width: 90%;
+    height: 100%;
+    margin-top: -300%;
+    background-color: #12212b;
+    text-align: center;
+    padding: 10px;
+    visibility: hidden;
+    transition: 0.5s;
+}
+
+.filter-form-show{
+    visibility: visible;
+    margin-top: 5%;
+    transition: 0.5s;
+}
+
+
+.modal form{
+    text-align: center;
+    background-color: #12212b;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: 55%;
+    color: #0ff5fc;
+}
+
+.modal .create-visitor-form{
+    height: 60%;
+}
+
+.modal .update-visitor-form{
+    height: 60%;
+}
+
+#delete-operation{
+    width: 30%;
+    height: 25%;
+}
+
+#provider-details{
+    background-color: #12212b;
+    padding: 10px;
+    width: 25%;
+    margin-left: 37.5%;
+    margin-top: 15%;
+}
+
+#provider-details h2{
+    text-align: center;
+}
+
+input{
+  text-align: center;
+  color: #0ff5fc;
+  background-color: #12212b;
+  border: none;
+  border-bottom: 1px solid #0ff5fc;
+  height: 30px;
+  width:60%;
+}
+
+input:focus{
+  outline: none;
+}
+
+select{
+    background-color: #12212b;
+    border: none;
+    border-bottom: 1px solid #0ff5fc;
+    width:60%;
+    text-align-last: center;
+    color: #0ff5fc;
+}
+
+select:focus{
+  outline: none;
+}
+
+
+button{
+    margin: 5px;
+    width: 30%;
+    height: 30px;
+    background-color: #12212b;
+    border-color: #0ff5fc;
+    border-radius: 10px;
+    color: #0ff5fc;
+    transition: 0.5s;
+}
+
+.button-hover{
+    background-color: #0ff5fc;
+    color: #12212b;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/*Modal*/
+
+.modal{
+    position: absolute;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.modal-show{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+/*Initial Modal*/
+
+.initial-modal{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.initial-modal-content{
+    text-align: center;
+    position: absolute;
+    background-color: #12212b;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.4%;
+    width: 40%;
+    height: 15%;
+    top: 40%;
+    left: 30%;
+}
+
+.tab{
+    transition: 0.5s;
+}
+
+.tab-hover{
+    cursor: pointer;
+    background-color: #0ff5fc;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+.initial-modal i{
+    margin-top: 25%;
+    margin-right: 5px;
+    font-size: 30px;
+}
+
+.initial-modal-show{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}

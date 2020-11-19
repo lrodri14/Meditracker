@@ -46,7 +46,6 @@ tr:nth-child(even){
 .tr-hover{
     background-color: #0ff5fc;
     cursor: pointer;
-    line-height: 50px;
     color: #12212b;
     transition: 0.5s;
 }
@@ -88,14 +87,16 @@ tr:nth-child(even){
 /*Navbar*/
 ul{
     list-style-type: none;
-    background-color: #12212b;
+    padding-left: 0px;
+    width: 55%;
 }
 
 li{
     display: inline-block;
-    padding: 20px;
+    padding: 15px;
     margin: 0px;
     transition: 0.5s;
+    background-color: #12212b;
 }
 
 .li-hover{
@@ -208,7 +209,6 @@ li{
 }
 
 #details{
-    text-align: center;
     background-color: #12212b;
     padding: 20px;
     position: absolute;
@@ -217,7 +217,11 @@ li{
     margin-right: -50%;
     transform: translate(-50%, -50%);
     width: 25%;
-    height: 35%;
+    height: 30%;
+}
+
+#details h2{
+    text-align: center;
 }
 
 #add-allergy{
@@ -226,10 +230,6 @@ li{
 
 #update-allergy{
     height: 35%;
-}
-
-h1{
-    padding: 20px;
 }
 
 input{

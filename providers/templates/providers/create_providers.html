@@ -1,0 +1,16 @@
+{%load static%}
+<form method="POST" action="{%url 'providers:create_provider'%}" autocomplete="off">
+    {%csrf_token%}
+    <h2>Create Provider</h2>
+    <p>{{form.company.label}}</p>
+    <p>{{form.company}}</p>
+    <p>{{form.address.label}}</p>
+    <p>{{form.address}}</p>
+    <p>{{form.email.label}}</p>
+    <p>{{form.email}}</p>
+    <p>{{form.contact.label}}</p>
+    <p>{{form.contact}}</p>
+    <p>{{form.provider_type}}</p>
+    <p class="error"><small>{{error}}</small></p>
+    <button type="submit">Submit</button>
+</form>

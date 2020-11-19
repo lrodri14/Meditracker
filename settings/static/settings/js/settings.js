@@ -250,7 +250,7 @@ if (wrapper){
             let form = e.target.parentNode.parentNode
             let url = form.action
             let method = form.method
-            let csrfmiddlewaretoken = document.querySelector("." + e.target.classList[0] + ' > [name=csrfmiddlewaretoken]')
+            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             let data = new FormData(form)
             filterResultsAW(url, method, csrfmiddlewaretoken, data)
             .then(data => {
@@ -317,7 +317,7 @@ if (modal){
             const form = e.target
             const url = form.action
             const method = form.method
-            const csrfmiddlewaretoken = document.querySelector('.' + e.target.classList[0] + ' > [name=csrfmiddlewaretoken]').value
+            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             const data = new FormData(form)
             if (e.target.classList.contains('add') || e.target.classList.contains('update')){
                 addUpdateElementAW(url, method, csrfmiddlewaretoken, data)

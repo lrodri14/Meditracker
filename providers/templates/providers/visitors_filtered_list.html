@@ -1,0 +1,17 @@
+{%load static%}
+{%if visitors%}
+    {%for visitor in visitors%}
+        <tr data-url="{%url 'providers:visitor_details' visitor.pk%}">
+            <td>{{visitor.name}}</td>
+            <td>{{visitor.last_name}}</td>
+            <td>{{visitor.company}}</td>
+            <td>{{visitor.contact}}</td>
+            <td>{{visitor.email}}</td>
+            <td><i class="fas fa-edit" data-url="{%url 'providers:update_visitors' visitor.pk%}"></i></td>
+            <td><i class="fas fa-trash" data-url="{%url 'providers:delete_visitor' visitor.pk%}"></i></td>
+            <td><i class="fas fa-envelope"></i></td>
+        </tr>
+    {%endfor%}
+{%else%}
+    <p class="no-providers">No providers of this category listed</p>
+{%endif%}

@@ -1,18 +1,22 @@
 <!--Included Template in patients.html-->
 {%load static%}
-{%for p in patients%}
-    <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">
-        <td>{%if p.id_number%}{{p.id_number}}{%else%}-------------{%endif%}</td>
-        <td>{{p.first_names}}</td>
-        <td>{{p.last_names}}</td>
-        <td>{{p.age}}</td>
-        <td>{{p.get_origin_display}}</td>
-        <td>{{p.get_residence_display}}</td>
-        <td>{%if p.insurance.insurance_carrier != None%}{{p.insurance.insurance_carrier}}{%else%}Not Available{%endif%}</td>
-        {%if doctor%}<td data-url="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></td>
-        <td data-url="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></td>{%endif%}
-        <td></td>
-<!--        <a href="{%url 'patients:patients_update' p.pk%}"></a>-->
-<!--        <a class="delete" href="{%url 'patients:patients_delete' p.pk%}"></a>-->
-    </tr>
-{%endfor%}
+{%if patients%}
+    {%for p in patients%}
+        <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">
+            <td>{%if p.id_number%}{{p.id_number}}{%else%}-------------{%endif%}</td>
+            <td>{{p.first_names}}</td>
+            <td>{{p.last_names}}</td>
+            <td>{{p.age}}</td>
+            <td>{{p.get_origin_display}}</td>
+            <td>{{p.get_residence_display}}</td>
+            <td>{%if p.insurance.insurance_carrier != None%}{{p.insurance.insurance_carrier}}{%else%}Not Available{%endif%}</td>
+            {%if doctor%}<td data-url="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></td>
+            <td data-url="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></td>{%endif%}
+            <td></td>
+    <!--        <a href="{%url 'patients:patients_update' p.pk%}"></a>-->
+    <!--        <a class="delete" href="{%url 'patients:patients_delete' p.pk%}"></a>-->
+        </tr>
+    {%endfor%}
+{%else%}
+    <p class="no-patients-listed">No patients found</p>
+{%endif%}

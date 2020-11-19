@@ -7,12 +7,12 @@
                 <div class="profile-picture-container profile-picture-container-modal">
                     {%if user_profile.profile_pic.url == '' %}
                         {%if user_profile.gender == 'Femenine'%}
-                            <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="" class="profile-picture">
+                            <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="" class="profile-modal-picture">
                         {%else%}
-                            <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="" class="profile-picture">
+                            <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="" class="profile-modal-picture">
                         {%endif%}
                     {%else%}
-                        <img src="{{MEDIA_URL}}{{user_profile.profile_pic}}" alt="" class="profile-picture">
+                        <img src="{{MEDIA_URL}}{{user_profile.profile_pic}}" alt="" class="profile-modal-picture">
                     {%endif%}
                 </div>
                 <p>@{{user}}</p>

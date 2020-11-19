@@ -231,7 +231,8 @@ button{
 }
 
 .add-consults-hide{
-    display: none;
+    opacity: 0;
+    transition: 0.5s;
 }
 
 #status-0{

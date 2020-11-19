@@ -297,6 +297,7 @@ select:focus{
 
 .account-type-selector i{
     margin-top: 15%;
+    margin-right: 10px;
     font-size: 50px;
     pointer-events: none;
 }

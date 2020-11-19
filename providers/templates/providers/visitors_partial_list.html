@@ -1,0 +1,45 @@
+{%load static%}
+{%if visitors%}
+    <div>
+        <table>
+            <thead>
+                <tr id="heading">
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Company</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th><i class="fas fa-plus" data-url="{%url 'providers:create_visitor'%}"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for visitor in visitors%}
+                    <tr data-url="{%url 'providers:visitor_details' visitor.pk%}">
+                        <td>{{visitor.name}}</td>
+                        <td>{{visitor.last_name}}</td>
+                        <td>{{visitor.company}}</td>
+                        <td>{{visitor.contact}}</td>
+                        <td>{{visitor.email}}</td>
+                        <td><i class="fas fa-edit" data-url="{%url 'providers:update_visitors' visitor.pk%}"></i></td>
+                        <td><i class="fas fa-trash" data-url="{%url 'providers:delete_visitor' visitor.pk%}"></i></td>
+                        <td><i class="fas fa-envelope"></i></td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <i class="fas fa-filter"></i>
+        <form method="GET" action="{%url 'providers:visitors_filter'%}" class="filter-form" autocomplete="off">
+            <h2>Visitors Filter</h2>
+            {%csrf_token%}
+            <p>{{filter_form.name.label}}</p>
+            <p>{{filter_form.name}}</p>
+        </form>
+    </div>
+{%else%}
+    <p class="no-providers">No visitors listed</p>
+    <i class="fas fa-plus add-providers" data-url="{%url 'providers:create_visitor'%}"></i>
+{%endif%}

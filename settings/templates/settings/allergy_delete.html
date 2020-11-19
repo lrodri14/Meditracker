@@ -1,6 +1,6 @@
 {%load static%}
 {%block body_block%}
-<form method="POST" action="{%url 'settings:allergies_delete' allergy.pk%}" class="delete">
+<form method="POST" action="{%url 'settings:allergies_delete' allergy.pk%}" id="delete">
     {%csrf_token%}
     <h1>{{allergy.allergy_type}}</h1>
     <h3>Are you sure you want to delete this allergy?</h3>

@@ -54,7 +54,8 @@ class UpdateConsultsForm(forms.ModelForm):
             'actions': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Extra Considerations'}),
         }
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
         super(UpdateConsultsForm, self).__init__(*args, **kwargs)
         self.fields['drugs'].queryset = Drugs.objects.filter(created_by=user)
 

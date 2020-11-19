@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'appointments',
     'records',
     'settings',
+    'providers',
 ]
 
 PASSWORD_HASHERS = [

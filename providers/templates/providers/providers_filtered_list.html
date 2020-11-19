@@ -1,0 +1,16 @@
+{%load static%}
+{%if providers%}
+    {%for provider in providers%}
+    <tr data-url="{%url 'providers:provider_details' provider.pk %}">
+        <td>{{provider.company}}</td>
+        <td>{{provider.address}}</td>
+        <td>{{provider.contact}}</td>
+        <td>{{provider.email}}</td>
+        <td><i class="fas fa-edit" data-url="{%url 'providers:update_provider' provider.pk %}"></i></td>
+        <td><i class="fas fa-trash" data-url="{%url 'providers:delete_provider' provider.pk %}"></i></td>
+        <td><i class="fas fa-envelope"></i></td>
+    </tr>
+    {%endfor%}
+{%else%}
+    <p class="no-providers">No providers of this category listed</p>
+{%endif%}

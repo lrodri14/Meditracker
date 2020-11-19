@@ -114,10 +114,6 @@ if (examsModal){
     examsModal.addEventListener('click', function(e){
         if (e.target.classList.contains('exams-modal') || e.target.innerText === 'Save'){
             this.classList.remove('exams-modal-show')
-            if (examsData.classList.contains('exams-data-preview-set') && previewImg.classList.contains('preview-image-display')){
-                examsData.classList.remove('exams-data-preview-set')
-                previewImg.classList.remove('preview-image-display')
-            }
         }
 
         if (e.target.classList.contains('fa-trash')){

@@ -23,7 +23,7 @@ async function editProfileAW(url, method, csrfmiddlewaretoken, formData){
 if (body){
 
     body.addEventListener('mouseover', (e) => {
-        if (e.target.classList.contains('profile-picture') || e.target === editProfilePicture || e.target.classList.contains('profile-picture-edit-button')){
+        if (e.target.className === 'profile-picture' || e.target === editProfilePicture || e.target.classList.contains('profile-picture-edit-button')){
             editProfilePicture.classList.add('edit-profile-picture-modal-show')
         }
 
@@ -122,6 +122,7 @@ if (body){
                 image = imageSelected
                 let cropper = new Cropper(image, {
                   aspectRatio: 1 / 1,
+                  background: false,
                   crop(event) {
                     x.value = event.detail.x
                     y.value = event.detail.y
@@ -148,6 +149,7 @@ if (body){
                 image = imageSelected
                 let cropper = new Cropper(image, {
                   aspectRatio: 364 / 70,
+                  background: false,
                   crop(event) {
                     x.value = event.detail.x
                     y.value = event.detail.y

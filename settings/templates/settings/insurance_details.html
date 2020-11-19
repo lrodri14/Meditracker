@@ -1,7 +1,9 @@
 {%block body_block%}
 <div id="details">
-    <h1>Insurance Details</h1>
-    <h2>Company: {{insurance.company}}</h2>
-    <h2>Country: {{insurance.get_country_display}}</h2>
+    <h2>Insurance Details</h2>
+    <h3>Company</h3>
+    <p>{{insurance.company}}</p>
+    <h3>Country</h3>
+    <p>{{insurance.get_country_display}}</p>
 </div>
 {%endblock%}

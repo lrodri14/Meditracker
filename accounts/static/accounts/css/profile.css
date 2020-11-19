@@ -142,6 +142,11 @@ i:not(.fa-camera){
     height: 200px;
 }
 
+.profile-modal-picture{
+    width: 200px;
+    height: 200px;
+}
+
 .edit-profile-picture-modal{
     position: absolute;
     width: 200px;
