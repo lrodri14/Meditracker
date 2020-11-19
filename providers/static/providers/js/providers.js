@@ -477,6 +477,14 @@ if (modal){
         e.preventDefault()
         e.stopPropagation()
 
+        /*This submit event will be fired every time a form is submitted, and the form
+          contains an id attribute with the 'delete-operation' value, it will collect
+          the following data from the target: 'url' which is used to do the "POST" request,
+          the 'method' which it collects from the method attribute in the form, the 'csrfmiddlewaretoke',
+          used to protect the request against Cross-Site Request Forgeries attacks and collected from the
+          '[name=csrfmiddlewaretoken]' hidden input value, the data received in JSON Format will be added
+          to the wrapper InnerHTML, it will also make a check in if the '.add-providers' element is present,
+          if it is, it will call the addIconLevitate function.*/
         if (e.target.id === 'delete-operation'){
             console.log(e.target.id)
             let form = e.target
@@ -497,6 +505,13 @@ if (modal){
           )
         }
 
+        /*This submit event will be fired every time a form is submitted, it will collect
+          the following data from the target: 'url' which is used to do the "POST" request,
+          the 'method' which it collects from the method attribute in the form, the 'csrfmiddlewaretoke',
+          used to protect the request against Cross-Site Request Forgeries attacks and collected from the
+          '[name=csrfmiddlewaretoken]' hidden input value, the data received in JSON Format will be added
+          to the wrapper InnerHTML, it will also make a check in if the'.add-providers' element is present
+          , if it is, it will call the addIconLevitate function.*/
         if (e.target.nodeName === 'FORM'){
             let form = e.target
             let url = form.action
