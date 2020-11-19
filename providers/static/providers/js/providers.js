@@ -486,7 +486,6 @@ if (modal){
           to the wrapper InnerHTML, it will also make a check in if the '.add-providers' element is present,
           if it is, it will call the addIconLevitate function.*/
         if (e.target.id === 'delete-operation'){
-            console.log(e.target.id)
             let form = e.target
             let url = form.action
             let method = form.method
@@ -512,7 +511,7 @@ if (modal){
           '[name=csrfmiddlewaretoken]' hidden input value, the data received in JSON Format will be added
           to the wrapper InnerHTML, it will also make a check in if the'.add-providers' element is present
           , if it is, it will call the addIconLevitate function.*/
-        if (e.target.nodeName === 'FORM'){
+        if (e.target.nodeName === 'FORM' && !e.target.id){
             let form = e.target
             let url = form.action
             let method = form.method
@@ -520,11 +519,16 @@ if (modal){
             let formData = new FormData(form)
             addProvidersAW(url, method, csrfmiddlewaretoken, formData)
             .then(data => {
+                console.log('data')
                 if (data['html']){
                     modalContent.innerHTML = data['html']
                 }else{
                     modal.classList.remove('modal-show')
                     wrapper.innerHTML = data['updated_html']
+                    if (document.querySelector('.add-providers')){
+                        addProvidersIcon = document.querySelector('.add-providers')
+                        addIconLevitate(addProvidersIcon)
+                    }
                 }
             }
           )
