@@ -4,8 +4,21 @@ User = get_user_model()
 
 # Create your models here.
 
+# This models.py file contains all the models for the Providers App to work properly, it
+# contains two models, Providers and Visitors.
+
 
 class Providers(models.Model):
+
+    """
+        DOCSTRING:
+        This class inherits from the models.Model class, tit is used to create Providers objects in our app,
+        we declared a PROVIDERS_TYPE_CHOICES tuple which contains all the possible choices for
+        the provider_type attribute. We also set an Meta class to configure the unique_together class
+        attribute to: ['company', 'created_by']. This class has it's own save method overwritten to
+        title() the information from the 'company' and 'address' attributes. Also contains it's own
+        __str__ dunder method.
+    """
 
     PROVIDERS_TYPE_CHOICES = (
         ('LP', 'Laboratory'),
@@ -33,6 +46,13 @@ class Providers(models.Model):
 
 class Visitor(models.Model):
 
+    """
+        DOCSTRING:
+        This class inherits from the models.Model class, tit is used to create Visitors objects in our app,
+        This class has it's own save method overwritten to title() the information from the 'name' and 'last_name'
+        attributes. Also contains it's own __str__ dunder method.
+    """
+
     name = models.CharField("Visitor's Name", max_length=100, blank=True, null=True, help_text="Visitor's First Name")
     last_name = models.CharField("Visitor's Last Name", max_length=100, blank=True, null=True, help_text="Visitor's Last Name")
     contact = models.CharField('Phone Number', max_length=100, blank=False, null=True, help_text="Visitor's Contact")
@@ -44,5 +64,8 @@ class Visitor(models.Model):
         self.name = self.name.title()
         self.last_name = self.last_name.title()
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name + ' ' + self.last_name + ' - ' + self.company
 
 
