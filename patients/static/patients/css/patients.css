@@ -1,18 +1,54 @@
 /*Checked*/
+/*This patients.css file contains all the styles needed for the patients main page.*/
+/*This file is divided into 4 sections: Body, Data Available, No Data and Modal*/
+
+
+/*#####################################################Body###########################################################*/
+/*Body*/
 body{
     overflow-x: hidden;
 }
 
+/*#####################################################No Data##########################################################*/
+/*Patients*/
+#no_patients{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.no-patients-listed{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+#add_patients{
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    transition: top 0.5s;
+}
+
+.add-patient-hover{
+    cursor: pointer;
+    color: #32a852;
+    transition: 0.5s;
+}
+
+/*#####################################################Data###########################################################*/
 /*Wrapper*/
 .wrapper{
     display: grid;
     grid-template-columns: 80% 19%;
     grid-gap: 1%;
-}
-
-/*Elements hide*/
-.hide{
-    display: none;
 }
 
 /*Table*/
@@ -109,6 +145,12 @@ tr:nth-child(even){
 
 .fa-filter{
     float: left;
+    transition: 0.5s;
+}
+
+.fa-filter-hover{
+    cursor: pointer;
+    color: #12212b;
     transition: 0.5s;
 }
 
@@ -214,41 +256,7 @@ button{
     padding: 0.5%;
 }
 
-
-/*Patients*/
-#no_patients{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
-
-.no-patients-listed{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
-
-#add_patients{
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    font-size: 25px;
-    transition: top 0.5s;
-}
-
-.add-patient-hover{
-    cursor: pointer;
-    color: #32a852;
-    transition: 0.5s;
-}
-
-/*Modal*/
+/*#####################################################Modal##########################################################*/
 .modal{
   background-color: rgba(0,0,0,0.3);
   position: absolute;

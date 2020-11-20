@@ -1,4 +1,23 @@
-//Checked
+/**/
+
+
+let body = document.querySelector('body')
+let generalInfo = document.querySelector('.general-info')
+let extras = document.querySelector('.extras')
+let appointments = document.querySelector('.appointments')
+let exams = document.querySelector('.exams')
+let charges = document.querySelector('.charges')
+let title = document.querySelector('#title')
+let previewImg = document.querySelector('.image-preview')
+let image = document.querySelector('.previewed-image')
+let titleOriginalContent = title.innerText
+let appointmentsBackUp = document.querySelector('.appointments').innerHTML
+let examsBackUp = document.querySelector('.exams').innerHTML
+let chargesBackUp = document.querySelector('.charges').innerHTML
+
+// List of wrappers
+let wrappers = [generalInfo, extras, appointments, exams, charges]
+
 function generalScroll(){
     window.scrollTo({
         left: 0,
@@ -40,23 +59,6 @@ async function filterResultsAW(url, method,type, csrfmiddlewaretoken, formData){
     const data = await result.json()
     return data
 }
-
-let body = document.querySelector('body')
-let generalInfo = document.querySelector('.general-info')
-let extras = document.querySelector('.extras')
-let appointments = document.querySelector('.appointments')
-let exams = document.querySelector('.exams')
-let charges = document.querySelector('.charges')
-let title = document.querySelector('#title')
-let previewImg = document.querySelector('.image-preview')
-let image = document.querySelector('.previewed-image')
-let titleOriginalContent = title.innerText
-let appointmentsBackUp = document.querySelector('.appointments').innerHTML
-let examsBackUp = document.querySelector('.exams').innerHTML
-let chargesBackUp = document.querySelector('.charges').innerHTML
-
-// List of wrappers
-let wrappers = [generalInfo, extras, appointments, exams, charges]
 
 body.addEventListener('mouseover', (e) => {
 
