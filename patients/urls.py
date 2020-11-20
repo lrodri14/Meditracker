@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+# This views.py file contains all the urls necessary to route all the views, it is composed of 5 routes.
 
 app_name = 'patients'
 urlpatterns = [

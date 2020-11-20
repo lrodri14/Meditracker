@@ -3,11 +3,23 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 user = get_user_model()
 # Create your models here.
+# This models.py file contains all the models needed to perform any data related process in the Patients App.
+# It is composed of 6 models.
 
 # Patients Model
 
 
 class Patient(models.Model):
+
+    """
+        DOCSTRING:
+        The Patient class inherits from the models.Model class, this model is used to add Patients to the Patient App,
+        there are four tuple choices: GENDER_CHOICES for selection of the patient's gender, CIVIL_STATUS_CHOICES for
+        selection of the patient's civil status, PROCEDENCE_CHOICES for selection of the patient's procedence and,
+        RESIDENCE_CHOICES for selection of the patient's residence, this class has an age() method which returns the
+        age of the patient based on the self.birthday field, it also rewrites the save() method, titling the self.first-
+        name and last-name fields, lastly it contains its own dunder __str__ method, which returns the patient's full name.
+    """
 
     GENDER_CHOICES = (
         ('F', 'Femenine'),
@@ -65,7 +77,13 @@ class Patient(models.Model):
 
 
 class InsuranceCarrier(models.Model):
-
+    """
+        DOCSTRING:
+        The InsuranceCarrier class inherits from the models.Model class, and is used to create InsuranceCarriers instances,
+        an ORIGIN_CHOICES tuple is defined for the country field choices, a class META is set to define the
+        unique_together class attribute to ['company', 'created_by'], the save() method has been overwritten
+        to title the self.company field, and lastly it contains its own __str__ dunder method.
+    """
     ORIGIN_CHOICES = (
         ('HND', 'Honduras'),
         ('NIC', 'Nicaragua'),
@@ -91,6 +109,12 @@ class InsuranceCarrier(models.Model):
 
 
 class InsuranceInformation(models.Model):
+    """
+        DOCSTRING:
+        The InsuranceCarrierInformation class inherits from the models.Model class, and is used to create Insurance-
+        CarriersInformation instances, an INSURANCE_TYPE_CHOICES tuple is defined for the type_of_insurance field
+        choices, and lastly it contains its own __str__ dunder method.
+    """
     INSURANCE_TYPE_CHOICES = (
         ('MEDICAL', 'Medical'),
     )
@@ -108,9 +132,19 @@ class InsuranceInformation(models.Model):
 
 
 class Allergies(models.Model):
+    """
+        DOCSTRING:
+        The Allergies class inherits from the models.Model class, and is used to create Allergies instances,
+         a class META is set to define the unique_together class attribute to ['allergy_type', 'created_by'],
+        the save() method has been overwritten to title the self.allergy_type field, and lastly it contains
+        its own __str__ dunder method.
+    """
     allergy_type = models.CharField('allergy', max_length=100, null=False, blank=False, help_text='Allergy Type')
     created_by = models.ForeignKey(user, blank=False, on_delete=models.CASCADE, null=True,
                                       help_text='User by who this allergy was created', related_name='user')
+
+    class Meta:
+        unique_together = ['allergy_type', 'created_by']
 
     def __str__(self):
         return self.allergy_type
@@ -119,13 +153,16 @@ class Allergies(models.Model):
         self.allergy_type = self.allergy_type.title()
         super(Allergies, self).save(*args, **kwargs)
 
-    class Meta:
-        unique_together = ['allergy_type', 'created_by']
-
 # Patient Allergies Information
 
 
 class AllergiesInformation(models.Model):
+    """
+        DOCSTRING:
+        The AllergiesInformation class inherits from the models.Model class, and is used to create Allergies-
+        Information instances, it rewrote the save() method to capitalize the self.about field in the model,
+        and lastly it contains its own __str__ dunder method.
+    """
     allergy_type = models.ForeignKey(Allergies, on_delete=models.CASCADE, null=True, blank=True, verbose_name='allergy type',
                                         help_text='Allergy type of the patient', related_name='allergy')
     about = models.TextField('about allergy', help_text='Tell us about what you suffer', blank=True, null=True)
@@ -143,6 +180,12 @@ class AllergiesInformation(models.Model):
 
 
 class Antecedents(models.Model):
+    """
+        DOCSTRING:
+        The Antecedents class inherits from the models.Model class, and is used to create Antecedents instances,
+        it rewrote the save() method to capitalize the self.antecedent and self.info field in the model,
+        and lastly it contains its own __str__ dunder method.
+    """
     antecedent = models.CharField('antecedent', max_length=150, blank=True, null=True, help_text='Antecedent Type')
     info = models.TextField('antecedent info', blank=True, null=True, help_text='About this antecedent')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',

@@ -13,8 +13,6 @@
             {%if doctor%}<td data-url="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></td>
             <td data-url="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></td>{%endif%}
             <td></td>
-    <!--        <a href="{%url 'patients:patients_update' p.pk%}"></a>-->
-    <!--        <a class="delete" href="{%url 'patients:patients_delete' p.pk%}"></a>-->
         </tr>
     {%endfor%}
 {%else%}
