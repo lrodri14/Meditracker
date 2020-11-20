@@ -1,4 +1,6 @@
+<!--This template is used to delete instances of the Providers class.-->
 {%load static%}
+<!--ID attribute set for JS Logic Purposes, it will decide which async function to run depending on this ID.-->
 <form method="POST" action="{%url 'providers:delete_visitor' visitor.pk%}" id="delete-operation">
     {%csrf_token%}
     <h1>{{visitor.name}} {{visitor.last_name}}</h1>

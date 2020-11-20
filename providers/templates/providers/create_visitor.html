@@ -1,3 +1,4 @@
+<!--This template is used to render the form to create instances of the Providers Class-->
 {%load static%}
 <form method="POST" action="{%url 'providers:create_visitor'%}" class="create-visitor-form" autocomplete="off">
     {%csrf_token%}
@@ -12,5 +13,7 @@
     <p>{{form.email}}</p>
     <p>{{form.company.label}}</p>
     <p>{{form.company}}</p>
+    <!--Custom Error-->
+    <p class="error"><small>{{error}}</small></p>
     <button type="submit">Save</button>
 </form>

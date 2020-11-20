@@ -1,5 +1,8 @@
+<!--This template will be rendered with the filtered instances retrieved from the database-->
 {%load static%}
+<!--If data is present, this will be executed.-->
 {%if providers%}
+    <!--For each instance-->
     {%for provider in providers%}
     <tr data-url="{%url 'providers:provider_details' provider.pk %}">
         <td>{{provider.company}}</td>
@@ -11,6 +14,7 @@
         <td><i class="fas fa-envelope"></i></td>
     </tr>
     {%endfor%}
+<!--If data is not present, this will be executed.-->
 {%else%}
     <p class="no-providers">No providers of this category listed</p>
 {%endif%}
