@@ -7,7 +7,7 @@ which contains all the Async functions, it consists of 11 async function declara
 contains the only Sync functions all over the file. The Event Listeners Section is composed of 3, the navigation bar
 events listener sections, the wrapper event listeners section and the modal event listeners section.*/
 
-////////////////////////////////////////////////////Variables///////////////////////////////////////////////////////////
+// ##################################################### Variables #####################################################
 
 // Available Data
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
@@ -21,7 +21,7 @@ let modal = document.querySelector('.modal');
 let modalContent = document.querySelector('.modal-content');
 
 
-////////////////////////////////////////////////////Functions///////////////////////////////////////////////////////////
+// #################################################### Functions ######################################################
 
 
 // Async Functions
@@ -155,7 +155,7 @@ function addIconLevitate(addProvidersIcon){
 }
 
 
-////////////////////////////////////////////////////Event Listeners/////////////////////////////////////////////////////
+// ##################################################### Event Listeners ###############################################
 
 /////////////////////////////////
 // Navigation Bar Event Listeners

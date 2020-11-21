@@ -2,9 +2,9 @@
 the Patients main page to work properly, it is divided into three sections: Variable Declarations, Functions and
 event listeners, the Variable declarations section is divided into another two sections, for data availability and
 no data present functionality, it also contains a variable called 'backedUpData', the purpose of this variable is
-to serve the data that present before a filtering operation.*/
+to serve the data that present before a filtering operation. The function section consists of 3 async functions.*/
 
-// ################################################Variables############################################################
+// ################################################ Variables ##########################################################
 // Data available
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
@@ -31,7 +31,7 @@ if (tbody){
     var backedUpData = tbody.innerHTML
 }
 
-// ################################################Functions############################################################
+// ################################################ Functions ##########################################################
 
 // Async Functions
 async function deleteAW(url){
@@ -69,7 +69,7 @@ async function submitFormAW(form, csrfmiddlewaretoken){
     return data
 }
 
-// ############################################Event Listeners##########################################################
+// ############################################ Event Listeners ########################################################
 
 // addPatient Event Listeners, this events will be fired when there is not data available to show.
 // addPatient Event Listeners

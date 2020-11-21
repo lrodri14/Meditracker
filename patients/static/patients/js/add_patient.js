@@ -1,8 +1,8 @@
 /*This JS file contains all the variable definitions, async and sync functions, and event listeners for the patient ad-
   dition to perform correctly, the variables are divided into three sections, the backedUpData variables, the management form
-  variables and finally the clonedNodes variable.*/
+  variables and finally the clonedNodes variable, the function section consists of 2 async functions.*/
 
-// #############################################Variables###############################################################
+// ############################################# Variables #############################################################
 
 // backedUpData variables
 var allergySelection
@@ -28,7 +28,7 @@ var modalContent = document.querySelector('.modal-content')
 var saveConfirmationModal = document.querySelector('.save-confirmation-modal')
 
 
-// #############################################Functions###############################################################
+// ############################################# Functions #############################################################
 
 async function elementAdditionFormAsync(url){
     /*This async function is used to retrieve the form to add elements as Allergies or Insurance carriers from the ser
@@ -51,7 +51,7 @@ async function addElementAsync(url, method, csrfmiddlewaretoken, formData){
 }
 
 
-// #############################################Event Listeners#########################################################
+// ############################################# Event Listeners #######################################################
 
 
 // Form Submit Event Listener

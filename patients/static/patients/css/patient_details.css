@@ -1,5 +1,8 @@
-/*Checked*/
-/*Body*/
+/* This CSS File, contains all the styles for the patient_details.html template, it is divided into 6 sections:
+   Body, Wrapper, Table, Filter Form, Navigation and Image Preview*/
+
+/*##################################################### Body #########################################################*/
+
 body{
     background-color: #12212b;
     overflow-x: hidden;
@@ -14,6 +17,8 @@ body{
 #title{
     position: fixed;
 }
+
+/*##################################################### Wrapper ######################################################*/
 
 .wrapper{
     display: grid;
@@ -74,6 +79,8 @@ a{
     font-size: 20px;
     margin-top: 5%;
 }
+
+/*##################################################### Data Table ###################################################*/
 
 table{
     margin-top: 5%;
@@ -162,6 +169,10 @@ tr:nth-child(even){
     color: #12212b !important;
     height: 100%;
 }
+
+
+/*##################################################### Filtering Form ###############################################*/
+
 
 i{
     padding: 5px;
@@ -275,7 +286,8 @@ button{
     margin-left: 60%;
 }
 
-/*Navigation*/
+/*##################################################### Navigation ###################################################*/
+
 
 .info{
     width: 100%;
@@ -312,6 +324,9 @@ button{
     color: #12212b;
     transition: 0.5s;
 }
+
+/*##################################################### Image Preview ################################################*/
+
 
 .image-preview{
     position: fixed;
