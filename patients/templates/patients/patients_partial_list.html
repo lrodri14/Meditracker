@@ -13,7 +13,7 @@
             <td>{%if p.insurance.insurance_carrier != None%}{{p.insurance.insurance_carrier}}{%else%}Not Available{%endif%}</td>
             {%if doctor%}<td data-url="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></td>
             <td data-url="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></td>{%endif%}
-            <td></td>
+            <td><!--<i class="fas fa-exclamation-circle"></i><i class="fas fa-exclamation-circle"></i>--></td>
         </tr>
     {%endfor%}
 <!--If no patients are present this code will be rendered-->

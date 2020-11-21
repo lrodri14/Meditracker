@@ -68,6 +68,10 @@ button{
     margin-left: 35%;
 }
 
+button:focus{
+    outline: none;
+}
+
 .button-hover{
     background-color: #0ff5fc;
     color: #12212b;

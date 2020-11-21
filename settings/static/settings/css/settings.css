@@ -205,7 +205,7 @@ li{
     margin-right: -50%;
     transform: translate(-50%, -50%);
     width: 25%;
-    height: 35%;
+    height: 25%;
 }
 
 #details{
@@ -273,7 +273,6 @@ select:focus{
 
 /*Button*/
 button{
-    margin: 15px;
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
@@ -283,6 +282,10 @@ button{
     color: #0ff5fc;
     transition: 0.5s;
 
+}
+
+button:focus{
+    outline: none;
 }
 
 .button-hover{

@@ -198,13 +198,17 @@ input:focus{
 }
 
 button{
-    width: 30%;
+    width: 25%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
     background-color: #12212b;
     border-color: #0ff5fc;
     border-radius: 10px;
     color: #0ff5fc;
+}
+
+button:focus{
+    outline: none;
 }
 
 .button-form-hover{

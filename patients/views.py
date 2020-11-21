@@ -28,6 +28,7 @@ def patients(request):
     """
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
+    today = timezone.localdate()
     if request.method == 'POST':
         data = {}
         patient_filter = PatientFilter(request.POST)
@@ -35,11 +36,11 @@ def patients(request):
         if patient_filter.is_valid():
             if patient_filter.cleaned_data['patient'][0] in [str(x) for x in range(0, 9)]:
                 updated_patients = Patient.objects.filter(id_number__icontains=int(patient_filter.cleaned_data['patient']), created_by=request.user)
-                context = {'patients':updated_patients, 'doctor': doctor}
+                context = {'patients':updated_patients, 'doctor': doctor, 'today': today}
                 data = {'html': render_to_string(template, context, request)}
             elif type(patient_filter.cleaned_data['patient']) == str:
                 updated_patients = Patient.objects.filter(Q(first_names__icontains=patient_filter.cleaned_data['patient']) | Q(last_names__icontains=patient_filter.cleaned_data['patient']), created_by=request.user)
-                context = {'patients':updated_patients, 'doctor': doctor}
+                context = {'patients':updated_patients, 'doctor': doctor, 'today': today}
                 data = {'html': render_to_string(template, context, request)}
         return JsonResponse(data)
     else:
@@ -49,7 +50,7 @@ def patients(request):
         page = request.GET.get('page')
         patients = paginator.get_page(page)
         patient_filter = PatientFilter
-        context = {'patients': patients, 'doctor': doctor, 'form': patient_filter}
+        context = {'patients': patients, 'doctor': doctor, 'form': patient_filter, 'today': today}
     return render(request, template, context=context)
 
 
