@@ -1,10 +1,14 @@
-/*Checked*/
-/*Body*/
+/*This add_patient.css stylesheet contains all the styles for the update_patient.html template, it is divided into four
+  sections: wrapper, forms, modal and save confirmation modal.*/
+
+
+/*#####################################################Body###########################################################*/
 body{
     background-color: #3e5278;
 }
 
-/*Wrapper*/
+/*###################################################Wrapper##########################################################*/
+
 .wrapper{
     display: grid;
     grid-template-columns: 30% 69%;
@@ -33,17 +37,13 @@ body{
 }
 
 
-/*Form*/
+/*#####################################################Form###########################################################*/
 form{
     text-align: center;
 }
 
 .error{
     color: #a83632;
-}
-
-.hidden{
-    display: none;
 }
 
 .allergies-form{
@@ -101,13 +101,13 @@ input{
   transition: 0.5s;
 }
 
-input:focus{
-    outline: none;
+.input-hover{
+    width: 75%;
+    transition: 0.5s;
 }
 
-.input-hover{
-  width: 75%;
-  transition: 0.5s;
+input:focus{
+    outline: none;
 }
 
 textarea{
@@ -117,6 +117,10 @@ textarea{
   border: 2px solid #0ff5fc;
   resize: none;
   transition: 0.5s;
+}
+
+textarea:focus{
+  outline: none;
 }
 
 select{
@@ -148,6 +152,10 @@ select:focus{
     display: none;
 }
 
+.hidden{
+    display: none;
+}
+
 button{
     margin: 20px;
     width: 30%;
@@ -166,6 +174,8 @@ button{
     transition: 0.5s;
     cursor: pointer;
 }
+
+/*####################################################Modal###########################################################*/
 
 .modal{
     position: absolute;
@@ -199,7 +209,8 @@ button{
     height: 60%;
 }
 
-/*Save confirmation modal*/
+/*########################################Save confirmation modal#####################################################*/
+
 .save-confirmation-modal{
     background-color: rgba(0,0,0,0.7);
     position: absolute;

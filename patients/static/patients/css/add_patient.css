@@ -101,6 +101,11 @@ input{
   transition: 0.5s;
 }
 
+.input-hover{
+    width: 75%;
+    transition: 0.5s;
+}
+
 input:focus{
     outline: none;
 }
@@ -112,7 +117,10 @@ textarea{
   border: 2px solid #0ff5fc;
   resize: none;
   transition: 0.5s;
+}
 
+textarea:focus{
+  outline: none;
 }
 
 select{

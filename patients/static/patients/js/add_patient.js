@@ -1,5 +1,5 @@
-/*This JS file contains all the variable definitions, async and sync functions, and event listeners for the template to
-  to perform correctly, the variables are divided into three sections, the backedUpData variables, the management form
+/*This JS file contains all the variable definitions, async and sync functions, and event listeners for the patient ad-
+  dition to perform correctly, the variables are divided into three sections, the backedUpData variables, the management form
   variables and finally the clonedNodes variable.*/
 
 // #############################################Variables###############################################################
@@ -82,9 +82,20 @@ for (let i = 0; i<button.length; i++){
         this.classList.add('button-hover')
     })
 
-    /* This event will be fired every time a mouse out occurs of a button, the button-hover class will be removed.*/
+    /* This event will be fired every time a mouse out occurs off a button, the button-hover class will be removed.*/
     button[i].addEventListener('mouseout', function(){
         this.classList.remove('button-hover')
+    })
+}
+
+for (var i = 0; i<inputs.length; i++){
+    /* This event will be fired every time a mouse over occurs over an input, the input-hover class will be added.*/
+    inputs[i].addEventListener('mouseover', function(){
+        this.classList.add('input-hover')
+    })
+    /* This event will be fired every time a mouse out occurs off an input, the button-hover class will be removed.*/
+    inputs[i].addEventListener('mouseout', function(){
+        this.classList.remove('input-hover')
     })
 }
 
@@ -105,12 +116,12 @@ if (extraInfo){
     })
 
     extraInfo.addEventListener('mouseout', (e) =>{
-        /* This event will be fired every time a mouse out occurs of fa-plus icon, the fa-plus-hover class will be removed.*/
+        /* This event will be fired every time a mouse out occurs off fa-plus icon, the fa-plus-hover class will be removed.*/
         if (e.target.classList.contains('fa-plus')){
             e.target.classList.remove('fa-plus-hover')
         }
 
-        /* This event will be fired every time a mouse out occurs of fa-trash icon, the fa-trash-hover class will be removed.*/
+        /* This event will be fired every time a mouse out occurs off fa-trash icon, the fa-trash-hover class will be removed.*/
         if (e.target.classList.contains('fa-trash')){
             e.target.classList.remove('fa-trash-hover')
         }
@@ -265,12 +276,12 @@ if (modal){
     })
 
     modal.addEventListener('mouseout', (e) => {
-        /* This event will be fired every time a mouse out occurs of a button, the button-hover class will be removed.*/
+        /* This event will be fired every time a mouse out occurs off a button, the button-hover class will be removed.*/
         if (e.target.nodeName === 'BUTTON'){
             e.target.classList.remove('button-hover')
         }
 
-        /* This event will be fired every time a mouse out occurs over a input, the input-hover class will be removed.*/
+        /* This event will be fired every time a mouse out occurs off a input, the input-hover class will be removed.*/
         if (e.target.nodeName === 'INPUT'){
             e.target.classList.remove('input-hover')
         }
