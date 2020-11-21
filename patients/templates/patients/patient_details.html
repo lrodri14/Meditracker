@@ -1,4 +1,4 @@
-<!--Checked-->
+<!--This template is used to display the details of any specific patient-->
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}{{patient.first_names}} {{patient.last_names}}{%endblock%}
@@ -8,12 +8,13 @@
 
 <h1 id="title">{{patient.first_names}} {{patient.last_names}}</h1>
 
-<!--Info Navigation-->
+<!--Info Navigation, this is used to select what information the user wants to see.-->
 <div class="info">
     <div class="info-tab tab-active"><p>General</p></div><div class="info-tab"><p>Background</p></div><div class="info-tab"><p>Appointments</p></div><div class="info-tab"><p>Exams</p></div><div class="info-tab"><p>Charges</p></div>
 </div>
 
 <div class="wrapper">
+    <!-- General Information of the patient-->
     <div class="general-info">
         <div class="title">General Information</div>
         <h3>Id Card Number: {{patient.id_number}}</h3>
@@ -28,6 +29,7 @@
         <h3>Origin: {{patient.get_origin_display}}</h3>
         <h3>Residence: {{patient.get_residence_display}}</h3>
     </div>
+    <!-- Extra Information of the patient-->
     <div class="extras">
         <div class="allergies">
             <div class="title">Allergies</div>
@@ -37,6 +39,7 @@
                         <h3>About: {{allergy.about}}</h3>
                         <hr>
                     {%endfor%}
+                <!-- If no allergies are present, this will be rendered-->
                 {%else%}
                     <p class="no-background">No Allergies</p>
                 {%endif%}
@@ -49,6 +52,7 @@
                         <h3>Information: {{antecedent.info}}</h3>
                         <hr>
                     {%endfor%}
+                <!-- If no antecedents are present, this will be rendered-->
                 {%else%}
                     <p class="no-background">No Antecedents</p>
                 {%endif%}
@@ -59,22 +63,27 @@
                     <h3>Insurance Carrier: {{insurance.insurance_carrier}}</h3>
                     <h3>Type of Insurnace: {{insurance.type_of_insurance}}</h3>
                     <h3>Expiration Date: {{insurance.expiration_date}}</h3>
+                <!-- If no insurance is present, this will be rendered-->
                 {%else%}
                     <p class="no-background">No Insurance Information</p>
                 {%endif%}
         </div>
     </div>
     <div class="filterable appointments">
+        <!-- Included template for dynamic displaying of results-->
         {%include 'patients/patient_consults_partial_list.html'%}
     </div>
     <div class="filterable exams">
+        <!-- Included template for dynamic displaying of results-->
         {%include 'patients/patient_exams_partial_list.html'%}
     </div>
     <div class="filterable charges">
+        <!-- Included template for dynamic displaying of results-->
         {%include 'patients/patient_charges_partial_list.html'%}
     </div>
 </div>
 
+<!--Modal used for image previewing.-->
 <div class="image-preview">
     <img class="previewed-image" src="" alt="">
 </div>

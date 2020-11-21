@@ -1,4 +1,6 @@
+<!-- Template used to display specific patient exams dynamically-->
 {%load static%}
+<!--If exams are present this code will be rendered-->
 {%if exams%}
 <div>
     <table>
@@ -25,6 +27,7 @@
     </table>
 </div>
 <div>
+    <!-- Filtering form -->
     <i class="fas fa-filter exams-filter"></i></i><i class="fas fa-sync-alt exams-reload"></i>
     <form method="POST" action="{%url 'patients:patients_details' patient.pk%}" class="exams-form">
         <h1>Filter Results</h1>
@@ -37,6 +40,7 @@
         <button type="submit">Submit</button>
     </form>
 </div>
+<!--If no exams are present this code will be rendered-->
 {%else%}
 <p class="no-data">No Exams</p>
 {%endif%}

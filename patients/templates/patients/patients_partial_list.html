@@ -1,5 +1,6 @@
-<!--Included Template in patients.html-->
+<!-- Template used to display specific patients dinamically-->
 {%load static%}
+<!--If patients are present this code will be rendered-->
 {%if patients%}
     {%for p in patients%}
         <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">
@@ -15,6 +16,7 @@
             <td></td>
         </tr>
     {%endfor%}
+<!--If no patients are present this code will be rendered-->
 {%else%}
     <p class="no-patients-listed">No patients found</p>
 {%endif%}

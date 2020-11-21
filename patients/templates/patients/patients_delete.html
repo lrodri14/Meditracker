@@ -1,4 +1,6 @@
+<!-- This template is used to render the form for deletion confirmation-->
 {%load static%}
+<!-- Confirmation -->
 {%if patient%}
 <form method="POST" action="{%url 'patients:patients_delete' patient.pk%}" id="modal-form">
     {%csrf_token%}
@@ -7,6 +9,7 @@
     <button type="submit" name='choice' value="yes">Yes</button>
     <button type="submit" name='choice' value="no">No</button>
 </form>
+<!-- If the patient is linked to other consults or the patient was deleted successfully, then this will be rendered-->
 {%else%}
     {%if error%}
         <p>{{error}}</p>

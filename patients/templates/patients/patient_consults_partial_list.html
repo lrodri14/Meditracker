@@ -1,4 +1,6 @@
+<!-- Template used to display specific patient consults dynamically-->
 {%load static%}
+<!--If consults are present this code will be rendered-->
 {%if consults%}
 <div>
     <table>
@@ -37,6 +39,7 @@
     </table>
 </div>
 <div>
+    <!--Filtering form-->
     <i class="fas fa-filter appointments-filter"></i><i class="fas fa-sync-alt appointments-reload"></i>
     <form method="POST" action="{%url 'patients:patients_details' patient.pk%}" class="appointments-form">
         <h1>Filter Results</h1>
@@ -49,6 +52,7 @@
         <button type="submit">Submit</button>
     </form>
 </div>
+<!--If no consults are present this code will be rendered-->
 {%else%}
 <p class="no-data">No consults</p>
 {%endif%}
