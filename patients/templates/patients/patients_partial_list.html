@@ -13,7 +13,17 @@
             <td>{%if p.insurance.insurance_carrier != None%}{{p.insurance.insurance_carrier}}{%else%}Not Available{%endif%}</td>
             {%if doctor%}<td data-url="{%url 'patients:patients_update' p.pk%}"><i class="fas fa-edit"></i></td>
             <td data-url="{%url 'patients:patients_delete' p.pk%}"><i class="fas fa-trash"></i></td>{%endif%}
-            <td><!--<i class="fas fa-exclamation-circle"></i><i class="fas fa-exclamation-circle"></i>--></td>
+            <!-- This condition is used to notify the user that some information inside that patient instance, presents
+                 anomallies, and must be corrected. We will also display a small pop-up -->
+            {%if p.age >= 18 and not p.id_number and p.insurance.expiration_data <= today%}
+                <td><i class="fas fa-exclamation-circle"></i></td>
+            {%elif p.age >= 18 and not p.id_number%}
+                <td><i class="fas fa-exclamation-circle"></i></td>
+            {%elif p.insurance.expiration_data <= today%}
+                <td><i class="fas fa-exclamation-circle"></i></td>
+            {%else%}
+                <td><i class="fas fa-check-circle"></i></td>
+            {%endif%}
         </tr>
     {%endfor%}
 <!--If no patients are present this code will be rendered-->

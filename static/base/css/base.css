@@ -30,12 +30,18 @@
     Attended: #32a852;
     Never Attended: #a83632;
 
+    Patient Instance Status
+    _______________________
+
+    In-Order: #32a852;
+    Anomally: #a83632;
+
     Operations
     ----------
 
     Add: #32a852;
     Delete: #a83632;
-    Update: #ffe100;
+    Update: #adab1d;
 
     Errors & Reminders
     __________________

@@ -92,7 +92,27 @@ table{
 }
 
 .fa-edit-hover{
-    color: #ffe100;
+    color: #adab1d;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-exclamation-circle{
+    color:  #adab1d;
+    transition: 0.5s;
+}
+
+.fa-exclamation-circle-hover{
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-check-circle{
+    color:  #32a852;
+    transition: 0.5s;
+}
+
+.fa-check-circle-hover{
     cursor: pointer;
     transition: 0.5s;
 }
