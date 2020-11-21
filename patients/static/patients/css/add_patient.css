@@ -1,10 +1,14 @@
-/*Checked*/
-/*Body*/
+/*This add_patient.css stylesheet contains all the styles for the add_patient.html template, it is divided into four
+  sections: wrapper, forms, modal and save confirmation modal.*/
+
+
+/*#####################################################Body###########################################################*/
 body{
     background-color: #3e5278;
 }
 
-/*Wrapper*/
+/*###################################################Wrapper##########################################################*/
+
 .wrapper{
     display: grid;
     grid-template-columns: 30% 69%;
@@ -33,7 +37,7 @@ body{
 }
 
 
-/*Form*/
+/*#####################################################Form###########################################################*/
 form{
     text-align: center;
 }
@@ -163,6 +167,8 @@ button{
     cursor: pointer;
 }
 
+/*####################################################Modal###########################################################*/
+
 .modal{
     position: absolute;
     top: 0;
@@ -195,7 +201,8 @@ button{
     height: 60%;
 }
 
-/*Save confirmation modal*/
+/*########################################Save confirmation modal#####################################################*/
+
 .save-confirmation-modal{
     background-color: rgba(0,0,0,0.7);
     position: absolute;
