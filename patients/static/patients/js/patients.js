@@ -1,10 +1,13 @@
 /*This JS file contains all the variable declarations, Async functions and functions, and event listeners needed for
 the Patients main page to work properly, it is divided into three sections: Variable Declarations, Functions and
 event listeners, the Variable declarations section is divided into another two sections, for data availability and
-no data present functionality, it also contains a variable called 'backedUpData', the purpose of this variable is
-to serve the data that present before a filtering operation. The function section consists of 3 async functions.*/
+no data present functionality, the data available section contains some an objects  which contain the respective
+warning messages shown to the user in case there is any anomally in any patient's instance, it also contains a variable
+called 'backedUpData', the purpose of this variable is to serve the data that present before a filtering operation.
+The function section consists of 3 async functions and 1 sync function.*/
 
 // ################################################ Variables ##########################################################
+
 // Data available
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
@@ -19,6 +22,16 @@ if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector
     var modalContent = document.querySelector('.modal-content')
     var info = document.querySelector('.info')
     var infoContent = document.querySelector('.info-content')
+    var warningPopup = document.querySelector('.popup')
+    var warningPopupText = document.querySelector('.popup-text')
+
+    // Warning Messages
+    var warningMessages = {
+        'no-id-registered' : "Patient over 18, no ID information registered",
+        'expired-insurance' : "Patient's Medical Insurance has already expired",
+        'out-of-date-info' : "Patient's ID and Medical Insurance information is out of date",
+        'in-order': "Patient's information up to date"
+    }
 }
 
 // No Data Available
@@ -67,6 +80,13 @@ async function submitFormAW(form, csrfmiddlewaretoken){
     const result = await fetch(form.action, {method:'POST', headers:{'X-CSRFToken': csrfmiddlewaretoken}})
     const data = await result.json()
     return data
+}
+
+// Sync Functions
+
+// This function is used to retrieve the warning message that will be shown to the user, it expects one parameter, the code.
+function retrieveWarningMessage(messageCode){
+    return warningMessages[messageCode]
 }
 
 // ############################################ Event Listeners ########################################################
@@ -160,6 +180,27 @@ if (wrapper){
             })
         }
 
+        let warnings = document.querySelectorAll('.fa-exclamation-circle, .fa-check-circle')
+        for (let i = 0; i<warnings.length; i++){
+            /*This event will be fired every time the target contains the fa-exclamation-circle class in its classlist,
+              what this function will perform is the display of the warning pop-up aside of the table row for that
+              specific patient instance, in case there is any anomally in the registered information*/
+            warnings[i].addEventListener('mouseover', (e) => {
+                form.classList.remove('show-form')
+                let positionY = e.clientY - 12
+                let messageCode = e.target.getAttribute('data-message-code')
+                warningPopupText.innerText = retrieveWarningMessage(messageCode)
+                warningPopup.classList.add('popup-show')
+                messageCode === 'in-order' ? warningPopupText.classList.add('popup-text-in-order') : warningPopupText.classList.remove('popup-text-in-order')
+                warningPopup.style.top = String(positionY + 'px')
+            })
+
+            warnings[i].addEventListener('mouseout', (e) => {
+                warningPopup.classList.remove('popup-show')
+            })
+        }
+
+
         // This event will be fired, every time the user hovers over an input, the input-hover class will be added.
         if (e.target.nodeName === 'INPUT'){
             e.target.classList.add('input-hover')
@@ -189,6 +230,7 @@ if (wrapper){
         if (e.target.classList.contains('fa-filter')){
             e.target.classList.add('fa-filter-hover')
         }
+
 
         })
 
@@ -259,6 +301,8 @@ if (wrapper){
         /* This event will be fired if the target is a fa-filter icon, and depending if the filter form contains the
            show-form class or not, will add or remove this class.*/
         if (e.target.classList.contains('fa-filter')){
+            warningPopup.classList.remove('popup-show')
+            warningPopup.style.top = ''
             !form.classList.contains('show-form') ? form.classList.add('show-form') : form.classList.remove('show-form')
         }
 

@@ -11,7 +11,7 @@ i:not(.fa-camera){
 }
 
 .fa-camera-hover{
-    color: #ffe100;
+    color: #e3d622;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -23,7 +23,7 @@ i:not(.fa-camera){
 }
 
 .fa-edit-hover{
-    color: #ffe100;
+    color: #e3d622;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -41,7 +41,7 @@ i:not(.fa-camera){
 
 .fa-pen-hover{
     cursor: pointer;
-    color: #ffe100;
+    color: #e3d622;
 }
 
 .menu{
