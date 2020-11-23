@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from patients.models import Patient
 from django.contrib.auth import get_user_model

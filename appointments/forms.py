@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.core.exceptions import ValidationError
 from .models import Consults, MedicalExams, Drugs
 from django import forms
@@ -26,8 +28,8 @@ class ConsultsForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         datetime = cleaned_data.get('datetime')
-        if datetime.date() < timezone.localtime().date():
-            raise ValidationError('Unable to create a consult for this date.', code='invalid_date')
+        if datetime < (timezone.localtime() - timedelta(hours=0, minutes=1)):
+            raise ValidationError('Unable to create a consult for this date and time.', code='invalid_date')
         return cleaned_data
 
 
