@@ -98,6 +98,7 @@ class Consults(models.Model):
     # Status
     medical_status = models.BooleanField('medical_status', blank=True, null=True, help_text='Handles the medical consult status', default=False)
     status = models.CharField('status', max_length=10, blank=True, null=True, help_text='Handles the consult status', default=STATUS_CHOICES[0][0], choices=STATUS_CHOICES)
+    lock = models.BooleanField('lock', default=True, blank=False, null=True, help_text='Consult lock status')
 
     def __str__(self):
         return str(self.patient) + "'s consult for " + str(self.datetime)

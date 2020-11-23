@@ -3,6 +3,9 @@ var formInputs = document.querySelectorAll('input:not([type=checkbox]):not([type
 var medicalBook = document.querySelector('.fa-book-medical')
 var button = document.querySelectorAll('button')
 var generalInfo = document.querySelector('.general-info')
+var lock = document.querySelector('.lock')
+var padlock = document.querySelector('.fa-lock')
+var lockInput = document.querySelector('#id_lock')
 var diagnose = document.querySelector('.diagnose')
 var navigation = document.querySelector('.navigation')
 var exams = document.querySelector('.fa-file-medical-alt')
@@ -60,6 +63,10 @@ function diagnoseScroll(elScrollLeft, elScrollWidth, distance, element, eTarget,
     }
 }
 
+// Asignments
+lockInput.value = 'True'
+
+
 //Wrapper
 if (form){
     form.addEventListener('submit', (e) => {
@@ -108,6 +115,19 @@ exams.addEventListener('click', function(){
     examsModal.classList.add('exams-modal-show')
 })
 
+lock.addEventListener('click', (e) => {
+    if (e.target.classList.contains('lock') || e.target.classList.contains('lock-switch')){
+        lock.classList.contains('lock-active') ? lock.classList.remove('lock-active') : lock.classList.add('lock-active')
+        lockInput.value === 'True' ? lockInput.value = 'False' : lockInput.value = 'True'
+        if (padlock.classList.contains('fa-lock')){
+            padlock.classList.remove('fa-lock')
+            padlock.classList.add('fa-unlock')
+        }else{
+            padlock.classList.remove('fa-unlock')
+            padlock.classList.add('fa-lock')
+        }
+    }
+})
 
 if (examsModal){
 

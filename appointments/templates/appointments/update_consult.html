@@ -24,6 +24,7 @@
             {%if consult_form.errors%}
                 <p class="error">{{consult_form.non_field_errors.as_text}}</p>
             {%endif%}
+            {{consult_form.lock}}
             <p class="error">{{error}}</p>
             <h4 id="charge-label">{{consult_form.charge.label}}</h4>
             <p>{{consult_form.charge}}</p>
@@ -116,6 +117,15 @@
 </div>
 
 </form>
+
+<div class="lock-container">
+    <i class="fas fa-lock"></i>
+    <div class="lock lock-active">
+        <div class="lock-switch">
+
+        </div>
+    </div>
+</div>
 
 <div class="preview-image">
     <img class="previewed-image" src="" alt="">

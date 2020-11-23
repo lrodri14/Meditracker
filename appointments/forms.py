@@ -52,6 +52,7 @@ class UpdateConsultsForm(forms.ModelForm):
             'drugs': forms.CheckboxSelectMultiple(),
             'medicine': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Indications Here'}),
             'actions': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Extra Considerations'}),
+            'lock': forms.widgets.HiddenInput(),
         }
 
     def __init__(self, *args, **kwargs):

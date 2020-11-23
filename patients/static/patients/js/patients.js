@@ -184,7 +184,8 @@ if (wrapper){
         for (let i = 0; i<warnings.length; i++){
             /*This event will be fired every time the target contains the fa-exclamation-circle class in its classlist,
               what this function will perform is the display of the warning pop-up aside of the table row for that
-              specific patient instance, in case there is any anomally in the registered information*/
+              specific patient instance, in case there is any anomally in the registered information, if not, it will
+              display a pop-up indicating every thing is in order.*/
             warnings[i].addEventListener('mouseover', (e) => {
                 form.classList.remove('show-form')
                 let positionY = e.clientY - 12

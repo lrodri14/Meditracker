@@ -21,6 +21,8 @@ if (document.querySelector('.modal') !== 'undefined' && document.querySelector('
 // Icons
 var plus = document.querySelector('.fa-plus')
 var edit = document.querySelectorAll('.fa-edit')
+var warnings = document.querySelectorAll('.fa-exclamation-circle')
+
 
 var createConsultModal = document.querySelector('.create-consult-modal')
 
@@ -59,6 +61,24 @@ if (edit){
 
         edit[i].addEventListener('mouseout', () => {
             edit[i].classList.remove('fa-edit-hover')
+        })
+
+    }
+
+}
+
+if (warnings){
+
+    for (let i = 0; i<warnings.length; i++){
+
+        let popUp
+        warnings[i].addEventListener('mouseover', (e) => {
+            popUp = e.target.parentNode.childNodes[1]
+            popUp.classList.add('popup-show')
+        })
+
+        warnings[i].addEventListener('mouseout', (e) => {
+            popUp.classList.remove('popup-show')
         })
 
     }
@@ -139,46 +159,6 @@ modalContent.addEventListener('submit', (e) => {
     }
 })
 
-//Table Rows
-//if (rows){
-//    for(let i = 0; i<rows.length; i++){
-//        let childNodes = rows[i].childNodes
-//        if (rows[i].id === ''){
-//            rows[i].addEventListener('mouseover', function(e){
-//                rows[i].style.backgroundColor = 'cyan'
-//                rows[i].classList.add('tr-hover')
-//                for (let c = 0; c<childNodes.length; c++){
-//                    if (childNodes[c].nodeName != '#text'){
-//                        childNodes[c].style.color = '#12212b'
-//                        if (childNodes[c].children){
-//                            var children = childNodes[c].children
-//                            for (var cc = 0; cc<children.length; cc++){
-//                                children[cc].style.color = '#12212b'
-//                                children[cc].style.transition = '0.5s'
-//                                }
-//                            }
-//                        }
-//                    }
-//                })
-//
-//        rows[i].addEventListener('mouseout', function(){
-//            rows[i].style.backgroundColor = ''
-//            rows[i].classList.remove('tr-hover')
-//            for (let c = 0; c<childNodes.length; c++){
-//                if (childNodes[c].nodeName != '#text'){
-//                    childNodes[c].style.color = ''
-//                    if (childNodes[c].children){
-//                            var children = childNodes[c].children
-//                            for (var cc = 0; cc<children.length; cc++){
-//                                children[cc].style.color = ''
-//                                }
-//                            }
-//                        }
-//                    }
-//                })
-//        }
-//    }
-//}
 if (table){
 
     table.addEventListener('mouseover', (e) => {

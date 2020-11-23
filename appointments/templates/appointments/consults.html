@@ -34,11 +34,19 @@
                     <td>{{a.datetime}}</td>
                     <td id="status-0">Pending...</td>
                     {%if doctor%}<td><i class="fas fa-edit" onclick="window.location='{%url 'appointments:update_consult' a.pk%}'"></i></td>{%endif%}
-                    <td></td>
+                    <td>
+                        {%if a.lock == False%}
+                            <div class="popup">
+                                <span class="popup-text">This consult is unlocked for further changes</span>
+                            </div>
+                            <i class="fas fa-exclamation-circle"></i>
+                        {%endif%}
+                    </td>
                 </tr>
             {%endfor%}
         </tbody>
     </table>
+
 {%else%}
     <p id="no-consults">There are no consults for today's date</p>
     <i class="fas fa-plus create-consult-modal" id="add-consult" data-url="{%url 'appointments:create_consult'%}"></i>

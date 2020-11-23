@@ -78,16 +78,16 @@ class InsuranceInformationForm(forms.ModelForm):
         model = InsuranceInformation
         exclude = ('patient',)
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     carrier = cleaned_data.get('insurance_carrier')
-    #     insurance_type = cleaned_data.get('type_of_insurance')
-    #     expiration_date = cleaned_data.get('expiration_date')
-    #     if (carrier and not insurance_type) or (insurance_type and not carrier):
-    #         raise ValidationError("Insurance information incomplete")
-    #     elif (carrier and insurance_type) and (expiration_date <= timezone.localtime().date()):
-    #         raise ValidationError('Insurance has already expired')
-    #     return cleaned_data
+    def clean(self):
+        cleaned_data = super().clean()
+        carrier = cleaned_data.get('insurance_carrier')
+        insurance_type = cleaned_data.get('type_of_insurance')
+        expiration_date = cleaned_data.get('expiration_date')
+        if (carrier and not insurance_type) or (insurance_type and not carrier):
+            raise ValidationError("Insurance information incomplete")
+        elif (carrier and insurance_type) and (expiration_date <= timezone.localtime().date()):
+            raise ValidationError('Insurance has already expired')
+        return cleaned_data
 
 
 # Allergies Forms

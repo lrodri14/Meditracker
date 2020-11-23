@@ -112,7 +112,6 @@ table{
 .tr-hover{
     background-color: #0ff5fc;
     cursor: pointer;
-    line-height: 50px;
     color: #12212b;
     transition: 0.5s;
 }
@@ -149,6 +148,10 @@ table{
     transition: 0.5s;
 }
 
+.fa-exclamation-circle{
+    color: #e3d622;
+}
+
 tr{
     transition: 0.5s;
     line-height: 20px;
@@ -177,12 +180,38 @@ tr:nth-child(even){
     transition: 0.5s;
 }
 
-.tr-hover{
-    background-color: #0ff5fc;
+/* Warning Popup */
+.popup{
+    position: absolute;
+    z-index: 1;
+    left: 83.3%;
+    margin-top: -35px;
+    visibility: hidden;
+    opacity: 0;
     transition: 0.5s;
-    cursor: pointer;
-    line-height: 50px;
+}
+
+.popup-show{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.popup-text{
+    font-size: 10px;
+    background-color: #e3d622;
     color: #12212b;
+    padding: 5px;
+}
+
+.popup-text:after{
+    content: " ";
+    border-width: 5px;
+    border-style: solid;
+    border-color: #e3d622 transparent transparent transparent;
+    position: absolute;
+    top: 115%;
+    left: 90%;
 }
 
 /*Buttons*/

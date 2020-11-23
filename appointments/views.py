@@ -22,7 +22,7 @@ def consults(request):
     today = timezone.localtime()
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    appointments = Consults.objects.filter(created_by=request.user, datetime__date=today.date(), medical_status=False, status='CONFIRMED')
+    appointments = Consults.objects.filter(Q(created_by=request.user, datetime__date=today.date(), medical_status=False, status='CONFIRMED') | Q(created_by=request.user, lock=False))
     template = 'appointments/consults.html'
     context = {'appointments': appointments, 'today': today, 'doctor': doctor}
     return render(request, template, context)
