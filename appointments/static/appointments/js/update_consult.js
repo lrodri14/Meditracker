@@ -6,6 +6,7 @@ var generalInfo = document.querySelector('.general-info')
 var lock = document.querySelector('.lock')
 var padlock = document.querySelector('.fa-lock')
 var lockInput = document.querySelector('#id_lock')
+var lockPopUp = document.querySelector('.popup')
 var diagnose = document.querySelector('.diagnose')
 var navigation = document.querySelector('.navigation')
 var exams = document.querySelector('.fa-file-medical-alt')
@@ -116,6 +117,7 @@ exams.addEventListener('click', function(){
 })
 
 lock.addEventListener('click', (e) => {
+
     if (e.target.classList.contains('lock') || e.target.classList.contains('lock-switch')){
         lock.classList.contains('lock-active') ? lock.classList.remove('lock-active') : lock.classList.add('lock-active')
         lockInput.value === 'True' ? lockInput.value = 'False' : lockInput.value = 'True'
@@ -127,6 +129,15 @@ lock.addEventListener('click', (e) => {
             padlock.classList.add('fa-lock')
         }
     }
+
+})
+
+lock.addEventListener('mouseover', () => {
+    lockPopUp.classList.add('popup-show')
+})
+
+lock.addEventListener('mouseout', () => {
+    lockPopUp.classList.remove('popup-show')
 })
 
 if (examsModal){
