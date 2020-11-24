@@ -16,6 +16,24 @@ body{
     text-align: justify;
 }
 
+#patient-info{
+    cursor: default;
+    display: block;
+    width: 20%;
+}
+
+.motive{
+    padding: 5px;
+    max-height: 9%;
+    overflow: auto;
+}
+
+.suffering{
+    padding: 5px;
+    max-height: 9%;
+    overflow: auto;
+}
+
 .lock-container{
     position: absolute;
     width: 55px;
@@ -62,15 +80,47 @@ body{
 
 .popup{
     position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.lock-popup{
     top: 15%;
     left: 32%;
     z-index: 1;
     padding: 5px;
     background-color: #e3d622;
     text-align: justify;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.5s;
+}
+
+.patient-info-popup{
+    background-color: #0ff5fc;
+    padding: 5px;
+    top: 11%;
+    left: 6%;
+    width: 40%;
+    display: grid;
+    grid-template-columns: 40% 59%;
+    grid-gap: 1%;
+}
+
+.patient-info-popup h3{
+    color: #12212b;
+}
+
+.patient-info-popup-text{
+    font-size: 10px;
+    color: #12212b;
+}
+
+.patient-info-popup-text:after{
+    content: '';
+    position: absolute;
+    border: 5px solid;
+    right: 100%;
+    top: 10%;
+    border-color: transparent #0ff5fc transparent transparent;
 }
 
 .popup-show{
@@ -94,7 +144,6 @@ body{
     border-color: transparent #e3d622 transparent transparent;
 }
 
-
 .error{
     color: #a83632;
 }
@@ -106,6 +155,7 @@ h4{
 #charge-label{
     text-decoration: none;
     text-align: center;
+    margin: 0px;
 }
 
 #id_charge{
@@ -122,8 +172,9 @@ h4{
 }
 
 .fa-book-medical-hover{
-  transition: 0.5s;
+  cursor: pointer;
   color: #37cc27;
+  transition: 0.5s;
 }
 
 .fa-file-medical-alt{
@@ -132,7 +183,7 @@ h4{
 }
 
 .fa-file-medical-alt-hover{
-    font-size: 40px;
+    color: #fff;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -195,8 +246,9 @@ button:focus{
 }
 
 .angle-active{
-    font-size: 45px;
+    color: #e3d622;
     cursor: pointer;
+    transition: 0.5s;
 }
 
 #id_medical_exams{
@@ -301,28 +353,30 @@ select:focus{
 }
 
 .exams-modal{
-    width: 100%;
-    height: 100%;
+    position: absolute;
     top: 0%;
     left: 0%;
-    position: fixed;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0,0,0,0.7);
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .exams-modal-show{
+    z-index: 1;
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .exams-data{
+    position: absolute;
     width: 70%;
     height: 40%;
     margin-left: 15%;
-    margin-top: 15%;
+    margin-top: 18%;
     background-color: #12212b;
     text-align: center;
     padding: 10px;
@@ -330,7 +384,7 @@ select:focus{
 }
 
 .exams-data-preview-set{
-    margin-left: 2%;
+    transform: translateX(-20%);
     transition: 1s;
 }
 
@@ -496,8 +550,6 @@ select:focus{
     outline: none;
 }
 
-
-
 #drug-submit{
     margin-top: 1%;
     margin-left: 0%;
@@ -523,6 +575,7 @@ select:focus{
 
 /*Add left:74% here for testing purposes*/
 .preview-image-display{
+    z-index: 1;
     visibility: visible;
     transition: 1.5s;
     transition-delay: visibility 1.5s, left 0.5s;
@@ -542,6 +595,119 @@ select:focus{
 }
 
 /*Modal*/
+.records-modal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.records-modal-show{
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s;
+}
+
+.records-modal-content{
+    display: grid;
+    grid-template-columns: 75% 24%;
+    grid-gap: 1%;
+    width: 100%;
+    height: 70%;
+    margin-left: 0%;
+    margin-top: 15%;
+}
+
+.records-modal-content .records-table{
+    width: 100%;
+    max-height: 77%;
+    overflow-y: auto;
+}
+
+.records-general-information{
+    background-color: #12212b;
+    padding: 10px;
+    text-align: justify;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.records-general-information h3{
+    text-align: center;
+}
+/*Table*/
+.records-table table{
+    background-color: #12212b;
+    border-collapse: collapse;
+    margin: auto;
+    width: 100%;
+}
+
+#heading{
+    background-color: #12212b;
+    color: #0ff5fc;
+    line-height: 25px;
+    cursor: default;
+}
+
+.records-table tr{
+    transition: 0.5s;
+    line-height: 20px;
+    margin: 10px;
+}
+
+.records-table tr th{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.records-table tr td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    color: #0ff5fc;
+}
+
+.records-table tr:nth-child(odd){
+    background-color: #3d6685;
+    transition: 0.5s;
+}
+
+.records-table tr:nth-child(even){
+    background-color: #2a465c;
+    transition: 0.5s;
+}
+
+.records-table .tr-hover{
+    background-color: #0ff5fc;
+    cursor: pointer;
+    color: #12212b;
+    transition: 0.5s;
+}
+
+.records-table .td-hover{
+    color: #12212b;
+}
+
+#no-consults{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+#status-1{
+    background-color: #32a852;
+    color: #12212b;
+    height: 100%;
+}
+
 .modal{
     position: absolute;
     width: 100%;
@@ -557,7 +723,7 @@ select:focus{
 .modal-show{
     opacity: 1;
     visibility: visible;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .modal-content{

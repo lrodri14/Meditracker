@@ -143,6 +143,11 @@ tr:nth-child(even){
     margin-left: 25%;
     width: 50%;
 }
+
+#cancel-consult h4{
+    text-align: left;
+}
+
 /*Form*/
 
 .modal-cancel-form{

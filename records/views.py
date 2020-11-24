@@ -7,16 +7,15 @@ from appointments.models import Consults
 from appointments.forms import RecordsDateFilterForm
 
 
-def records_list(request, pk=None):
-    appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True,).order_by('-datetime') if pk == None else Consults.objects.filter(created_by=request.user, medical_status=True, patient=Patient.objects.get(pk=pk)).order_by('-datetime')
+def records_list(request):
+    appointments_list = Consults.objects.filter(created_by=request.user, medical_status=True,).order_by('-datetime')
     paginator = Paginator(appointments_list, 25)
     page = request.GET.get('page')
     appointments = paginator.get_page(page)
     form = RecordsDateFilterForm
     template = 'records/records_list.html'
     context = {'appointments': appointments, 'form': form}
-    context['referer'] = request.META['HTTP_REFERER'] if 'update_consult' in request.META['HTTP_REFERER'] else None
-    if request.method == 'POST' and not pk:
+    if request.method == 'POST':
         form = RecordsDateFilterForm(request.POST)
         if form.is_valid():
             from_date = form.cleaned_data['date_from']
@@ -29,3 +28,12 @@ def records_list(request, pk=None):
             data = {'html': render_to_string('records/partial_records_list.html', context, request)}
             return JsonResponse(data)
     return render(request, template, context)
+
+
+def filtered_records(request, pk):
+    patient = Patient.objects.get(pk=pk)
+    records = Consults.objects.filter(created_by=request.user, medical_status=True, patient=patient).order_by('-datetime')
+    template = 'records/filtered_records.html'
+    context = {'records': records}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)

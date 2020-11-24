@@ -1,0 +1,27 @@
+{%load static%}
+{%if records%}
+    <table>
+        <thead>
+            <tr id="heading">
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Date and Time</th>
+                <th>Created By</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for r in records%}
+                <tr data-url="{%url 'appointments:consult_summary' r.pk%}">
+                    <td>{{r.patient.id_number}}</td>
+                    <td>{{r.patient.first_names}} {{r.patient.last_names}}</td>
+                    <td>{{r.datetime}}</td>
+                    <td>{{r.created_by}}</td>
+                    <td id="status-1">Attended</td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+{%else%}
+    <p>No records found, this is patient's first visit</p>
+{%endif%}

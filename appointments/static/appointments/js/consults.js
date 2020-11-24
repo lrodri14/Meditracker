@@ -1,4 +1,5 @@
 //Checked
+
 if (document.querySelectorAll('tr') !== 'undefined' && document.querySelectorAll('tr') !== 'null'){
     var table = document.querySelector('table')
 }
@@ -50,6 +51,7 @@ if (plus){
     })
 
 }
+
 
 if (edit){
 

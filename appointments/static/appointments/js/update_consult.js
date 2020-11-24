@@ -1,5 +1,7 @@
 var form = document.querySelector('form')
 var formInputs = document.querySelectorAll('input:not([type=checkbox]):not([type=hidden]):not([type=file]):not(#id_name), textarea')
+var patientInfo = document.querySelector('#patient-info')
+var patientInfoPopUp = document.querySelector('.patient-info-popup')
 var medicalBook = document.querySelector('.fa-book-medical')
 var button = document.querySelectorAll('button')
 var generalInfo = document.querySelector('.general-info')
@@ -27,6 +29,9 @@ var prevSlide = document.querySelector('.fa-angle-left')
 var nextSlide = document.querySelector('.fa-angle-right')
 var controllers = [prevSlide, nextSlide]
 var modal = document.querySelector('.modal')
+var recordsModal = document.querySelector('.records-modal')
+var recordsTable = document.querySelector('.records-table')
+var recordsSummary = document.querySelector('.records-general-information')
 
 navigation.innerHTML = '<li></li>'.repeat(document.querySelectorAll('.diagnose > div').length)
 navigation.childNodes[0].classList.add('navigator-active')
@@ -41,6 +46,18 @@ async function addDrugAsync(url, method, formData, csrfmiddlewaretoken){
 async function retrieveDrugsFilterAsync(url){
     const result = await fetch(url)
     const data = await result.json()
+    return data
+}
+
+async function requestRecords(url){
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+async function consultSummaryAW(url){
+    const result = await fetch(url)
+    const data = result.json()
     return data
 }
 
@@ -85,6 +102,16 @@ if (form){
     })
 }
 
+if (patientInfo){
+    patientInfo.addEventListener('mouseover', () => {
+        patientInfoPopUp.classList.add('popup-show')
+    })
+
+    patientInfo.addEventListener('mouseout', () => {
+        patientInfoPopUp.classList.remove('popup-show')
+    })
+}
+
 
 medicalBook.addEventListener('mouseover', function(){
     this.classList.add('fa-book-medical-hover')
@@ -92,6 +119,15 @@ medicalBook.addEventListener('mouseover', function(){
 
 medicalBook.addEventListener('mouseout', function(){
     this.classList.remove('fa-book-medical-hover')
+})
+
+medicalBook.addEventListener('click', () => {
+    let url = medicalBook.getAttribute('data-url')
+    requestRecords(url)
+    .then(data => {
+        recordsTable.innerHTML = data['html']
+    })
+    recordsModal.classList.add('records-modal-show')
 })
 
 for (let i = 0; i<button.length; i++){
@@ -115,6 +151,44 @@ exams.addEventListener('mouseout', function(){
 exams.addEventListener('click', function(){
     examsModal.classList.add('exams-modal-show')
 })
+
+if (recordsTable){
+    recordsTable.addEventListener('mouseover', (e) => {
+        if (e.target.nodeName === 'TD'){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = '#0ff5fc'
+            row.classList.add('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.add('td-hover')
+                }
+            }
+        let url = row.getAttribute('data-url')
+        consultSummaryAW(url)
+        .then(data => {
+            recordsSummary.innerHTML = data['html']
+        })
+        }
+    })
+
+    recordsTable.addEventListener('mouseout', (e) => {
+
+          if (e.target.nodeName === 'TD'){
+            let row
+            e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = ''
+            row.classList.remove('tr-hover')
+            for (let i = 0; i<row.childNodes.length; i++){
+                if (row.childNodes[i].nodeName === 'TD'){
+                    row.childNodes[i].classList.remove('td-hover')
+                }
+            }
+
+          }
+
+    })
+}
 
 lock.addEventListener('click', (e) => {
 
@@ -201,7 +275,7 @@ if (examsModal){
             e.target.classList.add('fa-eye-hover')
         }
 
-        if (e.target.classList.contains('filename') && e.target.innerText !== ''){
+        if (e.target.classList.contains('filename') && e.target.innerText !== '' && examsModal.classList.contains('exams-modal-show')){
             let imagePreview = document.querySelector('.previewed-image')
             let file
             for (let i = 0; i<e.target.parentNode.childNodes.length; i++){
@@ -434,6 +508,15 @@ if (modal){
 
         if (e.target.nodeName === 'BUTTON' && e.target.textContent === 'Yes'){
             form.submit()
+        }
+    })
+}
+
+
+if (recordsModal){
+    recordsModal.addEventListener('click', (e) => {
+        if (e.target === recordsModal){
+            recordsModal.classList.remove('records-modal-show')
         }
     })
 }

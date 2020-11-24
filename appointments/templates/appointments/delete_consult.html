@@ -1,7 +1,7 @@
 <!--Checked-->
 {%load static%}
 {%block body_block%}
-<form method="POST" class="modal-cancel-form" action="{%url 'appointments:cancel_consult' consult.pk%}">
+<form method="POST" class="modal-cancel-form" action="{%url 'appointments:cancel_consult' consult.pk%}" id="cancel-consult">
     {%csrf_token%}
     <h1>Cancel Consult</h1>
     <h3>Are you sure you want to cancel this consult?</h3>

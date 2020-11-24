@@ -9,23 +9,23 @@
     {{medical_exams_form.management_form}}
     <div class="wrapper">
         <div class="general-info">
-            <a href="{%url 'appointments:consults'%}"><i class="fas fa-long-arrow-alt-left"></i></a><a href="{%url 'records:records_list' consult.patient.pk%}"><i class="fas fa-book-medical"></i></a>
+            <a href="{%url 'appointments:consults'%}"><i class="fas fa-long-arrow-alt-left"></i></a><i class="fas fa-book-medical" data-url="{%url 'records:filtered_records' consult.patient.pk%}"></i>
             <h1 id="heading">Consult <i class="fas fa-file-medical-alt"></i></h1>
-            <h4>Patient</h4>
+            <h4 id="patient-info">Patient</h4>
             <p>{{consult.patient.first_names}} {{consult.patient.last_names}}</p>
-            <h4>ID Number</h4>
+            <h4>Identification</h4>
             <p>{{consult.patient.id_number}}</p>
             <h4>Date & Time</h4>
             <p>{{consult.datetime|date}} - {{consult.datetime|time}}</p>
             <h4>Motive</h4>
-            <p>{{consult.motive}}</p>
+            <p class="motive">{{consult.motive}}</p>
             <h4>Suffering</h4>
-            <p>{{consult.suffering}}</p>
+            <p class="suffering">{{consult.suffering}}</p>
             {%if consult_form.errors%}
-                <p class="error">{{consult_form.non_field_errors.as_text}}</p>
+                <p class="error"><small>{{consult_form.non_field_errors.as_text}}</small></p>
             {%endif%}
             {{consult_form.lock}}
-            <p class="error">{{error}}</p>
+            <p class="error"><small>{{error}}</small></p>
             <h4 id="charge-label">{{consult_form.charge.label}}</h4>
             <p>{{consult_form.charge}}</p>
             <button type="submit">Save</button>
@@ -127,9 +127,48 @@
     </div>
 </div>
 
-<div class="popup">
+<div class="popup lock-popup">
     <span class="popup-text"> This lock is used if you need to perform further changes for this consult in a short term,<br>
                               if the padlock is secured, the consult will be closed permanently once it's saved</span>
+</div>
+
+<div class="popup patient-info-popup">
+    <div class="patient-info-popup-text">
+        <h3>Information</h3>
+        <p>Name: {{consult.patient.first_names}} {{consult.patient.last_names}}</p>
+        <p>ID Number: {{consult.patient.id_number}}</p>
+        <p>Gender: {{consult.patient.get_gender_display}}</p>
+        <p>Birthday: {{consult.patient.birthday}}</p>
+        <p>Age: {{consult.patient.age}}</p>
+        <p>Origin: {{consult.patient.get_origin_display}}</p>
+        <p>Residence: {{consult.patient.get_residence_display}}</p>
+    </div>
+    <div class="patient-info-popup-text">
+        <h3>Background</h3>
+        <h4>Allergies</h4>
+        {%for allergy in consult.patient.allergies.all%}
+            <p>{{allergy.allergy_type}} - {{allergy.about}}</p>
+        {%endfor%}
+        <h4>Antecedents</h4>
+        {%for antecedent in consult.patient.antecedents.all%}
+            <p>{{antecedent.antecedent}} - {{antecedent.info}}</p>
+        {%endfor%}
+        <h4>Insurance</h4>
+        <p>Carrier: {{consult.patient.insurance.insurance_carrier}}</p>
+        <p>Insurance Type: {{consult.patient.insurance.get_type_of_insurance_display}}</p>
+        <p>Expiration Date: {{consult.patient.insurance.expiration_date}}</p>
+    </div>
+</div>
+
+<div class="records-modal">
+    <div class="records-modal-content">
+        <div class="records-table">
+
+        </div>
+        <div class="records-general-information">
+
+        </div>
+    </div>
 </div>
 
 <div class="preview-image">

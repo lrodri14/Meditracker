@@ -98,14 +98,12 @@ table{
 }
 
 .fa-exclamation-circle{
-    cursor: pointer;
     color: #e3d622;
     transition: 0.5s;
 }
 
 .fa-check-circle{
     color:  #32a852;
-    cursor: pointer;
     transition: 0.5s;
 }
 

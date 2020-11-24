@@ -1,0 +1,27 @@
+{%load static%}
+<h3>Consult Summary</h3>
+<h4>Motive</h4>
+<p>{{consult.motive}}</p>
+<h4>Suffering</h4>
+<p>{{consult.suffering}}</p>
+{%if consult.medicine or consult.actions%}
+    <h3>Treatment</h3>
+    {%if consult.drugs%}
+        <h4>Drugs</h4>
+        {%for drug in consult.drugs.all%}
+            <p>{{forloop.counter}}.- {{drug}}</p>
+        {%endfor%}
+    {%endif%}
+    {%if consult.medicine%}
+        <h4>Medicine</h4>
+        {% for medicine in consult.medicine.splitlines%}
+            <p>{{forloop.counter}}.- {{medicine}}</p>
+        {%endfor%}
+    {%endif%}
+    {%if consult.actions%}
+        <h4>Actions</h4>
+        {% for actions in consult.actions.splitlines%}
+            <p>{{forloop.counter}}.- {{actions}}</p>
+        {%endfor%}
+    {%endif%}
+{%endif%}

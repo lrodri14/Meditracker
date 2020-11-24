@@ -62,6 +62,14 @@ def consults_details(request, pk):
     return render(request, template, context)
 
 
+def consult_summary(request, pk):
+    consult = Consults.objects.get(pk=pk)
+    template = 'appointments/consult_summary.html'
+    context = {'consult': consult}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
 def update_consult(request, pk):
     consult = Consults.objects.get(pk=pk)
     consult_form = UpdateConsultsForm(request.POST or None, user=request.user, instance=consult)
@@ -88,7 +96,7 @@ def update_consult(request, pk):
             consult_form.save_m2m()
             return redirect('appointments:consults')
         elif not medical_exams_form.is_valid():
-            context['error'] = 'You did not fill your exams correctly. "Type" & "Image" must be provided.'
+            context['error'] = '* Exams not filled correctly. "Type" & "Image" must be provided.'
     return render(request, template, context)
 
 # Cancel Consult

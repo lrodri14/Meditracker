@@ -10,13 +10,13 @@
     left: 0;
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .modal-show{
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 
 .modal-content{
@@ -184,7 +184,7 @@ tr:nth-child(even){
 .popup{
     position: absolute;
     z-index: 1;
-    left: 83.3%;
+    left: 83.8%;
     margin-top: -35px;
     visibility: hidden;
     opacity: 0;
