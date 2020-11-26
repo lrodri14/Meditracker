@@ -1,3 +1,4 @@
+import asyncio
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -16,6 +17,24 @@ from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 
 # Create your views here.
+
+
+async def close_consult(delayed_consults, tz, date):
+    for c in delayed_consults:
+        if c.datetime.astimezone(tz).date() < date.date():
+            c.medical_status = False
+            c.status = 'CLOSED'
+            c.save()
+
+
+async def check_delayed_consults(user):
+    today = timezone.localtime()
+    tzone = timezone.get_current_timezone()
+    not_attended_consults = Consults.objects.filter(created_by=user, datetime__date__lte=today.date())
+    await close_consult(not_attended_consults, tzone, today)
+
+
+loop = asyncio.new_event_loop()
 
 
 def consults(request):
@@ -182,20 +201,15 @@ def filtering_conditional_results(data, user):
 
 
 def registers(request):
+    loop.run_until_complete(check_delayed_consults(request.user))
     today = timezone.localtime()
-    tzone = timezone.get_current_timezone()
     consults_list = Consults.objects.filter(created_by=request.user).order_by('-datetime')
-    not_attended_consults = Consults.objects.filter(created_by=request.user, datetime__date__lte=today.date(), medical_status=False)
     paginator = Paginator(consults_list, 25)
     page = request.GET.get('page')
     consults = paginator.get_page(page)
     template = 'appointments/registers.html'
     form = RegistersFilter
     context = {'consults': consults, 'form':form, 'items': len(consults_list), 'today': today}
-    for na in not_attended_consults:
-        if na.datetime.astimezone(tzone).date() < today.date():
-            na.status = 'CLOSED'
-            na.save()
     if request.method == 'POST':
         form = RegistersFilter(request.POST)
         if form.is_valid():

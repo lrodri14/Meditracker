@@ -25,12 +25,12 @@ class ConsultsForm(forms.ModelForm):
         super(ConsultsForm, self).__init__(*args, **kwargs)
         self.fields['patient'].queryset = Patient.objects.filter(created_by=self.user)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        datetime = cleaned_data.get('datetime')
-        if datetime < (timezone.localtime() - timedelta(hours=0, minutes=1)):
-            raise ValidationError('Unable to create a consult for this date and time.', code='invalid_date')
-        return cleaned_data
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     datetime = cleaned_data.get('datetime')
+    #     if datetime < (timezone.localtime() - timedelta(hours=0, minutes=1)):
+    #         raise ValidationError('Unable to create a consult for this date and time.', code='invalid_date')
+    #     return cleaned_data
 
 
 class UpdateConsultsForm(forms.ModelForm):
