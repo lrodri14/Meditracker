@@ -25,7 +25,7 @@
     Base
     -----
 
-    Background Color: #3C567C;
+    Background Color: #496897;
     Text Color: #FFFFFF;
     Button Color: #5075A5;
     Button Hovers: #374E71;
@@ -35,6 +35,13 @@
     Icons: #FFFFFF;
     Icons Hover: 00CCFF;
 
+
+    Main Forms
+    ----------
+    Background color: rgba(0,0,0,0)
+    Text Color: #FFFFFF
+    Button Hover: #FFFFFF
+    Button Text on Hover: #3C567C;
 
     Menu
     -----
@@ -95,22 +102,24 @@
     Reminders: #ffe100;
 
 
+
     # Titles
     Titles: H2
 
-    # Forms Font Size:
+    # Filter Forms Font Size:
     Title: H3
     Other Content: Paragraph + Small
 
     #Modal Timing
     Timing: 0.3s;
+    Background opacity: rgba(0,0,0,0.3)
 
 */
 
 /*Body*/
 body{
     font-family: 'Nunito', sans-serif;
-    background-color: #3C567C;
+    background-color: #496897;
     color: #FFFFFF;
 }
 

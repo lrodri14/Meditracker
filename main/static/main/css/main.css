@@ -142,7 +142,7 @@ button:focus{
 
 .button-hover{
     background-color: #FFFFFF;
-    color: #3C567C;;
+    color: #496897;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -275,7 +275,7 @@ select:focus{
 }
 
 .account-type-selector-hover{
-    color: #3C567C;;
+    color: #496897;
     background-color: #FFFFFF;
     transition: background-color 0.3s;
 }

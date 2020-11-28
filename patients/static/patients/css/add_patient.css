@@ -2,12 +2,6 @@
   sections: wrapper, forms, modal and save confirmation modal.*/
 
 
-/*##################################################### Body #########################################################*/
-
-body{
-    background-color: #3e5278;
-}
-
 /*################################################### Wrapper ########################################################*/
 
 .wrapper{
@@ -22,7 +16,7 @@ body{
 }
 
 .general-info{
-    background-color: #12212b;
+    background-color: #5075A5;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
     padding: 10px;
 }
@@ -33,7 +27,7 @@ body{
 }
 
 .extra-info{
-    background-color: #12212b;
+    background-color: #5075A5;
     padding: 10px;
 }
 
@@ -44,8 +38,12 @@ form{
     text-align: center;
 }
 
+::-webkit-scrollbar-track {
+    background: #5075A5;
+}
+
 .error{
-    color: #a83632;
+    color: #FFFFFF;
 }
 
 .allergies-form{
@@ -76,7 +74,7 @@ td{
 }
 
 .fa-plus-hover{
-    color: #37cc27;
+    color: #25BB41;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -86,7 +84,7 @@ td{
 }
 
 .fa-trash-hover{
-    color: #cc2727;
+    color: #A31621;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -94,10 +92,10 @@ td{
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5075A5;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #FFFFFF;
   height: 30px;
   width:60%;
   transition: 0.5s;
@@ -114,9 +112,9 @@ input:focus{
 
 textarea{
   font-family: 'Alegreya Sans SC', sans-serif;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
+  color: #FFFFFF;
+  background-color: #5075A5;
+  border: 1px solid #FFFFFF;
   resize: none;
   transition: 0.5s;
 }
@@ -128,10 +126,10 @@ textarea:focus{
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5075A5;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #FFFFFF;
   height: 30px;
   width:60%;
   margin: 5px;
@@ -163,10 +161,10 @@ button{
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: #5075A5;
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
+    color: #FFFFFF;
     transition: 0.5s;
 }
 
@@ -175,8 +173,8 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #FFFFFF;
+    color: #5075A5;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -189,7 +187,7 @@ button:focus{
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.3);
     visibility: hidden;
     opacity: 0;
     transition: 0.5s;
@@ -204,7 +202,7 @@ button:focus{
 /*Modal Forms*/
 .modal-content > form{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5075A5;;
     padding: 20px;
     position: absolute;
     top: 50%;
@@ -212,13 +210,13 @@ button:focus{
     margin-right: -50%;
     transform: translate(-50%, -50%);
     width: 25%;
-    height: 60%;
+    height: 45%;
 }
 
 /*######################################## Save confirmation modal ###################################################*/
 
 .save-confirmation-modal{
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.3);
     position: absolute;
     width: 100%;
     height: 100%;
@@ -226,18 +224,18 @@ button:focus{
     left: 0;
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: opacity 0.3s;
 }
 
 .save-confirmation-modal-show{
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: opacity 0.3s;
 }
 
 .save-confirmation-modal-content{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5075A5;
     width: 50%;
     margin-left: 25%;
     margin-top: 20%;
@@ -247,8 +245,4 @@ button:focus{
 .save-confirmation-modal-content button{
     width: 20%;
     margin: 0;
-}
-
-.reminder{
-    color: #ffe100;
 }
