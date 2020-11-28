@@ -65,11 +65,11 @@ function usernameFocusHoverOut(){
 for (let i = 0; i < li.length; i++) {
     li[i].addEventListener('mouseover', function(){
         this.classList.add('hover-over')
-})
+    })
     li[i].addEventListener('mouseout', function(){
         this.classList.remove('hover-over')
     })
-  }
+}
 
 
 
@@ -210,6 +210,10 @@ if (modal){
             submit.classList.add('button-hover')
         }
 
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.add('input-hover')
+        }
+
         if (e.target.nodeName === 'A'){
             e.target.classList.add('update-password-hover')
         }
@@ -227,6 +231,11 @@ if (modal){
         if (e.target == submit){
             submit.classList.remove('button-hover')
         }
+
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.remove('input-hover')
+        }
+
 
         if (e.target.nodeName === 'A'){
             e.target.classList.remove('update-password-hover')

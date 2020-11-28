@@ -32,6 +32,8 @@ var modal = document.querySelector('.modal')
 var recordsModal = document.querySelector('.records-modal')
 var recordsTable = document.querySelector('.records-table')
 var recordsSummary = document.querySelector('.records-general-information')
+var prescriptionModal = document.querySelector('.prescription-modal')
+var prescriptionModalContent = document.querySelector('.prescription-modal-content')
 
 navigation.innerHTML = '<li></li>'.repeat(document.querySelectorAll('.diagnose > div').length)
 navigation.childNodes[0].classList.add('navigator-active')
@@ -61,6 +63,11 @@ async function consultSummaryAW(url){
     return data
 }
 
+async function submitConsultAW(url, method, csrfmiddlewaretoken, formData){
+    const result = await fetch(url, {method: method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body: formData})
+    const data = result.json()
+    return data
+}
 // Functions
 function diagnoseScroll(elScrollLeft, elScrollWidth, distance, element, eTarget, navigation){
 
@@ -98,7 +105,21 @@ if (form){
                 unfilledInputs++
             }
         }
-        unfilledInputs === 0 ? form.submit() : modal.classList.add('modal-show')
+
+        if (unfilledInputs === 0){
+            let url = e.target.action
+            let method = e.target.method
+            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+            let formData = new FormData(e.target)
+            submitConsultAW(url, method, csrfmiddlewaretoken, formData)
+            .then(data => {
+                if (data['prescription_path']){
+                    console.log(data['prescription_path'])
+                }
+            })
+        } else{
+            modal.classList.add('modal-show')
+        }
     })
 }
 
@@ -126,6 +147,9 @@ medicalBook.addEventListener('click', () => {
     requestRecords(url)
     .then(data => {
         recordsTable.innerHTML = data['html']
+        if (document.querySelector('#no-records')){
+            recordsSummary.classList.add('records-general-information-hide')
+        }
     })
     recordsModal.classList.add('records-modal-show')
 })
@@ -507,7 +531,20 @@ if (modal){
         }
 
         if (e.target.nodeName === 'BUTTON' && e.target.textContent === 'Yes'){
-            form.submit()
+            let url = form.action
+            let method = form.method
+            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+            let formData = new FormData(form)
+            submitConsultAW(url, method, csrfmiddlewaretoken, formData)
+            .then(data => {
+                if (data['prescription_path']){
+                    prescriptionModalContent.setAttribute('data-pdf', data['prescription_path'])
+                    pdfPath = prescriptionModalContent.getAttribute('data-pdf')
+                    PDFObject.embed(pdfPath, prescriptionModalContent)
+                    prescriptionModal.classList.add('prescription-modal-show')
+                    modal.classList.remove('modal-show')
+                }
+            })
         }
     })
 }
@@ -520,4 +557,10 @@ if (recordsModal){
         }
     })
 }
+
+prescriptionModal.addEventListener('click', (e) => {
+    if (e.target.textContent === 'Save Consult'){
+        window.location.href = e.target.getAttribute('data-url')
+    }
+})
 

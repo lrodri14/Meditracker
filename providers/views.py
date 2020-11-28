@@ -1,3 +1,9 @@
+"""
+     This views.py contains all the views needed for the Providers App Logic.
+     It is separated into two sections 'Providers Related Logic' and 'Visitors Related Logic
+"""
+
+
 # Imports
 from django.db.models import Q
 from django.shortcuts import render
@@ -8,12 +14,7 @@ from .models import Providers, Visitor
 from .forms import ProvidersForm, ProvidersFilterForm, VisitorsForm, VisitorsFilterForm
 
 # Create your views here.
-# This views.py contains all the views needed for the Providers App Logic.
-# It is separated into two sections 'Providers Related Logic' and 'Visitors Related Logic'
-
-
 # Providers Related Logic
-# ########################################
 
 
 def providers(request):

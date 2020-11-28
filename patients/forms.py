@@ -1,3 +1,9 @@
+"""
+    This forms.py file contains all the forms needed to operate CRUD functionality in the Patient App.
+    It contains 9 forms, and is separated in 4 sections: Patient, Allergies, Insurance, Antecedents forms.
+"""
+
+
 # Imports
 from .models import *
 from django import forms
@@ -7,8 +13,6 @@ from django.forms import modelformset_factory, inlineformset_factory
 # List containing all the available years
 years = [years for years in range(1920, 2101)]
 
-# This forms.py file contains all the forms needed to operate CRUD functionality in the Patient App.
-# It contains 9 forms, and is separated in 4 sections: Patient, Allergies, Insurance, Antecedents forms.
 
 # Patients Forms
 # #################################

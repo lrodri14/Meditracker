@@ -5,7 +5,7 @@
 {%block return%}<a href="{%url 'home:home'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/patients.css'%}">
-    <h1>Patients</h1>
+    <h2>Patients</h2>
 
 <!-- If any patients are present, this code will be rendered-->
     {%if patients%}
@@ -71,7 +71,7 @@
             <i class="fas fa-filter"></i>
             <form method="POST" action="{%url 'patients:patients'%}" autocomplete="off" class="result-filter filter-form">
                 {%csrf_token%}
-                <h1>Filter Results</h1>
+                <h3>Filter Results</h3>
                 <p>{{form.patient.label}} Name</p>
                 <p>Or</p>
                 <p>ID Number</p>

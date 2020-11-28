@@ -5,10 +5,9 @@
 {%block return%}<a href="{%url 'home:home'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'appointments/css/consults.css'%}">
-<h1>Consults Pending for Today</h1>
-<h3>Date: {{ today|date}}</h3>
+<h1>Consults</h1>
 <a href="{%url 'appointments:agenda'%}"><button type="button">Agenda</button></a>
-<a href="{%url 'appointments:registers'%}"><button type="button" class="all-registers">All Registers</button></a>
+<a href="{%url 'appointments:registers'%}"><button type="button" class="all-registers">Registers</button></a>
 <div class="modal">
     <div class="modal-content">
 

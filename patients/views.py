@@ -1,3 +1,8 @@
+"""
+    This views.py file contains all the functions needed for the Patients app to perform. It contains 5 views,
+    which perform the CRUD Operations for our Patients Class, and a function used to check if there are charges or not.
+"""
+
 # Imports
 from .forms import *
 from .models import *
@@ -9,9 +14,26 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from appointments.models import Consults, MedicalExams
 from appointments.forms import ConsultsDetailsFilterForm
+
+
+# Functions
+
+def check_charges(consults):
+    """
+        DOCSTRING:
+        This function is used to check if there are any charges inside the consults, if there are not then the
+        charges section of the patient details would not be rendered. It takes a single argument: 'consults' and
+        it expects a querySet.
+    """
+    charges = None
+    for c in consults:
+        if c.charge:
+            charges = True
+            break
+    return charges
+
+
 # Create your views here.
-# This views.py file contains all the functions needed for the Patients app to perform. It contains 5 functions
-# Which perform the CRUD Operations for our Patients Class.
 
 
 def patients(request):
@@ -128,9 +150,10 @@ def patient_details(request, pk):
     antecedents = Antecedents.objects.filter(patient=patient)
     insurance = InsuranceInformation.objects.get(patient=patient)
     consults = Consults.objects.filter(patient=patient, created_by=request.user).order_by('-datetime')
+    charges = check_charges(consults)
     exams = MedicalExams.objects.filter(consult__patient=patient)
     template = 'patients/patient_details.html'
-    context = {'patient': patient, 'consults': consults, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'exams': exams, 'consults_form': ConsultsDetailsFilterForm}
+    context = {'patient': patient, 'consults': consults, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'exams': exams, 'charges': charges, 'consults_form': ConsultsDetailsFilterForm}
     if request.method == 'POST':
         consults_form = ConsultsDetailsFilterForm(request.POST)
         if consults_form.is_valid():
@@ -165,10 +188,11 @@ def patient_delete(request, pk):
         JsonResponse, it accepts two parameters, 'request' and 'pk' which expects an patients instance pk.
 
     """
+    today = timezone.localdate()
     patient = Patient.objects.get(pk=pk)
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    consults = Consults.objects.filter(patient=patient, medical_status=True)
+    consults = Consults.objects.filter(created_by=request.user, patient=patient, medical_status=True)
     template = 'patients/patients_delete.html'
     context = {'patient': patient}
     data = {'html': render_to_string(template, context, request=request)}
@@ -181,7 +205,7 @@ def patient_delete(request, pk):
             context = {'patient_deleted': ' Patient has been deleted successfully'}
             patients = Patient.objects.filter(created_by=request.user)
             data = {'html': render_to_string(template, context, request=request),
-                    'patients': render_to_string('patients/patients_partial_list.html', {'patients': patients, 'doctor': doctor}, request)}
+                    'patients': render_to_string('patients/patients_partial_list.html', {'patients': patients, 'doctor': doctor, 'today': today}, request)}
     return JsonResponse(data)
 
 

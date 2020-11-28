@@ -1,10 +1,10 @@
+"""
+    This .py file contains all the forms need for the provider's app to work.
+    It is composed of two types of forms: Creation Forms and Filtering Forms.
+"""
+
 from django import forms
 from .models import Providers, Visitor
-
-# Your forms go here.
-
-# This .py file contains all the forms need for the provider's app to work.
-# It is composed of two types of forms: Creation Forms and Filtering Forms.
 
 # Creation Forms
 

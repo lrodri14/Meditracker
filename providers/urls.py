@@ -1,8 +1,10 @@
+"""
+    This urls.py contains all the urls needed to route all the views in our Providers App
+    It contains two sections: 'Providers related views' and 'Visitors related views
+"""
+
 from django.urls import path
 from .views import *
-
-# This urls.py contains all the urls needed to route all the views in our Providers App
-# It contains two sections: 'Providers related views' and 'Visitors related views'
 
 
 app_name = 'providers'

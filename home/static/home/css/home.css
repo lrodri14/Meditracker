@@ -11,7 +11,7 @@
 
 /*Menu Title*/
 h1{
-    color: #0ff5fc;
+    color: #FFFFFF;
 }
 
 /*Wrapper One Top*/
@@ -19,32 +19,30 @@ h1{
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
-    transition: 0.5s;
 }
 
 .wrapper-two{
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .tile{
     text-align: center;
     padding: 20%;
-    background-color: #3e5278;
-    border: 0.5px solid #0ff5fc;
+    background-color: #5075A5;
+    color: #FFFFFF;
+    cursor: pointer;
     transition: background-color 0.5s;
-    color: #0ff5fc;
 
 }
 
 .tile-hover{
-    background-color: #f2f1ed;
-    transition: background-color 0.5s;
-    color: #3e5278;
+    background-color: #FFFFFF;
+    color: #5075A5;
     border: none;
-    cursor: pointer;
+    transition: background-color 0.5s;
 }
 
 a{
@@ -67,11 +65,6 @@ h3{
     pointer-events: none;
 }
 
-.h3-hover{
-    font-size: 20px;
-    transition: 0.5s;
-}
-
 /*Modal*/
 .modal{
     background-color: rgba(0,0,0,0.7);
@@ -92,22 +85,23 @@ h3{
 }
 /*Modal Content*/
 .modal-content{
-    background-color: #12212b;
+    background-color: #5075A5;
     text-align: center;
     width: 40%;
     padding: 2%;
     margin-left: 28%;
-    margin-top: 20%;
+    margin-top: 25%;
 }
 
 button{
-    background-color: #12212b;
-    color: #0ff5fc;
+    background-color: #5075A5;
+    color: #FFFFFF;
     border-radius: 10px;
-    border-color: #0ff5fc;
+    border-color: #C7E8F3;
     width: 20%;
     height: 30px;
-    transition: 0.5s;
+    cursor: pointer;
+    transition: all 0.5s;
 }
 
 button:focus{
@@ -115,8 +109,7 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
-    cursor: pointer;
-    transition: 0.5s;
+    background-color: #374E71;
+    color: #FFFFFF;
+    transition: all 0.5s;
 }

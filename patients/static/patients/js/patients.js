@@ -27,10 +27,10 @@ if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector
 
     // Warning Messages
     var warningMessages = {
-        'no-id-registered' : "Patient over 18, no ID information registered",
-        'expired-insurance' : "Patient's Medical Insurance has already expired",
-        'out-of-date-info' : "Patient's ID and Medical Insurance information is out of date",
-        'in-order': "Patient's information up to date"
+        'no-id-registered' : "Individual over 18, ID information unknown",
+        'expired-insurance' : "Medical Insurance's valid time concluded",
+        'out-of-date-info' : "Patient's ID unknown and Medical Insurance information out of date",
+        'in-order': "Individual's information up to date"
     }
 }
 
@@ -130,13 +130,8 @@ if (wrapper){
         if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-            row.style.backgroundColor = '#0ff5fc'
-            row.classList.add('tr-hover')
-            for (let i = 0; i<row.childNodes.length; i++){
-                if (row.childNodes[i].nodeName === 'TD'){
-                    row.childNodes[i].classList.add('td-hover')
-                }
-            }
+            row.style.backgroundColor = '#C7E8F3'
+            row.style.color = '#3C567C'
         }
 
         let deletion = document.querySelectorAll('.fa-trash')
@@ -242,13 +237,8 @@ if (wrapper){
       if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
         let row
         e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-        row.style.backgroundColor = ''
-        row.classList.remove('tr-hover')
-        for (let i = 0; i<row.childNodes.length; i++){
-            if (row.childNodes[i].nodeName === 'TD'){
-                row.childNodes[i].classList.remove('td-hover')
-            }
-        }
+            row.style.backgroundColor = ''
+            row.style.color = ''
       }
 
         // This event will be fired, every time the user hovers out over an input, the input-hover class will removed.

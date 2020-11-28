@@ -53,15 +53,14 @@ body{
 
 /*Table*/
 table{
-    background-color: #12212b;
     border-collapse: collapse;
     margin: auto;
     width: 100%;
 }
 
 #heading{
-    background-color: #12212b;
-    color: #0ff5fc;
+    background-color: #456387;
+    color: #FFFFFF;
     line-height: 25px;
     cursor: default;
 }
@@ -72,38 +71,29 @@ table{
 }
 
 .fa-plus-hover{
-    color: #32a852;
+    color: #25BB41;
     cursor: pointer;
     transition: 0.5s;
 }
 
-.fa-trash{
-    transition: 0.5s;
-}
-
-.fa-edit{
-    transition: 0.5s;
-}
-
 .fa-trash-hover{
-    color: #a83632;
+    color: #A31621;
     cursor: pointer;
     transition: 0.5s;
 }
 
 .fa-edit-hover{
-    color: #e3d622;
+    color: #CBA415;
     cursor: pointer;
     transition: 0.5s;
 }
 
 .fa-exclamation-circle{
-    color: #e3d622;
-    transition: 0.5s;
+    color: #CBA415;
 }
 
 .fa-check-circle{
-    color:  #32a852;
+    color: #25BB41;
     transition: 0.5s;
 }
 
@@ -116,13 +106,7 @@ tr{
     transition: 0.5s;
     line-height: 20px;
     margin: 10px;
-    transition: 0.5s;
-}
-
-.tr-hover{
-    background-color: #0ff5fc;
     cursor: pointer;
-    color: #12212b;
     transition: 0.5s;
 }
 
@@ -135,25 +119,18 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: #0ff5fc;
     max-width: 100px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.td-hover{
-    color: #12212b;
-}
-
 tr:nth-child(odd){
-    background-color: #3d6685;
-    transition: 0.5s;
+    background-color: #6082AD;
 }
 
 tr:nth-child(even){
-    background-color: #2a465c;
-    transition: 0.5s;
+    background-color: #6E8DB4;
 }
 
 /* Pop-Up */
@@ -173,14 +150,14 @@ tr:nth-child(even){
 .popup-text{
     max-width: 29%;
     height: 5%;
-    background-color: #e3d622;
-    color: #12212b;
+    background-color: #CBA415;
+    color: #3C567C;
     font-size: 10px;
     padding: 5px;
 }
 
 .popup-text-in-order{
-    background-color: #32a852;
+    background-color: #25BB41;
 }
 
 /*Form*/
@@ -192,7 +169,7 @@ tr:nth-child(even){
 
 .fa-filter-hover{
     cursor: pointer;
-    color: #12212b;
+    color: #00CCFF;
     transition: 0.5s;
 }
 
@@ -200,34 +177,29 @@ tr:nth-child(even){
     display: none;
 }
 
-form{
-    text-align: center;
-    background-color: #12212b;
-    padding: 10px;
-    margin-top: -300%;
-    transition: 0.5s;
-}
-
 .filter-form{
-    visibility: hidden;
+    text-align: center;
+    background-color: #5075A5;
+    padding: 10px;
+    transform: translateY(-200%);
+    transition: transform 0.5s;
 }
 
 .show-form{
-    visibility: visible;
-    margin-top: 10%;
-    transition: 0.5s;
+    transform: translateY(15%);
+    transition: transform 0.5s ease-out;
 }
 
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  background-color: #5075A5;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  color: #FFFFFF;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
-  transition: 0.5s;
+  transition: width 0.5s;
 }
 
 input:focus{
@@ -236,17 +208,17 @@ input:focus{
 
 .input-hover{
   width: 75%;
-  transition: 0.5s;
+  transition: width 0.5s;
 }
 
 button{
     width: 25%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: #5075A5;
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
+    color: #FFFFFF;
 }
 
 button:focus{
@@ -254,8 +226,7 @@ button:focus{
 }
 
 .button-form-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #374E71;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -312,28 +283,24 @@ button:focus{
   left: 0;
   visibility: hidden;
   opacity: 0;
-  transition: 0.5s;
+  transition: opacity 0.3s;
 }
 
 .modal-show{
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: opacity 0.3s;
 }
 
 .modal-content{
-    background-color: #12212b;
     width: 40%;
-    height: 25%;
     margin-left: 30%;
     margin-top: 20%;
     text-align: center;
+    background-color: #5075A5;
+    padding: 15px;
 }
 
 .modal-content #modal-form{
     margin-top: 0%;
-}
-
-.modal-content p{
-    padding-top: 70px;
 }

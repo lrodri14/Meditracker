@@ -85,7 +85,7 @@ class Consults(models.Model):
     # Physical Exploration
     head_exploration = models.TextField('head exploration', blank=True, null=True, help_text='head exploration analysis')
     thorax_exploration = models.TextField('thorax exploration', blank=True, null=True, help_text='thorax exploration analysis')
-    # Diagnose and treatment
+    # Diagnose
     cie_10_group = models.OneToOneField(Cie10Group, on_delete=models.CASCADE, blank=True, null=True, help_text='CIE-10 group for the diagnose',
                                         verbose_name='CIE-10 Group', related_name='ciegroup')
     cie_10_detail = models.TextField('CIE-10 Detail', blank=True, null=True, help_text='CIE-10 diagnose details')
@@ -97,6 +97,7 @@ class Consults(models.Model):
     drugs = models.ManyToManyField(Drugs, blank=True, help_text='Drugs recommended', verbose_name='Drugs', related_name='drugs')
     medicine = models.TextField('medicine', blank=True, null=True, help_text='Medicine')
     actions = models.TextField('actions', blank=True, null=True, help_text='actions')
+    prescription = models.FileField('prescription', blank=True, null=True, help_text="Current consult's prescription", upload_to='appointments/prescriptions')
     # Status
     medical_status = models.BooleanField('medical_status', blank=True, null=True, help_text='Handles the medical consult status', default=False)
     status = models.CharField('status', max_length=10, blank=True, null=True, help_text='Handles the consult status', default=STATUS_CHOICES[0][0], choices=STATUS_CHOICES)

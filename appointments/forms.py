@@ -36,7 +36,7 @@ class ConsultsForm(forms.ModelForm):
 class UpdateConsultsForm(forms.ModelForm):
     class Meta:
         model = Consults
-        exclude = ('patient', 'datetime', 'motive', 'suffering', 'created_by', 'status', 'medical_status')
+        exclude = ('patient', 'datetime', 'motive', 'suffering', 'created_by', 'status', 'medical_status', 'prescription')
         widgets = {
             'charge': forms.NumberInput(attrs={'placeholder': '0.00'}),
             'digestive_system': forms.Textarea(attrs={'rows': 2, 'cols': 70}),
@@ -129,7 +129,7 @@ YEARS_CHOICES = (
 
 
 class RegistersFilter(forms.Form):
-    patient = forms.CharField(max_length=100, widget=forms.TextInput,required=False)
+    patient = forms.CharField(max_length=100, widget=forms.TextInput, required=False)
     month = forms.ChoiceField(choices=MONTH_CHOICES, required=False)
     year = forms.ChoiceField(choices=YEARS_CHOICES, required=False)
 

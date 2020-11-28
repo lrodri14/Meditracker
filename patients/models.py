@@ -1,10 +1,13 @@
+"""
+    This models.py file contains all the models needed to perform any data related process in the Patients App.
+    It is composed of 6 models.
+"""
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 user = get_user_model()
 # Create your models here.
-# This models.py file contains all the models needed to perform any data related process in the Patients App.
-# It is composed of 6 models.
 
 # Patients Model
 

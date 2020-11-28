@@ -19,7 +19,7 @@
                 <td><i class="fas fa-exclamation-circle" data-message-code="out-of-date-info"></i></td>
             {%elif p.age >= 18 and not p.id_number%}
                 <td><i class="fas fa-exclamation-circle" data-message-code="no-id-registered"></i></td>
-            {%elif p.insurance.expiration_date <= today%}
+            {%elif p.insurance.insurance_carrier and p.insurance.expiration_date <= today%}
                 <td><i class="fas fa-exclamation-circle" data-message-code="expired-insurance"></i></td>
             {%else%}
                 <td><i class="fas fa-check-circle" data-message-code="in-order"></i></td>
@@ -28,5 +28,5 @@
     {%endfor%}
 <!--If no patients are present this code will be rendered-->
 {%else%}
-    <p class="no-patients-listed">No patients found</p>
+    <p class="no-patients-listed">Clear section, no data stored</p>
 {%endif%}

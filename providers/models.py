@@ -1,11 +1,14 @@
+"""
+    This models.py file contains all the models for the Providers App to work properly, it
+    contains two models, Providers and Visitors.
+"""
+
+
 from django.db import models
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # Create your models here.
-
-# This models.py file contains all the models for the Providers App to work properly, it
-# contains two models, Providers and Visitors.
 
 
 class Providers(models.Model):

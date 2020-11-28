@@ -11,7 +11,7 @@
     <h2>Date: {{consult.datetime}}</h2>
 </div>
 
-<a href="{%url 'appointments:create_pdf' consult.pk%}"><i class="fas fa-print"></i></a>
+<i class="fas fa-print" data-pdf="{{MEDIA_URL}}{{consult.prescription}}"></i>
 <div class="general-info">
     <div class="general">
         <h1>Appointment General Info</h1>
@@ -81,10 +81,17 @@
     {%endfor%}
 </div>
 
+<div class="prescription-modal">
+    <div class="prescription-modal-content">
+
+    </div>
+</div>
+
 <div class="exam-preview">
     <img src="" alt="" id="exam-image">
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.4/pdfobject.min.js" integrity="sha512-mW7siBAOOJTkMl77cTke1Krn+Wz8DJrjMzlKaorrGeGecq0DPUq28KgMrX060xQQOGjcl7MSSep+/1FOprNltw==" crossorigin="anonymous"></script>
 <script src="{%static 'appointments/js/consult_details.js'%}"></script>
 {%endblock%}
 

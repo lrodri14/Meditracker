@@ -3,7 +3,6 @@
 body{
     margin: 0px;
     padding: 0px;
-    color: white;
 }
 
 /*Video*/
@@ -19,7 +18,7 @@ video {
 
 /*Image*/
 .overlay {
-    position:absolute;
+    position: absolute;
     top:0;
     left:0;
     z-index:1;
@@ -54,20 +53,13 @@ img{
     display: inline-block;
     padding: 25px;
     border-radius: 10px;
-    transition: 0.5s;
-}
-
-#wrapper ul li a{
-    font-size: 25px;
-    color: white;
-    transition: 0.5s;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .hover-over{
-    background-color: #3e5278;
-    color: #0ff5fc;
-    cursor: pointer;
-    transition: background-color 0.5s;
+    background-color: rgba(0,0,0,0.3);
+    transition: all 0.3s;
 }
 
 .login-btn-hide{
@@ -84,7 +76,7 @@ img{
 
 form{
     text-align: center;
-    background-color: #12212b;
+    background-color: rgba(0,0,0,0);
     padding: 20px;
     position: absolute;
     top: 50%;
@@ -93,7 +85,6 @@ form{
     transform: translate(-50%, -50%);
     width: 25%;
     height: 60%;
-    color: #0ff5fc;
 }
 
 h1{
@@ -102,17 +93,16 @@ h1{
 
 .advice{
     font-size: 14px;
-    color: #ffe100;
 }
 
 /*Inputs*/
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: rgba(0,0,0,0);
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #FFFFFF;
   height: 30px;
   width:60%;
   transition: 0.5s;
@@ -131,20 +121,16 @@ input:focus{
   transition: 0.5s;
 }
 
-.error{
-    color: #a83632;
-}
-
 /*Buttons and Links*/
 button{
     margin: 5px;
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: rgba(0,0,0,0);
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
+    color: #FFFFFF;
     visibility: hidden;
     opacity: 0;
     transition: 0.5s;
@@ -155,8 +141,8 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #FFFFFF;
+    color: #3C567C;;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -181,8 +167,7 @@ form a{
 
 /*Password Reset Done*/
 .password-reset-done{
-    color: #0ff5fc;
-    background-color: #12212b;
+    background-color: rgba(0,0,0,0);
     position: absolute;
     left: 50%;
     top: 50%;
@@ -199,7 +184,6 @@ form a{
 
 .continue-hover{
     cursor: pointer;
-    font-size: 18px;
     transition: 0.5s;
 }
 
@@ -220,7 +204,6 @@ form a{
 .signup-form{
     text-align: center;
     background-color: rgba(0,0,0,0);
-    margin: auto;
     width: 70%;
 }
 
@@ -231,22 +214,20 @@ form a{
 }
 
 .personal-info{
-    background-color: #12212b;
-    padding-bottom: 10%;
+    padding-bottom: 15%;
 }
 
 .account-info{
-    background-color: #12212b;
     padding-top: 20%;
 }
 
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: rgba(0,0,0,0);
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #FFFFFF;
   height: 30px;
   transition: 0.5s;
 }
@@ -277,8 +258,8 @@ select:focus{
 .account-type-selector{
     display: grid;
     grid-template-columns: 50% 50%;
-    background-color: #3e5278;
-    color: #0ff5fc;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFFFFF;
     position: absolute;
     height: 20%;
     width: 40%;
@@ -289,14 +270,14 @@ select:focus{
 }
 
 .account-type-selector-show{
+    cursor: pointer;
     visibility: visible;
 }
 
 .account-type-selector-hover{
-    background-color: #f2f1ed;
-    transition: background-color 0.5s;
-    color: #3e5278;
-    cursor: pointer;
+    color: #3C567C;;
+    background-color: #FFFFFF;
+    transition: background-color 0.3s;
 }
 
 .account-type-selector i{

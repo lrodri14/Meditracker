@@ -4,7 +4,7 @@
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'appointments/css/update_consult.css'%}">
 {%block return%}{%endblock%}{%block home%}{%endblock%}
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" action="{%url 'appointments:update_consult' consult.pk%}" enctype="multipart/form-data">
     {%csrf_token%}
     {{medical_exams_form.management_form}}
     <div class="wrapper">
@@ -28,7 +28,7 @@
             <p class="error"><small>{{error}}</small></p>
             <h4 id="charge-label">{{consult_form.charge.label}}</h4>
             <p>{{consult_form.charge}}</p>
-            <button type="submit">Save</button>
+            <button type="submit">Continue</button>
         </div>
         <div class="diagnose">
             <i class="fas fa-angle-left"></i><i class="fas fa-angle-right"></i>
@@ -199,5 +199,14 @@
     </div>
 </div>
 
+
+<div class="prescription-modal">
+    <div class="prescription-modal-content">
+
+    </div>
+    <button data-url="{%url 'appointments:consults'%}">Save Consult</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.4/pdfobject.min.js" integrity="sha512-mW7siBAOOJTkMl77cTke1Krn+Wz8DJrjMzlKaorrGeGecq0DPUq28KgMrX060xQQOGjcl7MSSep+/1FOprNltw==" crossorigin="anonymous"></script>
 <script src="{%static 'appointments/js/update_consult.js'%}"></script>
 {%endblock%}

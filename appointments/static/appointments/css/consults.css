@@ -10,13 +10,12 @@
     left: 0;
     visibility: hidden;
     opacity: 0;
-    transition: 0.3s;
 }
 
 .modal-show{
     visibility: visible;
     opacity: 1;
-    transition: 0.3s;
+    transition: opacity 0.3s;
 }
 
 .modal-content{
