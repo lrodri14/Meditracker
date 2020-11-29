@@ -5,33 +5,16 @@
     -------------
     -------------
 
-    Colors Used:
-    #374E71
-    #3C567C
-    #456387
-    #587CA9
-    #6082AD
-    #6E8DB4
-    #7B97BB
-    #FFFFFF
-    #C7E8F3
-    #EAC435
-    #00CCFF
-    #CBA415
-    #25BB41
-    #A31621
-
-
     Base
     -----
 
     Background Color: #496897;
     Text Color: #FFFFFF;
-    Button Color: #5075A5;
-    Button Hovers: #374E71;
+    Button Color: #5A7FAF;
+    Button Hovers: #C7E8F3;
     Button Borders: #C7E8F3;
     Input Borders: #C7E8F3;
-    Forms: #5075A5;
+    Forms: #5A7FAF;
     Icons: #FFFFFF;
     Icons Hover: 00CCFF;
 
@@ -55,7 +38,7 @@
     Tiles
     -----
 
-    Tiles Background Color: #5075A5;
+    Tiles Background Color: #5A7FAF;
     Tiles Hover: #FFFFFF;
 
     Table
@@ -64,7 +47,7 @@
     Table Row (Odd): #6082AD;
     Table Row (Even): #6E8DB4;
     Table Row Hover: #C7E8F3;
-    Table Row Hover Text: #5075A5;
+    Table Row Hover Text: #496897;
 
 
     Scroll
@@ -174,7 +157,7 @@ a {
 }
 
 .menu{
-    background-color: #3C567C;
+    background-color: #496897;
     text-align: justify;
     position: fixed;
     margin-left: -20%;
@@ -206,7 +189,7 @@ a {
 .menu > div:hover{
     background-color: #FFFFFF;
     cursor: pointer;
-    color: #3C567C;
+    color: #496897;
     transition: 0.5s;
 }
 

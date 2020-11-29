@@ -141,7 +141,7 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #FFFFFF;
+    background-color: #C7E8F3;
     color: #496897;
     cursor: pointer;
     transition: 0.5s;

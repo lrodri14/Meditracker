@@ -31,7 +31,7 @@ h1{
 .tile{
     text-align: center;
     padding: 20%;
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     color: #FFFFFF;
     cursor: pointer;
     transition: background-color 0.5s;
@@ -67,7 +67,7 @@ h3{
 
 /*Modal*/
 .modal{
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.3);
     position: absolute;
     top: 0;
     left: 0;
@@ -85,7 +85,7 @@ h3{
 }
 /*Modal Content*/
 .modal-content{
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     text-align: center;
     width: 40%;
     padding: 2%;
@@ -94,7 +94,7 @@ h3{
 }
 
 button{
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     color: #FFFFFF;
     border-radius: 10px;
     border-color: #C7E8F3;
@@ -109,7 +109,7 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #374E71;
-    color: #FFFFFF;
+    background-color: #C7E8F3;
+    color: #5A7FAF;
     transition: all 0.5s;
 }

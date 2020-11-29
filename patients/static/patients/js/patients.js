@@ -13,6 +13,7 @@ if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector
     var wrapper = document.querySelector('.wrapper')
     var i = document.querySelector('.fa-filter')
     var form = document.querySelector('form')
+    var filterForm = document.querySelector('.filter-form')
     var input = document.querySelector('#id_patient')
     var button = document.querySelectorAll('button')
     var table = document.querySelector('table')
@@ -131,7 +132,7 @@ if (wrapper){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
             row.style.backgroundColor = '#C7E8F3'
-            row.style.color = '#3C567C'
+            row.style.color = '#496897'
         }
 
         let deletion = document.querySelectorAll('.fa-trash')

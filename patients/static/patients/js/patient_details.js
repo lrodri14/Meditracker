@@ -336,17 +336,6 @@ if (exams){
     })
 }
 
-/* This target will be fired every time the window is scrolled, and will change the background color depending on the
-   scroll distance in the X axis.*/
-window.addEventListener('scroll', (e) => {
-    if(window.scrollX > 1440){
-        body.classList.add('body-color-change')
-    }else if (window.scrollX < 2880){
-        body.classList.remove('body-color-change')
-    }
-
-})
-
 /* This event listener will be fired every time the page is loaded and will set the window scroll 0 to the left. */
 window.addEventListener('load', (e) => {
     generalScroll()

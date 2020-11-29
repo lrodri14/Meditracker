@@ -59,7 +59,7 @@ table{
 }
 
 #heading{
-    background-color: #456387;
+    background-color: #3E5979;
     color: #FFFFFF;
     line-height: 25px;
     cursor: default;
@@ -179,7 +179,7 @@ tr:nth-child(even){
 
 .filter-form{
     text-align: center;
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     padding: 10px;
     transform: translateY(-200%);
     transition: transform 0.5s;
@@ -193,7 +193,7 @@ tr:nth-child(even){
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
-  background-color: #5075A5;
+  background-color: #5A7FAF;
   border: none;
   color: #FFFFFF;
   border-bottom: 1px solid #C7E8F3;
@@ -215,7 +215,7 @@ button{
     width: 25%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     border-color: #C7E8F3;
     border-radius: 10px;
     color: #FFFFFF;
@@ -226,7 +226,8 @@ button:focus{
 }
 
 .button-form-hover{
-    background-color: #374E71;
+    color: #5A7FAF;
+    background-color: #C7E8F3;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -297,7 +298,7 @@ button:focus{
     margin-left: 30%;
     margin-top: 20%;
     text-align: center;
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     padding: 15px;
 }
 

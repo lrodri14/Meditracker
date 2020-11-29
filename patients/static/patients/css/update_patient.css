@@ -16,7 +16,7 @@
 }
 
 .general-info{
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
     padding: 10px;
 }
@@ -27,7 +27,8 @@
 }
 
 .extra-info{
-    background-color: #5075A5;
+    background-color: #5A7FAF;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
     padding: 10px;
 }
 
@@ -39,7 +40,7 @@ form{
 }
 
 ::-webkit-scrollbar-track {
-    background: #5075A5;
+    background: #5A7FAF;
 }
 
 .error{
@@ -93,9 +94,9 @@ input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
   color: #FFFFFF;
-  background-color: #5075A5;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
   transition: 0.5s;
@@ -113,8 +114,8 @@ input:focus{
 textarea{
   font-family: 'Alegreya Sans SC', sans-serif;
   color: #FFFFFF;
-  background-color: #5075A5;
-  border: 1px solid #FFFFFF;
+  background-color: #5A7FAF;
+  border: 1px solid #C7E8F3;
   resize: none;
   transition: 0.5s;
 }
@@ -127,9 +128,9 @@ select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
   color: #FFFFFF;
-  background-color: #5075A5;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
   margin: 5px;
@@ -161,7 +162,7 @@ button{
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     border-color: #C7E8F3;
     border-radius: 10px;
     color: #FFFFFF;
@@ -173,8 +174,8 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #FFFFFF;
-    color: #5075A5;
+    background-color: #C7E8F3;
+    color: #5A7FAF;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -202,7 +203,7 @@ button:focus{
 /*Modal Forms*/
 .modal-content > form{
     text-align: center;
-    background-color: #5075A5;;
+    background-color: #5A7FAF;
     padding: 20px;
     position: absolute;
     top: 50%;
@@ -235,7 +236,7 @@ button:focus{
 
 .save-confirmation-modal-content{
     text-align: center;
-    background-color: #5075A5;
+    background-color: #5A7FAF;
     width: 50%;
     margin-left: 25%;
     margin-top: 20%;

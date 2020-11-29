@@ -166,7 +166,7 @@ if (extraInfo){
               5. Change the Total Forms Value to the amount of forms available plus one unit.
               6. Append the cloned node to the allergies_form list.*/
             let formAmount = document.querySelectorAll('.allergies-form .form-container')
-            let allergyTotalForms = document.querySelector('.allergies_management_form #id_form-TOTAL_FORMS')
+            let allergyTotalForms = document.querySelector('.allergies_management_form #id_allergies-TOTAL_FORMS')
             let clonedNode = allergiesFormBlueprint.cloneNode(true)
             for (let i = 0; i<clonedNode.childNodes.length; i++){
                 if (clonedNode.childNodes[i].firstChild){
@@ -213,7 +213,7 @@ if (extraInfo){
               5. Change the Total Forms Value to the amount of forms available plus one unit.
               6. Append the cloned node to the antecedents_form list.*/
             let formAmount = document.querySelectorAll('.antecedents-form .form-container')
-            let antecedentsTotalForms = document.querySelector('.antecedents_management_form #id_form-TOTAL_FORMS')
+            let antecedentsTotalForms = document.querySelector('.antecedents_management_form #id_antecdents-TOTAL_FORMS')
             let clonedNode = antecedentsFormBlueprint.cloneNode(true)
             for (let i = 0; i<clonedNode.childNodes.length; i++){
                 if (clonedNode.childNodes[i].firstChild){
