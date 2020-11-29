@@ -5,7 +5,7 @@
 <div>
     <table>
         <thead>
-            <tr class="heading">
+            <tr id="heading">
                 <th>Date</th>
                 <th>Time</th>
                 <th>Medical Status</th>
@@ -42,7 +42,7 @@
     <!--Filtering form-->
     <i class="fas fa-filter appointments-filter"></i><i class="fas fa-sync-alt appointments-reload"></i>
     <form method="POST" action="{%url 'patients:patients_details' patient.pk%}" class="appointments-form">
-        <h1>Filter Results</h1>
+        <h3>Filter Results</h3>
         {%csrf_token%}
         <p>{{consults_form.date_from.label}}</p>
         <p>{{consults_form.date_from}}</p>
@@ -54,5 +54,5 @@
 </div>
 <!--If no consults are present this code will be rendered-->
 {%else%}
-<p class="no-data">No consults</p>
+<p class="no-data">No Data</p>
 {%endif%}

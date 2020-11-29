@@ -5,7 +5,7 @@
 <div>
     <table>
         <thead>
-            <tr class="heading">
+            <tr id="heading">
                 <th>Date</th>
                 <th>Time</th>
                 <th>Created By</th>
@@ -30,7 +30,7 @@
     <!-- Filtering Form -->
     <i class="fas fa-filter charges-filter"></i><i class="fas fa-sync-alt charges-reload"></i>
     <form method="POST" action="{%url 'patients:patients_details' patient.pk%}" class="charges-form">
-        <h1>Filter Results</h1>
+        <h3>Filter Results</h3>
         {%csrf_token%}
         <p>{{consults_form.date_from.label}}</p>
         <p>{{consults_form.date_from}}</p>

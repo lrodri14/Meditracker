@@ -4,6 +4,23 @@
     Color Listing
     -------------
     -------------
+    #496897;
+    #FFFFFF;
+    #5A7FAF;
+    #C7E8F3;
+    #00CCFF;
+    #A31621;
+    #456387;
+    #6082AD;
+    #6E8DB4;
+    #25BB41;
+    #CBA415;
+    rgba(0,0,0,0)
+    #00E083;
+    #EAC234;
+    #D73533;
+    #95B6C6;
+
 
     Base
     -----
@@ -24,12 +41,12 @@
     Background color: rgba(0,0,0,0)
     Text Color: #FFFFFF
     Button Hover: #FFFFFF
-    Button Text on Hover: #3C567C;
+    Button Text on Hover: #496897;
 
     Menu
     -----
 
-    Menu Background: #3C567C;
+    Menu Background: #496897;
     Menu Text: #FFFFFF;
     Menu Tile Hover: #FFFFFF;
     Menu Text Hover: #3C567C;
@@ -57,13 +74,13 @@
 
     Status
     ------
-    Open: #ffe100;
-    Confirmed: #32a852;
-    Closed: #a83632;
-    Cancelled: #b5b3a7;
-    Pending: #ffe100;
-    Attended: #32a852;
-    Never Attended: #a83632;
+    Open: #EAC234;
+    Confirmed: #00E083;
+    Closed: #D73533;
+    Cancelled: #95B6C6;
+    Pending: #EAC234;
+    Attended: #00E083;
+    Never Attended: #D73533;
 
     Warnings
     _______________________
@@ -112,7 +129,7 @@ body{
 }
 
 ::-webkit-scrollbar-track {
-    background: #3C567C;
+    background: #496897;
 }
 
 ::-webkit-scrollbar-thumb {

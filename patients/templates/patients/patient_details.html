@@ -6,67 +6,57 @@
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'patients/css/patient_details.css'%}">
 
-<h1 id="title">{{patient.first_names}} {{patient.last_names}}</h1>
+<h2 id="title">{{patient.first_names}} {{patient.last_names}}</h2>
 
 <!--Info Navigation, this is used to select what information the user wants to see.-->
 <div class="info">
-    <div class="info-tab tab-active"><p>General</p></div><div class="info-tab"><p>Background</p></div><div class="info-tab"><p>Appointments</p></div><div class="info-tab"><p>Exams</p></div><div class="info-tab"><p>Charges</p></div>
+    <div class="info-tab tab-active"><p>General</p></div><div class="info-tab"><p>Appointments</p></div><div class="info-tab"><p>Exams</p></div><div class="info-tab"><p>Charges</p></div>
 </div>
 
 <div class="wrapper">
     <!-- General Information of the patient-->
     <div class="general-info">
-        <div class="title">General Information</div>
-        <h3>Id Card Number: {{patient.id_number}}</h3>
-        <h3 class="name">First Name: {{patient.first_names}}</h3>
-        <h3 class="name">Last Name: {{patient.last_names}}</h3>
-        <h3>Gender: {{patient.get_gender_display}}</h3>
-        <h3>Birthday: {{patient.birthday|date:"d M, Y"}}</h3>
-        <h3>Age: {{patient.age}}</h3>
-        <h3>Phone Number: {{patient.phone_number}}</h3>
-        <h3>Email: {{patient.email}}</h3>
-        <h3>Civil Status: {{patient.get_civil_status_display}}</h3>
-        <h3>Origin: {{patient.get_origin_display}}</h3>
-        <h3>Residence: {{patient.get_residence_display}}</h3>
-    </div>
-    <!-- Extra Information of the patient-->
-    <div class="extras">
-        <div class="allergies">
+        <div class="general">
+            <h2>General</h2>
+            <div class="title">General Information</div>
+            <p>Id Card Number: {{patient.id_number}}</p>
+            <p class="name">First Name: {{patient.first_names}}</p>
+            <p class="name">Last Name: {{patient.last_names}}</p>
+            <p>Gender: {{patient.get_gender_display}}</p>
+            <p>Birthday: {{patient.birthday|date:"d M, Y"}}</p>
+            <p>Age: {{patient.age}}</p>
+            <p>Phone Number: {{patient.phone_number}}</p>
+            <p>Email: {{patient.email}}</p>
+            <p>Civil Status: {{patient.get_civil_status_display}}</p>
+            <p>Origin: {{patient.get_origin_display}}</p>
+            <p>Residence: {{patient.get_residence_display}}</p>
+        </div>
+        <div class="background">
+            <h2>Background</h2>
             <div class="title">Allergies</div>
-                {%if allergies%}
-                    {%for allergy in allergies%}
-                        <h3>Allergy Type: {{allergy.allergy_type}}</h3>
-                        <h3>About: {{allergy.about}}</h3>
-                        <hr>
-                    {%endfor%}
-                <!-- If no allergies are present, this will be rendered-->
-                {%else%}
-                    <p class="no-background">No Allergies</p>
-                {%endif%}
-        </div>
-        <div class="antecedents">
+            {%if patient.allergies.all%}
+                {%for allergy in patient.allergies.all%}
+                    <p>{{forloop.counter}}. {{allergy.allergy_type}} - {{allergy.about}}</p>
+                {%endfor%}
+            {%else%}
+                <p class="no-data">No Data</p>
+            {%endif%}
             <div class="title">Antecedents</div>
-                {%if antecedents%}
-                    {%for antecedent in antecedents%}
-                        <h3>Antecedent: {{antecedent.antecedent}}</h3>
-                        <h3>Information: {{antecedent.info}}</h3>
-                        <hr>
-                    {%endfor%}
-                <!-- If no antecedents are present, this will be rendered-->
-                {%else%}
-                    <p class="no-background">No Antecedents</p>
-                {%endif%}
-        </div>
-        <div class="insurance">
+            {%if patient.antecedents.all%}
+                {%for antecedent in patient.antecedents.all%}
+                    <p>{{forloop.counter}}. {{antecedent.antecedent}} - {{antecedent.info}}</p>
+                {%endfor%}
+            {%else%}
+                <p class="no-data">No Data</p>
+            {%endif%}
             <div class="title">Insurance</div>
-                {%if insurance and insurance.insurance_carrier and insurance.type_of_insurance%}
-                    <h3>Insurance Carrier: {{insurance.insurance_carrier}}</h3>
-                    <h3>Type of Insurnace: {{insurance.type_of_insurance}}</h3>
-                    <h3>Expiration Date: {{insurance.expiration_date}}</h3>
-                <!-- If no insurance is present, this will be rendered-->
-                {%else%}
-                    <p class="no-background">No Insurance Information</p>
-                {%endif%}
+            {%if patient.insurance.insurance_carrier or patient.type_of_insurance%}
+                <p>Insurance Carrier: {{patient.insurance.insurance_carrier}}</p>
+                <p>Insurance Type: {{patient.insurance.insurance_type}}</p>
+                <p>Expiration Date: {{patient.insurance.expiration_date}}</p>
+            {%else%}
+                <p class="no-data">No Data</p>
+            {%endif%}
         </div>
     </div>
     <div class="filterable appointments">

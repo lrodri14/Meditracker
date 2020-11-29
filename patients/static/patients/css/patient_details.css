@@ -7,11 +7,6 @@ body{
     overflow-x: hidden;
 }
 
-.body-color-change{
-    background-color: #3e5278;
-    transition: 0.5s;
-}
-
 #title{
     position: fixed;
 }
@@ -20,9 +15,25 @@ body{
 
 .wrapper{
     display: grid;
-    grid-template-columns: 100% 100% 100% 100% 100%;
+    grid-template-columns: 100% 100% 100% 100%;
     grid-gap: 1%;
     margin-top: 6%;
+}
+
+.general-info{
+    display: grid;
+    grid-template-columns: 49.5% 49.5%;
+    grid-gap: 1%;
+    margin-top: 5%;
+}
+
+.background{
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.general-info h2{
+    margin-left: 45%;
 }
 
 .filterable{
@@ -31,66 +42,36 @@ body{
     grid-gap: 1%;
 }
 
-.no-background{
-    margin-left: 45%;
-}
-
-.allergies{
-    text-align: justify;
-    overflow: auto;
-    overflow-x: hidden;
-    max-height: 200px;
-}
-
-hr{
-    border: 1px solid #0ff5fc;
-}
-
-hr:last-child{
-    display: none;
-}
-
 a{
     text-decoration: underline;
 }
 
-.antecedents{
-    text-align: justify;
-    overflow: auto;
-    overflow-x: hidden;
-    max-height: 200px;
-    margin-top: 2%;
-}
-
-.insurance{
-    text-align: justify;
-    overflow-x: hidden;
-    max-height: 200px;
-    margin-top: 2%;
-}
-
 .title{
-    padding: 5px;
+    padding: 10px;
     width: 95%;
-    background-color: #0ff5fc;
-    color: #12212b;
-    font-size: 20px;
+    background-color: #6082AD;
+    color: #FFFFFF;
     margin-top: 5%;
+    left: 0;
+}
+
+.background .no-data{
+    margin-top: 5%;
+    margin-left: 45%;
 }
 
 /*##################################################### Data Table ###################################################*/
 
 table{
     margin-top: 5%;
-    background-color: #12212b;
     border-collapse: collapse;
     width: 100%;
 }
 
 tr{
-    transition: 0.5s;
     line-height: 20px;
     margin: 10px;
+    cursor: pointer;
     transition: 0.5s;
 }
 
@@ -103,23 +84,22 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: #0ff5fc;
 }
 
 tr:nth-child(odd){
-    background-color: #3d6685;
+    background-color: #6082AD;
     transition: 0.5s;
 }
 
 tr:nth-child(even){
-    background-color: #2a465c;
+    background-color: #6E8DB4;
     transition: 0.5s;
 }
 
 .tr-hover{
-    background-color: #0ff5fc;
+    background-color: #C7E8F3;
     cursor: pointer;
-    color: #12212b;
+    color: #496897;
     transition: 0.5s;
 }
 
@@ -127,43 +107,42 @@ tr:nth-child(even){
     color: #12212b;
 }
 
-.heading{
-    background-color: #12212b !important;
-    color: #0ff5fc;
+#heading{
+    background-color: #456387;
     line-height: 25px;
     cursor: default;
 }
 
 .attended{
-    background-color: #32a852;
+    background-color: #00E083;
     color: #12212b !important;
 }
 
 .not-attended{
-    background-color: #a83632;
+    background-color: #D73533;
     color: #12212b !important;
 }
 
 .Open{
-    background-color: #ffe100;
+    background-color: #EAC234;
     color: #12212b !important;
     height: 100%;
 }
 
 .Confirmed{
-    background-color: #32a852;
+    background-color: #00E083;
     color: #12212b !important;
     height: 100%;
 }
 
 .Canceled{
-    background-color: #b5b3a7;
+    background-color: #95B6C6;
     color: #12212b !important;
     height: 100%;
 }
 
 .Closed{
-    background-color: #a83632;
+    background-color: #D73533;
     color: #12212b !important;
     height: 100%;
 }
@@ -182,7 +161,7 @@ i{
 }
 
 .fa-filter-hover{
-    color: #12212b;
+    color: #00CCFF;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -193,14 +172,14 @@ i{
 }
 
 .fa-sync-alt-hover{
-    color: #12212b;
+    color: #00CCFF;
     cursor: pointer;
     transition: 0.5s;
 }
 
 form{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 10px;
     margin-top: -300%;
     transition: 0.5s;
@@ -221,10 +200,10 @@ form{
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
   transition: 0.5s;
@@ -242,10 +221,10 @@ input:focus{
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
   margin: 5px;
@@ -260,10 +239,10 @@ button{
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
+    color: #FFFFFF;
 }
 
 button:focus{
@@ -271,8 +250,8 @@ button:focus{
 }
 
 .button-form-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #C7E8F3;
+    color: #496897;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -292,8 +271,8 @@ button:focus{
 
 
 .info{
-    width: 100%;
-    background-color: #12212b;
+    width: 50%;
+    background-color: #456387;
     left: 0;
     transition: 0.5s;
     margin-top: 5%;
@@ -309,20 +288,20 @@ button:focus{
 
 .info-tab{
     text-align: center;
-    width: 20%;
+    width: 25%;
     display: inline-block;
     transition: 0.5s;
 }
 
 .tab-hover{
-    background-color: #0ff5fc;
+    background-color: #FFFFFF;
     color: #12212b;
     cursor: pointer;
     transition: 0.5s;
 }
 
 .tab-active{
-    background-color: #0ff5fc;
+    background-color: #FFFFFF;
     color: #12212b;
     transition: 0.5s;
 }

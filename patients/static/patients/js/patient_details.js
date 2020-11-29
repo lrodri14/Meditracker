@@ -1,7 +1,7 @@
 /* This JS File contains all the variable declarations, async  and sync functions, and event listeners needed to show a
    particular patient's details, the variable section is divided into 4 divisions: backedUpData, imgPreview, titles and
    containers, the function section is divided into two divisions, sync functions and async functions, it contains a total
-   of 6 functions, 5 of them sync and one left async.*/
+   of 5 functions, 4 of them sync and one left async.*/
 
 // ##################################################### Variables #####################################################
 
@@ -39,18 +39,10 @@ function generalScroll(){
     })
 }
 
-function backgroundScroll(){
-    /*This function will scroll the window object left the width of the window screen in a smooth behavior.*/
-    window.scrollTo({
-        left: window.screen.availWidth,
-        behavior: 'smooth'
-    })
-}
-
 function appointmentsScroll(){
     /*This function will scroll the window object left the width of the window screen * 2 in a smooth behavior.*/
     window.scrollTo({
-        left: window.screen.availWidth * 2,
+        left: window.screen.availWidth,
         behavior: 'smooth'
     })
 }
@@ -58,7 +50,7 @@ function appointmentsScroll(){
 function examsScroll(){
     /*This function will scroll the window object left the width of the window screen * 3 in a smooth behavior.*/
     window.scrollTo({
-        left: window.screen.availWidth * 3,
+        left: window.screen.availWidth * 2,
         behavior: 'smooth'
     })
 }
@@ -66,7 +58,7 @@ function examsScroll(){
 function chargesScroll(){
     /*This function will scroll the window object left the width of the window screen * 4 in a smooth behavior.*/
     window.scrollTo({
-        left: window.screen.availWidth * 4,
+        left: window.screen.availWidth * 3,
         behavior: 'smooth'
     })
 }
@@ -92,17 +84,13 @@ body.addEventListener('mouseover', (e) => {
 
     /* This event will be fired every time a hover occurs in the icons or a td cell, this will change many style
        properties from the row and add tr-hover and td-hover class*/
-    if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
+    if (e.target.nodeName === 'TD'){
         let row
         e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-        row.style.backgroundColor = '#0ff5fc'
-        row.classList.add('tr-hover')
-        for (let i = 0; i<row.childNodes.length; i++){
-            if (row.childNodes[i].nodeName === 'TD'){
-                row.childNodes[i].classList.add('td-hover')
-            }
-        }
+        row.style.backgroundColor = '#C7E8F3'
+        row.style.color = '#496897'
     }
+
 
     /* This event will be fired every time a hover occurs over the target and the target or parentNode contains the
        info-tab class, and will add the tab-hover class*/
@@ -134,17 +122,12 @@ body.addEventListener('mouseout', (e) => {
 
   /* This event will be fired every time a hover occurs in the icons or a td cell, this will change many style
      properties from the row and removed tr-hover and td-hover class*/
-  if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
-    let row
-    e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-    row.style.backgroundColor = ''
-    row.classList.remove('tr-hover')
-    for (let i = 0; i<row.childNodes.length; i++){
-        if (row.childNodes[i].nodeName === 'TD'){
-            row.childNodes[i].classList.remove('td-hover')
-        }
-    }
-  }
+      if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
+        let row
+        e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            row.style.backgroundColor = ''
+            row.style.color = ''
+      }
 
 /* This event will be fired every time a mouseout occurs off a target and the target or parentNode contains the
    info-tab class, and the tab-hover class will be removed*/
@@ -189,9 +172,6 @@ body.addEventListener('click', (e) => {
         if (tab.innerText === 'General'){
             generalScroll()
             title.innerText = titleOriginalContent
-        } else if (tab.innerText === 'Background'){
-            backgroundScroll()
-            title.innerText = tab.innerText
         }else if (tab.innerText === 'Appointments'){
             appointmentsScroll()
             title.innerText = tab.innerText
