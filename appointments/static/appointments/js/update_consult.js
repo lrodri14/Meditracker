@@ -25,6 +25,7 @@ var addDrugModal = document.querySelector('.add-drug-modal')
 var addDrugModalContent = document.querySelector('.add-drug-modal-content')
 var addDrugForm = document.querySelector('.add-drug-modal-content form')
 var medicineText = document.querySelector('#id_indications')
+var actions = document.querySelector('#id_actions')
 var prevSlide = document.querySelector('.fa-angle-left')
 var nextSlide = document.querySelector('.fa-angle-right')
 var controllers = [prevSlide, nextSlide]
@@ -114,7 +115,10 @@ if (form){
             submitConsultAW(url, method, csrfmiddlewaretoken, formData)
             .then(data => {
                 if (data['prescription_path']){
-                    console.log(data['prescription_path'])
+                    prescriptionModalContent.setAttribute('data-pdf', data['prescription_path'])
+                    pdfPath = prescriptionModalContent.getAttribute('data-pdf')
+                    PDFObject.embed(pdfPath, prescriptionModalContent)
+                    prescriptionModal.classList.add('prescription-modal-show')
                 }
             })
         } else{
@@ -526,18 +530,23 @@ if (modal){
             let method = form.method
             let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             let formData = new FormData(form)
-            submitConsultAW(url, method, csrfmiddlewaretoken, formData)
-            .then(data => {
-                if (data['prescription_path']){
-                    prescriptionModalContent.setAttribute('data-pdf', data['prescription_path'])
-                    pdfPath = prescriptionModalContent.getAttribute('data-pdf')
-                    PDFObject.embed(pdfPath, prescriptionModalContent)
-                    prescriptionModal.classList.add('prescription-modal-show')
-                    modal.classList.remove('modal-show')
-                }
-            })
-        }
-    })
+            if (medicineText.value || actions.value){
+                submitConsultAW(url, method, csrfmiddlewaretoken, formData)
+                .then(data => {
+                    if (data['prescription_path']){
+                        prescriptionModalContent.setAttribute('data-pdf', data['prescription_path'])
+                        pdfPath = prescriptionModalContent.getAttribute('data-pdf')
+                        PDFObject.embed(pdfPath, prescriptionModalContent)
+                        prescriptionModal.classList.add('prescription-modal-show')
+                        modal.classList.remove('modal-show')
+                    }
+                })
+            }else{
+                submitConsultAW(url, method, csrfmiddlewaretoken, formData)
+                window.location.href = e.target.getAttribute('data-url')
+            }
+    }
+   })
 }
 
 

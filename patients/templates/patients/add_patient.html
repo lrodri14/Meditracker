@@ -31,25 +31,25 @@
             <!-- Errors -->
                 {%if patient_form.errors%}
                     {%for error in patient_form.errors%}
-                        <p class="error">{{error.as_text}}</p>
+                        <p class="error"><small>{{error.as_text}}</small></p>
                     {%endfor%}
                 {%endif%}
 
                 {%for form in allergies_form%}
                     {%if form.non_field_errors%}
-                        <p class="error">{{form.non_field_errors.as_text}}</p>
+                        <p class="error"><small>{{form.non_field_errors.as_text}}</small></p>
                     {%endif%}
                 {%endfor%}
 
                 {%for form in antecedents_form%}
                     {%if form.non_field_errors%}
-                        <p class="error">{{form.non_field_errors.as_text}}</p>
+                        <p class="error"><small>{{form.non_field_errors.as_text}}</small></p>
                     {%endif%}
                 {%endfor%}
 
 
                 {%if insurance_form.non_field_errors%}
-                    <p class="error">{{insurance_form.non_field_errors.as_text}}</p>
+                    <p class="error"><small>{{insurance_form.non_field_errors.as_text}}</small></p>
                 {%endif%}
 
                     <p>{{patient_form.id_number.label}}</p>

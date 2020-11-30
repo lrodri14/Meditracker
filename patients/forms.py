@@ -8,6 +8,7 @@
 from .models import *
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.forms import modelformset_factory, inlineformset_factory
 
 # List containing all the available years
@@ -91,6 +92,7 @@ class InsuranceInformationForm(forms.ModelForm):
             raise ValidationError("Insurance information incomplete")
         elif (carrier and insurance_type) and (expiration_date <= timezone.localtime().date()):
             raise ValidationError('Insurance has already expired')
+
         return cleaned_data
 
 

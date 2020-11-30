@@ -91,6 +91,11 @@ def add_patient(request):
         is set to the current patient and saved, after all this process is completed, we will be redirected to the patients
         main page, it accepts one parameters, 'request'.
     """
+    patient_form = PatientForm
+    allergies_form = AllergiesInformationFormset(queryset=AllergiesInformation.objects.none())
+    antecedents_form = AntecedentFormset(queryset=Antecedents.objects.none())
+    insurance_form = InsuranceInformationForm()
+    template = 'patients/add_patient.html'
     if request.method == 'POST':
         patient_form = PatientForm(request.POST)
         allergies_form = AllergiesInformationFormset(request.POST)
@@ -123,14 +128,9 @@ def add_patient(request):
             insurance.save()
 
             return redirect('patients:patients')
-    else:
-        patient_form = PatientForm
-        allergies_form = AllergiesInformationFormset(queryset=AllergiesInformation.objects.none())
-        antecedents_form = AntecedentFormset(queryset=Antecedents.objects.none())
-        insurance_form = InsuranceInformationForm()
-        template = 'patients/add_patient.html'
-        context_data = {'patient_form': patient_form, 'allergies_form': allergies_form, 'insurance_form': insurance_form, 'antecedents_form': antecedents_form}
-        return render(request, template, context=context_data)
+
+    context_data = {'patient_form': patient_form, 'allergies_form': allergies_form, 'insurance_form': insurance_form, 'antecedents_form': antecedents_form}
+    return render(request, template, context=context_data)
 
 
 def patient_details(request, pk):

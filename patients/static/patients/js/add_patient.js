@@ -301,7 +301,8 @@ if (modal){
         const method = form.method
         const csrfmiddlewaretoken = e.target.childNodes[0].value
         const formData = new FormData(form)
-        if (e.target.id = 'add-allergy'){
+        console.log(e.target)
+        if (e.target.classList.contains('add-allergy')){
             addElementAsync(url, method, csrfmiddlewaretoken, formData)
             .then(data => {
                 if (data['html']){
@@ -317,9 +318,7 @@ if (modal){
                 if (data['html']){
                     modalContent.innerHTML = data['html']
                 }else{
-                    for (let i = 0; i<insuranceSelection.length; i++){
-                        insuranceSelection.innerHTML = data['updated_selections']
-                    }
+                    insuranceSelection.innerHTML = data['updated_selections']
                     modal.classList.remove('modal-show')
                 }
             })

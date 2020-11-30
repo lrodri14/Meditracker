@@ -307,6 +307,11 @@ textarea:focus{
     outline: none;
 }
 
+textarea::-webkit-input-placeholder {
+  color: #FFFFFF;
+}
+
+
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
