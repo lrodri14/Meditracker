@@ -301,7 +301,6 @@ if (modal){
         const method = form.method
         const csrfmiddlewaretoken = e.target.childNodes[0].value
         const formData = new FormData(form)
-        console.log(e.target)
         if (e.target.classList.contains('add-allergy')){
             addElementAsync(url, method, csrfmiddlewaretoken, formData)
             .then(data => {
