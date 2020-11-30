@@ -39,7 +39,7 @@ body{
 
 .add-patient-hover{
     cursor: pointer;
-    color: #32a852;
+    color: #25BB41;
     transition: 0.5s;
 }
 
@@ -103,9 +103,7 @@ table{
 }
 
 tr{
-    transition: 0.5s;
     line-height: 20px;
-    margin: 10px;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -284,7 +282,7 @@ button:focus{
   left: 0;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: visibility 0.3s, opacity 0.3s;
 }
 
 .modal-show{

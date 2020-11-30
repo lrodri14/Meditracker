@@ -4,7 +4,7 @@
 /*##################################################### Body #########################################################*/
 
 body{
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 #title{
@@ -96,17 +96,6 @@ tr:nth-child(even){
     transition: 0.5s;
 }
 
-.tr-hover{
-    background-color: #C7E8F3;
-    cursor: pointer;
-    color: #496897;
-    transition: 0.5s;
-}
-
-.td-hover{
-    color: #12212b;
-}
-
 #heading{
     background-color: #456387;
     line-height: 25px;
@@ -115,45 +104,40 @@ tr:nth-child(even){
 
 .attended{
     background-color: #00E083;
-    color: #12212b !important;
+    color: #000000 !important;
 }
 
 .not-attended{
     background-color: #D73533;
-    color: #12212b !important;
+    color: #000000 !important;
 }
 
 .Open{
     background-color: #EAC234;
-    color: #12212b !important;
+    color: #000000 !important;
     height: 100%;
 }
 
 .Confirmed{
     background-color: #00E083;
-    color: #12212b !important;
+    color: #000000 !important;
     height: 100%;
 }
 
 .Canceled{
     background-color: #95B6C6;
-    color: #12212b !important;
+    color: #000000 !important;
     height: 100%;
 }
 
 .Closed{
     background-color: #D73533;
-    color: #12212b !important;
+    color: #000000 !important;
     height: 100%;
 }
 
 
 /*##################################################### Filtering Form ###############################################*/
-
-
-i{
-    padding: 5px;
-}
 
 .fa-filter{
     transition: 0.5s;
@@ -167,6 +151,7 @@ i{
 }
 
 .fa-sync-alt{
+    padding-left: 8px;
     margin-top: 20%;
     transition: 0.5s;
 }
@@ -188,7 +173,7 @@ form{
 }
 
 .error{
-    color: #a83632;
+    color: #FFFFFF;
 }
 
 .show-form{
@@ -295,14 +280,14 @@ button:focus{
 
 .tab-hover{
     background-color: #FFFFFF;
-    color: #12212b;
+    color: #496897;
     cursor: pointer;
     transition: 0.5s;
 }
 
 .tab-active{
     background-color: #FFFFFF;
-    color: #12212b;
+    color: #496897;
     transition: 0.5s;
 }
 

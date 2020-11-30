@@ -1,11 +1,11 @@
 {%load static%}
 <form method="POST" action="{%url 'settings:drug_add'%}" autocomplete="off" class="add add-drug">
     {%csrf_token%}
-    <h1>Add Drug</h1>
+    <h2>Add Drug</h2>
     <p>{{form.name.label}}</p>
     <p>{{form.name}}</p>
     <p>{{form.category.label}}</p>
     <p>{{form.category}}</p>
-    <p class="error">{{error}}</p>
+    <p class="error"><small>{{error}}</small></p>
     <button type="submit" id="drug-submit">Add Drug</button>
 </form>

@@ -128,7 +128,7 @@ def generate_pdf(user, consult):
         he are passing to this function in this case the pdf and finally the content_type.
 
     """
-    if consult.medicine != '' or consult.actions != '':
+    if consult.indications != '' or consult.actions != '':
         context = {'user': user, 'consult': consult}
         template = render_to_string('appointments/pdf.html', context)
         pdf = HTML(string=template).write_pdf()

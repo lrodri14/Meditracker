@@ -24,7 +24,7 @@ var addDrug = document.querySelector('.add-drug')
 var addDrugModal = document.querySelector('.add-drug-modal')
 var addDrugModalContent = document.querySelector('.add-drug-modal-content')
 var addDrugForm = document.querySelector('.add-drug-modal-content form')
-var medicineText = document.querySelector('#id_medicine')
+var medicineText = document.querySelector('#id_indications')
 var prevSlide = document.querySelector('.fa-angle-left')
 var nextSlide = document.querySelector('.fa-angle-right')
 var controllers = [prevSlide, nextSlide]
@@ -181,13 +181,9 @@ if (recordsTable){
         if (e.target.nodeName === 'TD'){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-            row.style.backgroundColor = '#0ff5fc'
-            row.classList.add('tr-hover')
-            for (let i = 0; i<row.childNodes.length; i++){
-                if (row.childNodes[i].nodeName === 'TD'){
-                    row.childNodes[i].classList.add('td-hover')
-                }
-            }
+            row.style.backgroundColor = '#C7E8F3'
+            row.style.color = '#496897'
+
         let url = row.getAttribute('data-url')
         consultSummaryAW(url)
         .then(data => {
@@ -202,12 +198,7 @@ if (recordsTable){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
             row.style.backgroundColor = ''
-            row.classList.remove('tr-hover')
-            for (let i = 0; i<row.childNodes.length; i++){
-                if (row.childNodes[i].nodeName === 'TD'){
-                    row.childNodes[i].classList.remove('td-hover')
-                }
-            }
+            row.style.color = ''
 
           }
 

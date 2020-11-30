@@ -8,23 +8,22 @@
 
 /*Table*/
 table{
-    background-color: #12212b;
     border-collapse: collapse;
     margin: auto;
     width: 100%;
 }
 
 #heading{
-    background-color: #12212b;
-    color: cyan;
+    background-color: #456387;
     line-height: 25px;
     cursor: default;
 }
 
 tr{
-    transition: 0.5s;
+    cursor: pointer;
     line-height: 20px;
     margin: 10px;
+    transition: 0.5s;
 }
 
 tr th{
@@ -36,68 +35,56 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: #0ff5fc;
 }
 
 tr:nth-child(odd){
-    background-color: #3d6685;
+    background-color: #6082AD;
     transition: 0.5s;
 }
 
 tr:nth-child(even){
-    background-color: #2a465c;
+    background-color: #6E8DB4;
     transition: 0.5s;
-}
-
-.tr-hover{
-    background-color: #0ff5fc;
-    cursor: pointer;
-    color: #12212b;
-    transition: 0.5s;
-}
-
-.td-hover{
-    color: #12212b;
 }
 
 #Open{
-    background-color: #ffe100;
+    background-color: #EAC234;
     color: #12212b;
     height: 100%;
 }
 
 #Confirmed{
-    background-color: #32a852;
+    background-color: #00E083;
     color: #12212b;
     height: 100%;
 }
 
 #Canceled{
-    background-color: #b5b3a7;
+    background-color: #95B6C6;
     color: #12212b;
     height: 100%;
 }
 
 #Closed{
-    background-color: #a83632;
+    background-color: #D73533;
     color: #12212b;
     height: 100%;
 }
 
 #never_attended{
-    background-color: #a83632;
+    background-color: #D73533;
     color: #12212b;
     height: 100%;
 }
 
 #pending{
-    background-color: #ffe100;
+    background-color: #EAC234;
     color: #12212b;
     height: 100%;
 }
 
 #attended{
-    background-color: #32a852;
+    background-color: #00E083;
     color: #12212b;
     height: 100%;
 }
@@ -107,36 +94,42 @@ tr:nth-child(even){
 .fa-filter{
     margin-top: 20%;
     float: left;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-filter-hover{
+    color: #00CCFF;
     transition: 0.5s;
 }
 
 form{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 10px;
-    margin-top: -200%;
+    transform: translateY(-200%);
     transition: 0.5s;
     visibility: hidden;
     transition: 0.5s;
 }
 
 .error{
-    color: #a83632;
+    color: #FFFFFF;
 }
 
 .show-form{
     visibility: visible;
-    margin-top: 35%;
-    transition: 0.5s;
+    transform: translateY(23%);
+    transition: transform 0.5s ease-out;
 }
 
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
   transition: 0.5s;
@@ -154,10 +147,10 @@ input:focus{
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
   margin: 5px;
@@ -172,10 +165,10 @@ button{
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
+    color: #FFFFFF;
 }
 
 button:focus{
@@ -183,8 +176,8 @@ button:focus{
 }
 
 .button-form-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #C7E8F3;
+    color: #496897;
     transition: 0.5s;
     cursor: pointer;
 }

@@ -7,8 +7,8 @@
 {%block content%}{%endblock%}
 <link rel="stylesheet" href="{%static 'appointments/css/consults_details.css'%}">
 <div id="heading">
-    <h1>{{consult.patient.first_names}} {{consult.patient.last_names}}</h1>
-    <h2>Date: {{consult.datetime}}</h2>
+    <h2>{{consult.patient.first_names}} {{consult.patient.last_names}}</h2>
+    <h3>Date: {{consult.datetime}}</h3>
 </div>
 
 <i class="fas fa-print" data-pdf="{{MEDIA_URL}}{{consult.prescription}}"></i>

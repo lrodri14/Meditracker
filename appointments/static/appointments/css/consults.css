@@ -10,6 +10,7 @@
     left: 0;
     visibility: hidden;
     opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
 }
 
 .modal-show{
@@ -27,7 +28,7 @@
 /*Modal Form*/
 form{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5A7FAF;
     margin-top: 10%;
     width: 50%;
     margin-left: 22%;
@@ -35,38 +36,36 @@ form{
 }
 
 .error{
-    color: #a83632;
+    color: #FFFFFF;
 }
 
 #add_new_patient{
     text-decoration: underline;
-    transition: 0.5s;
 }
 
 .add_new_patient_hover{
     font-size: 16px;
-    transition: 0.5s;
+    transition: font-size 0.5s;
 }
 
 textarea{
   font-family: 'Alegreya Sans SC', sans-serif;
-  color: #0ff5fc;
-  background-color: #12212b;
-  border: 2px solid #0ff5fc;
-  transition: 0.5s;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
+  border: 1px solid #C7E8F3;
+  resize: none;
 }
 
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
   margin: 5px;
-  transition: 0.5s;
 }
 
 select:focus{
@@ -76,13 +75,12 @@ select:focus{
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
-  transition: 0.5s;
 }
 
 input:focus{
@@ -93,68 +91,54 @@ form > button{
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
+    color: #FFFFFF;
 }
 
 /*Table*/
 table{
-    background-color: #12212b;
     border-collapse: collapse;
     margin: auto;
     width: 100%;
-    transition: 0.5s;
-}
-
-.tr-hover{
-    background-color: #0ff5fc;
-    cursor: pointer;
-    color: #12212b;
-    transition: 0.5s;
-}
-
-.td-hover{
-    color: #12212b;
 }
 
 #heading{
-    background-color: #12212b;
-    color: #0ff5fc;
+    background-color: #456387;
+    color: #FFFFFF;
     cursor: default;
-    transition: 0.5;
 }
 
 .fa-plus{
     padding: 5px 10px 5px 5px;
+    cursor: pointer;
     transition: 0.5s;
 }
 
 .fa-plus-hover{
-    color: #32a852;
-    cursor: pointer;
-    transition: 0.5s;
+    color: #25BB41;
+    transition: color 0.5s;
 }
 
 .fa-edit{
+    cursor: pointer;
     transition: 0.5s;
 }
 
 .fa-edit-hover{
-    color: #e3d622;
-    cursor: pointer;
-    transition: 0.5s;
+    color: #CBA415;
+    transition: color 0.5s;
 }
 
 .fa-exclamation-circle{
-    color: #e3d622;
+    color: #CBA415;
 }
 
 tr{
-    transition: 0.5s;
     line-height: 20px;
-    margin: 10px;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
 tr th{
@@ -166,17 +150,16 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: cyan;
 }
 
 tr:nth-child(odd){
-    background-color: #3d6685;
-    transition: 0.5s;
+    background-color: #6082AD;
+    transition: background-color 0.5s;
 }
 
 tr:nth-child(even){
-    background-color: #2a465c;
-    transition: 0.5s;
+    background-color: #6E8DB4;
+    transition: background-color 0.5s;
 }
 
 /* Warning Popup */
@@ -187,19 +170,19 @@ tr:nth-child(even){
     margin-top: -35px;
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: opacity 0.5s;
 }
 
 .popup-show{
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: opacity 0.5s;
 }
 
 .popup-text{
     font-size: 10px;
-    background-color: #e3d622;
-    color: #12212b;
+    background-color: #CBA415;
+    color: #496897;
     padding: 5px;
 }
 
@@ -207,10 +190,10 @@ tr:nth-child(even){
     content: " ";
     border-width: 5px;
     border-style: solid;
-    border-color: #e3d622 transparent transparent transparent;
+    border-color: #CBA415 transparent transparent transparent;
     position: absolute;
     top: 112%;
-    left: 90%;
+    left: 92%;
 }
 
 /*Buttons*/
@@ -219,9 +202,11 @@ button{
     width: 10%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color:#3e5278;
-    border: 2px solid #0ff5fc;
-    color: #0ff5fc;
+    background-color: #5A7FAF;
+    border: 1px solid #C7E8F3;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.5s, color 0.5s;
 }
 
 button:focus{
@@ -229,10 +214,9 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
-    transition: 0.5s;
-    cursor: pointer;
+    background-color: #C7E8F3;
+    color: #496897;
+    transition: background-color 0.5s, color 0.5s;
 }
 
 #no-consults{
@@ -254,12 +238,12 @@ button:focus{
     margin-right: -50%;
     transform: translate(-50%, -50%);
     font-size: 25px;
-    transition: 0.5s;
+    transition: top 0.5s, color 0.5s;
 }
 
 .add-consult-hover{
-    color: #32a852;
-    transition: 0.5s;
+    color: #25BB41;
+    transition: color 0.5s;
 }
 
 .add-consults-hide{
@@ -268,6 +252,6 @@ button:focus{
 }
 
 #status-0{
-    background-color: #ffe100;
-    color: #12212b;
+    background-color: #EAC234;
+    color: #000000;
 }

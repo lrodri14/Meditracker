@@ -14,6 +14,7 @@
 }
 
 .add-providers{
+    cursor: pointer;
     font-size: 25px;
     position: absolute;
     top: 90%;
@@ -29,8 +30,7 @@
 }
 
 .add-providers-hover{
-    cursor: pointer;
-    color: #32a852;
+    color: #25BB41;
     transition: 0.5s;
 }
 
@@ -55,22 +55,22 @@ ul{
 }
 
 li{
+    cursor: pointer;
     display: inline;
     padding: 15px;
-    background-color: #12212b;
+    background-color: #456387;
     transition: 0.5s;
 }
 
 .tab-active{
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #FFFFFF;
+    color: #496897;
     transition: 0.5s;
 }
 
 .tab-hover{
-    cursor: pointer;
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #FFFFFF;
+    color: #496897;
     transition: 0.5s;
 }
 
@@ -86,71 +86,59 @@ li{
 }
 
 table{
-    background-color: #12212b;
     border-collapse: collapse;
     margin: auto;
     width: 100%;
 }
 
 #heading{
-    background-color: #12212b;
-    color: #0ff5fc;
+    background-color: #456387;
     line-height: 25px;
     cursor: default;
 }
 
 .fa-plus{
+    cursor: pointer;
     padding: 5px 10px 5px 5px;
     transition: 0.5s;
 }
 
 .fa-plus-hover{
-    color: #32a852;
-    cursor: pointer;
+    color: #25BB41;
     transition: 0.5s;
 }
 
 .fa-trash{
-    transition: 0.5s;
+    cursor: pointer;
 }
 
 .fa-trash-hover{
-    color: #a83632;
-    cursor: pointer;
+    color: #A31621;
     transition: 0.5s;
 }
 
 .fa-edit{
-    transition: 0.5s;
+    cursor: pointer;
 }
 
 .fa-edit-hover{
-    color: #e3d622;
-    cursor: pointer;
+    color: #CBA415;
     transition: 0.5s;
 }
 
 .fa-envelope{
-    transition: 0.5s;
+    cursor: pointer;
 }
 
 .fa-envelope-hover{
-    cursor: pointer;
-    color: white;
+    color: #00CCFF;
     transition: 0.5s;
 }
 
 tr{
-    transition: 0.5s;
+    cursor: pointer;
     line-height: 20px;
     margin: 10px;
-    transition: 0.5s;
-}
-
-.tr-hover{
-    background-color: #0ff5fc;
-    cursor: pointer;
-    color: #12212b;
     transition: 0.5s;
 }
 
@@ -163,34 +151,27 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: #0ff5fc;
     max-width: 100px;
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
 }
 
-.td-hover{
-    color: #12212b;
-}
-
 tr:nth-child(odd){
-    background-color: #3d6685;
-    transition: 0.5s;
+    background-color: #6082AD;
 }
 
 tr:nth-child(even){
-    background-color: #2a465c;
-    transition: 0.5s;
+    background-color: #6E8DB4;
 }
 
 .fa-filter{
+    cursor: pointer;
     transition: 0.5s;
 }
 
 .fa-filter-hover{
-    cursor: pointer;
-    color: #12212b;
+    color: #00CCFF;
     transition: 0.5s;
 }
 
@@ -203,7 +184,7 @@ tr:nth-child(even){
 }
 
 .error{
-    color: #a83632;
+    color: #FFFFFF;
 }
 
 /*Filter form*/
@@ -211,8 +192,8 @@ tr:nth-child(even){
     position: static;
     width: 90%;
     height: 100%;
-    margin-top: -300%;
-    background-color: #12212b;
+    transform: translateY(-200%);
+    background-color: #5A7FAF;
     text-align: center;
     padding: 10px;
     visibility: hidden;
@@ -221,14 +202,14 @@ tr:nth-child(even){
 
 .filter-form-show{
     visibility: visible;
-    margin-top: 5%;
+    transform: translateY(15%);
     transition: 0.5s;
 }
 
 /*Form inside modals*/
 .modal form{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 20px;
     position: absolute;
     top: 50%;
@@ -237,7 +218,7 @@ tr:nth-child(even){
     transform: translate(-50%, -50%);
     width: 25%;
     height: 55%;
-    color: #0ff5fc;
+    color: #FFFFFF;
 }
 
 .modal .create-visitor-form{
@@ -250,11 +231,11 @@ tr:nth-child(even){
 
 #delete-operation{
     width: 30%;
-    height: 25%;
+    height: 20%;
 }
 
 #provider-details{
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 10px;
     width: 25%;
     margin-left: 37.5%;
@@ -267,10 +248,10 @@ tr:nth-child(even){
 
 input{
   text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
 }
@@ -280,27 +261,27 @@ input:focus{
 }
 
 select{
-    background-color: #12212b;
+    background-color: #5A7FAF;
     border: none;
-    border-bottom: 1px solid #0ff5fc;
+    border-bottom: 1px solid #C7E8F3;
     width:60%;
     text-align-last: center;
-    color: #0ff5fc;
+    color: #FFFFFF;
 }
 
 select:focus{
   outline: none;
 }
 
-
 button{
+    cursor: pointer;
     margin: 5px;
     width: 30%;
     height: 30px;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
+    color: #FFFFFF;
     transition: 0.5s;
 }
 
@@ -309,9 +290,8 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
-    cursor: pointer;
+    background-color: #C7E8F3;
+    color: #496897;
     transition: 0.5s;
 }
 
@@ -319,18 +299,18 @@ button:focus{
 
 .modal{
     position: absolute;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.3);
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: visibility 0.3s, opacity 0.3s;
 }
 
 .modal-show{
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: opacity 0.3s;
 }

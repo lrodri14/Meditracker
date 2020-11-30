@@ -2,7 +2,7 @@
 {%block body_block%}
 <form method="POST" autocomplete="off" action="{%url 'settings:allergy_add'%}" class="add" id="add-allergy">
     {%csrf_token%}
-    <h1>Add Allergy</h1>
+    <h2>Add Allergy</h2>
     <p>{{allergies_form.allergy_type.label}}</p>
     <p>{{allergies_form.allergy_type}}</p>
     <p class="error"><small>{{error}}</small></p>

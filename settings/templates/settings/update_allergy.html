@@ -2,7 +2,7 @@
 {%block body_block%}
 <form method="POST" autocomplete="off" action="{%url 'settings:allergies_update' allergy.pk%}" class="update" id="update-allergy">
     {%csrf_token%}
-    <h1>Update Allergy</h1>
+    <h2>Update Allergy</h2>
     <p>{{allergy_form.allergy_type.label}}</p>
     <p>{{allergy_form.allergy_type}}</p>
     <p class="error">{{error}}</p>

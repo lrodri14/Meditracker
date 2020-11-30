@@ -64,16 +64,16 @@
         <i class="fas fa-filter"></i>
         <form method="POST" autocomplete="off" class="filter-form">
             {%csrf_token%}
-            <h2>Filter Results</h2>
+            <h3>Filter Results</h3>
             <p>{{form.patient.label}}</p>
             <p>{{form.patient}}</p>
             <p>{{form.month.label}}</p>
             <p>{{form.month}}</p>
             <p>{{form.year.label}}</p>
             <p>{{form.year}}</p>
-            <button type="submit">Search</button>
             <p class="error"><small>{{error}}</small></p>
             <p class="error"><small>{{no_match}}</small></p>
+            <button type="submit">Search</button>
         </form>
     </div>
     {%else%}

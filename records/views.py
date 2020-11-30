@@ -20,7 +20,7 @@ def records_list(request):
         if form.is_valid():
             from_date = form.cleaned_data['date_from']
             to_date = form.cleaned_data['date_to']
-            appointments = Consults.objects.filter(datetime__date__gte=from_date, datetime__date__lte=to_date, medical_status=True, created_by=request.user)
+            appointments = Consults.objects.filter(datetime__date__gte=from_date, datetime__date__lte=to_date, medical_status=True, created_by=request.user).order_by('-datetime')
             if len(appointments) > 0:
                 context['appointments'] = appointments
             else:

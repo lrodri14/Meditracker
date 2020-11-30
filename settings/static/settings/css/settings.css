@@ -1,24 +1,19 @@
 /*Checked*/
 table{
-    background-color: #12212b;
     border-collapse: collapse;
     width: 100%;
 }
 
 #heading{
-    background-color: #12212b;
-    color: #0ff5fc;
+    background-color: #456387;
     cursor: default;
 }
 
-.fa-plus-hover{
-    cursor: pointer;
-}
-
 tr{
-    transition: 0.5s;
+    cursor: pointer;
     line-height: 20px;
     margin: 10px;
+    transition: 0.5s;
 }
 
 tr th{
@@ -30,60 +25,44 @@ tr td{
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: #0ff5fc;
 }
 
 tr:nth-child(odd){
-    background-color: #3d6685;
-    transition: 0.5s;
+    background-color: #6082AD;
 }
 
 tr:nth-child(even){
-    background-color: #2a465c;
-    transition: 0.5s;
-}
-
-.tr-hover{
-    background-color: #0ff5fc;
-    cursor: pointer;
-    color: #12212b;
-    transition: 0.5s;
-}
-
-.td-hover{
-    color: #12212b;
+    background-color: #6E8DB4;
 }
 
 .fa-plus{
+    cursor: pointer;
     padding: 10px;
-    transition: 0.5s;
 }
 
 .fa-plus-hover{
-    color: #32a852;
-    cursor: pointer;
+    color: #25BB41;
     transition: 0.5s;
 }
 
 .fa-trash{
+    cursor: pointer;
+}
+
+.fa-trash-hover{
+    color: #A31621;
     transition: 0.5s;
 }
 
 .fa-edit{
-    transition: 0.5s;
-}
-
-.fa-trash-hover{
-    color: #a83632;
     cursor: pointer;
-    transition: 0.5s;
 }
 
 .fa-edit-hover{
-    color: #e3d622;
-    cursor: pointer;
+    color: #CBA415;
     transition: 0.5s;
 }
+
 /*Navbar*/
 ul{
     list-style-type: none;
@@ -92,31 +71,30 @@ ul{
 }
 
 li{
+    cursor: pointer;
     display: inline-block;
     padding: 15px;
     margin: 0px;
+    background-color: #456387;
     transition: 0.5s;
-    background-color: #12212b;
 }
 
 .li-hover{
-    background-color: #0ff5fc;
+    background-color: #FFFFFF;
     transition: 0.5s;
-    cursor: pointer;
 }
 
 .li-hover a{
-    color: #12212b;
+    color: #496897;
 }
 
 .li-active{
-    background-color: #0ff5fc;
+    background-color: #FFFFFF;
     transition: 0.5s;
-    cursor: pointer;
 }
 
 .li-active a{
-    color: #12212b;
+    color: #496897;
 }
 
 /*Wrapper*/
@@ -130,24 +108,24 @@ li{
 /*filter forms*/
 .filter-form{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 10px;
-    margin-top: -500px;
+    transform: translateY(-220%);
     transition: 0.5s;
 }
 
 .show-filter-form{
-    margin-top: 20px;
+    transform: translateY(10%);
     transition: 0.5s;
 }
 
 .fa-filter{
+    cursor: pointer;
     transition: 0.5s;
 }
 
 .fa-filter-hover{
-   color: #12212b;
-   cursor: pointer;
+   color: #00CCFF;
    transition: 0.5s;
 }
 
@@ -162,14 +140,14 @@ li{
     left: 0;
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: visibility 0.3s, opacity 0.3s;
 }
 
 .show-modal{
     visibility: visible;
     opacity: 1;
     position: fixed;
-    transition: 0.5s;
+    transition: all 0.3s;
 }
 
 .modal-content{
@@ -180,7 +158,7 @@ li{
 /*Modal Forms*/
 .modal-content > form{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 20px;
     position: absolute;
     top: 50%;
@@ -188,16 +166,16 @@ li{
     margin-right: -50%;
     transform: translate(-50%, -50%);
     width: 25%;
-    height: 60%;
+    height: 40%;
 }
 
 .error{
-    color: #a83632;
+    color: #FFFFFF;
 }
 
 #delete{
     text-align: center;
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 20px;
     position: absolute;
     top: 45%;
@@ -209,7 +187,7 @@ li{
 }
 
 #details{
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 20px;
     position: absolute;
     top: 50%;
@@ -235,13 +213,13 @@ li{
 input{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align: center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
-  transition: 0.5s;
+  transition: width 0.5s;
 }
 
 input:focus{
@@ -257,10 +235,10 @@ input:focus{
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
-  color: #0ff5fc;
-  background-color: #12212b;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
   border: none;
-  border-bottom: 1px solid #0ff5fc;
+  border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
   transition: 0.5s;
@@ -270,18 +248,17 @@ select:focus{
     outline: none;
 }
 
-
 /*Button*/
 button{
+    cursor: pointer;
     width: 30%;
     height: 30px;
     font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
-    transition: 0.5s;
-
+    color: #FFFFFF;
+    transition: background-color 0.5s;
 }
 
 button:focus{
@@ -289,12 +266,10 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #C7E8F3;
+    color: #496897;
     transition: 0.5s;
-    cursor: pointer;
 }
-
 
 /*No Data*/
 .no-data{
@@ -312,5 +287,5 @@ button:focus{
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    transition: 0.5s;
+    transition: top 0.3s;
 }

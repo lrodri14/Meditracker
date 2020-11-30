@@ -95,7 +95,7 @@ class Consults(models.Model):
     notes = models.TextField('notes', blank=True, null=True, help_text='Notes')
     # Treatmenet
     drugs = models.ManyToManyField(Drugs, blank=True, help_text='Drugs recommended', verbose_name='Drugs', related_name='drugs')
-    medicine = models.TextField('medicine', blank=True, null=True, help_text='Medicine')
+    indications = models.TextField('indications', blank=True, null=True, help_text='Indications')
     actions = models.TextField('actions', blank=True, null=True, help_text='actions')
     prescription = models.FileField('prescription', blank=True, null=True, help_text="Current consult's prescription", upload_to='appointments/prescriptions')
     # Status

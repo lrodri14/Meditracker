@@ -13,9 +13,9 @@
         {%endfor%}
     {%endif%}
     {%if consult.medicine%}
-        <h4>Medicine</h4>
-        {% for medicine in consult.medicine.splitlines%}
-            <p>{{forloop.counter}}.- {{medicine}}</p>
+        <h4>Indications</h4>
+        {% for indication in consult.indications.splitlines%}
+            <p>{{forloop.counter}}.- {{indication}}</p>
         {%endfor%}
     {%endif%}
     {%if consult.actions%}

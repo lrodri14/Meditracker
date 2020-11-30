@@ -90,7 +90,7 @@ if (warnings){
 //Modal
 // Modal Click
 modal.addEventListener('click', (e) => {
-    if (e.target === modal){
+    if (e.target === modal || e.target === modalContent){
     modal.classList.remove('modal-show')
     if (noConsults && addConsult){
             addConsult.classList.remove('add-consults-hide')
@@ -168,13 +168,8 @@ if (table){
         if (e.target.nodeName === 'TD' ||  e.target.classList.contains('fa-edit')){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-            row.style.backgroundColor = '#0ff5fc'
-            row.classList.add('tr-hover')
-            for (let i = 0; i<row.childNodes.length; i++){
-                if (row.childNodes[i].nodeName === 'TD'){
-                    row.childNodes[i].classList.add('td-hover')
-                }
-            }
+            row.style.backgroundColor = '#C7E8F3'
+            row.style.color = '#496897'
         }
 
     })
@@ -185,12 +180,7 @@ if (table){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
             row.style.backgroundColor = ''
-            row.classList.remove('tr-hover')
-            for (let i = 0; i<row.childNodes.length; i++){
-                if (row.childNodes[i].nodeName === 'TD'){
-                    row.childNodes[i].classList.remove('td-hover')
-                }
-            }
+            row.style.color = ''
           }
     })
 

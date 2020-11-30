@@ -51,7 +51,7 @@
         {%else%}
         <form method="GET" action="{%url 'providers:providers_filter'%}" class="filter-form medical-provider-filter-form" autocomplete="off">
             {%csrf_token%}
-            <h2>Filter Result</h2>
+            <h3>Filter Result</h3>
             <p>{{filter_form.company.label}}</p>
             <p>{{filter_form.company}}</p>
         </form>

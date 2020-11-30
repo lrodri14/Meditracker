@@ -1,7 +1,7 @@
 {%block body_block%}
 <form method="POST" autocomplete="off" action="{%url 'settings:insurance_update' carrier.pk%}" class="update">
     {%csrf_token%}
-    <h1>Update Insurance Carrier</h1>
+    <h2>Update Insurance Carrier</h2>
     <p>{{insurance.company.label}}</p>
     <p>{{insurance.company}}</p>
     <p>{{insurance.country.label}}</p>

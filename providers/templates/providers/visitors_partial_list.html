@@ -38,7 +38,7 @@
         <!--Form for visitors filtering -->
         <i class="fas fa-filter"></i>
         <form method="GET" action="{%url 'providers:visitors_filter'%}" class="filter-form" autocomplete="off">
-            <h2>Visitors Filter</h2>
+            <h3>Visitors Filter</h3>
             {%csrf_token%}
             <p>{{filter_form.name.label}}</p>
             <p>{{filter_form.name}}</p>
