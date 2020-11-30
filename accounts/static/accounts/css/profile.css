@@ -11,37 +11,38 @@ i:not(.fa-camera){
 }
 
 .fa-camera-hover{
-    color: #e3d622;
-    cursor: pointer;
+    color: #CBA415;
     transition: 0.5s;
 }
 
 .fa-edit{
+    cursor: pointer;
     float:right;
     margin-right: 10px;
     transition: 0.5s;
 }
 
 .fa-edit-hover{
-    color: #e3d622;
-    cursor: pointer;
+    color: #CBA415;
     transition: 0.5s;
 }
 
 .edit-profile-picture-modal .fa-pen{
+    cursor: pointer;
     margin-top: 50%;
     margin-left: 45%;
 }
 
 .background-edit-modal .fa-pen{
+    cursor: pointer;
     font-size: 24px;
     margin-top: 10%;
     transition: 0.5s;
 }
 
 .fa-pen-hover{
-    cursor: pointer;
-    color: #e3d622;
+    color: #CBA415;
+    transition: 0.5s;
 }
 
 .menu{
@@ -56,7 +57,7 @@ i:not(.fa-camera){
     height: 30%;
     left: 0;
     top: 0;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.3);
     overflow: hidden;
     padding: 0px;
 }
@@ -67,7 +68,7 @@ i:not(.fa-camera){
     width: 100%;
     left: 0;
     top: 0;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.3);
     overflow: hidden;
 }
 
@@ -82,28 +83,29 @@ i:not(.fa-camera){
     background-color: rgba(0,0,0,0.3);
     width: 100%;
     height: 100%;
-    margin-top: 20%;
+    transform: translateY(100%);
     visibility: hidden;
     opacity: 0;
     text-align: center;
-    transition: 0.5s;
+    transition: transform 0.5s, opacity 0.5s, visibility 0.5s;
 }
 
 .background-edit-modal-show{
-    margin-top: 0%;
+    transform: translateY(0%);
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: transform 0.5s, opacity 0.5s;
 }
 
 .background .fa-camera{
+    cursor: pointer;
     font-size: 32px;
     margin-top: 7%;
     transition: 0.5s;
 }
 
 .fa-camera-hover{
-    color: #32a852;
+    color: #CBA415;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -152,18 +154,18 @@ i:not(.fa-camera){
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    margin-top: 0%;
+    transform: translateY(0%);
     background-color: rgba(0,0,0,0.3);
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: transform 0.5s, opacity 0.5s, visibility 0.5s;
 }
 
 .edit-profile-picture-modal-show{
-    margin-top: -103%;
+    transform: translateY(-103%);
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: transform 0.5s, opacity 0.5s;
 }
 
 .information{
@@ -172,7 +174,6 @@ i:not(.fa-camera){
     position: absolute;
     width: 100%;
     height: 70%;
-    background-color: #12212b;
     top: 30%;
     left: 0;
 }
@@ -210,7 +211,7 @@ i:not(.fa-camera){
 
 .personal-information hr{
     border: none;
-    border-bottom: 1px solid #0ff5fc;
+    border-bottom: 1px solid #C7E8F3;
 }
 
 .personal-information h4{
@@ -258,7 +259,7 @@ i:not(.fa-camera){
 
 .modal{
     position: absolute;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0,0,0,0.3);
     top: 0;
     left: 0;
     width: 100%;
@@ -266,47 +267,45 @@ i:not(.fa-camera){
     z-index: 2;
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: opacity 0.3s, visibility 0.3s;
 }
 
 .modal-show{
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: opacity 0.3s;
 }
-
 
 /*Form*/
 
 form{
-    background-color: #12212b;
+    background-color: #5A7FAF;
     padding: 10px;
 }
 
 .label-hover{
     cursor: pointer;
-    background-color: #0ff5fc;
-    color: #12212b;
-    transition: 0.5s;
+    background-color: #496897;
+    color: #496897;
+    transition: all 0.5s;
 }
 
 button{
     width: 30%;
     height: 30px;
-    background-color: #12212b;
-    border-color: #0ff5fc;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #0ff5fc;
-    transition: 0.5s;
+    color: #FFFFFF;
+    transition: all 0.5s;
 }
 
 .button-hover{
     cursor: pointer;
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #C7E8F3;
+    color: #496897;
     transition: 0.5s;
 }
-
 
 /*Profile Update Form*/
 
@@ -322,10 +321,10 @@ button{
 }
 
 .edit-profile textarea{
-    background-color: #12212b;
-    color: #0ff5fc;
+    background-color: #5A7FAF;
+    color: #FFFFFF;
     border: none;
-    border-bottom: 1px solid #0ff5fc;
+    border-bottom: 1px solid #C7E8F3;
     padding: 5px;
     resize: none;
     width: 95%;
@@ -339,8 +338,8 @@ button{
 
 .edit-profile input{
     border: none;
-    border-bottom: 1px solid #0ff5fc;
-    background-color: #12212b;
+    border-bottom: 1px solid #C7E8F3;
+    background-color: #5A7FAF;
 }
 
 .form-wrapper{
@@ -363,7 +362,7 @@ button{
 
 .profile-information hr{
     border: none;
-    border-bottom: 1px solid cyan;
+    border-bottom: 1px solid #C7E8F3;
 }
 
 .personal-info-edit{
@@ -373,28 +372,28 @@ button{
 
 .personal-info-edit input{
     border: none;
-    border-bottom: 1px solid #0ff5fc;
-    background-color: #12212b;
-    color: #0ff5fc;
+    border-bottom: 1px solid #C7E8F3;
+    background-color: #5A7FAF;
+    color: #FFFFFF;
     text-align: center;
     margin-left: 10px;
 }
 
 .personal-info-edit select{
     border: none;
-    border-bottom: 1px solid #0ff5fc;
-    background-color: #12212b;
+    border-bottom: 1px solid #C7E8F3;
+    background-color: #5A7FAF;
     margin-left: 10px;
     text-align-last: center;
-    color: #0ff5fc;
+    color: #FFFFFF;
 }
 
 .addressing-info-edit select{
     width: 30%;
-    background-color: #12212b;
-    color: #0ff5fc;
+    background-color: #5A7FAF;
+    color: #FFFFFF;
     border: none;
-    border-bottom: 1px solid #0ff5fc;
+    border-bottom: 1px solid #C7E8F3;
     text-align-last: center;
 }
 
@@ -426,14 +425,14 @@ label[for=id_profile_pic]{
     padding: 5px;
     border: none;
     border-radius: 0px;
-    border-bottom: 1px solid #0ff5fc;
+    border-bottom: 1px solid #C7E8F3;
     transition: 0.5s;
 }
 
 .label-hover{
     cursor: pointer;
-    background-color: #0ff5fc;
-    color: #12212b;
+    background-color: #C7E8F3;
+    color: #496897;
     transition: 0.5s;
 }
 
@@ -469,7 +468,7 @@ label[for=id_background_pic]{
     padding: 5px;
     border: none;
     border-radius: 0px;
-    border-bottom: 1px solid #0ff5fc;
+    border-bottom: 1px solid #496897;
     transition: 0.5s;
 }
 

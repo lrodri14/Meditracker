@@ -157,7 +157,7 @@ button:focus{
 form a{
    font-size: 12px;
    text-decoration: underline;
-   transition:0.5s;
+   transition: 0.5s;
 }
 
 .update-password-hover{
@@ -258,7 +258,7 @@ select:focus{
 .account-type-selector{
     display: grid;
     grid-template-columns: 50% 50%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.3);
     color: #FFFFFF;
     position: absolute;
     height: 20%;
@@ -272,6 +272,10 @@ select:focus{
 .account-type-selector-show{
     cursor: pointer;
     visibility: visible;
+}
+
+.tile{
+    transition: background-color 0.3s;
 }
 
 .account-type-selector-hover{
