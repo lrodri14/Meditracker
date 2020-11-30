@@ -74,6 +74,11 @@ li{
     transition: 0.5s;
 }
 
+.input-hover{
+    width: 75%;
+    transition: 0.5s;
+}
+
 /*##################################################### Data Table ###################################################*/
 
 /*If no data is available for the category, this style will be added.*/
@@ -254,6 +259,7 @@ input{
   border-bottom: 1px solid #C7E8F3;
   height: 30px;
   width:60%;
+  transition: width 0.5s;
 }
 
 input:focus{

@@ -51,6 +51,13 @@ if (body){
             e.target.classList.add('label-hover')
         }
 
+        /*This mouseover event will be fired every time a hover occurs over an input, this will add the input-hover class
+          over the target and will increase it's width to 75%.*/
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.add('input-hover')
+        }
+
+
     })
 
     body.addEventListener('mouseout', (e) => {
@@ -80,6 +87,12 @@ if (body){
 
         if (e.target === document.querySelector('label[for=id_profile_pic]') || e.target === document.querySelector('label[for=id_background_pic]')){
             e.target.classList.remove('label-hover')
+        }
+
+       /*This mouseover event will be fired every time a mouse out occurs over an input, this will remove the input-hover class
+          over the target and will decrease it's width to normal.*/
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.remove('input-hover')
         }
 
     })

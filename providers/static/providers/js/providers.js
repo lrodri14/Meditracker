@@ -342,6 +342,12 @@ if (wrapper){
             row.style.color = '#496897'
         }
 
+        /*This mouseover event will be fired every time a hover occurs over an input, this will add the input-hover class
+          over the target and will increase it's width to 75%*/
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.add('input-hover')
+        }
+
     })
 
     // Wrapper Mouseout Events
@@ -385,6 +391,12 @@ if (wrapper){
             row.style.backgroundColor = ''
             row.style.color = ''
           }
+
+        /*This mouseover event will be fired every time a mouse out occurs over an input, this will remove the input-hover class
+          over the target and will decrease it's width to normal.*/
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.remove('input-hover')
+        }
 
     })
 
@@ -450,6 +462,11 @@ if (modal){
             e.target.classList.add('button-hover')
         }
 
+        /*This mouseover event will be fired every time a hover occurs over an input, this will add the input-hover class
+          over the target and will increase it's width to 75%*/
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.add('input-hover')
+        }
     })
 
     // Modal Mouseout Events
@@ -458,6 +475,12 @@ if (modal){
           button, and will remove the 'button-hover' class to the target.*/
         if (e.target.nodeName === 'BUTTON'){
             e.target.classList.remove('button-hover')
+        }
+
+        /*This mouseover event will be fired every time a mouse out occurs over an input, this will remove the input-hover class
+          over the target and will decrease it's width to normal.*/
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.remove('input-hover')
         }
 
     })

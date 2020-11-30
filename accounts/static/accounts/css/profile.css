@@ -379,6 +379,10 @@ button{
     margin-left: 10px;
 }
 
+.personal-info-edit input:focus{
+    outline: none;
+}
+
 .personal-info-edit select{
     border: none;
     border-bottom: 1px solid #C7E8F3;
@@ -388,6 +392,10 @@ button{
     color: #FFFFFF;
 }
 
+.personal-info-edit select:focus{
+    outline: none;
+}
+
 .addressing-info-edit select{
     width: 30%;
     background-color: #5A7FAF;
@@ -395,6 +403,10 @@ button{
     border: none;
     border-bottom: 1px solid #C7E8F3;
     text-align-last: center;
+}
+
+.addressing-info-edit select:focus{
+    outline: none;
 }
 
 /*Edit Profile Picture Form*/

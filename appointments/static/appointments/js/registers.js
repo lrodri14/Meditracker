@@ -53,7 +53,10 @@ if (wrapper){
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
             row.style.backgroundColor = '#C7E8F3'
             row.style.color = '#496897'
+        }
 
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.add('input-hover')
         }
 
     })
@@ -74,6 +77,10 @@ if (wrapper){
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
             row.style.backgroundColor = ''
             row.style.color = ''
+        }
+
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.remove('input-hover')
         }
 
     })
