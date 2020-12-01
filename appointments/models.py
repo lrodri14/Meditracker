@@ -1,14 +1,27 @@
-from datetime import timedelta
+"""
+    DOCSTRING:
+    This models.py file contains all the models used to create instances of CIE-10-Groups, Drugs, Medical exams and
+    consults itself, this .py file is composed of four models.
+"""
 
+# Imports
 from django.db import models
 from patients.models import Patient
 from django.contrib.auth import get_user_model
+# Getting the user model
 user = get_user_model()
 
 # Create your models here.
 
 
 class Cie10Group(models.Model):
+    """
+        DOCSTRING:
+        The Cie10Group model is used to create CIE-10 code instances, it's composed of only one attribute, the code itself,
+        we also created it's own __str__ dunder method representation, this mode overwrote it's save method, we added
+        some functionality to capitalize the code once it reaches the database. It inherits from the models.Model class.
+    """
+
     code = models.CharField('code', max_length=50, blank=False, null=True, help_text='CIE-10 Code')
 
     def __str__(self):
@@ -20,6 +33,15 @@ class Cie10Group(models.Model):
 
 
 class Drugs(models.Model):
+    """
+        DOCSTRING:
+        The Drugs model inhertits from the models.Model class, it is used to create Drug instances as needed, this model
+        defines a tuple under the variable CATEGORY_CHOICES, this choices are used to specify to what branch does this
+        drug belongs, we added some functionality through the META CLASS indicating that the 'name' and 'created_by'
+        are unique inside our instances, we also set our own __str__ dunder method and we overwrote the save method to
+        capitalize the name of the drug every time it reaches the database.
+    """
+
     CATEGORY_CHOICES = (
         ('AP', 'Antipyretics'),
         ('AG', 'Analgesics'),
@@ -51,6 +73,18 @@ class Drugs(models.Model):
 
 
 class Consults(models.Model):
+    """
+        DOCSTRING:
+        The Consults class inherits from the models.Model class, it is used to create consults, and update consults
+        once they were scheduled, *NOTE: once consults have been scheduled, filled with diagnose related data and saved
+        can not be updated, this to prevent any possible misinformation*, we declared a tuple of choices which will
+        establish in which state does the consult remains, the 'medical_status' attribute sets the status of the consult,
+        to True if it was attended, and False if it was not, also the 'lock' attribute, is used to keep the consult active
+        to further changes, until the lock attribute is set to True, then the consult will be closed and will never be
+        able to be open again. We added some functionality, defining a META class, and set the unique_together attribute
+        to 'patient' and 'datetime' attributes, fianlly we created our own __str__ dunder method and rewrote the save
+        method, capitalizing the 'motive' and 'suffering' attributes once they reach the database.
+    """
 
     STATUS_CHOICES = (
         ('OPEN', 'Open'),
@@ -103,6 +137,9 @@ class Consults(models.Model):
     status = models.CharField('status', max_length=10, blank=True, null=True, help_text='Handles the consult status', default=STATUS_CHOICES[0][0], choices=STATUS_CHOICES)
     lock = models.BooleanField('lock', default=True, blank=False, null=True, help_text='Consult lock status')
 
+    class Meta:
+        unique_together = ['created_by', 'datetime']
+
     def __str__(self):
         return str(self.patient) + "'s consult for " + str(self.datetime)
 
@@ -111,11 +148,16 @@ class Consults(models.Model):
         self.motive = self.motive.capitalize()
         super(Consults, self).save(*args, **kwargs)
 
-    class Meta:
-        unique_together = ['created_by', 'datetime']
-
 
 class MedicalExams(models.Model):
+
+    """
+        DOCSTRING:
+        The MedicalExams model inherits from the models.Model class and is used to create exams instances, we defined a
+        tuple of choices under the name of EXAMS_CHOICES, used to indicate what type of exam we are creating, we also
+        created our own dunder __str__ dunder method.
+    """
+
     EXAMS_CHOICES = (
         ('T', 'Test'),
     )

@@ -1,3 +1,9 @@
+"""
+    DOCSTRING: Thos tasks.py file will be used to add some tasks that will be processed every single amount of time,
+    but it's aimed to an update right now!
+"""
+
+
 from __future__ import absolute_import
 from celery import shared_task
 from .models import Consults, Drugs

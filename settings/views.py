@@ -284,3 +284,5 @@ def delete_drug(request, pk):
 
 
 
+
+

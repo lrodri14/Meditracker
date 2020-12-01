@@ -425,7 +425,7 @@ def consult_date_update(request, pk):
 def consult_confirm(request, pk):
     """
         DOCSTRING:
-        This consult_confirm view is used to confirm the consult, it will set the consult.status attribute from pending
+        This consult_confirm() view is used to confirm the consult, it will set the consult.status attribute from pending
         to confirmed, once the consult is confirmed, it will collect all the updated data from the database and return
         it in a JSON Response, since the agenda will be updated asynchronously.It takes two arguments,
         'request' which expects a request object and 'pk' which expects a consult.pk key.
