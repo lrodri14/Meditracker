@@ -233,7 +233,6 @@ if (wrapper){
 
     //Wrapper Submit
 
-
     wrapper.addEventListener('submit', (e) => {
         /*This event will be fired every time a submit occurs and the target contains the 'modal-cancel-form' class in it's
         classlist, this event will stop the itself, and collect the data needed to cancel the consult, this consists of
