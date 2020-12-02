@@ -134,7 +134,7 @@ if (wrapper){
 
         /* This event will be fired every time a hover out occurs on a target which classList contains 'fa-filter' this will remove the
         fa-filter-hover class to the target.*/
-        if (e.target.nodeName === 'I' && e.target.classList.contains('fa-filter')){
+        if (e.target.classList.contains('fa-filter')){
             e.target.classList.remove('fa-filter-hover')
         }
 
