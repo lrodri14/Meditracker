@@ -8,11 +8,6 @@
 <h2>Consults</h2>
 <a href="{%url 'appointments:agenda'%}"><button type="button">Agenda</button></a>
 <a href="{%url 'appointments:registers'%}"><button type="button" class="all-registers">Registers</button></a>
-<div class="modal">
-    <div class="modal-content">
-
-    </div>
-</div>
 {%if appointments%}
     <table>
         <thead>
@@ -45,10 +40,16 @@
             {%endfor%}
         </tbody>
     </table>
-
 {%else%}
     <p id="no-consults">There are no consults for today's date</p>
-    <i class="fas fa-plus create-consult-modal" id="add-consult" data-url="{%url 'appointments:create_consult'%}"></i>
+    <i class="fas fa-plus" id="add-consult" data-url="{%url 'appointments:create_consult'%}"></i>
 {%endif%}
+
+<div class="modal">
+    <div class="modal-content">
+
+    </div>
+</div>
+
 <script src="{%static 'appointments/js/consults.js'%}"></script>
 {%endblock%}

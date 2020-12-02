@@ -150,6 +150,7 @@ form{
 
 #add_new_patient{
     text-decoration: underline;
+    transition: all 0.5s;
 }
 
 .add_new_patient_hover{
