@@ -1,12 +1,16 @@
-/*Checked*/
-/*Wrapper*/
+/*This registers.css stylesheet contains all the styles needed to display the registers template, it is divided into 5
+sections: Wrapper, Table, Forms, Pagination, No Data*/
+
+/*########################################################## Wrapper #################################################*/
+
 .wrapper{
     display: grid;
     grid-template-columns: 80% 19%;
     grid-gap: 1%;
 }
 
-/*Table*/
+/*########################################################## Table ###################################################*/
+
 table{
     border-collapse: collapse;
     margin: auto;
@@ -59,7 +63,7 @@ tr:nth-child(even){
     height: 100%;
 }
 
-#Canceled{
+#Cancelled{
     background-color: #95B6C6;
     color: #12212b;
     height: 100%;
@@ -89,7 +93,7 @@ tr:nth-child(even){
     height: 100%;
 }
 
-/*Form*/
+/*########################################################## Forms ###################################################*/
 
 .fa-filter{
     margin-top: 20%;
@@ -188,7 +192,8 @@ button:focus{
     cursor: pointer;
 }
 
-/*Pagination*/
+/*########################################################## Pagination ##############################################*/
+
 .pagination{
     list-style: none;
 }
@@ -225,7 +230,9 @@ button:focus{
 }
 
 
-/*Consults*/
+/*########################################################## No Data #################################################*/
+
+
 #no-consults{
     position: absolute;
     top: 50%;

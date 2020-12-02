@@ -2,7 +2,7 @@
     This urls.py contains all the urls needed to route all the views in our Providers App
     It contains two sections: 'Providers related views' and 'Visitors related views
 """
-
+# Imports
 from django.urls import path
 from .views import *
 

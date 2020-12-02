@@ -273,6 +273,7 @@ def update_consult(request, pk):
             consult_form.save_m2m()
             if consult.prescription:
                 return JsonResponse({'prescription_path': settings.MEDIA_URL + consult.prescription.name})
+            return redirect('appointments:consults')
         elif not medical_exams_form.is_valid():
             context['error'] = '* Exams not filled correctly. "Type" & "Image" must be provided.'
     return render(request, template, context)

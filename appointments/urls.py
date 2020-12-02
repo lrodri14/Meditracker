@@ -3,6 +3,7 @@
     This urls.py file contains all the urls needed to route every single view from the .views.py file in this app.
 """
 
+# Imports
 from django.urls import path
 from .views import *
 

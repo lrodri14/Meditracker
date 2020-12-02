@@ -1,3 +1,9 @@
+/*This update_consult.css stylesheet contains all the styles needed to display the update consult template, it is divided
+in  10 sections: Body, Wrapper ,General, Lock Btn, Diagnose,Popups, Drugs Modal, Exam Modal, Records Modal,
+Prescription Modal*/
+
+/*#################################################### Body ##########################################################*/
+
 body{
     overflow-x: hidden;
 }
@@ -6,11 +12,17 @@ body{
     background: rgba(0,0,0,0);
 }
 
+/*#################################################### Wrapper #######################################################*/
+
+
 .wrapper{
     display: grid;
     grid-template-columns: 30% 69%;
     grid-gap: 1%;
 }
+
+
+/*#################################################### General #######################################################*/
 
 .general-info{
     box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
@@ -37,6 +49,77 @@ body{
     max-height: 9%;
     overflow: auto;
 }
+
+.error{
+    color: #FFFFFF;
+}
+
+h4{
+    text-decoration: underline;
+}
+
+#charge-label{
+    text-decoration: none;
+    text-align: center;
+    margin: 0px;
+}
+
+#id_charge{
+    margin-left: 30%;
+    height: 20px;
+    width: 40%;
+    border-radius: 0px;
+}
+
+#id_charge::-webkit-input-placeholder {
+  color: #FFFFFF;
+}
+
+.fa-book-medical{
+    font-size: 23px;
+    float: right;
+    transition: 0.5s;
+}
+
+.fa-book-medical-hover{
+  cursor: pointer;
+  color: #00CCFF;
+  transition: 0.5s;
+}
+
+.fa-file-medical-alt{
+    float: right;
+    transition: 0.5s;
+}
+
+.fa-file-medical-alt-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+button{
+    width: 30%;
+    height: 30px;
+    cursor: pointer;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
+    border-radius: 10px;
+    color: #FFFFFF;
+    margin-left: 35%;
+}
+
+button:focus{
+    outline: none;
+}
+
+.button-hover{
+    background-color: #C7E8F3;
+    color: #496897;
+    transition: 0.5s;
+}
+
+/*#################################################### Lock Btn ######################################################*/
 
 .lock-container{
     position: absolute;
@@ -81,6 +164,8 @@ body{
     margin-left: 20px;
     transition: 0.5s;
 }
+
+/*#################################################### Popups ########################################################*/
 
 .popup{
     position: absolute;
@@ -148,70 +233,7 @@ body{
     border-color: transparent #CBA415 transparent transparent;
 }
 
-.error{
-    color: #FFFFFF;
-}
-
-h4{
-    text-decoration: underline;
-}
-
-#charge-label{
-    text-decoration: none;
-    text-align: center;
-    margin: 0px;
-}
-
-#id_charge{
-    margin-left: 30%;
-    height: 20px;
-    width: 40%;
-    border-radius: 0px;
-}
-
-.fa-book-medical{
-    font-size: 23px;
-    float: right;
-    transition: 0.5s;
-}
-
-.fa-book-medical-hover{
-  cursor: pointer;
-  color: #00CCFF;
-  transition: 0.5s;
-}
-
-.fa-file-medical-alt{
-    float: right;
-    transition: 0.5s;
-}
-
-.fa-file-medical-alt-hover{
-    color: #00CCFF;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-button{
-    width: 30%;
-    height: 30px;
-    cursor: pointer;
-    background-color: #5A7FAF;
-    border-color: #C7E8F3;
-    border-radius: 10px;
-    color: #FFFFFF;
-    margin-left: 35%;
-}
-
-button:focus{
-    outline: none;
-}
-
-.button-hover{
-    background-color: #C7E8F3;
-    color: #496897;
-    transition: 0.5s;
-}
+/*#################################################### Diagnose ######################################################*/
 
 .diagnose{
     display: grid;
@@ -311,7 +333,6 @@ textarea::-webkit-input-placeholder {
   color: #FFFFFF;
 }
 
-
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
@@ -356,100 +377,7 @@ select:focus{
     transition: 0.5s;
 }
 
-.exams-modal{
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.3);
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.exams-modal-show{
-    z-index: 1;
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.3s;
-}
-
-.exams-data{
-    position: absolute;
-    width: 70%;
-    height: 40%;
-    margin-left: 15%;
-    margin-top: 18%;
-    background-color: #5A7FAF;
-    text-align: center;
-    padding: 10px;
-    transition: 1s;
-}
-
-.exams-data-preview-set{
-    transform: translateX(-20%);
-    transition: transform 1s;
-}
-
-.fa-eye{
-    cursor: pointer;
-    float: right;
-    transition: 0.5s;
-}
-
-.fa-eye-hover{
-    color: #00CCFF;
-    transition: 0.5s;
-}
-
-.exams-list{
-    height: 180px;
-    max-height: 180px;
-    overflow: auto;
-}
-
-.exams-table{
-    padding: 10px;
-    height: 150px;
-    margin-left: 15%;
-    width: 70%;
-    max-width: 70%;
-    overflow: auto;
-    overflow-x: hidden;
-}
-
-.form-hide{
-    display: none;
-}
-
-.exams-table th{
-    padding: 10px;
-}
-
-.exams-table input[type=file]{
-    display: none;
-}
-
-.exams-table select{
-    width: 100%;
-}
-
-.filename{
-    max-width: 100px;
-    overflow: auto;
-    overflow-y: hidden;
-}
-
-.fa-plus{
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.fa-plus-hover{
-    color: #25BB41;
-    transition: 0.5s;
-}
+/*#################################################### Add Drug Modal ################################################*/
 
 .add-drug{
     cursor: pointer;
@@ -565,6 +493,103 @@ select:focus{
     transition: opacity 0.3s;
 }
 
+/*#################################################### Exams Modal ###################################################*/
+
+.exams-modal{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.exams-modal-show{
+    z-index: 1;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.exams-data{
+    position: absolute;
+    width: 70%;
+    height: 40%;
+    margin-left: 15%;
+    margin-top: 18%;
+    background-color: #5A7FAF;
+    text-align: center;
+    padding: 10px;
+    transition: 1s;
+}
+
+.exams-data-preview-set{
+    transform: translateX(-20%);
+    transition: transform 1s;
+}
+
+.fa-eye{
+    cursor: pointer;
+    float: right;
+    transition: 0.5s;
+}
+
+.fa-eye-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
+.exams-list{
+    height: 180px;
+    max-height: 180px;
+    overflow: auto;
+}
+
+.exams-table{
+    padding: 10px;
+    height: 150px;
+    margin-left: 15%;
+    width: 70%;
+    max-width: 70%;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.form-hide{
+    display: none;
+}
+
+.exams-table th{
+    padding: 10px;
+}
+
+.exams-table input[type=file]{
+    display: none;
+}
+
+.exams-table select{
+    width: 100%;
+}
+
+.filename{
+    max-width: 100px;
+    overflow: auto;
+    overflow-y: hidden;
+}
+
+.fa-plus{
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-plus-hover{
+    color: #25BB41;
+    transition: 0.5s;
+}
+
 .preview-image{
     width: 25%;
     height: 70%;
@@ -599,7 +624,7 @@ select:focus{
     transition: 0.5s;
 }
 
-/*Modal*/
+/*#################################################### Records Modal #################################################*/
 .records-modal{
     position: absolute;
     top: 0;
@@ -649,7 +674,9 @@ select:focus{
 .records-general-information h3{
     text-align: center;
 }
+
 /*Table*/
+
 .records-table table{
     border-collapse: collapse;
     margin: auto;
@@ -703,6 +730,8 @@ select:focus{
     color: #000000;
     height: 100%;
 }
+
+/*#################################################### Prescription Modal ############################################*/
 
 .modal{
     position: absolute;
@@ -764,6 +793,7 @@ select:focus{
     margin-left: 30%;
 }
 
+/*PDF Object Container*/
 .pdfobject-container{
     width: 100%;
     height: 100%;

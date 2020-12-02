@@ -1,12 +1,17 @@
-/*Checked*/
-/*Wrapper*/
+/*This consult_register.css contains all the stylesheets for the consult register template, it is divided into 6
+sections: Wrapper, Table, Forms, Cancel and Update Form, Pagination and No Data*/
+
+
+/*######################################################## Wrapper ###################################################*/
+
 .wrapper{
     display: grid;
     grid-template-columns: 80% 19%;
     grid-gap: 1%;
 }
 
-/*Table*/
+/*########################################################## Table ###################################################*/
+
 table{
     border-collapse: collapse;
     margin: auto;
@@ -61,6 +66,18 @@ tr:nth-child(even){
     transition: 0.5s;
 }
 
+.fa-filter{
+    cursor: pointer;
+    margin-top: 24%;
+    float: left;
+    transition: 0.5s;
+}
+
+.fa-filter-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
 #Open{
     background-color: #EAC234;
     color: #000000;
@@ -85,78 +102,7 @@ tr:nth-child(even){
     height: 100%;
 }
 
-/*Modal*/
-.modal{
-    background-color: rgba(0,0,0,0.3);
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.5s;
-}
-
-.modal-show{
-    visibility: visible;
-    opacity: 1;
-    transition: 0.5s;
-}
-
-.modal-content{
-    display: inline-block;
-    margin-left: 25%;
-    width: 50%;
-}
-
-#cancel-consult h4{
-    text-align: left;
-}
-
-/*Form*/
-
-.modal-cancel-form{
-    margin-top: 25%;
-    padding: 50px;
-}
-
-.update-date-form{
-    margin-top: 10%;
-    width: 50%;
-    margin-left: 22%;
-    padding: 25px;
-}
-
-#close{
-    border: none;
-    width: 5%;
-    border-radius: 0px;
-    float: right;
-    margin-top: 5%;
-    margin-right: 21%;
-}
-
-textarea{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: 1px solid #C7E8F3;
-  resize: none;
-  transition: 0.5s;
-}
-
-.fa-filter{
-    cursor: pointer;
-    margin-top: 24%;
-    float: left;
-    transition: 0.5s;
-}
-
-.fa-filter-hover{
-    color: #00CCFF;
-    transition: 0.5s;
-}
+/*########################################################## Forms ###################################################*/
 
 form{
     text-align: center;
@@ -182,7 +128,6 @@ form{
     font-size: 16px;
     transition: 0.5s;
 }
-
 
 .link-hover{
     font-size: 16px;
@@ -232,6 +177,19 @@ select:focus{
     outline: none;
 }
 
+textarea{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
+  border: 1px solid #C7E8F3;
+  resize: none;
+  transition: 0.5s;
+}
+
+textarea:focus{
+    outline: none;
+}
+
 button{
     width: 30%;
     height: 30px;
@@ -259,7 +217,61 @@ button:focus{
     cursor: pointer;
 }
 
-/*Pagination*/
+/*########################################################## Modal ###################################################*/
+
+.modal{
+    background-color: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.modal-show{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.modal-content{
+    display: inline-block;
+    margin-left: 25%;
+    width: 50%;
+}
+
+#cancel-consult h4{
+    text-align: left;
+}
+
+/*######################################### Cancel and Update Form Modal #############################################*/
+
+.modal-cancel-form{
+    margin-top: 25%;
+    padding: 50px;
+}
+
+.update-date-form{
+    margin-top: 10%;
+    width: 50%;
+    margin-left: 22%;
+    padding: 25px;
+}
+
+#close{
+    border: none;
+    width: 5%;
+    border-radius: 0px;
+    float: right;
+    margin-top: 5%;
+    margin-right: 21%;
+}
+
+/*########################################################## Pagination ##############################################*/
+
 .pagination{
     list-style: none;
 }
@@ -295,8 +307,8 @@ button:focus{
     padding: 0.5%;
 }
 
+/*########################################################## No Data #################################################*/
 
-/*Consults*/
 #no-consults{
     position: absolute;
     top: 50%;

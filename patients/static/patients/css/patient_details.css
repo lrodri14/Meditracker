@@ -293,11 +293,10 @@ button:focus{
 
 /*##################################################### Image Preview ################################################*/
 
-
 .image-preview{
     position: fixed;
     margin-left: 78.5%;
-    margin-top: -39.5%;
+    margin-top: -37%;
     max-width: 20%;
     max-height: 70%;
     visibility: hidden;

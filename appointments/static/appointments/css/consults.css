@@ -1,103 +1,9 @@
-/*Checked*/
+/*This consults.css stylesheet contains all the styles needed to display the consults main page, it is divided in 4
+sections, Table, PopUp and Modal and No Data*/
 
-/*Modal*/
-.modal{
-    background-color: rgba(0,0,0,0.3);
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s, visibility 0.3s;
-}
 
-.modal-show{
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.3s;
-}
+/*#################################################### Table #########################################################*/
 
-.modal-content{
-    display: inline-block;
-    margin-left: 25%;
-    width: 50%;
-}
-
-/*Modal Form*/
-form{
-    text-align: center;
-    background-color: #5A7FAF;
-    margin-top: 10%;
-    width: 50%;
-    margin-left: 22%;
-    padding: 10px 30px 10px 30px;
-}
-
-.error{
-    color: #FFFFFF;
-}
-
-#add_new_patient{
-    text-decoration: underline;
-}
-
-.add_new_patient_hover{
-    font-size: 16px;
-    transition: font-size 0.5s;
-}
-
-textarea{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: 1px solid #C7E8F3;
-  resize: none;
-}
-
-select{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align-last:center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  margin: 5px;
-}
-
-select:focus{
-    outline: none;
-}
-
-input{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-}
-
-input:focus{
-    outline: none;
-}
-
-form > button{
-    width: 30%;
-    height: 30px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #5A7FAF;
-    border-color: #C7E8F3;
-    border-radius: 10px;
-    color: #FFFFFF;
-}
-
-/*Table*/
 table{
     border-collapse: collapse;
     margin: auto;
@@ -162,7 +68,13 @@ tr:nth-child(even){
     transition: background-color 0.5s;
 }
 
-/* Warning Popup */
+#status-0{
+    background-color: #EAC234;
+    color: #000000;
+}
+
+/*#################################################### PopUp #########################################################*/
+
 .popup{
     position: absolute;
     z-index: 1;
@@ -186,6 +98,7 @@ tr:nth-child(even){
     padding: 5px;
 }
 
+/*Needed to display the arrow in the popup*/
 .popup-text:after{
     content: " ";
     border-width: 5px;
@@ -196,7 +109,108 @@ tr:nth-child(even){
     left: 92%;
 }
 
-/*Buttons*/
+/*#################################################### Modal #########################################################*/
+.modal{
+    background-color: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.modal-show{
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.modal-content{
+    display: inline-block;
+    margin-left: 25%;
+    width: 50%;
+}
+
+/*Modal Form*/
+form{
+    text-align: center;
+    background-color: #5A7FAF;
+    margin-top: 10%;
+    width: 50%;
+    margin-left: 22%;
+    padding: 10px 30px 10px 30px;
+}
+
+.error{
+    color: #FFFFFF;
+}
+
+#add_new_patient{
+    text-decoration: underline;
+}
+
+.add_new_patient_hover{
+    font-size: 16px;
+    transition: font-size 0.5s;
+}
+
+textarea{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
+  border: 1px solid #C7E8F3;
+  resize: none;
+}
+
+textarea:focus{
+    outline: none;
+}
+
+select{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align-last:center;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
+  border: none;
+  border-bottom: 1px solid #C7E8F3;
+  height: 30px;
+  width:60%;
+  margin: 5px;
+}
+
+select:focus{
+    outline: none;
+}
+
+input{
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-align: center;
+  color: #FFFFFF;
+  background-color: #5A7FAF;
+  border: none;
+  border-bottom: 1px solid #C7E8F3;
+  height: 30px;
+  width:60%;
+}
+
+input:focus{
+    outline: none;
+}
+
+form button{
+    width: 30%;
+    height: 30px;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
+    border-radius: 10px;
+    color: #FFFFFF;
+}
+
+/*Button above the table*/
 button{
     margin-bottom: 10px;
     width: 10%;
@@ -218,6 +232,8 @@ button:focus{
     color: #496897;
     transition: background-color 0.5s, color 0.5s;
 }
+
+/*#################################################### No Data #######################################################*/
 
 #no-consults{
     position: absolute;
@@ -249,9 +265,4 @@ button:focus{
 .add-consults-hide{
     opacity: 0;
     transition: 0.5s;
-}
-
-#status-0{
-    background-color: #EAC234;
-    color: #000000;
 }

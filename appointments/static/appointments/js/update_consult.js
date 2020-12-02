@@ -542,8 +542,7 @@ if (modal){
                     }
                 })
             }else{
-                submitConsultAW(url, method, csrfmiddlewaretoken, formData)
-                window.location.href = e.target.getAttribute('data-url')
+                form.submit()
             }
     }
    })
