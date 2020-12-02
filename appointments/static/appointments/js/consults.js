@@ -1,6 +1,6 @@
 /* This consults.js file contains all the variable definitions, async and sync functions, as well as all the Event Listeners
    needed to display the consults main page correctly, it is divided in 4 sections: Variable Definitions, Async and Sync
-   functions, and event listeners.*/
+   functions, and event listeners. It is composed of two Async Functions.*/
 
 /*#################################################### Variables #####################################################*/
 

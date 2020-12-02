@@ -249,7 +249,7 @@ button:focus{
 
 /*######################################### Cancel and Update Form Modal #############################################*/
 
-.modal-cancel-form{
+.cancel-form{
     margin-top: 25%;
     padding: 50px;
 }
