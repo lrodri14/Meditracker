@@ -1,34 +1,57 @@
+/* This update_consult.js file contains all the variables definitions, async and sync functions, assignments,
+as well as event listeners need for the Consult Update View to work properly in the Appointments App, this file is
+composed of 5 async functions, and 1 sync function.*/
+
+/*#################################################### Variables #####################################################*/
+
+// General
+
 var form = document.querySelector('form')
 var formInputs = document.querySelectorAll('input:not([type=checkbox]):not([type=hidden]):not([type=file]):not(#id_name), textarea')
+var button = document.querySelectorAll('button')
+var navigation = document.querySelector('.navigation')
+var prevSlide = document.querySelector('.fa-angle-left')
+var nextSlide = document.querySelector('.fa-angle-right')
+var controllers = [prevSlide, nextSlide]
+
+// Consult Information
+
+var generalInfo = document.querySelector('.general-info')
 var patientInfo = document.querySelector('#patient-info')
 var patientInfoPopUp = document.querySelector('.patient-info-popup')
+var exams = document.querySelector('.fa-file-medical-alt')
 var medicalBook = document.querySelector('.fa-book-medical')
-var button = document.querySelectorAll('button')
-var generalInfo = document.querySelector('.general-info')
-var lock = document.querySelector('.lock')
 var padlock = document.querySelector('.fa-lock')
+var lock = document.querySelector('.lock')
 var lockInput = document.querySelector('#id_lock')
 var lockPopUp = document.querySelector('.popup')
+
+// Diagnose
+
 var diagnose = document.querySelector('.diagnose')
-var navigation = document.querySelector('.navigation')
-var exams = document.querySelector('.fa-file-medical-alt')
+var medicineText = document.querySelector('#id_indications')
+var actions = document.querySelector('#id_actions')
+
+// Exams
+
 var examsModal = document.querySelector('.exams-modal')
 var examsData = document.querySelector('.exams-data')
 var previewImg = document.querySelector('.preview-image')
 var image = document.querySelector('.previewed-image')
 var addForm = document.querySelector('.add-form')
 var remExam = document.querySelector('.fa-trash')
+
+// Drugs
+
 var drugCategoryFilter = document.querySelector('#id_category')
 var drugList = document.querySelector('#drugs')
 var addDrug = document.querySelector('.add-drug')
 var addDrugModal = document.querySelector('.add-drug-modal')
 var addDrugModalContent = document.querySelector('.add-drug-modal-content')
 var addDrugForm = document.querySelector('.add-drug-modal-content form')
-var medicineText = document.querySelector('#id_indications')
-var actions = document.querySelector('#id_actions')
-var prevSlide = document.querySelector('.fa-angle-left')
-var nextSlide = document.querySelector('.fa-angle-right')
-var controllers = [prevSlide, nextSlide]
+
+// Modals
+
 var modal = document.querySelector('.modal')
 var recordsModal = document.querySelector('.records-modal')
 var recordsTable = document.querySelector('.records-table')
@@ -36,41 +59,79 @@ var recordsSummary = document.querySelector('.records-general-information')
 var prescriptionModal = document.querySelector('.prescription-modal')
 var prescriptionModalContent = document.querySelector('.prescription-modal-content')
 
+// Navigator
 navigation.innerHTML = '<li></li>'.repeat(document.querySelectorAll('.diagnose > div').length)
 navigation.childNodes[0].classList.add('navigator-active')
 
+/*#################################################### Functions #####################################################*/
+
 // Async Functions
+
 async function addDrugAsync(url, method, formData, csrfmiddlewaretoken){
+    /*This addDrugAsync function is used to drugs asynchronously to the server, this function takes 4 paramaters we collect
+    from the form that fires the submit event, we need to collect the 'url' to where we make our POST request, we also
+    need to collect 'method' from the form.method attribute and 'csrfmiddlewaretoken' from the form's hidden input, finally
+    we collect the formData from the form and send it in our request, the response will be converted to JSON Format and
+    returned for further processing.*/
     const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
     const data = await result.json()
     return data
 }
 
 async function retrieveDrugsFilterAsync(url){
+    /* This retrieveDrugsFilterAsync function is used to filter the drugs options in the drugs select element, this
+    function only takes one argument, the url containing the parameters for the GET request, the response will be
+    converted into JSON Format and finally, displayed in the select box. It takes a single argument, the 'url' to make
+    the GET request.*/
     const result = await fetch(url)
     const data = await result.json()
     return data
 }
 
 async function requestRecords(url){
+    /* This requestRecords function is used to display the records filled of this current patient, this data will be
+     displayed in the records modal as a table, the response will be converted into JSON Format and finally, displayed
+     in the modal. It takes a single argument, the 'url' to make the GET request.*/
     const result = await fetch(url)
     const data = result.json()
     return data
 }
 
 async function consultSummaryAW(url){
+    /* This consultSummaryAW function is used to display a summary of the most important things from a consult in the
+        consult summary section, This function only takes one single argument, the 'url' with the primary key of that
+        consult.*/
     const result = await fetch(url)
     const data = result.json()
     return data
 }
 
 async function submitConsultAW(url, method, csrfmiddlewaretoken, formData){
+    /* This submitConsultAW function is used to submit the consult to the server, once the consult has been sent to the
+    server, if the response contains a prescription, then the prescription modal will be displayed containing the prescription
+    in PDF Format, if not, the user will be redirected to the consults main page, (This is not part of the async func
+    functionality but it makes part of this process), The function takes 4 arguments, the 'url' to make the POST request,
+    the 'method' which we collect from the form.method attribute, the 'csrfmiddlewaretoken' we collect from the forms hidden
+    input and finally the formData we collect from the form and create a new FormData object, the response is converted into
+    JSON Format for future use.*/
     const result = await fetch(url, {method: method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body: formData})
     const data = result.json()
     return data
 }
+
 // Functions
+
 function diagnoseScroll(elScrollLeft, elScrollWidth, distance, element, eTarget, navigation){
+
+    /* The diagnoseScroll function is used to scroll the diagnose section and activating a navigator dot based on the
+       scroll distance of that element. This function takes 6 arguments, 'elScrollLeft' which is the distance that
+       exists from the left which is 0 to the current position scrolled of that element, 'elScrollWidth' expects
+       the whole width of that element, in this case the '.diagnose' element, 'distance' is the distance that the element
+       will be scrolled, 'element' is the element that will be scrolled, in all the cases of this file, it will be the
+       '.diagnose' element, 'eTarget' is the controller that was clicked either a 'fa-angle-left' or 'fa-angle-right'
+       element, and based on the element clicked is the direction in which the section will be scrolled, 'navigation'
+       is the set of navigator dots in the navigator section. Now with all this data, the function will decide where to
+       scroll based on the arrow that was clicked, making use of the scrollTo function.*/
 
     let activeElement = Math.round((elScrollLeft / distance))
 
@@ -89,9 +150,17 @@ function diagnoseScroll(elScrollLeft, elScrollWidth, distance, element, eTarget,
     }
 }
 
+/*#################################################### Assignments ###################################################*/
+
+
 // Asignments
+
+// This assignment is made to ensure that every time a consult is opened, it is locked, no matter if it was left opened in the last opening.
+
 lockInput.value = 'True'
 
+
+/*#################################################### Event Listeners ###############################################*/
 
 //Wrapper
 if (form){
