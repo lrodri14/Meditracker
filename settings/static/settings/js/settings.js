@@ -11,6 +11,7 @@ if (document.querySelector('.modal') !== 'undefined' && document.querySelector('
 }
 
 var body = document.querySelector('body')
+var tabs = document.querySelectorAll('.tab')
 
 var backedUpContent
 
@@ -51,6 +52,12 @@ async function filterResultsAW(url, method, csrfmiddlewaretoken, formData){
     return data
 }
 
+async function updatePasswordAW(url, method, csrfmiddlewaretoken, formData){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
+    const data = result.json()
+    return data
+}
+
 // Functions
 //Add Data
 function addData(){
@@ -70,47 +77,33 @@ function addData(){
 // Body Event Listeners
 
 body.addEventListener('click', (e) => {
-    if (e.target.nodeName === 'A' || e.target.nodeName === 'LI'){
-        const items = document.querySelectorAll('ul > li')
-        const url = e.target.nodeName === 'A' ? e.target.href : e.target.firstElementChild.href
-        const item = e.target.nodeName === 'A' ? e.target.parentNode : e.target
-        for (let i = 0; i<items.length; i++){
-            if (items[i].classList.contains('li-active') && items[i] !== item){
-                items[i].classList.remove('li-active')
-                wrapper.innerHTML = ''
-            }
-        }
+    if (e.target.classList.contains('tab')){
         e.preventDefault()
         e.stopPropagation()
-        if (item.classList.contains('li-active')){
-            item.classList.remove('li-active')
-            wrapper.innerHTML = ''
-            backedUpContent = ''
-        }else{
-            item.classList.add('li-active')
-            displaySettingsAW(url)
-            .then(data => {
-                wrapper.innerHTML = data['html']
-                backedUpContent = wrapper.innerHTML
-            })
-        }
-}
+        tabs.forEach(tab => tab.classList.remove('li-active'))
+        wrapper.innerHTML = ''
+        e.target.classList.add('li-active')
+        let url = e.target.getAttribute('data-url')
+        displaySettingsAW(url)
+        .then(data => {
+            wrapper.innerHTML = data['html']
+            backedUpContent = wrapper.innerHTML
+        })
+    }
 })
 
 body.addEventListener('mouseover', (e) => {
 
-    if (e.target.nodeName === 'A' || e.target.nodeName === 'LI'){
-        item = e.target.nodeName === 'A' ? e.target.parentNode : e.target
-        item.classList.add('li-hover')
+    if (e.target.classList.contains('tab')){
+        e.target.classList.add('li-hover')
     }
 
 })
 
 body.addEventListener('mouseout', (e) => {
 
-    if (e.target.nodeName === 'A' || e.target.nodeName === 'LI'){
-        item = e.target.nodeName === 'A' ? e.target.parentNode : e.target
-        item.classList.remove('li-hover')
+    if (e.target.classList.contains('tab')){
+        e.target.classList.remove('li-hover')
     }
 
 })
@@ -151,6 +144,10 @@ if (wrapper){
             e.target.classList.add('input-hover')
         }
 
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.add('button-hover')
+        }
+
     })
 
     wrapper.addEventListener('mouseout', (e) => {
@@ -182,6 +179,9 @@ if (wrapper){
             e.target.classList.remove('input-hover')
         }
 
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.remove('button-hover')
+        }
 
     })
 
@@ -231,6 +231,16 @@ if (wrapper){
             .then(data => {
                 modal.classList.add('show-modal')
                 modalContent.innerHTML = data['html']
+            })
+        }
+
+        if (e.target.nodeName === 'BUTTON'){
+            let url = e.target.getAttribute('data-url')
+            modal.classList.add('show-modal')
+            showForm(url)
+            .then(data => {
+                modalContent.innerHTML = data['html']
+                modal.classList.add('show-modal')
             })
         }
     })
@@ -306,9 +316,11 @@ if (modal){
             e.stopPropagation()
             const form = e.target
             const url = form.action
+            console.log(url)
             const method = form.method
             const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             const data = new FormData(form)
+
             if (e.target.classList.contains('add') || e.target.classList.contains('update')){
                 addUpdateElementAW(url, method, csrfmiddlewaretoken, data)
                 .then(data => {
@@ -320,7 +332,9 @@ if (modal){
                         modal.classList.remove('show-modal')
                     }
                 })
-            } else{
+            }
+
+            if (e.target.id === 'delete'){
                 deleteItemAW(url, method, csrfmiddlewaretoken)
                 .then(data => {
                     wrapper.innerHTML = data['updated_html']
@@ -329,6 +343,18 @@ if (modal){
                     }
                 )
             }
+
+            if (e.target.classList.contains('password-form')){
+                updatePasswordAW(url, method, csrfmiddlewaretoken, data)
+                .then(data => {
+                    if (data['html']){
+                        modalContent.innerHTML = data['html']
+                    }else{
+                        modal.classList.remove('show-modal')
+                    }
+                })
+            }
+
 
          }
     })

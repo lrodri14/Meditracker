@@ -47,6 +47,7 @@ class ChangePassword(PasswordChangeView):
         return JsonResponse(data)
 
     def form_invalid(self, form):
+        super().form_invalid(form)
         context = super().get_context_data()
         data = {'html': render_to_string(self.template_name, context, self.request)}
         return JsonResponse(data)

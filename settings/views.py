@@ -23,6 +23,14 @@ def settings(request):
     context = {'insurance_list': insurances_list, 'allergies_list': allergies_created_list, 'drugs_list': drugs_list}
     return render(request, template, context)
 
+# Accounts
+
+
+def account(request):
+    template = 'settings/account.html'
+    data = {'html': render_to_string(template, request=request)}
+    return JsonResponse(data)
+
 # Insurances
 
 

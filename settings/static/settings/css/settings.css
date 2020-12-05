@@ -81,6 +81,7 @@ li{
 
 .li-hover{
     background-color: #FFFFFF;
+    color: #496897;
     transition: 0.5s;
 }
 
@@ -90,6 +91,7 @@ li{
 
 .li-active{
     background-color: #FFFFFF;
+    color: #496897;
     transition: 0.5s;
 }
 
@@ -129,6 +131,18 @@ li{
    transition: 0.5s;
 }
 
+button{
+    cursor: pointer;
+    width: 8%;
+    height: 30px;
+    margin-left: 1%;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
+    color: #FFFFFF;
+    transition: background-color 0.5s;
+}
+
+
 /*Modal*/
 
 .modal{
@@ -156,7 +170,7 @@ li{
 }
 
 /*Modal Forms*/
-.modal-content > form{
+.modal-content form{
     text-align: center;
     background-color: #5A7FAF;
     padding: 20px;
@@ -167,6 +181,10 @@ li{
     transform: translate(-50%, -50%);
     width: 25%;
     height: 40%;
+}
+
+.modal-content .password-form{
+    height: 55%;
 }
 
 .error{
@@ -249,7 +267,7 @@ select:focus{
 }
 
 /*Button*/
-button{
+form button{
     cursor: pointer;
     width: 30%;
     height: 30px;

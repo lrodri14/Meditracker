@@ -4,6 +4,7 @@ from .views import *
 app_name = 'settings'
 urlpatterns = [
     path('', settings, name='settings'),
+    path('account', account, name='account'),
     path('insurance_list', insurance_list, name='insurance_list'),
     path('insurance_add/', add_insurance_carrier, name='insurance_add'),
     path('insurance_details/<int:pk>', insurance_details, name='insurance_details'),
