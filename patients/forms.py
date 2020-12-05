@@ -89,9 +89,9 @@ class InsuranceInformationForm(forms.ModelForm):
         insurance_type = cleaned_data.get('type_of_insurance')
         expiration_date = cleaned_data.get('expiration_date')
         if (carrier and not insurance_type) or (insurance_type and not carrier):
-            raise ValidationError("Insurance information incomplete")
+            raise ValidationError("Insurance information incomplete", code='invalid_insurance')
         elif (carrier and insurance_type) and (expiration_date <= timezone.localtime().date()):
-            raise ValidationError('Insurance has already expired')
+            raise ValidationError('Insurance has already expired', code='expired_insurance')
 
         return cleaned_data
 
