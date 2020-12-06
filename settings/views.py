@@ -66,12 +66,24 @@ def insurance_list(request):
     template = 'settings/insurance_list.html'
     context = {'insurances': insurances_list, 'form': insurance_filter_form}
     data = {'html': render_to_string(template, context, request)}
-    if request.method == 'POST':
-        filter_form = InsuranceCarrierFilterForm(request.POST)
-        if filter_form.is_valid():
-            updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user, company__icontains=filter_form.cleaned_data['company'])
-            context['insurances'] = updated_insurances
-            data = {'updated_html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def filter_insurance(request):
+    """
+        DOCSTRING:
+        This filter_insurance view is used to filter the results of the available insurances for the user, this view
+        will perform the filtering and will return the data collected based on a query made by the user, this query
+        will be extracted from the 'HTTP_QUERY' inside the request.META dictionary, the results will be sent to the
+        client side in JSON Format for dynamic displaying, so for this we will make use of the render_to_string function,
+        this way we can convert, our response with sent as a JsonResponse. This view accepts one single argument, the
+        'request' which expects a request object.
+    """
+    query = request.META.get('HTTP_QUERY')
+    updated_insurances = InsuranceCarrier.objects.filter(company__icontains=query, created_by=request.user)
+    template = 'settings/insurance_filtered_list.html'
+    context = {'insurance': updated_insurances}
+    data = {'updated_html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -195,12 +207,24 @@ def allergies_list(request):
     template = 'settings/allergies_list.html'
     context = {'allergies': allergies_created, 'form': filter_form}
     data = {'html': render_to_string(template, context, request)}
-    if request.method == 'POST':
-        filter_form = AllergiesFilterForm(request.POST)
-        if filter_form.is_valid():
-            updated_allergies = Allergies.objects.filter(created_by=request.user, allergy_type__icontains=filter_form.cleaned_data['allergy_type'])
-            context['allergies'] = updated_allergies
-            data = {'updated_html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def filter_allergies(request):
+    """
+        DOCSTRING:
+        This filter_allergies view is used to filter the results of the available allergies for the user, this view
+        will perform the filtering and will return the data collected based on a query made by the user, this query
+        will be extracted from the 'HTTP_QUERY' inside the request.META dictionary, the results will be sent to the
+        client side in JSON Format for dynamic displaying, so for this we will make use of the render_to_string function,
+        this way we can convert, our response with sent as a JsonResponse. This view accepts one single argument, the
+        'request' which expects a request object.
+    """
+    query = request.META.get('HTTP_QUERY')
+    filtered_allergies = Allergies.objects.filter(allergy_type__icontains=query, created_by=request.user)
+    template = 'settings/allergies_filtered_list.html'
+    context = {'allergies': filtered_allergies}
+    data = {'updated_html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -321,14 +345,24 @@ def drugs_list(request):
     template = 'settings/drugs_list.html'
     context = {'drugs': drugs, 'form': DrugsFilterForm}
     data = {'html': render_to_string(template, context, request)}
-    if request.method == 'POST':
-        filter_form = DrugsFilterForm(request.POST)
-        if filter_form.is_valid():
-            print(type(filter_form.cleaned_data))
-            updated_drugs = Drugs.objects.filter(created_by=request.user, name__icontains=filter_form.cleaned_data['name'])
-            if len(updated_drugs) > 0:
-                context['drugs'] = updated_drugs
-                data = {'updated_html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def filter_drugs(request):
+    """
+        DOCSTRING:
+        This filter_drugs view is used to filter the results of the available drugs for the user, this view
+        will perform the filtering and will return the data collected based on a query made by the user, this query
+        will be extracted from the 'HTTP_QUERY' inside the request.META dictionary, the results will be sent to the
+        client side in JSON Format for dynamic displaying, so for this we will make use of the render_to_string function,
+        this way we can convert, our response with sent as a JsonResponse. This view accepts one single argument, the
+        'request' which expects a request object.
+    """
+    query = request.META.get('HTTP_QUERY')
+    updated_drugs = Drugs.objects.filter(name__icontains=query, created_by=request.user)
+    template = 'settings/drugs_filtered_list.html'
+    context = {'drugs': updated_drugs}
+    data = {'updated_html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 

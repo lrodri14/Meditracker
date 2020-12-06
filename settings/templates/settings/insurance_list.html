@@ -10,7 +10,7 @@
                         <th>Country</th>
                         <th>Edit</th>
                         <th>Delete</th>
-                        <th><a href="{%url 'settings:insurance_add' %}"><i class="fas fa-plus"></i></a></th>
+                        <th><i class="fas fa-plus" data-url="{%url 'settings:insurance_add'%}"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,8 +18,8 @@
                     <tr data-url="{%url 'settings:insurance_details' i.pk%}">
                         <td>{{i.company}}</td>
                         <td>{{i.get_country_display}}</td>
-                        <td data-url="{%url 'settings:insurance_update' i.pk%}"><i class="fas fa-edit"></i></td>
-                        <td data-url="{%url 'settings:insurance_delete' i.pk%}"><i class="fas fa-trash"></i></td>
+                        <td><i class="fas fa-edit" data-url="{%url 'settings:insurance_update' i.pk%}"></i></td>
+                        <td><i class="fas fa-trash" data-url="{%url 'settings:insurance_delete' i.pk%}"></i></td>
                         <td></td>
                     </tr>
                 {%endfor%}
@@ -28,13 +28,10 @@
         </div>
         <div>
             <i class="fas fa-filter"></i>
-            <form method="POST" action="{%url 'settings:insurance_list'%}" class="filter-form" autocomplete="off">
+            <form method="GET" action="{%url 'settings:filter_insurance'%}" class="filter-form" autocomplete="off">
                 <h3>Filter Insurance</h3>
-                {%csrf_token%}
                 <p>{{form.company.label}}</p>
                 <p>{{form.company}}</p>
-                <p>{{form.country.label}}</p>
-                <p>{{form.country}}</p>
             </form>
         </div>
     </div>

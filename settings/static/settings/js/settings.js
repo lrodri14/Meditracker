@@ -64,13 +64,13 @@ async function viewElementAW(url){
     return data
 }
 
-async function filterResultsAW(url, method, csrfmiddlewaretoken, formData){
+async function filterResultsAW(url, method, query){
     /* The filterResultsAW async function is used to filter items belonging to the current user, this function is called
        whenever an input event is fired in the filter inputs every table contains, this function accepts,4 parameters:
        'url' we collect from the form.action attribute, the 'method' we collect from the form.method attribute,
        the 'csrfmiddlewaretoken' from the form's hidden input, and finally the 'formData' we collect form the forms inputs
        the response will be returned in JSON Format for further processing.*/
-    const result = await fetch(url, {method:method, headers: {'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
+    const result = await fetch(url, {method:method, headers: {'QUERY':query}})
     const data = await result.json()
     return data
 }
@@ -113,12 +113,19 @@ function addData(){
 // Body Event Listeners
 
 body.addEventListener('click', (e) => {
+
+    /* This event listeners will be fired every time a click occurs over an element with 'tab' class in its classList,
+       this event will be stopped, we need to perform some extra functionality, first we need to set the 'active' class
+       for the target clicked, to provide an active effect, afterwards we remove the previous content inside our wrapper,
+       to fill it with the new one. To collect the new data from the server we need to do a 'GET' request, and the url
+       for this request we grab it from the data-url attribute from the target, when we finally get our response, we will
+       fill the wrapper with the new content and re-define the backedUpContent variable for filtering purposes.*/
     if (e.target.classList.contains('tab')){
         e.preventDefault()
         e.stopPropagation()
-        tabs.forEach(tab => tab.classList.remove('li-active'))
+        tabs.forEach(tab => tab.classList.remove('tab-active'))
         wrapper.innerHTML = ''
-        e.target.classList.add('li-active')
+        e.target.classList.add('tab-active')
         let url = e.target.getAttribute('data-url')
         displaySettingsAW(url)
         .then(data => {
@@ -129,17 +136,17 @@ body.addEventListener('click', (e) => {
 })
 
 body.addEventListener('mouseover', (e) => {
-
+    /* This event will be fired every time the target contains the 'tab' class in its classlist, it will add the tab-hover class*/
     if (e.target.classList.contains('tab')){
-        e.target.classList.add('li-hover')
+        e.target.classList.add('tab-hover')
     }
 
 })
 
 body.addEventListener('mouseout', (e) => {
-
+    /* This event will be fired every time the target contains the 'tab' class in its classlist, it will remove the tab-hover class*/
     if (e.target.classList.contains('tab')){
-        e.target.classList.remove('li-hover')
+        e.target.classList.remove('tab-hover')
     }
 
 })
@@ -149,10 +156,13 @@ body.addEventListener('mouseout', (e) => {
 
 if (wrapper){
 
+    /* This assignment is done for filtering purposes, every time the form input is blank, this content will be added.*/
     var backedUpContent = wrapper.innerHTML
 
     wrapper.addEventListener('mouseover', (e) => {
 
+        /* This event will be fired every time a hover occurs in an element with the 'TD' nodeName of the childs are the
+           'fa-trash' or 'fa-edit' icons, this event will change some styles in the table rows.*/
         if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
@@ -160,26 +170,38 @@ if (wrapper){
             row.style.color = '#496897'
         }
 
+        /* This event will be fired every time the target contains the 'fa-filter' class in its classList, it will add
+           the 'fa-filter-hover' class to the target.*/
         if (e.target.classList.contains('fa-filter')){
             e.target.classList.add('fa-filter-hover')
         }
 
+        /* This event will be fired every time the target contains the 'fa-plus' class in its classList, it will add
+           the 'fa-plus-hover' to the target.*/
         if (e.target.classList.contains('fa-plus')){
             e.target.classList.add('fa-plus-hover')
         }
 
+        /* This event will be fired every time the target contains the 'fa-edit' class in its classList, it will add
+           the 'fa-edit-hover' to the target.*/
         if (e.target.classList.contains('fa-edit')){
             e.target.classList.add('fa-edit-hover')
         }
 
+        /* This event will be fired every time the target contains the 'fa-trash' class in its classList, it will add
+           the 'fa-trash-hover' to the target.*/
         if (e.target.classList.contains('fa-trash')){
             e.target.classList.add('fa-trash-hover')
         }
 
         if (e.target.nodeName === 'INPUT'){
+        /* This event will be fired every time the target's nodeName is INPUT it will add
+           the 'input-hover' class to the target.*/
             e.target.classList.add('input-hover')
         }
 
+        /* This event will be fired every time the target's nodeName is BUTTON it will add
+           the 'button-hover' class to the target.*/
         if (e.target.nodeName === 'BUTTON'){
             e.target.classList.add('button-hover')
         }
@@ -188,6 +210,8 @@ if (wrapper){
 
     wrapper.addEventListener('mouseout', (e) => {
 
+    /* This event will be fired every time a hover occurs in an element with the 'TD' nodeName of the childs are the
+       'fa-trash' or 'fa-edit' icons, this event will remove some styles in the table rows.*/
       if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
         let row
         e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
@@ -195,26 +219,38 @@ if (wrapper){
             row.style.color = ''
       }
 
+        /* This event will be fired every time the target contains the 'fa-filter' class in its classList, it will remove
+           the 'fa-filter-hover' class to the target.*/
         if (e.target.classList.contains('fa-filter')){
             e.target.classList.remove('fa-filter-hover')
         }
 
+        /* This event will be fired every time the target contains the 'fa-plus' class in its classList, it will remove
+           the 'fa-plus-hover' to the target.*/
         if (e.target.classList.contains('fa-plus')){
             e.target.classList.remove('fa-plus-hover')
         }
 
+        /* This event will be fired every time the target contains the 'fa-edit' class in its classList, it will remove
+           the 'fa-edit-hover' to the target.*/
         if (e.target.classList.contains('fa-edit')){
             e.target.classList.remove('fa-edit-hover')
         }
 
+        /* This event will be fired every time the target contains the 'fa-trash' class in its classList, it will remove
+           the 'fa-trash-hover' to the target.*/
         if (e.target.classList.contains('fa-trash')){
             e.target.classList.remove('fa-trash-hover')
         }
 
+        /* This event will be fired every time the target's nodeName is INPUT it will remove
+           the 'input-hover' class to the target.*/
         if (e.target.nodeName === 'INPUT'){
             e.target.classList.remove('input-hover')
         }
 
+        /* This event will be fired every time the target's nodeName is BUTTON it will remove
+           the 'button-hover' class to the target.*/
         if (e.target.nodeName === 'BUTTON'){
             e.target.classList.remove('button-hover')
         }
@@ -224,6 +260,9 @@ if (wrapper){
     wrapper.addEventListener('click', (e) => {
 
         if (e.target.nodeName === 'TD'){
+        /* This event will be fired every time the target it's a table data cell, this event will open the modal and
+           display the details of the clicked object. For this we need to make a 'GET' request to the server to retrieve
+           the information, once it is collected, it is presented in the modal.*/
             const url = e.target.parentNode.getAttribute('data-url')
             viewElementAW(url)
             .then(data => {
@@ -233,14 +272,20 @@ if (wrapper){
         }
 
         if (e.target.classList.contains('fa-filter')){
+            /* This event will be fired every time the target contains the 'fa-filter' class in its classList, this will
+            either hide or display the form based on the current status.*/
             const form = document.querySelector('.filter-form')
             form.classList.contains('show-filter-form') ? form.classList.remove('show-filter-form') : form.classList.add('show-filter-form')
         }
 
         if (e.target.classList.contains('fa-plus')){
+            /* This event will be fired every time the target contains the 'fa-plus' class in it's classList, this event
+               will display the addition form for the current type of object displayed. The form presented depends on the
+               'url' collected from the 'data-url' attribute from the target, finally, the modal is displayed and the form
+               is presented.*/
             e.preventDefault()
             e.stopPropagation()
-            const url = e.target.parentNode.href
+            const url = e.target.getAttribute('data-url')
             showForm(url)
             .then(data => {
                 modal.classList.add('show-modal')
@@ -249,9 +294,13 @@ if (wrapper){
         }
 
         if (e.target.classList.contains('fa-edit')){
+        /* This event will be fired every time the target contains the 'fa-edit' class in it's classList, this event
+           will display the edit form for the current type of object displayed. The form presented depends on the
+           'url' collected from the 'data-url' attribute from the target, finally, the modal is displayed and the form
+           is presented.*/
             e.preventDefault()
             e.stopPropagation()
-            const url = e.target.parentNode.getAttribute('data-url')
+            const url = e.target.getAttribute('data-url')
             showForm(url)
             .then(data => {
                 modal.classList.add('show-modal')
@@ -260,9 +309,13 @@ if (wrapper){
         }
 
         if (e.target.classList.contains('fa-trash')){
+        /* This event will be fired every time the target contains the 'fa-trash' class in it's classList, this event
+           will display the deletion form for the current type of object displayed. The form presented depends on the
+           'url' collected from the 'data-url' attribute from the target, finally, the modal is displayed and the form
+           is presented.*/
             e.preventDefault()
             e.stopPropagation()
-            const url = e.target.parentNode.getAttribute('data-url')
+            const url = e.target.getAttribute('data-url')
             showForm(url)
             .then(data => {
                 modal.classList.add('show-modal')
@@ -271,6 +324,9 @@ if (wrapper){
         }
 
         if (e.target.nodeName === 'BUTTON'){
+            /* This event will be fired every time the target is a button, this event will present any form
+            if needed in the modal, the form that will be presented in the modal based on the
+            'data-url' attribute in the target.*/
             let url = e.target.getAttribute('data-url')
             modal.classList.add('show-modal')
             showForm(url)
@@ -282,38 +338,40 @@ if (wrapper){
     })
 
     wrapper.addEventListener('input', (e) => {
+        /* This event will be fired every time a form input is being changed, this event will make an AJAX request to the
+           server, for filtering purposes, we need ro collect some before making the request, data such as the 'url' for
+           the request, 'method' we collect from the form.method attribute and finally the query, we grab from the target
+           value. The response will be rendered in the tbody.*/
         if (e.target.nodeName === 'INPUT'){
             let form = e.target.parentNode.parentNode
             let url = form.action
             let method = form.method
-            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-            let data = new FormData(form)
-            filterResultsAW(url, method, csrfmiddlewaretoken, data)
+            let query = e.target.value
+            filterResultsAW(url, method, query)
             .then(data => {
-                console.log(data)
                 var tbody = document.querySelector('tbody')
-                var start = data['updated_html'] ? data['updated_html'].search('<tbody>') : backedUpContent.search('<tbody>')
-                var end = data['updated_html'] ? data['updated_html'].search('</tbody>') : backedUpContent.search('</tbody>')
                 if (data['updated_html']){
-                    var newData = data['updated_html'].slice(start + 8,end)
-                    tbody.innerHTML = newData
-                }else{
-                    var newData = backedUpContent.slice(start + 8,end)
-                    tbody.innerHTML = newData
+                    tbody.innerHTML = data['updated_html']
                 }
-                })
-            }})
+            })
+        }})
     }
 
+
 // Modal Event Listeners
+
 if (modal){
+
+    // Modal Click Events
 
     modal.addEventListener('click', (e) => {
 
+        // This event will be fired every time the target is the modal, the 'show-modal' class will be removed from the modal.
         if (e.target === modal){
             modal.classList.remove('show-modal')
         }
 
+        // This event will be fired every time the target is the a button with the value of 'no', the 'show-modal' class will be removed from the modal.
         if (e.target.value === 'no'){
             e.preventDefault()
             e.stopPropagation()
@@ -322,41 +380,61 @@ if (modal){
 
     })
 
+    // Modal Mouseover Events
+
     modal.addEventListener('mouseover', (e) => {
 
+        /* This event will be fired every time the target's nodeName is 'BUTTON', the 'button-hover' class will be added to the target*/
         if (e.target.nodeName === 'BUTTON'){
             e.target.classList.add('button-hover')
         }
 
+        /* This event will be fired every time the target's nodeName is 'INPUT', the 'input-hover' class will be added to the target*/
         if (e.target.nodeName === 'INPUT'){
             e.target.classList.add('input-hover')
         }
 
     })
 
+    // Modal Mouseout Events
+
     modal.addEventListener('mouseout', (e) => {
 
+        /* This event will be fired every time the target's nodeName is 'BUTTON', the 'button-hover' class will be removed to the target*/
         if (e.target.nodeName === 'BUTTON'){
             e.target.classList.remove('button-hover')
         }
 
+        /* This event will be fired every time the target's nodeName is 'INPUT', the 'input-hover' class will be removed to the target*/
          if (e.target.nodeName === 'INPUT'){
             e.target.classList.remove('input-hover')
         }
 
     })
 
-    modal.addEventListener('submit', (e) => {
-         if (e.target.nodeName === 'FORM'){
-            e.preventDefault()
-            e.stopPropagation()
-            const form = e.target
-            const url = form.action
-            console.log(url)
-            const method = form.method
-            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-            const data = new FormData(form)
+    // Modal Submit Events
 
+    modal.addEventListener('submit', (e) => {
+
+        /* Whenever this event will be fired, this data will be collected, the form itself which is the target, the 'url'
+           for the 'POST' request we collect from the form.action attribute, the 'method' we collect from the form.method
+           attribute, the 'csrfmiddlewaretoken' we collect from the form's hidden input, and finally the formData we collect
+           from the form's inputs.*/
+        e.preventDefault()
+        e.stopPropagation()
+        const form = e.target
+        const url = form.action
+        const method = form.method
+        const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+        const data = new FormData(form)
+
+         // All these events will be fired if the target's nodeName is a FORM
+
+         if (e.target.nodeName === 'FORM'){
+            /* This event will be fired every time the form contains the 'add' or 'update' class in it's classList, this
+               form will collect make use of the information collected above to make the request, after we receive a response,
+               we check if the response contains an error, if it does, the error is rendered in the form, if not, the wrapper
+               html is updated and the backedUpContent variable reassigned and the modal is closed.*/
             if (e.target.classList.contains('add') || e.target.classList.contains('update')){
                 addUpdateElementAW(url, method, csrfmiddlewaretoken, data)
                 .then(data => {
@@ -371,6 +449,9 @@ if (modal){
             }
 
             if (e.target.id === 'delete'){
+            /* This event will be fired every time the form contains the 'delete' class in it's classList, this
+               form will collect make use of the information collected above to make the request, after we receive a response,
+               the wrapper's html is updated and the backedUpContent variable reassigned and the modal is closed.*/
                 deleteItemAW(url, method, csrfmiddlewaretoken)
                 .then(data => {
                     wrapper.innerHTML = data['updated_html']
@@ -381,6 +462,9 @@ if (modal){
             }
 
             if (e.target.classList.contains('password-form')){
+            /* This event will be fired every time the form contains the 'password-form' class in it's classList, this
+               form will collect make use of the information collected above to make the request, after we receive a response,
+               we check if the response contains an error, if it does, the error is rendered in the form, the modal is closed.*/
                 updatePasswordAW(url, method, csrfmiddlewaretoken, data)
                 .then(data => {
                     if (data['html']){

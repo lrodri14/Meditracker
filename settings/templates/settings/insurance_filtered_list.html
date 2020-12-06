@@ -1,0 +1,14 @@
+{%load static%}
+{%if insurance%}
+    {%for i in insurance%}
+        <tr data-url="{%url 'settings:insurance_details' i.pk%}">
+            <td>{{i.company}}</td>
+            <td>{{i.get_country_display}}</td>
+            <td><i class="fas fa-edit" data-url="{%url 'settings:insurance_update' i.pk%}"></i></td>
+            <td><i class="fas fa-trash" data-url="{%url 'settings:insurance_delete' i.pk%}"></i></td>
+            <td></td>
+        </tr>
+{%endfor%}
+{%else%}
+    <p class="no-data">No insurances listed</p>
+{%endif%}

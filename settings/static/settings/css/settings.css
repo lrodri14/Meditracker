@@ -18,23 +18,23 @@ li{
     transition: 0.5s;
 }
 
-.li-hover{
+.tab-hover{
     background-color: #FFFFFF;
     color: #496897;
     transition: 0.5s;
 }
 
-.li-hover a{
+.tab-hover a{
     color: #496897;
 }
 
-.li-active{
+.tab-active{
     background-color: #FFFFFF;
     color: #496897;
     transition: 0.5s;
 }
 
-.li-active a{
+.tab-active a{
     color: #496897;
 }
 
