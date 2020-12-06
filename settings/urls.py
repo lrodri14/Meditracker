@@ -1,3 +1,7 @@
+"""
+    This urls.py file contains all the paths needed to route all the views in the settings app
+"""
+
 from django.urls import path
 from .views import *
 

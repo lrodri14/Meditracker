@@ -1,4 +1,87 @@
-/*Checked*/
+/* This settings.css stylesheet contains all the styles needed to display the settings web page correctly, it is divided
+   into 5 sections: Nav-bar, Wrapper, Tables, Modal, No Data*/
+
+/*###################################################### Nav Bar #####################################################*/
+
+ul{
+    list-style-type: none;
+    padding-left: 0px;
+    width: 55%;
+}
+
+li{
+    cursor: pointer;
+    display: inline-block;
+    padding: 15px;
+    margin: 0px;
+    background-color: #456387;
+    transition: 0.5s;
+}
+
+.li-hover{
+    background-color: #FFFFFF;
+    color: #496897;
+    transition: 0.5s;
+}
+
+.li-hover a{
+    color: #496897;
+}
+
+.li-active{
+    background-color: #FFFFFF;
+    color: #496897;
+    transition: 0.5s;
+}
+
+.li-active a{
+    color: #496897;
+}
+
+/*###################################################### Wrapper #####################################################*/
+
+.box{
+    display: grid;
+    grid-template-columns: 80% 19%;
+    grid-gap: 1%;
+}
+
+.filter-form{
+    text-align: center;
+    background-color: #5A7FAF;
+    padding: 10px;
+    transform: translateY(-220%);
+    transition: 0.5s;
+}
+
+.show-filter-form{
+    transform: translateY(10%);
+    transition: 0.5s;
+}
+
+.fa-filter{
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-filter-hover{
+   color: #00CCFF;
+   transition: 0.5s;
+}
+
+button{
+    cursor: pointer;
+    width: 8%;
+    height: 30px;
+    margin-left: 1%;
+    background-color: #5A7FAF;
+    border-color: #C7E8F3;
+    color: #FFFFFF;
+    transition: background-color 0.5s;
+}
+
+/*####################################################### Tables #####################################################*/
+
 table{
     border-collapse: collapse;
     width: 100%;
@@ -63,87 +146,7 @@ tr:nth-child(even){
     transition: 0.5s;
 }
 
-/*Navbar*/
-ul{
-    list-style-type: none;
-    padding-left: 0px;
-    width: 55%;
-}
-
-li{
-    cursor: pointer;
-    display: inline-block;
-    padding: 15px;
-    margin: 0px;
-    background-color: #456387;
-    transition: 0.5s;
-}
-
-.li-hover{
-    background-color: #FFFFFF;
-    color: #496897;
-    transition: 0.5s;
-}
-
-.li-hover a{
-    color: #496897;
-}
-
-.li-active{
-    background-color: #FFFFFF;
-    color: #496897;
-    transition: 0.5s;
-}
-
-.li-active a{
-    color: #496897;
-}
-
-/*Wrapper*/
-
-.box{
-    display: grid;
-    grid-template-columns: 80% 19%;
-    grid-gap: 1%;
-}
-
-/*filter forms*/
-.filter-form{
-    text-align: center;
-    background-color: #5A7FAF;
-    padding: 10px;
-    transform: translateY(-220%);
-    transition: 0.5s;
-}
-
-.show-filter-form{
-    transform: translateY(10%);
-    transition: 0.5s;
-}
-
-.fa-filter{
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.fa-filter-hover{
-   color: #00CCFF;
-   transition: 0.5s;
-}
-
-button{
-    cursor: pointer;
-    width: 8%;
-    height: 30px;
-    margin-left: 1%;
-    background-color: #5A7FAF;
-    border-color: #C7E8F3;
-    color: #FFFFFF;
-    transition: background-color 0.5s;
-}
-
-
-/*Modal*/
+/*####################################################### Modal ######################################################*/
 
 .modal{
     background-color: rgba(0,0,0,0.3);
@@ -169,7 +172,6 @@ button{
     margin-top: 12%;
 }
 
-/*Modal Forms*/
 .modal-content form{
     text-align: center;
     background-color: #5A7FAF;
@@ -249,7 +251,6 @@ input:focus{
   transition: 0.5s;
 }
 
-/*Select*/
 select{
   font-family: 'Alegreya Sans SC', sans-serif;
   text-align-last:center;
@@ -266,7 +267,6 @@ select:focus{
     outline: none;
 }
 
-/*Button*/
 form button{
     cursor: pointer;
     width: 30%;
@@ -289,7 +289,8 @@ button:focus{
     transition: 0.5s;
 }
 
-/*No Data*/
+/*###################################################### No Data #####################################################*/
+
 .no-data{
     position: absolute;
     top: 50%;

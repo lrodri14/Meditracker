@@ -1,66 +1,99 @@
-// Checked
-//Checked
+/* This settings.js files contains all the variable declarations, async and sync functions, and event listeners, needed
+   to make the settings template work properly, this file is composed of 7 async functions, and one synchronous function.
+   The file is also divided into three sections: Variable Declarations, Functions, Event Listeners.*/
 
-if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
-    var wrapper = document.querySelector('.wrapper')
-}
-
-if (document.querySelector('.modal') !== 'undefined' && document.querySelector('.modal') !== 'null'){
-    var modal = document.querySelector('.modal')
-    var modalContent = document.querySelector('.modal-content')
-}
+/*###################################################### Variables ###################################################*/
 
 var body = document.querySelector('body')
 var tabs = document.querySelectorAll('.tab')
-
+var wrapper = document.querySelector('.wrapper')
+var modal = document.querySelector('.modal')
+var modalContent = document.querySelector('.modal-content')
 var backedUpContent
+
+/*###################################################### Functions ###################################################*/
 
 // Async Functions
 async function displaySettingsAW(url){
+    /* This displaySettingsAW async function is used to display the settings of the users choice, this async func will
+       retrieve the content of that particular settings and display it inside the wrapper container, this async func
+       accepts one single parameter: 'url' which we retrieve from the tab 'data-url' attribute, to make the 'GET'
+       request. The response will be converted into JSON and returned for further processing.*/
     const result = await fetch(url)
     const data = await result.json()
     return data
 }
 
 async function showForm(url){
+    /* This showForm async function is used to display the form for a particular use such as adding, deleting or updating
+       any instances of any object, this form will be displayed in the modal container, this function accepts one single
+       parameter: 'url' to make the 'GET' request, this response will be return as JSON for further response.*/
     const result = await fetch(url)
     const data = await result.json()
     return data
 }
 
 async function addUpdateElementAW(url, method, csrfmiddlewaretoken, formData){
+    /* This addUpdateElementAW function is used to add or to update any objects, this function will display the corresponding
+       form for the specific operation, this form will be displayed in the modal container, the function accepts, 4
+       parameters: 'url' we collect from the form.action attribute, 'method' we grab from the form.method attribute,
+       'csrfmiddlewaretoken' that we collect form the form's hidden input, and finally the 'formData' we collect from
+       the form's inputs, the response will be returned in JSON format for further processing.*/
     const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
     const data = await result.json()
     return data
 }
 
 async function deleteItemAW(url, method, csrfmiddlewaretoken){
+    /* The deleteItemAW async function is used to delete items belonging to the current user, this function will display
+       corresponding form for the operation, it will be displayed in the modal container, this function accepts,3 parameters:
+       'url' we collect from the form.action attribute, the 'method' we collect from the form.method attribute and finally
+       the 'csrfmiddlewaretoken' from the form's hidden input, the response will be returned in JSON Format for further
+       processing.*/
     const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:{'choice':'yes'}})
     const data = await result.json()
     return data
 }
 
 async function viewElementAW(url){
+    /* This viewElementAW function is used to display the details of any object, this content will be displayed inside the
+       modal container, the function accepts one single parameter: 'url' to make the 'GET' request, the response will
+       be returned in JSON format, for further processing.*/
     const result = await fetch(url)
     const data = await result.json()
     return data
 }
 
 async function filterResultsAW(url, method, csrfmiddlewaretoken, formData){
+    /* The filterResultsAW async function is used to filter items belonging to the current user, this function is called
+       whenever an input event is fired in the filter inputs every table contains, this function accepts,4 parameters:
+       'url' we collect from the form.action attribute, the 'method' we collect from the form.method attribute,
+       the 'csrfmiddlewaretoken' from the form's hidden input, and finally the 'formData' we collect form the forms inputs
+       the response will be returned in JSON Format for further processing.*/
     const result = await fetch(url, {method:method, headers: {'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
     const data = await result.json()
     return data
 }
 
 async function updatePasswordAW(url, method, csrfmiddlewaretoken, formData){
+    /* This updatePasswordAW function is used update the users password, this function will display the corresponding
+       form for the specific operation, this form will be displayed in the modal container, the function accepts, 4
+       parameters: 'url' we collect from the form.action attribute, 'method' we grab from the form.method attribute,
+       'csrfmiddlewaretoken' that we collect form the form's hidden input, and finally the 'formData' we collect from
+       the form's inputs, the response will be returned in JSON format for further processing.*/
     const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
     const data = result.json()
     return data
 }
 
 // Functions
-//Add Data
+
 function addData(){
+    /* The sync function addData, is used to create the levitating effect on the 'fa-plus' signs, whenever the
+       filtering returned an empty querySet or the user is new and there are no register yet, this function will
+       grab the 'add-data' element, will also call a setInterval function that will be executed every .5s, what this
+       interval will execute is the style changing of the top attribute, in the addData element, it will change it to
+       '90%' every time the top attribute is '88%' and vice versa.*/
     if (document.querySelector('.add-data') !== 'undefined' && document.querySelector('.add-data') !== 'null'){
         var addData = document.querySelector('.add-data')
         setInterval(function(){
@@ -73,6 +106,9 @@ function addData(){
         console.log(addData)
     }
 }
+
+/*###################################################### Events Listeners ############################################*/
+
 
 // Body Event Listeners
 
