@@ -58,11 +58,47 @@ table{
     width: 100%;
 }
 
+#paginator{
+    position: absolute;
+    left: 40%;
+    top: 9%;
+    font-size: 18px;
+    width: 39.5%;
+}
+
+.navigation{
+    width: 20%;
+    float: right;
+}
+
+#paginator i{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 24px;
+}
+
 #heading{
     background-color: #3E5979;
     color: #FFFFFF;
     line-height: 25px;
     cursor: default;
+}
+
+.fa-angle-left{
+    cursor: pointer;
+    transition: 0.5s;
+    float: left;
+}
+
+.fa-angle-right{
+    cursor: pointer;
+    transition: 0.5s;
+    float: right;
+}
+
+.fa-angle-hover{
+    color: #00CCFF;
+    transition: 0.5s;
 }
 
 .fa-plus{

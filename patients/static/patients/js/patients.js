@@ -9,6 +9,8 @@ The function section consists of 3 async functions and 1 sync function.*/
 // ################################################ Variables ##########################################################
 
 // Data available
+var body = document.querySelector('body')
+
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
     var i = document.querySelector('.fa-filter')
@@ -40,11 +42,6 @@ if (document.querySelector('#add_patients') !== 'undefined' && document.querySel
     var addPatient = document.querySelector('#add_patients')
 }
 
-// Backed up data, serving the data that was present before a filtering operation.
-if (tbody){
-    var backedUpData = tbody.innerHTML
-}
-
 // ################################################ Functions ##########################################################
 
 // Async Functions
@@ -58,7 +55,16 @@ async function deleteAW(url){
     return data
 }
 
-async function filterResults(url, method, csrfmiddlewaretoken, formData){
+async function getPageAW(url){
+    /* This async function will be used to collect the data from the previous or next page, this content will be
+    received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
+    the tbody dynamically.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+async function filterResults(url, method, query){
     /*This filterResults async functions it's purpose is to retrieve the patients
       related data from the database based on a query the user inputs in the filter form,
       it accepts 4 arguments 'url' to where the POST request is done, the method which
@@ -66,7 +72,7 @@ async function filterResults(url, method, csrfmiddlewaretoken, formData){
       from the input's hidden input and the formData, the data inputted into the form.
       after the data was retrieved from the server, it's converted to JSON format and
       returned*/
-    const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
+    const result = await fetch(url, {method:method, headers:{'QUERY': query}})
     const data = await result.json()
     return data
 }
@@ -116,6 +122,39 @@ if (addPatient){
        class from the element*/
     addPatient.addEventListener('mouseout', () => {
         addPatient.classList.remove('add-patient-hover')
+    })
+}
+
+// Body Event Listeners
+
+if (body){
+
+    body.addEventListener('click', (e) => {
+        /* This event will be fired every time an angle icon is clicked, this event will grab the url for the
+           GET request, then the response will be added to the tbody, as well as the paginator will be deleted
+           to get the current one.*/
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            const url = e.target.getAttribute('data-url') + e.target.getAttribute('data-page')
+            getPageAW(url)
+            .then(data => {
+                document.querySelector('#paginator').remove()
+                tbody.innerHTML = data['html']
+            })
+        }
+    })
+
+    body.addEventListener('mouseover', (e) => {
+        // This event will be fired, every time the user hovers over a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be added.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.add('fa-angle-hover')
+        }
+    })
+
+    body.addEventListener('mouseout', (e) => {
+        // This event will be fired, every time the user hover out occurs on a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be removed.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.remove('fa-angle-hover')
+        }
     })
 
 }
@@ -315,7 +354,6 @@ if (wrapper){
                 if (data.hasOwnProperty('patients')){
                     modalContent.innerHTML = data['html']
                     tbody.innerHTML = data['patients']
-                    backedUpData = tbody.innerHTML
                 }else{
                     modalContent.innerHTML = data['html']
                 }
@@ -333,17 +371,11 @@ if (wrapper){
         if (e.target.nodeName === 'INPUT'){
             const url = form.action
             const method = form.method
-            const input = document.querySelector('[type=text]')
-            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-            const data = new FormData(form)
-            if (input.value !== ''){
-                filterResults(url, method, csrfmiddlewaretoken, data)
-                .then(data => {
-                    tbody.innerHTML = data['html']
-                })
-            } else{
-                tbody.innerHTML = backedUpData
-            }
+            const query = e.target.value
+            filterResults(url, method, query)
+            .then(data => {
+                tbody.innerHTML = data['html']
+            })
         }
 
     })

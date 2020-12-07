@@ -51,29 +51,41 @@ def patients(request):
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
     today = timezone.localdate()
-    if request.method == 'POST':
-        data = {}
-        patient_filter = PatientFilter(request.POST)
-        template = 'patients/patients_partial_list.html'
-        if patient_filter.is_valid():
-            if patient_filter.cleaned_data['patient'][0] in [str(x) for x in range(0, 9)]:
-                updated_patients = Patient.objects.filter(id_number__icontains=int(patient_filter.cleaned_data['patient']), created_by=request.user)
-                context = {'patients':updated_patients, 'doctor': doctor, 'today': today}
-                data = {'html': render_to_string(template, context, request)}
-            elif type(patient_filter.cleaned_data['patient']) == str:
-                updated_patients = Patient.objects.filter(Q(first_names__icontains=patient_filter.cleaned_data['patient']) | Q(last_names__icontains=patient_filter.cleaned_data['patient']), created_by=request.user)
-                context = {'patients':updated_patients, 'doctor': doctor, 'today': today}
-                data = {'html': render_to_string(template, context, request)}
+    template = 'patients/patients.html'
+    patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
+    paginator = Paginator(patients_list, 17)
+    page = request.GET.get('page')
+    patients = paginator.get_page(page)
+    patient_filter = PatientFilter
+    context = {'patients': patients, 'doctor': doctor, 'form': patient_filter, 'today': today}
+    if page:
+        data = {'html': render_to_string('patients/patients_partial_list.html', context, request)}
         return JsonResponse(data)
-    else:
-        template = 'patients/patients.html'
-        patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
-        paginator = Paginator(patients_list, 25)
-        page = request.GET.get('page')
-        patients = paginator.get_page(page)
-        patient_filter = PatientFilter
-        context = {'patients': patients, 'doctor': doctor, 'form': patient_filter, 'today': today}
     return render(request, template, context=context)
+
+
+def filter_patients(request):
+    query = request.META.get('HTTP_QUERY')
+    doctor_group = Group.objects.get(name='Doctor')
+    doctor = doctor_group in request.user.groups.all()
+    today = timezone.localdate()
+    template = 'patients/patients_partial_list.html'
+    data = {}
+    if len(query) > 0 and query[0] in [str(x) for x in range(0, 9)]:
+        patients_list = Patient.objects.filter(id_number__icontains=int(query), created_by=request.user).order_by('id_number')
+        patients = Paginator(patients_list, 17)
+        page = request.GET.get('page')
+        updated_patients = patients.get_page(page)
+        context = {'patients': updated_patients, 'doctor': doctor, 'today': today}
+        data = {'html': render_to_string(template, context, request)}
+    elif type(query) == str:
+        patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
+        patients = Paginator(patients_list, 17)
+        page = request.GET.get('page')
+        updated_patients = patients.get_page(page)
+        context = {'patients': updated_patients, 'doctor': doctor, 'today': today}
+        data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def add_patient(request):
