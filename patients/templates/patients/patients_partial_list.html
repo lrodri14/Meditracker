@@ -1,8 +1,8 @@
 <!-- Template used to display specific patients dinamically-->
 {%load static%}
 <!--If patients are present this code will be rendered-->
+{%if patients.has_other_pages%}<div id="paginator"> <span>{{patients.number}} / {{patients.paginator.num_pages}}</span> <div class="navigation">{%if patients.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'patients:patients'%}" data-page="?page={{patients.previous_page_number}}">{%endif%}</i>{%if patients.has_next%}<i class="fas fa-angle-right" data-url="{%url 'patients:patients'%}" data-page="?page={{patients.next_page_number}}"></i>{%endif%}</div></div>{%endif%}
 {%if patients%}
-    {%if patients.has_other_pages%}<div id="paginator"> <span>{{patients.number}} / {{patients.paginator.num_pages}}</span> <div class="navigation">{%if patients.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'patients:patients'%}" data-page="?page={{patients.previous_page_number}}">{%endif%}</i>{%if patients.has_next%}<i class="fas fa-angle-right" data-url="{%url 'patients:patients'%}" data-page="?page={{patients.next_page_number}}"></i>{%endif%}</div></div>{%endif%}
     {%for p in patients%}
         <tr onclick="window.location='{%url 'patients:patients_details' p.pk%}'">
             <td>{%if p.id_number%}{{p.id_number}}{%else%}-------------{%endif%}</td>

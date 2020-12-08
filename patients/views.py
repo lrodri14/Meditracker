@@ -69,20 +69,20 @@ def filter_patients(request):
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
     today = timezone.localdate()
-    template = 'patients/patients_partial_list.html'
+    template = 'patients/patients_filter_list.html'
     data = {}
     if len(query) > 0 and query[0] in [str(x) for x in range(0, 9)]:
         patients_list = Patient.objects.filter(id_number__icontains=int(query), created_by=request.user).order_by('id_number')
-        patients = Paginator(patients_list, 17)
+        paginator = Paginator(patients_list, 17)
         page = request.GET.get('page')
-        updated_patients = patients.get_page(page)
+        updated_patients = paginator.get_page(page)
         context = {'patients': updated_patients, 'doctor': doctor, 'today': today}
         data = {'html': render_to_string(template, context, request)}
     elif type(query) == str:
         patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
-        patients = Paginator(patients_list, 17)
+        paginator = Paginator(patients_list, 17)
         page = request.GET.get('page')
-        updated_patients = patients.get_page(page)
+        updated_patients = paginator.get_page(page)
         context = {'patients': updated_patients, 'doctor': doctor, 'today': today}
         data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
@@ -215,7 +215,10 @@ def patient_delete(request, pk):
         else:
             patient.delete()
             context = {'patient_deleted': ' Patient has been deleted successfully'}
-            patients = Patient.objects.filter(created_by=request.user)
+            patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
+            paginator = Paginator(patients_list, 17)
+            page = request.GET.get('page')
+            patients = paginator.get_page(page)
             data = {'html': render_to_string(template, context, request=request),
                     'patients': render_to_string('patients/patients_partial_list.html', {'patients': patients, 'doctor': doctor, 'today': today}, request)}
     return JsonResponse(data)

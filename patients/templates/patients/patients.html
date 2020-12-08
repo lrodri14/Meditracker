@@ -9,7 +9,9 @@
 <!-- If any patients are present, this code will be rendered-->
     {%if patients%}
     <div class="wrapper">
-        <div>
+
+        <div class="table">
+
             <table>
                 <thead>
                 <tr id="heading">
@@ -23,23 +25,16 @@
                     {%if doctor%}<th>Edit</th>
                     <th>Delete</th>{%endif%}
                     <th><i class="fas fa-plus" onclick="window.location='{%url 'patients:add_patient'%}'"></i></th>
-                </thead>
                 </tr>
+                </thead>
                 <tbody>
                 <!--Included Template, this included template is used to display content dinamically in our main page. -->
                     {%include 'patients/patients_partial_list.html'%}
                 </tbody>
             </table>
 
-            <!--Modal-->
-            <!--Modal used to confirm or cancel patient deletion.-->
-            <div class="modal">
-                <div class="modal-content">
-
-                </div>
-            </div>
-
         </div>
+
         <div>
             <!-- Patient filtering form -->
             <i class="fas fa-filter"></i>
@@ -57,6 +52,15 @@
             </div>
 
         </div>
+
+        <!--Modal-->
+        <!--Modal used to confirm or cancel patient deletion.-->
+        <div class="modal">
+            <div class="modal-content">
+
+            </div>
+        </div>
+
     </div>
 
 <!-- If no patients are present, this code will be rendered-->
