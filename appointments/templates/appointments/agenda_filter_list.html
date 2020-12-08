@@ -1,0 +1,46 @@
+{%load static%}
+{%if consults.has_other_pages%}<div id="paginator"><span> {{consults.number}} / {{consults.paginator.num_pages}}</span> <div id="navigation">{%if consults.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'appointments:agenda'%}" data-page="?page={{consults.previous_page_number}}" ></i>{%endif%} {%if consults.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:agenda'%}" data-page="?page={{consults.next_page_number}}"></i>{%endif%}</div></div>{%endif%}
+{%if consults%}
+    {%for m in months%}
+        <h3>{{m}}</h3>
+        <table>
+            <thead>
+                <tr id="heading">
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Date and Time</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Confirm</th>
+                    <th>Cancel</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for c in consults%}
+                    {%if c.datetime|date:"F" == m%}
+                        <tr>
+                            <td>{{c.patient.id_number}}</td>
+                            <td>{{c.patient.first_names}} {{c.patient.last_names}}</td>
+                            <td>{{c.datetime}}</td>
+                            {%if c.status == 'OPEN'%}
+                                <td id="Open">Open</td>
+                            {%elif c.status == 'CONFIRMED'%}
+                                 <td id="Confirmed">Confirmed</td>
+                            {%elif c.status == 'CANCELLED'%}
+                                <td id="Canceled">Cancelled</td>
+                            {%elif c.status == 'CLOSED'%}
+                                <td id="Closed">Closed</td>
+                            {%endif%}
+                            </td>
+                            <td data-url="{%url 'appointments:consult_date_update' c.pk%}">{%if c.status == 'OPEN'%}<i class="fas fa-edit"></i>{%endif%}</td>
+                            <td data-url="{%url 'appointments:consult_confirm' c.pk%}">{%if c.status == 'OPEN'%}<i class="fas fa-check"></i>{%endif%}</td>
+                            <td data-url="{%url 'appointments:cancel_consult' c.pk%}">{%if c.status == 'OPEN'%}<i class="fas fa-times-circle"></i>{%endif%}</td>
+                        </tr>
+                    {%endif%}
+                {%endfor%}
+            </tbody>
+        </table>
+    {%endfor%}
+{%else%}
+    <p id="no-consults">No Matches Found</p>
+{%endif%}

@@ -1,0 +1,21 @@
+{%load static%}
+{%if appointments%}
+    {%if appointments.has_other_pages%} <div id="paginator"> <span>{{appointments.number}} / {{appointments.paginator.num_pages}}</span>{%if appointments.has_previous%}<div id="navigation"> <i class="fas fa-angle-left" data-url="{%url 'appointments:consults'%}" data-page="?page={{appointments.previous_page_number}}" ></i>{%endif%}{%if appointments.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:consults'%}" data-page="?page={{appointments.next_page_number}}" ></i>{%endif%}</div></div> {%endif%}
+    {%for a in appointments%}
+        <tr>
+            <td>{{a.patient.id_number}}</td>
+            <td>{{a.patient.first_names}} {{a.patient.last_names}}</td>
+            <td>{{a.datetime}}</td>
+            <td id="status-0">Pending...</td>
+            {%if doctor%}<td><i class="fas fa-edit" onclick="window.location='{%url 'appointments:update_consult' a.pk%}'"></i></td>{%endif%}
+            <td>
+                {%if a.lock == False%}
+                    <div class="popup">
+                        <span class="popup-text">This consult is unlocked for further changes</span>
+                    </div>
+                    <i class="fas fa-exclamation-circle"></i>
+                {%endif%}
+            </td>
+        </tr>
+    {%endfor%}
+{%endif%}

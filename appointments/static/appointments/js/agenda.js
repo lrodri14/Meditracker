@@ -6,6 +6,7 @@
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
     var form = document.querySelector('.filter-form')
+    var table = document.querySelector('.table')
 }
 
 if (document.querySelector('.modal') !== 'undefined' && document.querySelector('.modal') !== 'null'){
@@ -14,6 +15,15 @@ if (document.querySelector('.modal') !== 'undefined' && document.querySelector('
 }
 
 /*#################################################### Functions #####################################################*/
+
+async function requestPageAW(url){
+    /* This async function will be used to collect the data from the previous or next page, this content will be
+    received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
+    the tbody dynamically.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
 
 async function cancelAW(url){
     /* This cancelAW async function is used to cancel consults that were previously scheduled, this function will display
@@ -81,6 +91,11 @@ if (wrapper){
 
     wrapper.addEventListener('mouseover', (e) => {
 
+        // This event will be fired every time the target is a 'fa-angle', this event will add the 'fa-angle-hover' to its classList.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.add('fa-angle-hover')
+        }
+
         /* This event will be fired every time a hover occurs on a target which nodeName is 'BUTTON', this will add the
         button-form-hover class to the target.*/
         if (e.target.nodeName === 'BUTTON'){
@@ -125,6 +140,11 @@ if (wrapper){
     //Wrapper MouseOut
 
     wrapper.addEventListener('mouseout', (e) => {
+
+        // This event will be fired every time the target is a 'fa-angle', this event will remove the 'fa-angle-hover' to its classList.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.remove('fa-angle-hover')
+        }
 
         /* This event will be fired every time a hover out occurs on a target which nodeName is 'BUTTON', this will remove the
         button-form-hover class to the target.*/
@@ -171,6 +191,18 @@ if (wrapper){
 
     wrapper.addEventListener('click', (e) => {
 
+        /* This event will be fired every time an angle icon is clicked, this event will grab the url for the
+           GET request, then the response will be added to the tbody, as well as the paginator will be deleted
+           to get the current one.*/
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            let url = e.target.getAttribute('data-url') + e.target.getAttribute('data-page')
+            requestPageAW(url)
+            .then(data => {
+                document.querySelector('#paginator').remove()
+                table.innerHTML = data['html']
+            })
+        }
+
         /*This target will be fired every time the target is the modal or the modalContent itself, this will remove the
           modal-show class from the modal, hiding it.*/
         if (e.target.classList.contains('modal') || e.target.classList.contains('modal-content')){
@@ -204,7 +236,7 @@ if (wrapper){
             e.stopPropagation()
             confirmAW(e.target.parentNode.getAttribute('data-url'))
             .then(data => {
-                wrapper.innerHTML = data['html']
+                table.innerHTML = data['html']
             })
         }
 
@@ -246,7 +278,7 @@ if (wrapper){
             const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             submitCancelAW(url, method, csrfmiddlewaretoken)
             .then(data => {
-                wrapper.innerHTML = data['html']
+                table.innerHTML = data['html']
             })
             modal.classList.remove('modal-show')
         /*This event will be fired every time a submit occurs and the target contains the 'update-date-form' class in it's
@@ -263,7 +295,7 @@ if (wrapper){
             submitUpdateAW(url, method, csrfmiddlewaretoken, data)
             .then(data => {
                 if (data['updated_html']){
-                    wrapper.innerHTML = data['updated_html']
+                    table.innerHTML = data['updated_html']
                     modal.classList.remove('modal-show')
                 }else{
                     modalContent.innerHTML = data['html']
@@ -282,7 +314,7 @@ if (wrapper){
             const data = new FormData(form)
             filterResultsAW(url, method, csrfmiddlewaretoken, data)
             .then(data => {
-                wrapper.innerHTML = data['html']
+                table.innerHTML = data['html']
                 if(form){
                     form.classList.add('show-form')
                 }

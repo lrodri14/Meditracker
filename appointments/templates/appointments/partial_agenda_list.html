@@ -1,20 +1,20 @@
-<div class="table">
-{%if consults%}
-    {%for m in months%}
-        <h3>{{m}}</h3>
-        <table>
-            <thead>
-                <tr id="heading">
-                    <th>ID</th>
-                    <th>Patient</th>
-                    <th>Date and Time</th>
-                    <th>Status</th>
-                    <th>Update</th>
-                    <th>Confirm</th>
-                    <th>Cancel</th>
-                </tr>
-            </thead>
-            <tbody>
+{%load static%}
+{%if consults.has_other_pages%}<div id="paginator"><span> {{consults.number}} / {{consults.paginator.num_pages}}</span> <div id="navigation">{%if consults.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'appointments:agenda'%}" data-page="?page={{consults.previous_page_number}}" ></i>{%endif%} {%if consults.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:agenda'%}" data-page="?page={{consults.next_page_number}}"></i>{%endif%}</div></div>{%endif%}
+{%for m in months%}
+    <h3>{{m}}</h3>
+    <table>
+        <thead>
+            <tr id="heading">
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Date and Time</th>
+                <th>Status</th>
+                <th>Update</th>
+                <th>Confirm</th>
+                <th>Cancel</th>
+            </tr>
+        </thead>
+        <tbody>
             {%for c in consults%}
                 {%if c.datetime|date:"F" == m%}
                     <tr>
@@ -39,26 +39,4 @@
             {%endfor%}
         </tbody>
     </table>
-    <div class="modal">
-        <div class="modal-content">
-
-        </div>
-    </div>
-    {%endfor%}
-</div>
-<div>
-    <i class="fas fa-filter"></i>
-    <form method="POST" action="" class="filter-results-form filter-form">
-        {%csrf_token%}
-        <h3>Filter Results</h3>
-        <p>{{form.date_from.label}}</p>
-        <p>{{form.date_from}}</p>
-        <p>{{form.date_to.label}}</p>
-        <p>{{form.date_to}}</p>
-        <p class="error"><small>{{error}}</small></p>
-        <button type="submit">Search</button><br>
-    </form>
-</div>
-{%else%}
-    <p id="no-consults">There are no appointments pending...</p>
-{%endif%}
+{%endfor%}

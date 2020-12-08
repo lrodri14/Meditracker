@@ -6,8 +6,11 @@
 
 // Data Available
 
-if (document.querySelectorAll('tr') !== 'undefined' && document.querySelectorAll('tr') !== 'null'){
+var body = document.querySelector('body')
+
+if (document.querySelectorAll('table') !== 'undefined' && document.querySelectorAll('table') !== 'null'){
     var table = document.querySelector('table')
+    var tbody = document.querySelector('tbody')
 }
 
 if (document.querySelectorAll('button') !== 'undefined' && document.querySelectorAll('button') !== 'null'){
@@ -39,6 +42,15 @@ async function addConsultAW(url){
     return data
 }
 
+async function requestPageAW(url){
+    /* This async function will be used to collect the data from the previous or next page, this content will be
+    received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
+    the tbody dynamically.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
 async function submitConsultAW(url, method,csrfmiddlewaretoken, formData){
     /*This submitConsultAW async function is used to submit form data to the url passed, this async function will
     make a POST requests to the url provided, and will send two types of data, the data inside the form as well as
@@ -54,6 +66,44 @@ async function submitConsultAW(url, method,csrfmiddlewaretoken, formData){
 
 /*#################################################### Event Listeners ###############################################*/
 
+// Body Event Listeners
+
+if (body){
+
+    // Body Click Events
+    body.addEventListener('click', (e) => {
+    /* This event will be fired every time an angle icon is clicked, this event will grab the url for the
+       GET request, then the response will be added to the tbody, as well as the paginator will be deleted
+       to get the current one.*/
+    if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+        const url = e.target.getAttribute('data-url') + e.target.getAttribute('data-page')
+        requestPageAW(url)
+        .then(data => {
+            document.querySelector('#paginator').remove()
+            tbody.innerHTML = data['html']
+        })
+    }
+    })
+
+
+    // Body Mouseover events
+    body.addEventListener('mouseover', (e) => {
+        // This event will be fired every time the target is a 'fa-angle', this event will add the 'fa-angle-hover' to its classList.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.add('fa-angle-hover')
+        }
+
+    })
+
+    body.addEventListener('mouseout', (e) => {
+        // This event will be fired every time the target is a 'fa-angle', this event will remove the 'fa-angle-hover' to its classList.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.remove('fa-angle-hover')
+        }
+
+    })
+
+}
 
 // Table Event Listeners
 

@@ -1,6 +1,43 @@
 /*This consults.css stylesheet contains all the styles needed to display the consults main page, it is divided in 4
 sections, Table, PopUp and Modal and No Data*/
 
+/*#################################################### Paginator #########################################################*/
+
+
+#paginator{
+    position: absolute;
+    width: 49%;
+    top: 13.5%;
+    left: 50%;
+    font-size: 18px;
+}
+
+#navigation{
+    width: 10%;
+    float: right;
+}
+
+#paginator i{
+    font-size: 24px;
+}
+
+.fa-angle-left{
+    cursor: pointer;
+    transition: 0.5s;
+    float: left;
+}
+
+.fa-angle-right{
+    cursor: pointer;
+    transition: 0.5s;
+    float: right;
+}
+
+.fa-angle-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
 
 /*#################################################### Table #########################################################*/
 
