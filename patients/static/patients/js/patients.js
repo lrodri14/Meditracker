@@ -13,7 +13,6 @@ var body = document.querySelector('body')
 
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
-    var dataTable = document.querySelector('.table')
     var i = document.querySelector('.fa-filter')
     var form = document.querySelector('form')
     var filterForm = document.querySelector('.filter-form')
@@ -138,8 +137,13 @@ if (body){
             const url = e.target.getAttribute('data-url') + e.target.getAttribute('data-page')
             getPageAW(url)
             .then(data => {
-                document.querySelector('#paginator').remove()
-                tbody.innerHTML = data['html']
+                if (data['html']){
+                    document.querySelector('#paginator').remove()
+                    tbody.innerHTML = data['html']
+                }else{
+                    document.querySelector('#paginator').remove()
+                    tbody.innerHTML = data['filtered_data']
+                }
             })
         }
     })
@@ -375,8 +379,10 @@ if (wrapper){
             const query = e.target.value
             filterResults(url, method, query)
             .then(data => {
-                dataTable.innerHTML = data['html']
-                tbody = document.querySelector('tbody')
+                if (document.querySelector('#paginator')){
+                    document.querySelector('#paginator').remove()
+                }
+                tbody.innerHTML = data['html']
             })
         }
 
