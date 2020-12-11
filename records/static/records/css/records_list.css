@@ -2,6 +2,7 @@
    file is divided into 5 sections: wrapper, paginator, table, forms and no data*/
 
 /*################################################## Wrapper #############################################*/
+
 .wrapper{
     display: grid;
     grid-template-columns: 80% 19%;
@@ -120,7 +121,7 @@ form{
 
 .show-form{
     visibility: visible;
-    transform: translateY(10%);
+    transform: translateY(8%);
     transition: 0.5s;
 }
 

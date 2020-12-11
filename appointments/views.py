@@ -363,7 +363,7 @@ def filter_agenda(request):
     query_date_to = datetime.strptime(request.GET.get('date_to'), "%Y-%m-%d")
     page = request.GET.get('page')
     consults_list = Consults.objects.filter(datetime__date__gte=query_date_from, datetime__date__lte=query_date_to, created_by=request.user)
-    paginator = Paginator(consults_list, 1)
+    paginator = Paginator(consults_list, 10)
     consults = paginator.get_page(page)
     months = collect_months_names(consults, tzone)
     context = {'consults': consults, 'months': months, 'filtered': True}
@@ -444,7 +444,7 @@ def consult_date_update(request, pk):
             try:
                 consult_form.save()
                 consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-                paginator = Paginator(consults_list, 16)
+                paginator = Paginator(consults_list, 10)
                 page = request.GET.get('page')
                 consults = paginator.get_page(page)
                 months_names = collect_months_names(consults, tzone)
@@ -472,7 +472,7 @@ def consult_confirm(request, pk):
     tzone = timezone.get_current_timezone()
     form = AgendaDateFilterForm
     consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-    paginator = Paginator(consults_list, 16)
+    paginator = Paginator(consults_list, 10)
     page = request.GET.get('page')
     consults = paginator.get_page(page)
     months_names = collect_months_names(consults, tzone)
