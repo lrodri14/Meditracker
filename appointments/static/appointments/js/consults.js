@@ -76,7 +76,7 @@ if (body){
        GET request, then the response will be added to the tbody, as well as the paginator will be deleted
        to get the current one.*/
     if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
-        const url = e.target.getAttribute('data-url') + e.target.getAttribute('data-page')
+        const url = e.target.getAttribute('data-url')
         requestPageAW(url)
         .then(data => {
             document.querySelector('#paginator').remove()

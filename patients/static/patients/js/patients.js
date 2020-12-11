@@ -13,6 +13,7 @@ var body = document.querySelector('body')
 
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
+    var dataTable = document.querySelector('.table')
     var i = document.querySelector('.fa-filter')
     var form = document.querySelector('form')
     var filterForm = document.querySelector('.filter-form')
@@ -55,7 +56,7 @@ async function deleteAW(url){
     return data
 }
 
-async function getPageAW(url){
+async function requestPageAW(url){
     /* This async function will be used to collect the data from the previous or next page, this content will be
     received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
     the tbody dynamically.*/
@@ -131,18 +132,18 @@ if (body){
 
     body.addEventListener('click', (e) => {
         /* This event will be fired every time an angle icon is clicked, this event will grab the url for the
-           GET request, then the response will be added to the tbody, as well as the paginator will be deleted
+           GET request, then the response will be added to the dataTable, as well as the paginator will be deleted
            to get the current one.*/
         if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
-            const url = e.target.getAttribute('data-url') + e.target.getAttribute('data-page')
-            getPageAW(url)
+            const url = e.target.getAttribute('data-url')
+            requestPageAW(url)
             .then(data => {
                 if (data['html']){
                     document.querySelector('#paginator').remove()
-                    tbody.innerHTML = data['html']
+                    dataTable.innerHTML = data['html']
                 }else{
                     document.querySelector('#paginator').remove()
-                    tbody.innerHTML = data['filtered_data']
+                    dataTable.innerHTML = data['filtered_data']
                 }
             })
         }
@@ -358,7 +359,7 @@ if (wrapper){
             .then(data => {
                 if (data.hasOwnProperty('patients')){
                     modalContent.innerHTML = data['html']
-                    tbody.innerHTML = data['patients']
+                    dataTable.innerHTML = data['patients']
                 }else{
                     modalContent.innerHTML = data['html']
                 }
@@ -369,20 +370,16 @@ if (wrapper){
 
     wrapper.addEventListener('input', (e) => {
         /*This event will be fired every time the target is an input, it will collect some data from the target, as the
-          action attribute value, the csrfmiddlwaretoken, the input value, the method, and will create a new FormData
-          obj, it will make a request using the filterResultsAW and retrieve the information from the server to insert it
-          to the wrapper inner HTML, if the value is empty, it will insert the content inside the backedUpContent variable
-          to the wrapper innerHTML.*/
+          action attribute value, the input value, filterResultsAW and retrieve the information from the server to insert it
+          to the dataTable inner HTML*/
         if (e.target.nodeName === 'INPUT'){
-            const url = form.action
-            const method = form.method
-            const query = e.target.value
-            filterResults(url, method, query)
+            const url = form.action + '?query=' + e.target.value
+            filterResults(url)
             .then(data => {
                 if (document.querySelector('#paginator')){
                     document.querySelector('#paginator').remove()
                 }
-                tbody.innerHTML = data['html']
+                dataTable.innerHTML = data['html']
             })
         }
 

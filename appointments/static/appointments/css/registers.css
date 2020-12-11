@@ -9,6 +9,42 @@ sections: Wrapper, Table, Forms, Pagination, No Data*/
     grid-gap: 1%;
 }
 
+/*########################################################## Paginator ###############################################*/
+
+#paginator{
+    position: absolute;
+    width: 40%;
+    top: 13%;
+    left: 39%;
+    font-size: 18px;
+}
+
+#navigation{
+    float: right;
+    width: 10%;
+}
+
+#paginator i{
+    font-size: 24px;
+}
+
+.fa-angle-left{
+    cursor: pointer;
+    transition: 0.5s;
+    float: left;
+}
+
+.fa-angle-right{
+    cursor: pointer;
+    transition: 0.5s;
+    float: right;
+}
+
+.fa-angle-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
 /*########################################################## Table ###################################################*/
 
 table{
@@ -96,7 +132,6 @@ tr:nth-child(even){
 /*########################################################## Forms ###################################################*/
 
 .fa-filter{
-    margin-top: 20%;
     float: left;
     cursor: pointer;
     transition: 0.5s;
@@ -123,7 +158,7 @@ form{
 
 .show-form{
     visibility: visible;
-    transform: translateY(23%);
+    transform: translateY(10%);
     transition: transform 0.5s ease-out;
 }
 
@@ -140,7 +175,7 @@ input{
 }
 
 input:focus{
-    outline: : none;
+    outline: none;
 }
 
 .input-hover{
@@ -191,44 +226,6 @@ button:focus{
     transition: 0.5s;
     cursor: pointer;
 }
-
-/*########################################################## Pagination ##############################################*/
-
-.pagination{
-    list-style: none;
-}
-
-.disabled{
-    color: #12212b;
-    background-color: #0ff5fc;
-    cursor: not-allowed;
-}
-
-#active{
-    color: #12212b;
-    background-color: #0ff5fc;
-    cursor: not-allowed;
-}
-
-.pagination li{
-    display: inline;
-    border: 1px solid #0ff5fc;
-    margin: 1%;
-    padding: 1%;
-}
-
-.pagination li:hover{
-    color: #12212b;
-    background-color: #0ff5fc;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-.list-container{
-    background-color: #12212b;
-    padding: 0.5%;
-}
-
 
 /*########################################################## No Data #################################################*/
 

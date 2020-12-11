@@ -39,25 +39,22 @@ def check_charges(consults):
 def patients(request):
     """
         DOCSTRING:
-        The patients function is used to render all the patients related to this user, this function will first check
-        if the user has the permissions to see this information, checking if it belongs to the Doctor group in the group
-        class, afterwards it will retrieve all the patients related to this user and paginate them by 25 instances each
-        page and also grab the filter form belonging to the Patients class, if the request.method attribute is a GET
-        request, the function will render all this content and return the view if the request.method attribute is POST,
-         it will populate the filter form with the content of the POST Request, if the form is valid, it will filter the
-         patients with the given query and return all the instances found as a JsonResponse object, it receives a single
-         parameter, 'request'.
+        The patients function is used to display all the patients belonging to this user, first the view will check if the
+        user belongs to the doctor group searching in the users groups, afterwards it will collect all the patients that are
+        related to him and paginating them in groups of 17 instances, the patient filtering form will also be sent for rendering,
+        this function only accepts 'GET' requests, the 'page' query parameter will be evaluated every time, so the function knows
+        which page should it send, if the 'page' parameter exists, then the content will be sent in JSON Format. It accepts only
+        one parameter, 'request' which expects a request object.
     """
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    today = timezone.localdate()
     template = 'patients/patients.html'
     patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
     paginator = Paginator(patients_list, 17)
     page = request.GET.get('page')
-    patients = paginator.get_page(page)
+    listed_patients = paginator.get_page(page)
     patient_filter = PatientFilter
-    context = {'patients': patients, 'doctor': doctor, 'form': patient_filter, 'today': today}
+    context = {'patients': listed_patients, 'doctor': doctor, 'form': patient_filter}
     if page:
         data = {'html': render_to_string('patients/patients_partial_list.html', context, request)}
         return JsonResponse(data)
@@ -65,35 +62,23 @@ def patients(request):
 
 
 def filter_patients(request):
-    query = request.META.get('HTTP_QUERY')
+    """
+        DOCSTRING:
+        The filter_patients function is used to filter the patients belonging to the user based on a query sent through
+        'GET' request in the 'query' parameter, once this data is collected, it is paginated by 17 instances each page, we also need
+        to evaluate the 'page' parameter, so the function knows which page must be sent to the front-end, the data collected
+        is sent in JSON Format.
+    """
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    today = timezone.localdate()
     template = 'patients/patients_filter_list.html'
-    data = {}
-    if query is not None:
-        if len(query) > 0 and query[0] in [str(x) for x in range(0, 9)]:
-            patients_list = Patient.objects.filter(id_number__icontains=int(query), created_by=request.user).order_by('id_number')
-            paginator = Paginator(patients_list, 17)
-            page = request.GET.get('page')
-            updated_patients = paginator.get_page(page)
-            context = {'patients': updated_patients, 'doctor': doctor, 'today': today, 'query':query}
-            data = {'html': render_to_string(template, context, request)}
-        elif type(query) == str:
-            patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
-            paginator = Paginator(patients_list, 17)
-            page = request.GET.get('page')
-            updated_patients = paginator.get_page(page)
-            context = {'patients': updated_patients, 'doctor': doctor, 'today': today, 'query':query}
-            data = {'html': render_to_string(template, context, request)}
-    else:
-        page = request.GET.get('page')
-        query = request.GET.get('query')
-        patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
-        paginator = Paginator(patients_list, 17)
-        updated_patients = paginator.get_page(page)
-        context = {'patients': updated_patients, 'doctor': doctor, 'today': today, 'query': query}
-        data = {'filtered_data': render_to_string(template, context, request)}
+    query = request.GET.get('query')
+    page = request.GET.get('page')
+    patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
+    paginator = Paginator(patients_list, 17)
+    listed_patients = paginator.get_page(page)
+    context = {'patients': listed_patients, 'doctor': doctor, 'filtered': True}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 

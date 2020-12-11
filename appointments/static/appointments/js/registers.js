@@ -5,6 +5,7 @@ the consults registers template in the Appointments, app, this file consists of 
 
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
+    var dataTable = document.querySelector('.table')
     var rows = document.querySelectorAll('tr')
     var i = document.querySelector('.fa-filter')
     var button = document.querySelectorAll('button')
@@ -13,15 +14,24 @@ if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector
 
 /*#################################################### Functions #####################################################*/
 
-
 // Async Functions
-async function filterResultsAW(url, method, csrfmiddlewaretoken, formData){
+
+async function requestPageAW(url){
+    /* This async function will be used to collect the data from the previous or next page, this content will be
+    received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
+    the tbody dynamically.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+async function filterResultsAW(url){
     /* This filterResultsAW async function is used to filter results from the Agenda based on a date query, this func
     takes four parameters, the 'url' which we collect from the form's action attribute, the 'method' we collect from
     the form's method attribute, csrfmiddlewaretoken we collect from the form's hidden input,and the 'formData' which
      we collect from the form and convert it into a formData object. The response will be converted into JSON before
      dynamically showing it.*/
-    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
+    const result = await fetch(url)
     const data = await result.json()
     return data
 }
@@ -33,6 +43,11 @@ if (wrapper){
 
     //Wrapper mouse over
     wrapper.addEventListener('mouseover', (e) => {
+
+        // This event will be fired every time the target is a 'fa-angle', this event will add the 'fa-angle-hover' to its classList.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.add('fa-angle-hover')
+        }
 
         /* This event will be fired every time a hover occurs on a target which classList contains 'fa-filter' this will add the
         fa-filter-hover class to the target.*/
@@ -64,6 +79,11 @@ if (wrapper){
 
     //Wrapper mouse out
     wrapper.addEventListener('mouseout', (e) => {
+
+        // This event will be fired every time the target is a 'fa-angle', this event will remove the 'fa-angle-hover' to its classList.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.remove('fa-angle-hover')
+        }
 
         /* This event will be fired every time a hover out occurs on a target which classList contains 'fa-filter' this will remove the
         fa-filter-hover class to the target.*/
@@ -98,6 +118,20 @@ if (wrapper){
     /* This event will be fired every time a click occurs on the fa-filter icon, this will check if the filter form
     is shown or hidden, and perform the displaying or hiding depending on the previous condition.*/
     wrapper.addEventListener('click', (e) => {
+
+        /* This event will be fired every time an angle icon is clicked, this event will grab the url for the
+           GET request, then the response will be added to the tbody, as well as the paginator will be deleted
+           to get the current one.*/
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            url = e.target.getAttribute('data-url')
+            requestPageAW(url)
+            .then(data => {
+                document.querySelector('#paginator').remove()
+                dataTable.innerHTML = data['html']
+            })
+        }
+
+
         if (e.target.classList.contains('fa-filter')){
             form.classList.contains('show-form') ? form.classList.remove('show-form') : form.classList.add('show-form')
         }
@@ -112,17 +146,17 @@ if (wrapper){
         call our asynchronous function, the response is dynamically displayed in our table.*/
         if (e.target.nodeName === 'FORM'){
             e.preventDefault()
-            const form = e.target
-            const url = form.action
-            const method = form.method
-            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-            const data = new FormData(form)
-            filterResultsAW(url, method, csrfmiddlewaretoken, data)
+            let patientQuery = document.querySelector('#id_patient').value
+            let monthQuery = document.querySelector('#id_month').value
+            let yearQuery = document.querySelector('#id_year').value
+            let url = e.target.action + '?patient=' + patientQuery + '&month=' + monthQuery + '&year=' + yearQuery
+            filterResultsAW(url)
             .then(data => {
-                wrapper.innerHTML = data['html']
-                document.querySelector('form').classList.add('show-form')
+                if (document.querySelector('#paginator')){
+                    document.querySelector('#paginator').remove()
+                }
+                dataTable.innerHTML = data['html']
             })
         }
     })
-
 }

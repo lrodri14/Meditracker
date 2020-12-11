@@ -304,9 +304,9 @@ if (recordsTable){
             various actions, it will change some styles of the row and will grab the 'data-url' attribute from the row,
             to display the information in the summary section.*/
         if (e.target.nodeName === 'TD'){
-            let url = row.getAttribute('data-url')
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
+            let url = row.getAttribute('data-url')
             row.style.backgroundColor = '#C7E8F3'
             row.style.color = '#496897'
             consultSummaryAW(url)

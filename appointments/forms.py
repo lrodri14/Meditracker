@@ -124,6 +124,7 @@ MedicalExamsFormset = modelformset_factory(model=MedicalExams, form=MedicalExams
 
 # Range of years displayed in the filter forms.
 
+
 years = [y for y in range(1920, timezone.now().year+2)]
 
 

@@ -5,9 +5,25 @@
 {%block body_block%}
 <link rel="stylesheet" href="{%static 'appointments/css/registers.css'%}">
 <h2>Registers</h2>
+<p>{{items}} items have been scheduled</p>
 {%if consults%}
     <div class="wrapper">
-        {%include 'appointments/partial_registers.html'%}
+        <div class="table">
+            {%include 'appointments/partial_registers.html'%}
+        </div>
+        <div>
+            <i class="fas fa-filter"></i>
+            <form method="GET" action="{%url 'appointments:filter_registers'%}" autocomplete="off" class="filter-form">
+                <h3>Filter Results</h3>
+                <p>{{form.patient.label}}</p>
+                <p>{{form.patient}}</p>
+                <p>{{form.month.label}}</p>
+                <p>{{form.month}}</p>
+                <p>{{form.year.label}}</p>
+                <p>{{form.year}}</p>
+                <button type="submit">Search</button>
+            </form>
+        </div>
     </div>
 {%else%}
     <p id="no-consults">There are no appointments created</p>

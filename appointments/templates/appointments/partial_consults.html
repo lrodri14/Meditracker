@@ -1,6 +1,7 @@
 {%load static%}
+{%load appointments_custom_tags%}
 {%if appointments%}
-    {%if appointments.has_other_pages%} <div id="paginator"> <span>{{appointments.number}} / {{appointments.paginator.num_pages}}</span>{%if appointments.has_previous%}<div id="navigation"> <i class="fas fa-angle-left" data-url="{%url 'appointments:consults'%}" data-page="?page={{appointments.previous_page_number}}" ></i>{%endif%}{%if appointments.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:consults'%}" data-page="?page={{appointments.next_page_number}}" ></i>{%endif%}</div></div> {%endif%}
+    {%if appointments.has_other_pages%} <div id="paginator"> <span>{{appointments.number}} / {{appointments.paginator.num_pages}}</span>{%if appointments.has_previous%}<div id="navigation"> <i class="fas fa-angle-left" data-url="{%url 'appointments:consults'%}{%current_url 'page' appointments.previous_page_number%}"></i>{%endif%}{%if appointments.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:consults'%}{%current_url 'page' appointments.next_page_number%}" ></i>{%endif%}</div></div> {%endif%}
     {%for a in appointments%}
         <tr>
             <td>{{a.patient.id_number}}</td>

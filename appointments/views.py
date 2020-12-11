@@ -6,7 +6,7 @@
 
 # Imports
 import asyncio
-
+from datetime import datetime
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import IntegrityError
 from django.shortcuts import render
@@ -24,7 +24,6 @@ from weasyprint import HTML
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.http import JsonResponse
-from django.contrib.auth import get_user_model
 from django.conf import settings
 
 # Async Functions
@@ -91,19 +90,19 @@ def filter_conditional_results(user, **kwargs):
     """
     cleaned_data = kwargs.pop('cleaned_data')
     patient = cleaned_data.get('patient')
-    month = cleaned_data.get('month')
-    year = cleaned_data.get('year')
-    if patient == '' and int(month) == 0 and int(year) == 1920:
-        return 'Please select your filters'
-    elif patient != '' and int(month) == 0 and int(year) == 1920:
+    month = int(cleaned_data.get('month'))
+    year = int(cleaned_data.get('year'))
+    if patient == '' and month == 0 and year == 1920:
+        return Consults.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__month=month, datetime__date__year=year, created_by=user)
+    elif patient != '' and month == 0 and year == 1920:
         return Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient), created_by=user)
-    elif patient == '' and int(month) != 0 and int(year) == 1920:
+    elif patient == '' and month != 0 and year == 1920:
         return Consults.objects.filter(datetime__date__month=month, created_by=user)
-    elif patient == '' and int(month) == 0 and int(year) != 1920:
+    elif patient == '' and month == 0 and year != 1920:
         return Consults.objects.filter(datetime__date__year=year, created_by=user)
-    elif patient != '' and int(month) != 0 and int(year) == 1920:
+    elif patient != '' and month != 0 and year == 1920:
         return Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient),datetime__date__month=month, created_by=user)
-    elif patient != '' and int(month) == 0 and int(year) != 1920:
+    elif patient != '' and month == 0 and year != 1920:
         return Consults.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__year=year, created_by=user)
     else:
         return Consults.objects.filter(datetime__date__month=month, datetime__date__year=year, created_by=user)
@@ -145,15 +144,18 @@ def consults(request):
         This consults() view is used to render the main consults page, in here the user will be able to see the consults that are
         pending for the current date and also the consults that were locked for further changes, it will retrieve the
         consults using a filter, also this view will check if the user who requested this page belongs to the Doctor's
-        group, this for editing logic that will be managed in the template. It expects only one argument, 'request', it
-        waits for an object request, This view will render the content if the page is not a valid number, if it is, the
-        response will be ret.
+        group, this for editing logic that will be managed in the template. Since the results will be paginated, we need to
+        check if the 'page' parameter exists in our 'GET' dictionary, depending of the value of the parameter, the
+        function will decide which page should it return, if the 'page' parameters, doesn't exists, the context will be
+        rendered, if not, then the context will be rendered and returned as string, so we can send it in a JSON Format.
+        It expects only one argument, 'request', it waits for an object request, This view will render the content if
+        the page is not a valid number, if it is, the response will be returned in JSON Format.
     """
     today = timezone.localtime()
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
     appointments_list = Consults.objects.filter(Q(created_by=request.user, datetime__date=today.date(), medical_status=False, status='CONFIRMED') | Q(created_by=request.user, lock=False))
-    paginator = Paginator(appointments_list, 1)
+    paginator = Paginator(appointments_list, 16)
     page = request.GET.get('page')
     appointments = paginator.get_page(page)
     template = 'appointments/consults.html'
@@ -311,7 +313,7 @@ def cancel_consult(request, pk):
         consult.status = 'CANCELLED'
         consult.save()
         consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-        paginator = Paginator(consults_list, 1)
+        paginator = Paginator(consults_list, 10)
         page = request.GET.get('page')
         consults = paginator.get_page(page)
         months_names = collect_months_names(consults, tzone)
@@ -327,18 +329,14 @@ def agenda(request):
         scheduled for november, that month will appear in the template, we will also render the AgendaFilterForm, this
         so that we can perform filtering processes with the data we have at our disposal in the agenda, we need to render
         the name of the months our consults are scheduled, for this we store the result returned from our collect_months_names()
-        function into a variable called 'months_names', if the request.method is a 'GET' the consults, along with the
-        filtering form and months names, if the filter form is used, then the request.method is 'POST', the consults
-        will be filtered with the values in the request.POST dictionary, if the querySet is not empty, then we will
-        collect the month_names making use of our collect_months_names() function, since we will need to udpate
-        the template asynchronously, we will return our response in JSON Format making use of the render_to_string()
-        function, if the form is invalid a custom error will be added to the context and displayed in the form. This
-        function takes only one argument: 'request' which expects a request object.
+        function into a variable called 'months_names', along with the filtering form and the consults,this function will also verify that
+        there is a 'page' parameter in the request.GET dict, if there is no parameter, then the first page is shown, else the
+        asking page will be shown to the user. This function takes only one argument: 'request' which expects a request object.
     """
     today = timezone.localtime()
     tzone = timezone.get_current_timezone()
     consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-    paginator = Paginator(consults_list, 1)
+    paginator = Paginator(consults_list, 10)
     page = request.GET.get('page')
     consults = paginator.get_page(page)
     months_names = collect_months_names(consults, tzone)
@@ -352,22 +350,25 @@ def agenda(request):
 
 
 def filter_agenda(request):
+    """
+        This filter_agenda is used to filter the consults belonging to this user, depending on the parameters values inside the
+        request.GET dictionary, this function will collect the 'date_from' parameter and 'date_to' parameter values and convert
+        them into a datetime object, this way we can filter the consults based on this values, finally we will return our response
+        in JSON Format, this function also checks if the 'page' parameter is inside the querystring, if it is, then the page that
+        will be rendered will be that one in the 'page' value, else the first page will be rendered.
+    """
     tzone = timezone.get_current_timezone()
-    today = timezone.localdate()
-    if request.method == 'POST':
-        filter_form = AgendaDateFilterForm(request.POST)
-        if filter_form.is_valid():
-            date_from = filter_form.cleaned_data['date_from']
-            date_to = filter_form.cleaned_data['date_to']
-            consults_list = Consults.objects.filter(datetime__date__gte=date_from, datetime__date__lte=date_to, created_by=request.user)
-            paginator = Paginator(consults_list, 1)
-            page = request.GET.get('page')
-            consults = paginator.get_page(page)
-            months = collect_months_names(consults, tzone)
-            template = 'appointments/agenda_filter_list.html'
-            context = {'consults': consults, 'months': months, 'today': today}
-            data = {'html': render_to_string(template, context, request)}
-            return JsonResponse(data)
+    template = 'appointments/partial_agenda_list.html'
+    query_date_from = datetime.strptime(request.GET.get('date_from'), "%Y-%m-%d")
+    query_date_to = datetime.strptime(request.GET.get('date_to'), "%Y-%m-%d")
+    page = request.GET.get('page')
+    consults_list = Consults.objects.filter(datetime__date__gte=query_date_from, datetime__date__lte=query_date_to, created_by=request.user)
+    paginator = Paginator(consults_list, 1)
+    consults = paginator.get_page(page)
+    months = collect_months_names(consults, tzone)
+    context = {'consults': consults, 'months': months, 'filtered': True}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def registers(request):
@@ -385,26 +386,36 @@ def registers(request):
     loop.run_until_complete(check_delayed_consults(request.user))
     today = timezone.localtime()
     consults_list = Consults.objects.filter(created_by=request.user).order_by('-datetime')
-    paginator = Paginator(consults_list, 25)
+    paginator = Paginator(consults_list, 16)
     page = request.GET.get('page')
     consults = paginator.get_page(page)
     template = 'appointments/registers.html'
     form = RegistersFilter
-    context = {'consults': consults, 'form':form, 'items': len(consults_list), 'today': today}
-    if request.method == 'POST':
-        form = RegistersFilter(request.POST)
-        if form.is_valid():
-            result = filter_conditional_results(request.user, cleaned_data=form.cleaned_data)
-            if type(result) == str:
-                context['error'] = 'Please select your filters'
-            else:
-                if len(result) == 0:
-                    context['no_match'] = 'No matches were found'
-                else:
-                    context['consults'] = result
+    context = {'consults': consults, 'form': form, 'items': len(consults_list), 'today': today}
+    if page:
         data = {'html': render_to_string('appointments/partial_registers.html', context, request)}
         return JsonResponse(data)
     return render(request, template, context)
+
+
+def registers_filter(request):
+    """
+        This registers_filter is used to filter the registers belonging to this user, depending on the parameters values inside the
+        request.GET dictionary, this function will collect the 'patient', 'month' and 'year' parameter values and convert
+        them into a datetime object, this way we can filter the consults based on this values, finally we will return our response
+        in JSON Format, this function also checks if the 'page' parameter is inside the querystring, if it is, then the page that
+        will be rendered will be that one in the 'page' value, else the first page will be rendered.
+    """
+    patient_query = request.GET.get('patient')
+    month_query = request.GET.get('month')
+    year_query = request.GET.get('year')
+    page = request.GET.get('page')
+    consults_list = filter_conditional_results(request.user, cleaned_data={'patient': patient_query, 'month': month_query, 'year': year_query}).order_by('datetime')
+    paginator = Paginator(consults_list, 16)
+    consults = paginator.get_page(page)
+    context = {'consults': consults, 'filtered': True}
+    data = {'html': render_to_string('appointments/partial_registers.html', context, request)}
+    return JsonResponse(data)
 
 
 def consult_date_update(request, pk):
@@ -433,7 +444,7 @@ def consult_date_update(request, pk):
             try:
                 consult_form.save()
                 consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-                paginator = Paginator(consults_list, 1)
+                paginator = Paginator(consults_list, 16)
                 page = request.GET.get('page')
                 consults = paginator.get_page(page)
                 months_names = collect_months_names(consults, tzone)
@@ -461,7 +472,7 @@ def consult_confirm(request, pk):
     tzone = timezone.get_current_timezone()
     form = AgendaDateFilterForm
     consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-    paginator = Paginator(consults_list, 1)
+    paginator = Paginator(consults_list, 16)
     page = request.GET.get('page')
     consults = paginator.get_page(page)
     months_names = collect_months_names(consults, tzone)

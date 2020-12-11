@@ -1,6 +1,7 @@
 <!--Checked-->
 {%extends 'base.html'%}
 {%load static%}
+{%load appointments_custom_tags%}
 {%block title%}Consults for Today{%endblock%}
 {%block return%}<a href="{%url 'home:home'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
 {%block body_block%}
@@ -8,7 +9,7 @@
 <h2>Consults</h2>
 <a href="{%url 'appointments:agenda'%}"><button type="button">Agenda</button></a>
 <a href="{%url 'appointments:registers'%}"><button type="button" class="all-registers">Registers</button></a>
-{%if appointments.has_other_pages%} <div id="paginator"> <span>{{appointments.number}} / {{appointments.paginator.num_pages}}</span>{%if appointments.has_previous%}<div id="navigation"> <i class="fas fa-angle-left" data-url="{%url 'appointments:consults'%}" data-page="?page={{appointments.previous_page_number}}" ></i>{%endif%}{%if appointments.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:consults'%}" data-page="?page={{appointments.next_page_number}}" ></i>{%endif%}</div></div> {%endif%}
+{%if appointments.has_other_pages%} <div id="paginator"> <span>{{appointments.number}} / {{appointments.paginator.num_pages}}</span>{%if appointments.has_previous%}<div id="navigation"> <i class="fas fa-angle-left" data-url="{%url 'appointments:consults'%}{%current_url 'page' appointments.previous_page_number%}"></i>{%endif%}{%if appointments.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:consults'%}{%current_url 'page' appointments.next_page_number%}"></i>{%endif%}</div></div> {%endif%}
 {%if appointments%}
     <table>
         <thead>

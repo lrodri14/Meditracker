@@ -18,6 +18,7 @@ urlpatterns = [
     path('agenda/', agenda, name='agenda'),
     path('filter_agenda/', filter_agenda, name='filter_agenda'),
     path('register', registers, name='registers'),
+    path('filter_registers', registers_filter, name='filter_registers'),
     path('consult_confirm/<int:pk>', consult_confirm, name='consult_confirm'),
     path('consult_date_update/<int:pk>', consult_date_update, name='consult_date_update'),
 ]

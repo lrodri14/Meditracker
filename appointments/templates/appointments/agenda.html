@@ -17,8 +17,7 @@
         </div>
         <div>
             <i class="fas fa-filter"></i>
-            <form method="POST" action="{%url 'appointments:filter_agenda'%}" class="filter-results-form filter-form">
-                {%csrf_token%}
+            <form method="GET" action="{%url 'appointments:filter_agenda'%}" class="filter-results-form filter-form">
                 <h3>Filter Results</h3>
                 <p>{{form.date_from.label}}</p>
                 <p>{{form.date_from}}</p>

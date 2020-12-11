@@ -19,7 +19,7 @@ if (document.querySelector('.modal') !== 'undefined' && document.querySelector('
 async function requestPageAW(url){
     /* This async function will be used to collect the data from the previous or next page, this content will be
     received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
-    the tbody dynamically.*/
+    the dataTable dynamically.*/
     const result = await fetch(url)
     const data = result.json()
     return data
@@ -195,7 +195,7 @@ if (wrapper){
            GET request, then the response will be added to the tbody, as well as the paginator will be deleted
            to get the current one.*/
         if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
-            let url = e.target.getAttribute('data-url') + e.target.getAttribute('data-page')
+            url = e.target.getAttribute('data-url')
             requestPageAW(url)
             .then(data => {
                 document.querySelector('#paginator').remove()
@@ -302,17 +302,21 @@ if (wrapper){
                 }
             })
         } else{
-                /*This event will be fired every time a submit occurs and the target is the filter results form
-                this event will stop the itself, and collect the data needed to update the consult, this consists of
-                the url, method, csrfmiddlewaretoken and the form data, once this data is collected from the form, we proceed to
-                call our asynchronous function, the response is dynamically displayed in our table.*/
+            /*This event will be fired every time a submit occurs and the target is the filter results form
+            this event will stop the itself, and collect the data needed to filter the consults, this consists of
+            the url , once this data is collected from the form, we proceed to call our asynchronous function, the
+            response is dynamically displayed in our table.*/
             e.preventDefault()
-            const form = e.target
-            const url = form.action
-            const method = form.method
-            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-            const data = new FormData(form)
-            filterResultsAW(url, method, csrfmiddlewaretoken, data)
+            let fromDay = document.querySelector('#id_date_from_day').value
+            let fromMonth = document.querySelector('#id_date_from_month').value
+            let fromYear = document.querySelector('#id_date_from_year').value
+            let toDay = document.querySelector('#id_date_to_day').value
+            let toMonth = document.querySelector('#id_date_to_month').value
+            let toYear = document.querySelector('#id_date_to_year').value
+            let fromDate = fromYear + "-" + fromMonth + "-" + fromDay
+            let toDate = toYear + "-" + toMonth + "-" + toDay
+            const url = e.target.action + '?date_from=' + fromDate + '&date_to=' + toDate
+            filterResultsAW(url)
             .then(data => {
                 table.innerHTML = data['html']
                 if(form){

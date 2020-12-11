@@ -1,77 +1,54 @@
 {%load static%}
- <div>
-    <p>{{items}} records have been found</p>
-        <table>
-                <thead>
-                    <tr id="heading">
-                        <th>ID</th>
-                        <th>Patient</th>
-                        <th>Date and Time</th>
-                        <th>Status</th>
-                        <th>Medical Status</th>
-                    </tr>
-                </thead>
-        {%for c in consults%}
-                <tr>
-                    <td>{{c.patient.id_number}}</td>
-                    <td>{{c.patient.first_names}} {{c.patient.last_names}}</td>
-                    <td>{{c.datetime}}</td>
-                    {%if c.status == 'OPEN'%}
-                        <td id="Open">Open</td>
-                    {%elif c.status == 'CONFIRMED'%}
-                        <td id="Confirmed">Confirmed</td>
-                    {%elif c.status == 'CANCELLED'%}
-                        <td id="Cancelled">Cancelled</td>
-                    {%elif c.status == 'CLOSED'%}
-                        <td id="Closed">Closed</td>
-                    {%endif%}
-                    {%if c.medical_status == False and c.status == 'CLOSED' or c.medical_status == False and c.status == 'CANCELLED'%}
-                        <td id="never_attended">Never Attended</td>
-                    {%elif c.medical_status == False and c.status == 'OPEN' or c.medical_status == False and c.status == 'CONFIRMED'%}
-                        <td id="pending">Pending</td>
-                    {%else%}
-                        <td id="attended">Attended</td>
-                    {%endif%}
-                </tr>
-            {%endfor%}
-    </table>
-    {% if consults.has_other_pages %}
-        <div class="list-container">
-          <ul class="pagination">
-            {% if consults.has_previous %}
-              <li onclick="window.location='?page={{ consults.previous_page_number }}'">&laquo;</li>
-            {% else %}
-              <li class="disabled"><span>&laquo;</span></li>
-            {% endif %}
-            {% for i in consults.paginator.page_range %}
-              {% if consults.number == i %}
-                <li id="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-              {% else %}
-                <li onclick="window.location='?page={{ i }}'">{{i}}</li>
-              {% endif %}
-            {% endfor %}
-            {% if consults.has_next %}
-              <li onclick="window.location='?page={{ consults.next_page_number }}'">&raquo;</li>
-            {% else %}
-              <li class="disabled"><span>&raquo;</span></li>
+{%load appointments_custom_tags%}
+{%if consults.has_other_pages%}
+    <div id="paginator">
+        <span> {{consults.number}} / {{consults.paginator.num_pages}}</span>
+        <div id="navigation">
+            {%if filtered%}
+                {%if consults.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'appointments:filter_registers'%}{% current_url 'page' consults.previous_page_number request.GET.urlencode%}"></i>{%endif%}{%if consults.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:filter_registers'%}{% current_url 'page' consults.next_page_number request.GET.urlencode%}"></i>{%endif%}
+            {%else%}
+                {%if consults.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'appointments:registers'%}{% current_url 'page' consults.previous_page_number request.GET.urlencode%}"></i>{%endif%} {%if consults.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:registers'%}{% current_url 'page' consults.next_page_number request.GET.urlencode%}"></i>{%endif%}
             {%endif%}
-          </ul>
         </div>
-    {% endif %}
-</div>
-<div>
-    <i class="fas fa-filter"></i>
-    <form method="POST" autocomplete="off" class="filter-form">
-        {%csrf_token%}
-        <h3>Filter Results</h3>
-        <p>{{form.patient.label}}</p>
-        <p>{{form.patient}}</p>
-        <p>{{form.month.label}}</p>
-        <p>{{form.month}}</p>
-        <p>{{form.year.label}}</p>
-        <p>{{form.year}}</p>
-        <p class="error"><small>{{error}}</small></p>
-        <p class="error"><small>{{no_match}}</small></p>
-        <button type="submit">Search</button>
-    </form>
-</div>
+    </div>
+{%endif%}
+{%if consults%}
+    <table>
+        <thead>
+            <tr id="heading">
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Date and Time</th>
+                <th>Status</th>
+                <th>Medical Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for c in consults%}
+            <tr>
+                <td>{{c.patient.id_number}}</td>
+                <td>{{c.patient.first_names}} {{c.patient.last_names}}</td>
+                <td>{{c.datetime}}</td>
+                {%if c.status == 'OPEN'%}
+                    <td id="Open">Open</td>
+                {%elif c.status == 'CONFIRMED'%}
+                    <td id="Confirmed">Confirmed</td>
+                {%elif c.status == 'CANCELLED'%}
+                    <td id="Cancelled">Cancelled</td>
+                {%elif c.status == 'CLOSED'%}
+                    <td id="Closed">Closed</td>
+                {%endif%}
+                {%if c.medical_status == False and c.status == 'CLOSED' or c.medical_status == False and c.status == 'CANCELLED'%}
+                    <td id="never_attended">Never Attended</td>
+                {%elif c.medical_status == False and c.status == 'OPEN' or c.medical_status == False and c.status == 'CONFIRMED'%}
+                    <td id="pending">Pending</td>
+                {%else%}
+                    <td id="attended">Attended</td>
+                {%endif%}
+            </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+{%else%}
+    <p id="no-consults">Clear section, no data stored</p>
+{%endif%}
