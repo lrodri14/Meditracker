@@ -1,0 +1,38 @@
+<!--This template is used to render all the data related to Providers, retrieved from the database.-->
+{%load static%}
+<!--If data is present this will execute and rendered-->
+{%if providers%}
+<!--First Container, with the content of each instance-->
+    <div class="table">
+        {%include 'providers/providers_partial_list.html'%}
+    </div>
+    <div>
+        <!--Form for providers filtering -->
+        <i class="fas fa-filter"></i>
+        <!--Depending on the requested type, a unique form will be rendered.-->
+        {%if requested_type == 'LP'%}
+            <form method="GET" action="{%url 'providers:providers_filter'%}" class="filter-form" data-provider-type="LP" autocomplete="off">
+                {%csrf_token%}
+                <h2>Filter Result</h2>
+                <p>{{filter_form.company.label}}</p>
+                <p>{{filter_form.company}}</p>
+            </form>
+        {%else%}
+            <form method="GET" action="{%url 'providers:providers_filter'%}" class="filter-form" data-provider-type="MP" autocomplete="off">
+                {%csrf_token%}
+                <h3>Filter Result</h3>
+                <p>{{filter_form.company.label}}</p>
+                <p>{{filter_form.company}}</p>
+            </form>
+        {%endif%}
+    </div>
+<!--If no data is present, this will execute.-->
+{%else%}
+    <p class="no-providers">No providers of this category listed</p>
+    <!--Depending on the requested type, a unique icon will be rendered, with it's own data-url attribute.-->
+    {%if requested_type == 'LP'%}
+    <i class="fas fa-plus add-providers" data-url="{%url 'providers:create_provider'%}" data-provider-type="LP"></i>
+    {%else%}
+    <i class="fas fa-plus add-providers" data-url="{%url 'providers:create_provider'%}" data-provider-type="MP"></i>
+    {%endif%}
+{%endif%}

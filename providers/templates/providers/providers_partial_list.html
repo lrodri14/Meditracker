@@ -1,69 +1,46 @@
-<!--This template is used to render all the data related to Providers, retrieved from the database.-->
 {%load static%}
-<!--If data is present this will execute and rendered-->
-{%if providers%}
-<!--First Container, with the content of each instance-->
-    <div>
-        <table>
-            <thead>
-                <tr id="heading">
-                    <th>Company</th>
-                    <th>Address</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    <!--Depending on the requested type, a unique icon will be rendered, with it's own data-url and data-provider-type attribute.-->
-                    {%if requested_type == 'LP'%}
-                    <th><i class="fas fa-plus" data-url="{%url 'providers:create_provider'%}" data-provider-type="LP"></i></th>
-                    {%else%}
-                    <th><i class="fas fa-plus" data-url="{%url 'providers:create_provider'%}" data-provider-type="MP"></i></th>
-                    {%endif%}
-                </tr>
-            </thead>
-            <tbody>
-                <!--For each instance-->
-                {%for provider in providers%}
-                <tr data-url="{%url 'providers:provider_details' provider.pk %}">
-                    <td>{{provider.company}}</td>
-                    <td>{{provider.address}}</td>
-                    <td>{{provider.contact}}</td>
-                    <td>{{provider.email}}</td>
-                    <td><i class="fas fa-edit" data-url="{%url 'providers:update_provider' provider.pk %}"></i></td>
-                    <td><i class="fas fa-trash" data-url="{%url 'providers:delete_provider' provider.pk %}"></i></td>
-                    <td><i class="fas fa-envelope"></i></td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <!--Form for providers filtering -->
-        <i class="fas fa-filter"></i>
-        <!--Depending on the requested type, a unique form will be rendered.-->
-        {%if requested_type == 'LP'%}
-        <form method="GET" action="{%url 'providers:providers_filter'%}" class="filter-form laboratories-filter-form" autocomplete="off">
-            {%csrf_token%}
-            <h2>Filter Result</h2>
-            <p>{{filter_form.company.label}}</p>
-            <p>{{filter_form.company}}</p>
-        </form>
+{%load providers_custom_tags%}
+{%if providers.has_other_pages%}
+<div id="paginator">
+    <span>{{providers.number}} / {{providers.paginator.num_pages}}</span>
+    <div id="navigation">
+        {%if filtered%}
+            {% if providers.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'providers:providers_filter'%}{% current_url 'page' providers.previous_page_number request.GET.urlencode %}" data-provider-type="{{requested_type}}"></i>{%endif%}{%if providers.has_next%}<i class="fas fa-angle-right" data-url="{%url 'providers:providers_filter'%}{% current_url 'page' providers.next_page_number request.GET.urlencode%}" data-provider-type="{{requested_type}}"></i>{%endif%}
         {%else%}
-        <form method="GET" action="{%url 'providers:providers_filter'%}" class="filter-form medical-provider-filter-form" autocomplete="off">
-            {%csrf_token%}
-            <h3>Filter Result</h3>
-            <p>{{filter_form.company.label}}</p>
-            <p>{{filter_form.company}}</p>
-        </form>
+            {% if providers.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'providers:providers_list'%}{% current_url 'page' providers.previous_page_number request.GET.urlencode %}" data-provider-type="{{requested_type}}"></i>{%endif%}{%if providers.has_next%}<i class="fas fa-angle-right" data-url="{%url 'providers:providers_list'%}{% current_url 'page' providers.next_page_number request.GET.urlencode%}" data-provider-type="{{requested_type}}"></i>{%endif%}
         {%endif%}
     </div>
-<!--If no data is present, this will execute.-->
-{%else%}
-    <p class="no-providers">No providers of this category listed</p>
-    <!--Depending on the requested type, a unique icon will be rendered, with it's own data-url attribute.-->
-    {%if requested_type == 'LP'%}
-    <i class="fas fa-plus add-providers" data-url="{%url 'providers:create_provider'%}" data-provider-type="LP"></i>
-    {%else%}
-    <i class="fas fa-plus add-providers" data-url="{%url 'providers:create_provider'%}" data-provider-type="MP"></i>
-    {%endif%}
+</div>
 {%endif%}
+<table>
+    <thead>
+        <tr id="heading">
+            <th>Company</th>
+            <th>Address</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <!--Depending on the requested type, a unique icon will be rendered, with it's own data-url and data-provider-type attribute.-->
+            {%if requested_type == 'LP'%}
+            <th><i class="fas fa-plus" data-url="{%url 'providers:create_provider'%}" data-provider-type="LP"></i></th>
+            {%else%}
+            <th><i class="fas fa-plus" data-url="{%url 'providers:create_provider'%}" data-provider-type="MP"></i></th>
+            {%endif%}
+        </tr>
+    </thead>
+    <tbody>
+        <!--For each instance-->
+        {%for provider in providers%}
+        <tr data-url="{%url 'providers:provider_details' provider.pk %}">
+            <td>{{provider.company}}</td>
+            <td>{{provider.address}}</td>
+            <td>{{provider.contact}}</td>
+            <td>{{provider.email}}</td>
+            <td><i class="fas fa-edit" data-url="{%url 'providers:update_provider' provider.pk %}"></i></td>
+            <td><i class="fas fa-trash" data-url="{%url 'providers:delete_provider' provider.pk %}"></i></td>
+            <td><i class="fas fa-envelope"></i></td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>

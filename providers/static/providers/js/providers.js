@@ -12,6 +12,7 @@ events listener sections, the wrapper event listeners section and the modal even
 // Available Data
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
+    var dataTable
     var navigation = document.querySelector('.navigation')
     var tabs = document.querySelectorAll('.tab')
 }
@@ -25,6 +26,16 @@ let modalContent = document.querySelector('.modal-content');
 
 
 // Async Functions
+
+async function requestPageAW(url){
+    /* This async function will be used to collect the data from the previous or next page, this content will be
+    received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
+    the wrapper dynamically.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
 async function addProvidersFormAW(url, formType){
     /*Function used to display provider's form dynamically, it accepts two
       parameters, the 'url' for the "GET" request, and the 'formType', which
@@ -87,12 +98,12 @@ async function deleteProvidersAW(url, method, csrfmiddlewaretoken){
     return data
 }
 
-async function requestProvidersAW(url, providerType){
+async function requestProvidersAW(url){
     /*This function is used to request the providers from the server side every time we
       click on a tab in the navigation bar, it receives two parameters, 'url' for the
       "GET" request, and the 'providerType' which is sent as a header requesting that
       specific type of provider. This function will return it's result in JSON Format.*/
-    const result = await fetch(url, {headers:{'PROVIDER-TYPE': providerType}})
+    const result = await fetch(url)
     const data = result.json()
     return data
 }
@@ -106,24 +117,22 @@ async function requestVisitorsAW(url){
     return data
 }
 
-async function filterProvidersAW(url, query, type){
+async function filterProvidersAW(url){
     /*This function is used retrieve specific providers from the server side
-      depending on a query sent by a "GET" request and a type. This function takes
-      three parameters, 'url' for the "GET" request, the 'query' which we collect from
-      the input in the form and the type, which we collect from the classlist of the form.
-      This function will return it's result in JSON Format.*/
-    provider_type = (type === 'laboratories-filter-form') ? 'LP' : 'MP'
-    const result = await fetch(url, {headers:{'QUERY':query, 'PROVIDER-TYPE':provider_type}})
+      depending on a query sent by a "GET" request. This function takes
+      one paramaters, 'url' for the "GET" request This function will return
+      it's result in JSON Format.*/
+    const result = await fetch(url)
     const data = result.json()
     return data
 }
 
-async function filterVisitorsAW(url, query){
+async function filterVisitorsAW(url){
     /*This function is used retrieve specific visitors from the server side
       depending on a query sent by a "GET" request. This function takes
       two parameters, 'url' for the "GET" request, the 'query' which we collect from
       the input in the form. This function will return it's result in JSON Format.*/
-    const result = await fetch(url, {headers:{'QUERY':query}})
+    const result = await fetch(url)
     const data = result.json()
     return data
 }
@@ -175,12 +184,13 @@ if (navigation){
                 tabs[i].classList.remove('tab-active')
             }
             e.target.classList.add('tab-active')
-            let url = e.target.getAttribute('data-url')
             let providerType = e.target.getAttribute('data-provider-type')
+            let url = providerType ? e.target.getAttribute('data-url') + '?provider_type=' + providerType : e.target.getAttribute('data-url')
             if (providerType){
-                requestProvidersAW(url, providerType)
+                requestProvidersAW(url)
                 .then(data => {
                     wrapper.innerHTML = data['html']
+                    dataTable = document.querySelector('.table')
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)
@@ -190,6 +200,7 @@ if (navigation){
                 requestVisitorsAW(url)
                 .then(data => {
                     wrapper.innerHTML = data['html']
+                    dataTable = document.querySelector('.table')
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)
@@ -225,6 +236,20 @@ if (wrapper){
     // Wrapper Click Events
     wrapper.addEventListener('click', (e) => {
 
+    /* This event will be fired every time an angle icon is clicked, this event will grab the url for the
+       GET request, then the response will be added to the dataTable, as well as the paginator will be deleted
+       to get the current one.*/
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            const url = e.target.getAttribute('data-url').includes('provider_type') ? e.target.getAttribute('data-url') : e.target.getAttribute('data-url') + '&provider_type=' + e.target.getAttribute('data-provider-type')
+            requestPageAW(url)
+            .then(data => {
+                if (data['html']){
+                    document.querySelector('#paginator').remove()
+                    dataTable.innerHTML = data['html']
+                }
+            })
+        }
+
         /*This click event will be fired every time the 'fa-plus' icon is clicked,
           it will collect the following data form the target: 'url' form the data-url
           attribute and the 'providerType' from the data-provider-type attribute, and will
@@ -232,10 +257,10 @@ if (wrapper){
           open the modal and display the JSON Formatted data in the modal content section,
           it returns a form.*/
         if (e.target.classList.contains('fa-plus')){
-            let url = e.target.getAttribute('data-url')
             let providerType = e.target.getAttribute('data-provider-type')
+            let url = providerType === 'LP' ? e.target.getAttribute('data-url') + '?provider_type=' + providerType : e.target.getAttribute('data-url') + '?provider_type=' + 'MP'
             if (providerType){
-                addProvidersFormAW(url, providerType)
+                addProvidersFormAW(url)
                 .then(data => {
                     modalContent.innerHTML = data['html']
                     modal.classList.add('modal-show')
@@ -303,6 +328,11 @@ if (wrapper){
     // Wrapper Mouseover Events
     wrapper.addEventListener('mouseover', (e) => {
 
+        // This event will be fired, every time the user hovers over a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be added.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.add('fa-angle-hover')
+        }
+
         /*This mouseover event is fired every time a hover occurs in a 'fa-plus' icon
           it will add the 'fa-plus-hover' class to the target*/
         if (e.target.classList.contains('fa-plus')){
@@ -352,6 +382,11 @@ if (wrapper){
 
     // Wrapper Mouseout Events
     wrapper.addEventListener('mouseout', (e) => {
+
+        // This event will be fired, every time the user hover out occurs on a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be removed.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.remove('fa-angle-hover')
+        }
 
         /*This mouseout event is fired every time a mouseout event occurs in a 'fa-plus' icon,
           it will remove the 'fa-plus-hover' class to the target*/
@@ -411,18 +446,29 @@ if (wrapper){
         the data returned in JSON Format is added to the innerHTML from the tbody element.*/
         if (e.target.nodeName === 'INPUT'){
             let form = e.target.parentNode.parentNode
-            let url = form.action
             let query = e.target.value
-            let type = form.classList[1]
+            let type = form.getAttribute('data-provider-type')
+            let url
+
+            switch (type){
+                case 'LP':
+                case 'MP':
+                    url = form.action + '?query=' + query + '&provider_type=' + type
+                break
+                case null:
+                    url = form.action + '?query=' + query
+                break
+            }
+
             if (type){
-                filterProvidersAW(url, query, type)
+                filterProvidersAW(url)
                 .then(data => {
-                    document.querySelector('tbody').innerHTML = data['html']
+                    dataTable.innerHTML = data['html']
                 })
             }else{
-                filterVisitorsAW(url, query)
+                filterVisitorsAW(url)
                 .then(data => {
-                    document.querySelector('tbody').innerHTML = data['html']
+                    dataTable.innerHTML = data['html']
                 })
             }
         }
@@ -507,7 +553,7 @@ if (modal){
             .then(data => {
                 if (data['updated_html']){
                     modal.classList.remove('modal-show')
-                    wrapper.innerHTML = data['updated_html']
+                    dataTable.innerHTML = data['updated_html']
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)
@@ -532,12 +578,11 @@ if (modal){
             let formData = new FormData(form)
             addProvidersAW(url, method, csrfmiddlewaretoken, formData)
             .then(data => {
-                console.log('data')
                 if (data['html']){
                     modalContent.innerHTML = data['html']
                 }else{
                     modal.classList.remove('modal-show')
-                    wrapper.innerHTML = data['updated_html']
+                    dataTable.innerHTML = data['updated_html']
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)

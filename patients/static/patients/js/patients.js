@@ -141,9 +141,6 @@ if (body){
                 if (data['html']){
                     document.querySelector('#paginator').remove()
                     dataTable.innerHTML = data['html']
-                }else{
-                    document.querySelector('#paginator').remove()
-                    dataTable.innerHTML = data['filtered_data']
                 }
             })
         }

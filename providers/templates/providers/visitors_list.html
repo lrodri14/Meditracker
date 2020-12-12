@@ -1,0 +1,23 @@
+<!--This template is used to render all the data related to Visitors, retrieved from the database.-->
+{%load static%}
+<!--If data is present this will execute and rendered-->
+{%if visitors%}
+<!--First Container, with the content of each instance-->
+    <div class="table">
+        {%include 'providers/visitors_partial_list.html'%}
+    </div>
+    <div>
+        <!--Form for visitors filtering -->
+        <i class="fas fa-filter"></i>
+        <form method="GET" action="{%url 'providers:visitors_filter'%}" class="filter-form" autocomplete="off">
+            <h3>Visitors Filter</h3>
+            {%csrf_token%}
+            <p>{{filter_form.name.label}}</p>
+            <p>{{filter_form.name}}</p>
+        </form>
+    </div>
+<!--If no data is present this will be rendered.-->
+{%else%}
+    <p class="no-providers">No visitors listed</p>
+    <i class="fas fa-plus add-providers" data-url="{%url 'providers:create_visitor'%}"></i>
+{%endif%}
