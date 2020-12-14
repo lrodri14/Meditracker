@@ -6,7 +6,7 @@
 
 from __future__ import absolute_import
 from celery import shared_task
-from .models import Consults, Drugs
+from .models import Consult, Drug
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 
@@ -26,7 +26,7 @@ def save_new_drug(drugs, user_id):
     user = get_user_model().objects.get(id=user_id)
     if drugs:
         for drug in drugs:
-            new_drug = Drugs.objects.create(name=drug, created_by=user)
+            new_drug = Drug.objects.create(name=drug, created_by=user)
             new_drug.save()
         else:
             pass

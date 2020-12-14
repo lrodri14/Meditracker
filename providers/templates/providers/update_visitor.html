@@ -1,6 +1,6 @@
 <!--This template is used to render the form to update instances of the Providers Class-->
 {%load static%}
-<form method="POST" action="{%url 'providers:update_visitors' visitor.pk%}" class="update-visitor-form" autocomplete="off">
+<form method="POST" action="{%url 'providers:update_visitor' visitor.pk%}" class="update-visitor-form" autocomplete="off">
     {%csrf_token%}
     <h2>Create Visitor</h2>
     <p>{{form.name.label}}</p>

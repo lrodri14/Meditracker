@@ -122,7 +122,7 @@ class TestPatientDelete(TestCase):
 
     def test_patient_delete_template(self):
         response = self.client.get(self.patient_delete_url)
-        self.assertTemplateUsed(response, 'patients/patients_delete.html')
+        self.assertTemplateUsed(response, 'patients/delete_patient.html')
 
 
 class TestPatientUpdate(TestCase):
@@ -185,6 +185,6 @@ class TestPatientUpdate(TestCase):
 
     def test_update_patients_template_used(self):
         response = self.client.get(self.update_patient_url)
-        self.assertTemplateUsed(response, 'patients/patients_update.html')
+        self.assertTemplateUsed(response, 'patients/update_patient.html')
 
 

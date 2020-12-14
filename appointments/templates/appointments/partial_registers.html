@@ -1,54 +1,41 @@
-{%load static%}
-{%load appointments_custom_tags%}
-{%if consults.has_other_pages%}
+{% load static %}
+{% load appointments_custom_tags %}
+{% if registers.has_other_pages %}
     <div id="paginator">
-        <span> {{consults.number}} / {{consults.paginator.num_pages}}</span>
+        <span> {{ registers.number }} / {{ registers.paginator.num_pages }}</span>
         <div id="navigation">
-            {%if filtered%}
-                {%if consults.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'appointments:filter_registers'%}{% current_url 'page' consults.previous_page_number request.GET.urlencode%}"></i>{%endif%}{%if consults.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:filter_registers'%}{% current_url 'page' consults.next_page_number request.GET.urlencode%}"></i>{%endif%}
-            {%else%}
-                {%if consults.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'appointments:registers'%}{% current_url 'page' consults.previous_page_number request.GET.urlencode%}"></i>{%endif%} {%if consults.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:registers'%}{% current_url 'page' consults.next_page_number request.GET.urlencode%}"></i>{%endif%}
-            {%endif%}
+            {% if filtered %}
+                {% if registers.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'appointments:filter_registers' %}{% current_url 'page' registers.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if registers.has_next %}<i class="fas fa-angle-right" data-url="{% url 'appointments:filter_registers' %}{% current_url 'page' registers.next_page_number request.GET.urlencode %}"></i>{% endif %}
+            {% else %}
+                {% if registers.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'appointments:registers' %}{% current_url 'page' registers.previous_page_number request.GET.urlencode %}"></i>{% endif %} {% if registers.has_next %}<i class="fas fa-angle-right" data-url="{% url 'appointments:registers' %}{% current_url 'page' registers.next_page_number request.GET.urlencode %}"></i>{% endif %}
+            {% endif %}
         </div>
     </div>
-{%endif%}
-{%if consults%}
-    <table>
-        <thead>
-            <tr id="heading">
-                <th>ID</th>
-                <th>Patient</th>
-                <th>Date and Time</th>
-                <th>Status</th>
-                <th>Medical Status</th>
-            </tr>
-        </thead>
-        <tbody>
-        {%for c in consults%}
-            <tr>
-                <td>{{c.patient.id_number}}</td>
-                <td>{{c.patient.first_names}} {{c.patient.last_names}}</td>
-                <td>{{c.datetime}}</td>
-                {%if c.status == 'OPEN'%}
-                    <td id="Open">Open</td>
-                {%elif c.status == 'CONFIRMED'%}
-                    <td id="Confirmed">Confirmed</td>
-                {%elif c.status == 'CANCELLED'%}
-                    <td id="Cancelled">Cancelled</td>
-                {%elif c.status == 'CLOSED'%}
-                    <td id="Closed">Closed</td>
-                {%endif%}
-                {%if c.medical_status == False and c.status == 'CLOSED' or c.medical_status == False and c.status == 'CANCELLED'%}
-                    <td id="never_attended">Never Attended</td>
-                {%elif c.medical_status == False and c.status == 'OPEN' or c.medical_status == False and c.status == 'CONFIRMED'%}
-                    <td id="pending">Pending</td>
-                {%else%}
-                    <td id="attended">Attended</td>
-                {%endif%}
-            </tr>
-        {%endfor%}
-        </tbody>
-    </table>
-{%else%}
+{% endif %}
+{% if registers %}
+    {% for r in registers %}
+        <tr>
+            <td>{{ r.patient.id_number }}</td>
+            <td>{{ r.patient.first_names }} {{ c.patient.last_names }}</td>
+            <td>{{ r.datetime }}</td>
+            {% if r.status == 'OPEN' %}
+                <td id="Open">Open</td>
+            {% elif r.status == 'CONFIRMED' %}
+                <td id="Confirmed">Confirmed</td>
+            {% elif r.status == 'CANCELLED' %}
+                <td id="Cancelled">Cancelled</td>
+            {% elif r.status == 'CLOSED' %}
+                <td id="Closed">Closed</td>
+            {% endif %}
+            {% if r.medical_status == False and r.status == 'CLOSED' or r.medical_status == False and r.status == 'CANCELLED' %}
+                <td id="never_attended">Never Attended</td>
+            {% elif r.medical_status == False and r.status == 'OPEN' or r.medical_status == False and r.status == 'CONFIRMED' %}
+                <td id="pending">Pending</td>
+            {% else %}
+                <td id="attended">Attended</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+{% else %}
     <p id="no-consults">Clear section, no data stored</p>
-{%endif%}
+{% endif %}

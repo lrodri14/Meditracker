@@ -1,7 +1,7 @@
 <!-- Template used to display specific patient exams dynamically-->
-{%load static%}
+{% load static %}
 <!--If exams are present this code will be rendered-->
-{%if exams%}
+{% if exams %}
 <div>
     <table>
         <thead>
@@ -14,33 +14,33 @@
             </tr>
         </thead>
         <tbody>
-            {%for e in exams%}
-            <tr onclick="window.location='{%url 'appointments:consult_details' e.consult.pk%}'">
-                <td>{{e.consult.datetime|date}}</td>
-                <td>{{e.consult.datetime|time}}</td>
-                <td>{{e.consult.created_by}}</td>
-                <td>{{e.get_type_display}}</td>
-                <td data-img-src="{{MEDIA_URL}}{{e.image}}" class="exam-filename">{{e}}</td>
+            {% for e in exams %}
+            <tr onclick="window.location='{% url 'appointments:consult_details' e.consult.pk %}'">
+                <td>{{ e.consult.datetime|date }}</td>
+                <td>{{ e.consult.datetime|time }}</td>
+                <td>{{ e.consult.created_by }}</td>
+                <td>{{ e.get_type_display }}</td>
+                <td data-img-src="{{ MEDIA_URL }}{{ e.image }}" class="exam-filename">{{e}}</td>
             </tr>
-            {%endfor%}
+            {% endfor %}
         </tbody>
     </table>
 </div>
 <div>
     <!-- Filtering form -->
     <i class="fas fa-filter exams-filter"></i></i><i class="fas fa-sync-alt exams-reload"></i>
-    <form method="POST" action="{%url 'patients:patients_details' patient.pk%}" class="exams-form">
+    <form method="POST" action="{% url 'patients:patients_details' patient.pk %}" class="exams-form">
         <h3>Filter Results</h3>
-        {%csrf_token%}
-        <p>{{consults_form.date_from.label}}</p>
-        <p>{{consults_form.date_from}}</p>
-        <p>{{consults_form.date_to.label}}</p>
-        <p>{{consults_form.date_to}}</p>
-        <p class="error"><small>{{error}}</small></p>
+        {% csrf_token %}
+        <p>{{ consults_form.date_from.label }}</p>
+        <p>{{ consults_form.date_from }}</p>
+        <p>{{ consults_form.date_to.label }}</p>
+        <p>{{ consults_form.date_to }}</p>
+        <p class="error"><small>{{ error }}</small></p>
         <button type="submit">Submit</button>
     </form>
 </div>
 <!--If no exams are present this code will be rendered-->
-{%else%}
+{% else %}
 <p class="no-data">No Data</p>
-{%endif%}
+{% endif %}

@@ -5,8 +5,8 @@
 
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
+    var dataTable = document.querySelector('.data-table')
     var form = document.querySelector('.filter-form')
-    var table = document.querySelector('.table')
 }
 
 if (document.querySelector('.modal') !== 'undefined' && document.querySelector('.modal') !== 'null'){
@@ -199,7 +199,7 @@ if (wrapper){
             requestPageAW(url)
             .then(data => {
                 document.querySelector('#paginator').remove()
-                table.innerHTML = data['html']
+                dataTable.innerHTML = data['html']
             })
         }
 
@@ -236,7 +236,7 @@ if (wrapper){
             e.stopPropagation()
             confirmAW(e.target.parentNode.getAttribute('data-url'))
             .then(data => {
-                table.innerHTML = data['html']
+                dataTable.innerHTML = data['html']
             })
         }
 
@@ -278,7 +278,7 @@ if (wrapper){
             const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             submitCancelAW(url, method, csrfmiddlewaretoken)
             .then(data => {
-                table.innerHTML = data['html']
+                dataTable.innerHTML = data['html']
             })
             modal.classList.remove('modal-show')
         /*This event will be fired every time a submit occurs and the target contains the 'update-date-form' class in it's
@@ -295,7 +295,7 @@ if (wrapper){
             submitUpdateAW(url, method, csrfmiddlewaretoken, data)
             .then(data => {
                 if (data['updated_html']){
-                    table.innerHTML = data['updated_html']
+                    dataTable.innerHTML = data['updated_html']
                     modal.classList.remove('modal-show')
                 }else{
                     modalContent.innerHTML = data['html']
@@ -318,7 +318,7 @@ if (wrapper){
             const url = e.target.action + '?date_from=' + fromDate + '&date_to=' + toDate
             filterResultsAW(url)
             .then(data => {
-                table.innerHTML = data['html']
+                dataTable.innerHTML = data['html']
                 if(form){
                     form.classList.add('show-form')
                 }

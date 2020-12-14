@@ -12,7 +12,6 @@ events listener sections, the wrapper event listeners section and the modal even
 // Available Data
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
-    var dataTable
     var navigation = document.querySelector('.navigation')
     var tabs = document.querySelectorAll('.tab')
 }
@@ -190,7 +189,6 @@ if (navigation){
                 requestProvidersAW(url)
                 .then(data => {
                     wrapper.innerHTML = data['html']
-                    dataTable = document.querySelector('.table')
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)
@@ -200,7 +198,6 @@ if (navigation){
                 requestVisitorsAW(url)
                 .then(data => {
                     wrapper.innerHTML = data['html']
-                    dataTable = document.querySelector('.table')
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)
@@ -208,8 +205,6 @@ if (navigation){
                 })
             }
         }
-
-
     })
 
     /*This event will add the 'tab-hover' class to the target
@@ -245,7 +240,7 @@ if (wrapper){
             .then(data => {
                 if (data['html']){
                     document.querySelector('#paginator').remove()
-                    dataTable.innerHTML = data['html']
+                    document.querySelector('tbody').innerHTML = data['html']
                 }
             })
         }
@@ -293,8 +288,7 @@ if (wrapper){
           class from the filter which resides at the right side of the wrapper, it will
           show up a filtering form.*/
         if (e.target.classList.contains('fa-filter')){
-            var filterForm = document.querySelector('.filter-form')
-            filterForm.classList.contains('filter-form-show') ? filterForm.classList.remove('filter-form-show') : filterForm.classList.add('filter-form-show')
+            document.querySelector('.filter-form').classList.contains('filter-form-show') ? document.querySelector('.filter-form').classList.remove('filter-form-show') : document.querySelector('.filter-form').classList.add('filter-form-show')
         }
 
         /*This click event will be fired every time a 'fa-edit' icon is clicked,
@@ -460,15 +454,19 @@ if (wrapper){
                 break
             }
 
+            if (document.querySelector('#paginator')){
+                document.querySelector('#paginator').remove()
+            }
+
             if (type){
                 filterProvidersAW(url)
                 .then(data => {
-                    dataTable.innerHTML = data['html']
+                    document.querySelector('tbody').innerHTML = data['html']
                 })
             }else{
                 filterVisitorsAW(url)
                 .then(data => {
-                    dataTable.innerHTML = data['html']
+                    document.querySelector('tbody').innerHTML = data['html']
                 })
             }
         }
@@ -553,7 +551,7 @@ if (modal){
             .then(data => {
                 if (data['updated_html']){
                     modal.classList.remove('modal-show')
-                    dataTable.innerHTML = data['updated_html']
+                    data['is_initial'] === true ? wrapper.innerHTML = data['updated_html'] : document.querySelector('tbody').innerHTML = data['updated_html']
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)
@@ -582,7 +580,7 @@ if (modal){
                     modalContent.innerHTML = data['html']
                 }else{
                     modal.classList.remove('modal-show')
-                    dataTable.innerHTML = data['updated_html']
+                    data['is_initial'] === true ? wrapper.innerHTML = data['updated_html'] : document.querySelector('tbody').innerHTML = data['updated_html']
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)

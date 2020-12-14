@@ -33,7 +33,7 @@ class PatientForm(forms.ModelForm):
         exclude = ('created_by',)
 
 
-class PatientFilter(forms.Form):
+class PatientFilterForm(forms.Form):
     """
         DOCSTRING:
         The PatientFilter form inherits form the forms.Form class, and it is used to filter Patient
@@ -100,29 +100,29 @@ class InsuranceInformationForm(forms.ModelForm):
 # #################################
 
 
-class AllergiesForm(forms.ModelForm):
+class AllergyForm(forms.ModelForm):
     """
         DOCSTRING:
         The AllergiesForm form inherits form the forms.ModelForm class, and it is used to create
         AllergiesForm instances.
     """
     class Meta:
-        model = Allergies
+        model = Allergy
         exclude = ('created_by',)
 
 
-class AllergiesFilterForm(forms.ModelForm):
+class AllergyFilterForm(forms.ModelForm):
     """
         DOCSTRING:
         The AllergiesFilterForm form inherits form the forms.ModelForm class, and it is used to filter Allergies
         data from the server side.
     """
     class Meta:
-        model = Allergies
+        model = Allergy
         exclude = ('created_by',)
 
 
-class AllergiesInformationForm(forms.ModelForm):
+class AllergyInformationForm(forms.ModelForm):
     """
         DOCSTRING:
         The AllergiesInformationForm form inherits form the forms.ModelForm class, and it is used to create
@@ -133,7 +133,7 @@ class AllergiesInformationForm(forms.ModelForm):
         AllergiesInformationUpdateFormset to update as many instances as needed.
     """
     class Meta:
-        model = AllergiesInformation
+        model = AllergyInformation
         exclude = ('patient',)
         widgets = {
             'about': forms.widgets.Textarea(attrs={'rows': 2, 'columns': 2})
@@ -148,8 +148,8 @@ class AllergiesInformationForm(forms.ModelForm):
         return cleaned_data
 
 
-AllergiesInformationFormset = modelformset_factory(model=AllergiesInformation, form=AllergiesInformationForm, can_delete=True, extra=1)
-AllergiesInformationUpdateFormset = inlineformset_factory(parent_model=Patient, model=AllergiesInformation, form=AllergiesInformationForm, can_delete=True, extra=1)
+AllergyInformationFormset = modelformset_factory(model=AllergyInformation, form=AllergyInformationForm, can_delete=True, extra=1)
+AllergyInformationUpdateFormset = inlineformset_factory(parent_model=Patient, model=AllergyInformation, form=AllergyInformationForm, can_delete=True, extra=1)
 
 
 # Antecedents Forms
@@ -167,7 +167,7 @@ class AntecedentForm(forms.ModelForm):
          AntecedentUpdateFormset to update as many instances as needed.
     """
     class Meta:
-        model = Antecedents
+        model = Antecedent
         exclude = ('patient',)
         widgets = {
             'info': forms.widgets.Textarea(attrs={'rows': 2, 'columns': 2})
@@ -182,6 +182,6 @@ class AntecedentForm(forms.ModelForm):
         return cleaned_data
 
 
-AntecedentFormset = modelformset_factory(model=Antecedents, form=AntecedentForm, can_delete=True)
-AntecedentUpdateFormset = inlineformset_factory(parent_model=Patient, model=Antecedents, form=AntecedentForm, can_delete=True, extra=1)
+AntecedentFormset = modelformset_factory(model=Antecedent, form=AntecedentForm, can_delete=True)
+AntecedentUpdateFormset = inlineformset_factory(parent_model=Patient, model=Antecedent, form=AntecedentForm, can_delete=True, extra=1)
 

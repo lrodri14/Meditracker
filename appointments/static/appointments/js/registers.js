@@ -5,7 +5,7 @@ the consults registers template in the Appointments, app, this file consists of 
 
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
-    var dataTable = document.querySelector('.table')
+    var tbody = document.querySelector('tbody')
     var rows = document.querySelectorAll('tr')
     var i = document.querySelector('.fa-filter')
     var button = document.querySelectorAll('button')
@@ -127,7 +127,7 @@ if (wrapper){
             requestPageAW(url)
             .then(data => {
                 document.querySelector('#paginator').remove()
-                dataTable.innerHTML = data['html']
+                tbody.innerHTML = data['html']
             })
         }
 
@@ -155,7 +155,7 @@ if (wrapper){
                 if (document.querySelector('#paginator')){
                     document.querySelector('#paginator').remove()
                 }
-                dataTable.innerHTML = data['html']
+                tbody.innerHTML = data['html']
             })
         }
     })

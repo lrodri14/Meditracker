@@ -7,7 +7,7 @@
 # Imports
 from datetime import timedelta
 from django.core.exceptions import ValidationError
-from .models import Consults, MedicalExams, Drugs
+from .models import Consult, MedicalExam, Drug
 from django import forms
 from django.forms import modelformset_factory
 from django.utils import timezone
@@ -15,7 +15,7 @@ from dateutil import relativedelta
 from patients.models import Patient
 
 
-class ConsultsForm(forms.ModelForm):
+class ConsultForm(forms.ModelForm):
     """
         DOCSTRING:
         This ConsultForm class, inherits from the ModelForm class, and is used to the create Consults Forms
@@ -28,7 +28,7 @@ class ConsultsForm(forms.ModelForm):
     datetime = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'), initial=timezone.localtime(timezone.now()))
 
     class Meta:
-        model = Consults
+        model = Consult
         fields = ('patient', 'datetime', 'motive', 'suffering',)
         widgets = {
             'motive': forms.Textarea(attrs={'rows': 8, 'columns': 5}),
@@ -37,7 +37,7 @@ class ConsultsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
-        super(ConsultsForm, self).__init__(*args, **kwargs)
+        super(ConsultForm, self).__init__(*args, **kwargs)
         self.fields['patient'].queryset = Patient.objects.filter(created_by=self.user)
 
     def clean(self):
@@ -48,10 +48,10 @@ class ConsultsForm(forms.ModelForm):
         return cleaned_data
 
 
-class UpdateConsultsForm(forms.ModelForm):
+class UpdateConsultForm(forms.ModelForm):
     """
         DOCSTRING:
-        UpdateConsultsForm class inherits from the forms.ModelForm class, and is used to create UpdateConsultsForm instances,
+        UpdateConsultForm class inherits from the forms.ModelForm class, and is used to create UpdateConsultsForm instances,
         we defined our META Class to add functionality to our class, we created a dictionary containing all the
         widgets needed for our input fields, we overwrote the __init__ method to provide some extra functionality
         to our forms, we need the current user to set the select options of the drug fields, they must be only drugs created
@@ -60,7 +60,7 @@ class UpdateConsultsForm(forms.ModelForm):
     """
 
     class Meta:
-        model = Consults
+        model = Consult
         exclude = ('patient', 'datetime', 'motive', 'suffering', 'created_by', 'status', 'medical_status', 'prescription')
         widgets = {
             'charge': forms.NumberInput(attrs={'placeholder': '0.00'}),
@@ -84,8 +84,8 @@ class UpdateConsultsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
-        super(UpdateConsultsForm, self).__init__(*args, **kwargs)
-        self.fields['drugs'].queryset = Drugs.objects.filter(created_by=user)
+        super(UpdateConsultForm, self).__init__(*args, **kwargs)
+        self.fields['drugs'].queryset = Drug.objects.filter(created_by=user)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -96,10 +96,10 @@ class UpdateConsultsForm(forms.ModelForm):
         return cleaned_data
 
 
-class MedicalExamsForm(forms.ModelForm):
+class MedicalExamForm(forms.ModelForm):
     """
         DOCSTRING:
-        MedicalExamsForm class inherits from forms.ModelForm class, and is used to create MedicalExamsForm instances,
+        MedicalExamForm class inherits from forms.ModelForm class, and is used to create MedicalExamsForm instances,
         we defined our Meta Class as usual indicating the model and the fields to display in our form, we overwrote the
         the clean method to perform some extra cleaning in our forms, the form will return an error if the
         exams information is incomplete. This class will not be used as a single form, we used modelformsets, so the
@@ -107,7 +107,7 @@ class MedicalExamsForm(forms.ModelForm):
     """
 
     class Meta:
-        model = MedicalExams
+        model = MedicalExam
         fields = ('type', 'image',)
 
     def clean(self):
@@ -120,7 +120,7 @@ class MedicalExamsForm(forms.ModelForm):
         return cleaned_data
 
 
-MedicalExamsFormset = modelformset_factory(model=MedicalExams, form=MedicalExamsForm, can_delete=True)
+MedicalExamFormset = modelformset_factory(model=MedicalExam, form=MedicalExamForm, can_delete=True)
 
 # Range of years displayed in the filter forms.
 
@@ -148,7 +148,7 @@ class AgendaDateFilterForm(forms.Form):
     date_to = forms.DateField(widget=forms.SelectDateWidget(years=years), initial=timezone.now())
 
 
-class ConsultsDetailsFilterForm(forms.Form):
+class ConsultDetailsFilterForm(forms.Form):
     """
         DOCSTRING:
         The ConsultDetailsFilterForm inherits from forms.Form class and is used to consults records and display them
@@ -184,10 +184,10 @@ YEARS_CHOICES = (
 )
 
 
-class RegistersFilter(forms.Form):
+class RegisterFilterForm(forms.Form):
     """
         DOCSTRING:
-        The RegistersFilter class, inherits from the forms.Form class and is used to instance filter forms for the
+        The RegisterFilterForm class, inherits from the forms.Form class and is used to instance filter forms for the
         Registers, it contains only three attributes, 'patient', 'month' and 'year', the two last ones make use of the
         choices we defined at the top.
     """
@@ -228,30 +228,30 @@ class DrugCategoryFilterForm(forms.Form):
         self.fields['category'].required = False
 
 
-class DrugsForm(forms.ModelForm):
+class DrugForm(forms.ModelForm):
     """
         DOCSTRING:
-        The DrugsForm inherits from the models.ModelForm class, it is used to create DrugsForm form instances,
+        The DrugForm inherits from the models.ModelForm class, it is used to create DrugsForm form instances,
         we defined it's META class as usual, defining the model to create the form for, and the fields we want the
         form to display.
     """
 
     class Meta:
-        model = Drugs
+        model = Drug
         exclude = ('created_by',)
 
 
-class DrugsFilterForm(forms.ModelForm):
+class DrugFilterForm(forms.ModelForm):
     """
         DOCSTRING:
-        The DrugsFilterForm inherits from forms.ModelForm class and is used to filter drugs and display them
+        The DrugFilterForm inherits from forms.ModelForm class and is used to filter drugs and display them
         dynamically in our template,  we defined our META Class as usual and the fields, we also rewrote the
         __init__ method, since we need to perform some extra functionality to our form, the category field, not always
         will be required, so we turned the required field into False.
     """
 
     class Meta:
-        model = Drugs
+        model = Drug
         exclude = ('created_by',)
 
     def __init__(self, *args, **kwargs):

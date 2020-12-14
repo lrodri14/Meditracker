@@ -3,13 +3,29 @@
 <!--If data is present this will execute and rendered-->
 {%if visitors%}
 <!--First Container, with the content of each instance-->
-    <div class="table">
-        {%include 'providers/visitors_partial_list.html'%}
+    <div>
+        <table>
+            <thead>
+                <tr id="heading">
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Company</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th><i class="fas fa-plus" data-url="{%url 'providers:create_visitor'%}"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {%include 'providers/visitors_partial_list.html'%}
+            </tbody>
+        </table>
     </div>
     <div>
         <!--Form for visitors filtering -->
         <i class="fas fa-filter"></i>
-        <form method="GET" action="{%url 'providers:visitors_filter'%}" class="filter-form" autocomplete="off">
+        <form method="GET" action="{%url 'providers:filter_visitors'%}" class="filter-form" autocomplete="off">
             <h3>Visitors Filter</h3>
             {%csrf_token%}
             <p>{{filter_form.name.label}}</p>

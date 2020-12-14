@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Consults, Cie10Group, Drugs, MedicalExams
+from .models import Consult, Cie10Group, Drug, MedicalExam
 # Register your models here.
 
-admin.site.register(Consults)
+admin.site.register(Consult)
 admin.site.register(Cie10Group)
-admin.site.register(Drugs)
-admin.site.register(MedicalExams)
+admin.site.register(Drug)
+admin.site.register(MedicalExam)

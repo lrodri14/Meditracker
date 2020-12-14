@@ -11,8 +11,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.shortcuts import redirect
-from .models import Consults
-from .forms import ConsultsForm, DrugsForm, DrugCategoryFilterForm, UpdateConsultsForm, MedicalExamsFormset, RecordsDateFilterForm, AgendaDateFilterForm, RegistersFilter, MedicalExams
+from .models import Consult, MedicalExam
+from .forms import ConsultForm, DrugForm, DrugCategoryFilterForm, UpdateConsultForm, MedicalExamFormset, AgendaDateFilterForm, RegisterFilterForm
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.db.models import Q
@@ -57,7 +57,7 @@ async def check_delayed_consults(user):
     """
     today = timezone.localtime()
     tzone = timezone.get_current_timezone()
-    not_attended_consults = Consults.objects.filter(created_by=user, datetime__date__lte=today.date())
+    not_attended_consults = Consult.objects.filter(created_by=user, datetime__date__lte=today.date())
     await close_consult(not_attended_consults, tzone, today)
 
 # New Event Loop
@@ -93,19 +93,19 @@ def filter_conditional_results(user, **kwargs):
     month = int(cleaned_data.get('month'))
     year = int(cleaned_data.get('year'))
     if patient == '' and month == 0 and year == 1920:
-        return Consults.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__month=month, datetime__date__year=year, created_by=user)
+        return Consult.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__month=month, datetime__date__year=year, created_by=user)
     elif patient != '' and month == 0 and year == 1920:
-        return Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient), created_by=user)
+        return Consult.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient), created_by=user)
     elif patient == '' and month != 0 and year == 1920:
-        return Consults.objects.filter(datetime__date__month=month, created_by=user)
+        return Consult.objects.filter(datetime__date__month=month, created_by=user)
     elif patient == '' and month == 0 and year != 1920:
-        return Consults.objects.filter(datetime__date__year=year, created_by=user)
+        return Consult.objects.filter(datetime__date__year=year, created_by=user)
     elif patient != '' and month != 0 and year == 1920:
-        return Consults.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient),datetime__date__month=month, created_by=user)
+        return Consult.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient),datetime__date__month=month, created_by=user)
     elif patient != '' and month == 0 and year != 1920:
-        return Consults.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__year=year, created_by=user)
+        return Consult.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__year=year, created_by=user)
     else:
-        return Consults.objects.filter(datetime__date__month=month, datetime__date__year=year, created_by=user)
+        return Consult.objects.filter(datetime__date__month=month, datetime__date__year=year, created_by=user)
 
 
 def generate_pdf(user, consult):
@@ -138,12 +138,12 @@ def generate_pdf(user, consult):
 # Create your views here.
 
 
-def consults(request):
+def appointments(request):
     """
         DOCSTRING:
-        This consults() view is used to render the main consults page, in here the user will be able to see the consults that are
+        This appointments() view is used to render the main appointments page, in here the user will be able to see the appointments that are
         pending for the current date and also the consults that were locked for further changes, it will retrieve the
-        consults using a filter, also this view will check if the user who requested this page belongs to the Doctor's
+        appointments using a filter, also this view will check if the user who requested this page belongs to the Doctor's
         group, this for editing logic that will be managed in the template. Since the results will be paginated, we need to
         check if the 'page' parameter exists in our 'GET' dictionary, depending of the value of the parameter, the
         function will decide which page should it return, if the 'page' parameters, doesn't exists, the context will be
@@ -154,38 +154,37 @@ def consults(request):
     today = timezone.localtime()
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    appointments_list = Consults.objects.filter(Q(created_by=request.user, datetime__date=today.date(), medical_status=False, status='CONFIRMED') | Q(created_by=request.user, lock=False))
-    paginator = Paginator(appointments_list, 16)
+    appointments_list = Consult.objects.filter(Q(created_by=request.user, datetime__date=today.date(), medical_status=False, status='CONFIRMED') | Q(created_by=request.user, lock=False)).order_by('datetime')
+    paginator = Paginator(appointments_list, 17)
     page = request.GET.get('page')
-    appointments = paginator.get_page(page)
-    template = 'appointments/consults.html'
-    context = {'appointments': appointments, 'doctor': doctor}
+    page_obj = paginator.get_page(page)
+    template = 'appointments/appointments.html'
+    context = {'appointments': page_obj, 'doctor': doctor}
     if page:
-        data = {'html': render_to_string('appointments/partial_consults.html', context, request)}
+        data = {'html': render_to_string('appointments/partial_appointments.html', context, request)}
         return JsonResponse(data)
     return render(request, template, context)
 
 
-def create_consult(request):
+def create_appointment(request):
     """
         DOCSTRING:
-        This create_consult() view processes consult instance creation logic, this consult is used to create consults
-        in the consults main page, if the request.method is a 'GET' then the view will instantiate the ConsultForm and
-        pass the request.user to the class, this because we need to manage some logic inside this class, such as the
-        displaying of patients only related to the current user, the only thing inside our view context is this form,
-        we will return the data in JSON Format, so the rendering we convert it into a string with the use of the
-        render_to_string() function, and send the data as a JSONResponse, if the request.method is a 'POST', then
-        we populate the form with the content inside the request.POST dictionary, and we check if the form is valid,
+        This create_appointment() view processes consult instance creation logic, if the request.method is a 'GET' then
+        the view will instantiate the ConsultForm and pass the request.user to the class, this because we need to manage
+        some logic inside this class, such as the displaying of patients only related to the current user, the only thing
+        inside our view context is this form, we will return the data in JSON Format, so the rendering we convert it into a
+        string with the use of the render_to_string() function, and send the data as a JSONResponse, if the request.method is
+        a 'POST', then we populate the form with the content inside the request.POST dictionary, and we check if the form is valid,
         if it is, then the consult will be saved and added to the agenda so we can then confirm it, edit it or cancel it,
         if the form is not valid, then we will add a custom error to the context and render the template again so
         we can send it back as a JSONResponse. This view only expects an argument, 'request', should be a request object.
     """
-    consults_form = ConsultsForm(user=request.user)
-    template = 'appointments/create_consult.html'
+    consults_form = ConsultForm(user=request.user)
+    template = 'appointments/create_appointment.html'
     context = {}
     data = {}
     if request.method == 'POST':
-        consults_form = ConsultsForm(request.POST, user=request.user)
+        consults_form = ConsultForm(request.POST, user=request.user)
         if consults_form.is_valid():
             try:
                 consult = consults_form.save(commit=False)
@@ -204,13 +203,13 @@ def create_consult(request):
 def consults_details(request, pk):
     """
         DOCSTRING:
-        This consult_details() view is used to display the details of a single consults, as well as the exams related to
+        This consult_details() view is used to display the details of a single consult, as well as the exams related to
         that consult in case there are, this view will also check for the HTTP_REFERER headers, this so it can know where
         to redirect if the user wants to go to the page it was before. It takes two arguments, 'request' which expects
         a request object, and 'pk', which expects the pk of a specific consult.
     """
-    consult = Consults.objects.get(pk=pk)
-    exams = MedicalExams.objects.filter(consult=consult) if len(MedicalExams.objects.filter(consult=consult)) > 0 else None
+    consult = Consult.objects.get(pk=pk)
+    exams = MedicalExam.objects.filter(consult=consult) if len(MedicalExam.objects.filter(consult=consult)) > 0 else None
     template = 'appointments/consult_details.html'
     context = {'consult': consult, 'exams': exams}
     if 'patients/details' in request.META.get('HTTP_REFERER'):
@@ -230,7 +229,7 @@ def consult_summary(request, pk):
         send the response as a JSON Response. It takes two arguments, 'request' which expects a request object, and
         'pk', which expects the pk of a specific consult.
     """
-    consult = Consults.objects.get(pk=pk)
+    consult = Consult.objects.get(pk=pk)
     template = 'appointments/consult_summary.html'
     context = {'consult': consult}
     data = {'html': render_to_string(template, context, request)}
@@ -255,16 +254,16 @@ def update_consult(request, pk):
         then a custom error will be added to the context and the template will be rendered again. It takes two arguments,
         'request' which expects a request object and 'pk' which expects a consult's pk.
     """
-    consult = Consults.objects.get(pk=pk)
-    consult_form = UpdateConsultsForm(request.POST or None, user=request.user, instance=consult)
-    medical_exams_form = MedicalExamsFormset(queryset=Consults.objects.none())
-    drug_form = DrugsForm
+    consult = Consult.objects.get(pk=pk)
+    consult_form = UpdateConsultForm(request.POST or None, user=request.user, instance=consult)
+    medical_exams_form = MedicalExamFormset(queryset=Consult.objects.none())
+    drug_form = DrugForm
     drug_category_filter_form = DrugCategoryFilterForm()
     template = 'appointments/update_consult.html'
     context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form, 'drug_form': drug_form, 'drug_category_filter_form': drug_category_filter_form}
     if request.method == 'POST':
-        consult_form = UpdateConsultsForm(request.POST or None, user=request.user, instance=consult)
-        medical_exams_form = MedicalExamsFormset(request.POST, request.FILES)
+        consult_form = UpdateConsultForm(request.POST or None, user=request.user, instance=consult)
+        medical_exams_form = MedicalExamFormset(request.POST, request.FILES)
         if consult_form.is_valid() and medical_exams_form.is_valid():
             consult = consult_form.save(commit=False)
             exam_instances = medical_exams_form.save(commit=False)
@@ -281,44 +280,10 @@ def update_consult(request, pk):
             consult_form.save_m2m()
             if consult.prescription:
                 return JsonResponse({'prescription_path': settings.MEDIA_URL + consult.prescription.name})
-            return redirect('appointments:consults')
+            return redirect('appointments:appointments')
         elif not medical_exams_form.is_valid():
             context['error'] = '* Exams not filled correctly. "Type" & "Image" must be provided.'
     return render(request, template, context)
-
-# Cancel Consult
-
-
-def cancel_consult(request, pk):
-    """
-        DOCSTRING:
-        The cancel_consult() view is used to cancel any consult if needed, since this process will be done from the
-        Agenda view, then we need to return the response in a JSON Format, for this we will make use of our render_to_
-        string function and return the rendered template as a string, if the request.method is 'GET' then the template
-        will be rendered as a form with the information of that consult, if the request.method is 'POST' then the consult
-        will be cancelled, setting the status attribute to 'CANCELLED' and saved. Since we need to update the Agenda
-        with the updated consults, we will collect them form the DB with the new data, and return it through a JSON
-        response object. The agenda is divided into months, so we need to collect all the months in which there are
-        consults pending for us, how can we do that? We call our collected_months function and we pass the updated_consults
-        and tzone as parameters, finally we send our response in JSON Format so the agenda view can update this data.
-    """
-    today = timezone.localtime(timezone.now())
-    consult = Consults.objects.get(pk=pk)
-    tzone = timezone.get_current_timezone()
-    form = AgendaDateFilterForm
-    template = 'appointments/delete_consult.html'
-    context = {'consult': consult}
-    data = {'html': render_to_string(template, context, request)}
-    if request.method == 'POST':
-        consult.status = 'CANCELLED'
-        consult.save()
-        consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-        paginator = Paginator(consults_list, 10)
-        page = request.GET.get('page')
-        consults = paginator.get_page(page)
-        months_names = collect_months_names(consults, tzone)
-        data = {'html': render_to_string('appointments/partial_agenda_list.html', {'consults': consults, 'months': months_names, 'form':form}, request=request)}
-    return JsonResponse(data)
 
 
 def agenda(request):
@@ -335,14 +300,14 @@ def agenda(request):
     """
     today = timezone.localtime()
     tzone = timezone.get_current_timezone()
-    consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-    paginator = Paginator(consults_list, 10)
+    appointments_list = Consult.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
+    paginator = Paginator(appointments_list, 1)
     page = request.GET.get('page')
-    consults = paginator.get_page(page)
-    months_names = collect_months_names(consults, tzone)
+    page_obj = paginator.get_page(page)
+    months_names = collect_months_names(page_obj, tzone)
     form = AgendaDateFilterForm
     template = 'appointments/agenda.html'
-    context = {'consults': consults, 'months': months_names, 'form': form, 'today': today}
+    context = {'appointments': page_obj, 'months': months_names, 'form': form, 'today': today}
     if page:
         data = {'html': render_to_string('appointments/partial_agenda_list.html', context, request)}
         return JsonResponse(data)
@@ -362,12 +327,106 @@ def filter_agenda(request):
     query_date_from = datetime.strptime(request.GET.get('date_from'), "%Y-%m-%d")
     query_date_to = datetime.strptime(request.GET.get('date_to'), "%Y-%m-%d")
     page = request.GET.get('page')
-    consults_list = Consults.objects.filter(datetime__date__gte=query_date_from, datetime__date__lte=query_date_to, created_by=request.user)
-    paginator = Paginator(consults_list, 10)
-    consults = paginator.get_page(page)
-    months = collect_months_names(consults, tzone)
-    context = {'consults': consults, 'months': months, 'filtered': True}
+    consults_list = Consult.objects.filter(datetime__date__gte=query_date_from, datetime__date__lte=query_date_to, created_by=request.user).order_by('datetime')
+    paginator = Paginator(consults_list, 1)
+    page_obj = paginator.get_page(page)
+    months = collect_months_names(page_obj, tzone)
+    context = {'appointments': page_obj, 'months': months, 'filtered': True}
     data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def appointment_date_update(request, pk):
+    """
+        DOCSTRING:
+        This appointment_date_update() view is used to update the date of a specific consult, this view will collect that
+        specific consult form the database and the ConsultsForm, since this process will be done asynchronously, we need
+        to return our response in JSON Format, for this we use our render_to_string function, if the request.method is
+        'GET' we return this response in JSON Format, if the request.method is 'POST' we fill our form with the
+        content inside our request.POST dict and check if it is valid or not, if it is not then we will add a custom
+        error and return the response again, if it is we save this consult's new date and return in JSON Format the
+        updated content, so the registers will be updated asynchronously in the front-end. It takes two arguments,
+        'request' which expects a request object and 'pk' which expects a consult.pk key.
+    """
+    today = timezone.localtime()
+    tzone = timezone.get_current_timezone()
+    consult = Consult.objects.get(pk=pk)
+    form = AgendaDateFilterForm
+    consult_form = ConsultForm(request.POST or None, instance=consult, user=request.user)
+    template = 'appointments/appointment_date_update.html'
+    context = {'consult_form': consult_form, 'consult':consult}
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        consult_form = ConsultForm(request.POST or None, instance=consult, user=request.user)
+        if consult_form.is_valid():
+            try:
+                consult_form.save()
+                consults_list = Consult.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
+                paginator = Paginator(consults_list, 10)
+                page = request.GET.get('page')
+                page_obj = paginator.get_page(page)
+                months_names = collect_months_names(page_obj, tzone)
+                data = {'updated_html': render_to_string('appointments/partial_agenda_list.html', {'appointments': page_obj, 'months': months_names, 'form': form}, request=request)}
+            except IntegrityError:
+                date = consult_form.cleaned_data.get('datetime').date()
+                time = consult_form.cleaned_data.get('datetime').time().strftime('%I:%M:%S %p')
+                context['error'] = 'There is already a reservation for {} at {}'.format(date, time)
+                data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def confirm_appointment(request, pk):
+    """
+        DOCSTRING:
+        This confirm_appointment() view is used to confirm the consult, it will set the consult.status attribute from pending
+        to confirmed, once the consult is confirmed, it will collect all the updated data from the database and return
+        it in a JSON Response, since the agenda will be updated asynchronously.It takes two arguments,
+        'request' which expects a request object and 'pk' which expects a consult.pk key.
+    """
+    consult = Consult.objects.get(pk=pk)
+    consult.status = 'CONFIRMED'
+    consult.save()
+    today = timezone.localtime()
+    tzone = timezone.get_current_timezone()
+    form = AgendaDateFilterForm
+    consults_list = Consult.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
+    paginator = Paginator(consults_list, 10)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+    months_names = collect_months_names(page_obj, tzone)
+    data = {'html': render_to_string('appointments/partial_agenda_list.html', {'appointments': page_obj, 'months': months_names, 'form': form}, request=request)}
+    return JsonResponse(data)
+
+
+def cancel_appointment(request, pk):
+    """
+        DOCSTRING:
+        The cancel_appointment() view is used to cancel any consult if needed, since this process will be done from the
+        Agenda view, then we need to return the response in a JSON Format, for this we will make use of our render_to_
+        string function and return the rendered template as a string, if the request.method is 'GET' then the template
+        will be rendered as a form with the information of that consult, if the request.method is 'POST' then the consult
+        will be cancelled, setting the status attribute to 'CANCELLED' and saved. Since we need to update the Agenda
+        with the updated consults, we will collect them form the DB with the new data, and return it through a JSON
+        response object. The agenda is divided into months, so we need to collect all the months in which there are
+        consults pending for us, how can we do that? We call our collected_months function and we pass the updated_consults
+        and tzone as parameters, finally we send our response in JSON Format so the agenda view can update this data.
+    """
+    today = timezone.localtime(timezone.now())
+    consult = Consult.objects.get(pk=pk)
+    tzone = timezone.get_current_timezone()
+    form = AgendaDateFilterForm
+    template = 'appointments/cancel_appointment.html'
+    context = {'consult': consult}
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        consult.status = 'CANCELLED'
+        consult.save()
+        appointments_list = Consult.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
+        paginator = Paginator(appointments_list, 10)
+        page = request.GET.get('page')
+        page_obj = paginator.get_page(page)
+        months_names = collect_months_names(page_obj, tzone)
+        data = {'html': render_to_string('appointments/partial_agenda_list.html', {'appointments': page_obj, 'months': months_names, 'form':form}, request=request)}
     return JsonResponse(data)
 
 
@@ -385,22 +444,22 @@ def registers(request):
     """
     loop.run_until_complete(check_delayed_consults(request.user))
     today = timezone.localtime()
-    consults_list = Consults.objects.filter(created_by=request.user).order_by('-datetime')
+    consults_list = Consult.objects.filter(created_by=request.user).order_by('-datetime')
     paginator = Paginator(consults_list, 16)
     page = request.GET.get('page')
-    consults = paginator.get_page(page)
+    page_obj = paginator.get_page(page)
     template = 'appointments/registers.html'
-    form = RegistersFilter
-    context = {'consults': consults, 'form': form, 'items': len(consults_list), 'today': today}
+    form = RegisterFilterForm
+    context = {'registers': page_obj, 'form': form, 'items': len(consults_list), 'today': today}
     if page:
         data = {'html': render_to_string('appointments/partial_registers.html', context, request)}
         return JsonResponse(data)
     return render(request, template, context)
 
 
-def registers_filter(request):
+def filter_registers(request):
     """
-        This registers_filter is used to filter the registers belonging to this user, depending on the parameters values inside the
+        This filter_registers() function is used to filter the registers belonging to this user, depending on the parameters values inside the
         request.GET dictionary, this function will collect the 'patient', 'month' and 'year' parameter values and convert
         them into a datetime object, this way we can filter the consults based on this values, finally we will return our response
         in JSON Format, this function also checks if the 'page' parameter is inside the querystring, if it is, then the page that
@@ -412,69 +471,7 @@ def registers_filter(request):
     page = request.GET.get('page')
     consults_list = filter_conditional_results(request.user, cleaned_data={'patient': patient_query, 'month': month_query, 'year': year_query}).order_by('datetime')
     paginator = Paginator(consults_list, 16)
-    consults = paginator.get_page(page)
-    context = {'consults': consults, 'filtered': True}
+    page_obj = paginator.get_page(page)
+    context = {'registers': page_obj, 'filtered': True}
     data = {'html': render_to_string('appointments/partial_registers.html', context, request)}
-    return JsonResponse(data)
-
-
-def consult_date_update(request, pk):
-    """
-        DOCSTRING:
-        This consult_date_update() view is used to update the date of a specific consult, this view will collect that
-        specific consult form the database and the ConsultsForm, since this process will be done asynchronously, we need
-        to return our response in JSON Format, for this we use our render_to_string function, if the request.method is
-        'GET' we return this response in JSON Format, if the request.method is 'POST' we fill our form with the
-        content inside our request.POST dict and check if it is valid or not, if it is not then we will add a custom
-        error and return the response again, if it is we save this consult's new date and return in JSON Format the
-        updated content, so the registers will be updated asynchronously in the front-end. It takes two arguments,
-        'request' which expects a request object and 'pk' which expects a consult.pk key.
-    """
-    today = timezone.localtime()
-    tzone = timezone.get_current_timezone()
-    consult = Consults.objects.get(pk=pk)
-    form = AgendaDateFilterForm
-    consult_form = ConsultsForm(request.POST or None, instance=consult, user=request.user)
-    template = 'appointments/consult_date_update.html'
-    context = {'consult_form': consult_form, 'consult':consult}
-    data = {'html': render_to_string(template, context, request)}
-    if request.method == 'POST':
-        consult_form = ConsultsForm(request.POST or None, instance=consult, user=request.user)
-        if consult_form.is_valid():
-            try:
-                consult_form.save()
-                consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-                paginator = Paginator(consults_list, 10)
-                page = request.GET.get('page')
-                consults = paginator.get_page(page)
-                months_names = collect_months_names(consults, tzone)
-                data = {'updated_html': render_to_string('appointments/partial_agenda_list.html', {'consults': consults, 'months': months_names, 'form': form}, request=request)}
-            except IntegrityError:
-                date = consult_form.cleaned_data.get('datetime').date()
-                time = consult_form.cleaned_data.get('datetime').time().strftime('%I:%M:%S %p')
-                context['error'] = 'There is already a reservation for {} at {}'.format(date, time)
-                data = {'html': render_to_string(template, context, request)}
-    return JsonResponse(data)
-
-
-def consult_confirm(request, pk):
-    """
-        DOCSTRING:
-        This consult_confirm() view is used to confirm the consult, it will set the consult.status attribute from pending
-        to confirmed, once the consult is confirmed, it will collect all the updated data from the database and return
-        it in a JSON Response, since the agenda will be updated asynchronously.It takes two arguments,
-        'request' which expects a request object and 'pk' which expects a consult.pk key.
-    """
-    consult = Consults.objects.get(pk=pk)
-    consult.status = 'CONFIRMED'
-    consult.save()
-    today = timezone.localtime()
-    tzone = timezone.get_current_timezone()
-    form = AgendaDateFilterForm
-    consults_list = Consults.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-    paginator = Paginator(consults_list, 10)
-    page = request.GET.get('page')
-    consults = paginator.get_page(page)
-    months_names = collect_months_names(consults, tzone)
-    data = {'html': render_to_string('appointments/partial_agenda_list.html', {'consults': consults, 'months': months_names, 'form': form}, request=request)}
     return JsonResponse(data)

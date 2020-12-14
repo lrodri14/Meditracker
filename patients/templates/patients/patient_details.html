@@ -1,12 +1,12 @@
 <!--This template is used to display the details of any specific patient-->
-{%extends 'base.html'%}
-{%load static%}
-{%block title%}{{patient.first_names}} {{patient.last_names}}{%endblock%}
-{%block return%}<a href="{%url 'patients:patients'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}{%block home%}{%endblock%}
-{%block body_block%}
-<link rel="stylesheet" href="{%static 'patients/css/patient_details.css'%}">
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ patient.first_names }} {{ patient.last_names }}{% endblock %}
+{% block return %}<a href="{% url 'patients:patients' %}"><i class="fas fa-long-arrow-alt-left"></i></a>{% endblock %}{% block home %}{% endblock %}
+{% block body_block %}
+<link rel="stylesheet" href="{% static 'patients/css/patient_details.css' %}">
 
-<h2 id="title">{{patient.first_names}} {{patient.last_names}}</h2>
+<h2 id="title">{{ patient.first_names }} {{ patient.last_names }}</h2>
 
 <!--Info Navigation, this is used to select what information the user wants to see.-->
 <div class="info">
@@ -19,57 +19,57 @@
         <div class="general">
             <h2>General</h2>
             <div class="title">General Information</div>
-            <p>Id Card Number: {{patient.id_number}}</p>
-            <p class="name">First Name: {{patient.first_names}}</p>
-            <p class="name">Last Name: {{patient.last_names}}</p>
-            <p>Gender: {{patient.get_gender_display}}</p>
-            <p>Birthday: {{patient.birthday|date:"d M, Y"}}</p>
-            <p>Age: {{patient.age}}</p>
-            <p>Phone Number: {{patient.phone_number}}</p>
-            <p>Email: {{patient.email}}</p>
-            <p>Civil Status: {{patient.get_civil_status_display}}</p>
-            <p>Origin: {{patient.get_origin_display}}</p>
-            <p>Residence: {{patient.get_residence_display}}</p>
+            <p>Id Card Number: {{ patient.id_number }}</p>
+            <p class="name">First Name: {{ patient.first_names }}</p>
+            <p class="name">Last Name: {{ patient.last_names }}</p>
+            <p>Gender: {{ patient.get_gender_display }}</p>
+            <p>Birthday: {{ patient.birthday|date:"d M, Y" }}</p>
+            <p>Age: {{ patient.age }}</p>
+            <p>Phone Number: {{ patient.phone_number }}</p>
+            <p>Email: {{ patient.email }}</p>
+            <p>Civil Status: {{ patient.get_civil_status_display }}</p>
+            <p>Origin: {{ patient.get_origin_display }}</p>
+            <p>Residence: {{ patient.get_residence_display }}</p>
         </div>
         <div class="background">
             <h2>Background</h2>
             <div class="title">Allergies</div>
-            {%if patient.allergies.all%}
-                {%for allergy in patient.allergies.all%}
-                    <p>{{forloop.counter}}. {{allergy.allergy_type}} - {{allergy.about}}</p>
-                {%endfor%}
-            {%else%}
+            {% if patient.allergies.all %}
+                {% for allergy in patient.allergies.all %}
+                    <p>{{ forloop.counter }}. {{ allergy.allergy_type }} - {{ allergy.about }}</p>
+                {% endfor %}
+            {% else %}
                 <p class="no-data">No Data</p>
-            {%endif%}
+            {% endif %}
             <div class="title">Antecedents</div>
-            {%if patient.antecedents.all%}
-                {%for antecedent in patient.antecedents.all%}
-                    <p>{{forloop.counter}}. {{antecedent.antecedent}} - {{antecedent.info}}</p>
-                {%endfor%}
-            {%else%}
+            {% if patient.antecedents.all %}
+                {% for antecedent in patient.antecedents.all %}
+                    <p>{{ forloop.counter }}. {{ antecedent.antecedent }} - {{ antecedent.info }}</p>
+                {% endfor %}
+            {% else %}
                 <p class="no-data">No Data</p>
-            {%endif%}
+            {% endif %}
             <div class="title">Insurance</div>
-            {%if patient.insurance.insurance_carrier or patient.type_of_insurance%}
-                <p>Insurance Carrier: {{patient.insurance.insurance_carrier}}</p>
-                <p>Insurance Type: {{patient.insurance.insurance_type}}</p>
-                <p>Expiration Date: {{patient.insurance.expiration_date}}</p>
-            {%else%}
+            {% if patient.insurance.insurance_carrier or patient.type_of_insurance %}
+                <p>Insurance Carrier: {{ patient.insurance.insurance_carrier }}</p>
+                <p>Insurance Type: {{ patient.insurance.insurance_type }}</p>
+                <p>Expiration Date: {{ patient.insurance.expiration_date }}</p>
+            {% else %}
                 <p class="no-data">No Data</p>
-            {%endif%}
+            {% endif %}
         </div>
     </div>
     <div class="filterable appointments">
         <!-- Included template for dynamic displaying of results-->
-        {%include 'patients/patient_consults_partial_list.html'%}
+        {% include 'patients/patient_consults_partial_list.html' %}
     </div>
     <div class="filterable exams">
         <!-- Included template for dynamic displaying of results-->
-        {%include 'patients/patient_exams_partial_list.html'%}
+        {% include 'patients/patient_exams_partial_list.html' %}
     </div>
     <div class="filterable charges">
         <!-- Included template for dynamic displaying of results-->
-        {%include 'patients/patient_charges_partial_list.html'%}
+        {% include 'patients/patient_charges_partial_list.html' %}
     </div>
 </div>
 
@@ -78,5 +78,5 @@
     <img class="previewed-image" src="" alt="">
 </div>
 
-<script src="{%static 'patients/js/patient_details.js'%}"></script>
+<script src="{% static 'patients/js/patient_details.js' %}"></script>
 {%endblock%}

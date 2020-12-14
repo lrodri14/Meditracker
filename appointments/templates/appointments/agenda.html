@@ -1,34 +1,36 @@
-{%extends 'base.html'%}
-{%load static%}
-{%block title%}Agenda{%endblock%}
-{%block return%}<a href="{%url 'appointments:consults'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
-{%block body_block%}
-<link rel="stylesheet" href="{%static 'appointments/css/agenda.css'%}">
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Agenda{% endblock %}
+{% block return %}<a href="{% url 'appointments:appointments' %}"><i class="fas fa-long-arrow-alt-left"></i></a>{% endblock %}
+{% block body_block %}
+<link rel="stylesheet" href="{% static 'appointments/css/agenda.css' %}">
 <h2>Agenda</h2>
-<div class="wrapper">
-    {%if consults%}
-        <div class="table">
-            {%include 'appointments/partial_agenda_list.html'%}
+{% if appointments %}
+    <div class="wrapper">
+        <div class="data-table">
+            {% include 'appointments/partial_agenda_list.html' %}
         </div>
+
         <div class="modal">
             <div class="modal-content">
 
             </div>
         </div>
+
         <div>
             <i class="fas fa-filter"></i>
-            <form method="GET" action="{%url 'appointments:filter_agenda'%}" class="filter-results-form filter-form">
+            <form method="GET" action="{% url 'appointments:filter_agenda' %}" class="filter-results-form filter-form">
                 <h3>Filter Results</h3>
-                <p>{{form.date_from.label}}</p>
-                <p>{{form.date_from}}</p>
-                <p>{{form.date_to.label}}</p>
-                <p>{{form.date_to}}</p>
+                <p>{{ form.date_from.label }}</p>
+                <p>{{ form.date_from }}</p>
+                <p>{{ form.date_to.label }}</p>
+                <p>{{ form.date_to }}</p>
                 <button type="submit">Search</button><br>
         </form>
     </div>
-    {%else%}
-        <p id="no-consults">No Data Available</p>
-    {%endif%}
+{% else %}
+    <p id="no-appointments">No Data Available</p>
+{% endif %}
 </div>
-<script src="{%static 'appointments/js/agenda.js'%}"></script>
-{%endblock%}
+<script src="{% static 'appointments/js/agenda.js' %}"></script>
+{% endblock %}

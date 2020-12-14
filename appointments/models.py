@@ -17,7 +17,7 @@ user = get_user_model()
 class Cie10Group(models.Model):
     """
         DOCSTRING:
-        The Cie10Group model is used to create CIE-10 code instances, it's composed of only one attribute, the code itself,
+        The Cie10Group modal is used to create CIE-10 code instances, it's composed of only one attribute, the code itself,
         we also created it's own __str__ dunder method representation, this mode overwrote it's save method, we added
         some functionality to capitalize the code once it reaches the database. It inherits from the models.Model class.
     """
@@ -32,10 +32,10 @@ class Cie10Group(models.Model):
         super(Cie10Group, self).save(*args, **kwargs)
 
 
-class Drugs(models.Model):
+class Drug(models.Model):
     """
         DOCSTRING:
-        The Drugs model inhertits from the models.Model class, it is used to create Drug instances as needed, this model
+        The Drug modal inherits from the models.Model class, it is used to create Drug instances as needed, this model
         defines a tuple under the variable CATEGORY_CHOICES, this choices are used to specify to what branch does this
         drug belongs, we added some functionality through the META CLASS indicating that the 'name' and 'created_by'
         are unique inside our instances, we also set our own __str__ dunder method and we overwrote the save method to
@@ -69,13 +69,13 @@ class Drugs(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.capitalize()
-        super(Drugs, self).save(*args, **kwargs)
+        super(Drug, self).save(*args, **kwargs)
 
 
-class Consults(models.Model):
+class Consult(models.Model):
     """
         DOCSTRING:
-        The Consults class inherits from the models.Model class, it is used to create consults, and update consults
+        The Consult class inherits from the models.Model class, it is used to create consults, and update consults
         once they were scheduled, *NOTE: once consults have been scheduled, filled with diagnose related data and saved
         can not be updated, this to prevent any possible misinformation*, we declared a tuple of choices which will
         establish in which state does the consult remains, the 'medical_status' attribute sets the status of the consult,
@@ -128,7 +128,7 @@ class Consults(models.Model):
     analysis = models.TextField('analysis', blank=True, null=True, help_text='Analysis')
     notes = models.TextField('notes', blank=True, null=True, help_text='Notes')
     # Treatmenet
-    drugs = models.ManyToManyField(Drugs, blank=True, help_text='Drugs recommended', verbose_name='Drugs', related_name='drugs')
+    drugs = models.ManyToManyField(Drug, blank=True, help_text='Drugs recommended', verbose_name='Drugs', related_name='drugs')
     indications = models.TextField('indications', blank=True, null=True, help_text='Indications')
     actions = models.TextField('actions', blank=True, null=True, help_text='actions')
     prescription = models.FileField('prescription', blank=True, null=True, help_text="Current consult's prescription", upload_to='appointments/prescriptions')
@@ -146,14 +146,14 @@ class Consults(models.Model):
     def save(self, *args, **kwargs):
         self.suffering = self.suffering.capitalize()
         self.motive = self.motive.capitalize()
-        super(Consults, self).save(*args, **kwargs)
+        super(Consult, self).save(*args, **kwargs)
 
 
-class MedicalExams(models.Model):
+class MedicalExam(models.Model):
 
     """
         DOCSTRING:
-        The MedicalExams model inherits from the models.Model class and is used to create exams instances, we defined a
+        The MedicalExam model inherits from the models.Model class and is used to create exams instances, we defined a
         tuple of choices under the name of EXAMS_CHOICES, used to indicate what type of exam we are creating, we also
         created our own dunder __str__ dunder method.
     """
@@ -161,7 +161,7 @@ class MedicalExams(models.Model):
     EXAMS_CHOICES = (
         ('T', 'Test'),
     )
-    consult = models.ForeignKey(Consults, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Medical Exams', help_text='Medical Exams', related_name='exams')
+    consult = models.ForeignKey(Consult, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Medical Exams', help_text='Medical Exams', related_name='exams')
     date = models.DateField('date', blank=True, null=True, help_text='Date the exams were presented')
     type = models.CharField('type of exams', max_length=100, blank=False, null=True, help_text='Type of exams', choices=EXAMS_CHOICES)
     image = models.ImageField('exam', blank=True, null=True, help_text='Exam IMG', upload_to='appointments/exams')

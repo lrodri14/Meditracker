@@ -1,20 +1,20 @@
-{%load static%}
-{%load appointments_custom_tags%}
-{%if consults.has_other_pages%}
+{% load static %}
+{% load appointments_custom_tags %}
+{%  if appointments.has_other_pages %}
     <div id="paginator">
-        <span> {{consults.number}} / {{consults.paginator.num_pages}}</span>
+        <span> {{ appointments.number }} / {{ appointments.paginator.num_pages }}</span>
         <div id="navigation">
-        {%if filtered%}
-            {%if consults.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'appointments:filter_agenda'%}{% current_url 'page' consults.previous_page_number request.GET.urlencode%}"></i>{%endif%} {%if consults.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:filter_agenda'%}{% current_url 'page' consults.next_page_number request.GET.urlencode%}"></i>{%endif%}
-        {%else%}
-            {%if consults.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'appointments:agenda'%}{% current_url 'page' consults.previous_page_number%}"></i>{%endif%} {%if consults.has_next%}<i class="fas fa-angle-right" data-url="{%url 'appointments:agenda'%}{% current_url 'page' consults.next_page_number%}"></i>{%endif%}
-        {%endif%}
+        {% if filtered %}
+            {% if appointments.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'appointments:filter_agenda' %}{% current_url 'page' appointments.previous_page_number request.GET.urlencode %}"></i>{% endif %} {%  if appointments.has_next %}<i class="fas fa-angle-right" data-url="{% url 'appointments:filter_agenda' %}{% current_url 'page' appointments.next_page_number request.GET.urlencode %}"></i>{% endif %}
+        {% else %}
+            {% if appointments.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'appointments:agenda' %}{% current_url 'page' appointments.previous_page_number %}"></i>{% endif %} {% if appointments.has_next %}<i class="fas fa-angle-right" data-url="{% url 'appointments:agenda' %}{% current_url 'page' appointments.next_page_number %}"></i>{%endif%}
+        {% endif %}
         </div>
     </div>
-{%endif%}
-{%if consults%}
-    {%for m in months%}
-        <h3>{{m}}</h3>
+{% endif %}
+{% if appointments %}
+    {% for m in months %}
+        <h3>{{ m }}</h3>
         <table>
             <thead>
                 <tr id="heading">
@@ -28,31 +28,31 @@
                 </tr>
             </thead>
             <tbody>
-                {%for c in consults%}
-                    {%if c.datetime|date:"F" == m%}
-                        <tr>
-                            <td>{{c.patient.id_number}}</td>
-                            <td>{{c.patient.first_names}} {{c.patient.last_names}}</td>
-                            <td>{{c.datetime}}</td>
-                            {%if c.status == 'OPEN'%}
-                                <td id="Open">Open</td>
-                            {%elif c.status == 'CONFIRMED'%}
-                                 <td id="Confirmed">Confirmed</td>
-                            {%elif c.status == 'CANCELLED'%}
-                                <td id="Canceled">Cancelled</td>
-                            {%elif c.status == 'CLOSED'%}
-                                <td id="Closed">Closed</td>
-                            {%endif%}
-                            </td>
-                            <td data-url="{%url 'appointments:consult_date_update' c.pk%}">{%if c.status == 'OPEN'%}<i class="fas fa-edit"></i>{%endif%}</td>
-                            <td data-url="{%url 'appointments:consult_confirm' c.pk%}">{%if c.status == 'OPEN'%}<i class="fas fa-check"></i>{%endif%}</td>
-                            <td data-url="{%url 'appointments:cancel_consult' c.pk%}">{%if c.status == 'OPEN'%}<i class="fas fa-times-circle"></i>{%endif%}</td>
-                        </tr>
-                    {%endif%}
-                {%endfor%}
+            {% for a in appointments %}
+                {% if a.datetime|date:"F" == m %}
+                    <tr>
+                        <td>{{ a.patient.id_number }}</td>
+                        <td>{{ a.patient.first_names }} {{ a.patient.last_names }}</td>
+                        <td>{{ a.datetime }}</td>
+                        {% if a.status == 'OPEN' %}
+                            <td id="Open">Open</td>
+                        {% elif a.status == 'CONFIRMED' %}
+                             <td id="Confirmed">Confirmed</td>
+                        {% elif a.status == 'CANCELLED' %}
+                            <td id="Canceled">Cancelled</td>
+                        {% elif a.status == 'CLOSED' %}
+                            <td id="Closed">Closed</td>
+                        {% endif %}
+                        </td>
+                        <td data-url="{% url 'appointments:appointment_date_update' a.pk %}">{% if a.status == 'OPEN' %}<i class="fas fa-edit"></i>{% endif %}</td>
+                        <td data-url="{% url 'appointments:confirm_appointment' a.pk %}">{% if a.status == 'OPEN' %}<i class="fas fa-check"></i>{% endif %}</td>
+                        <td data-url="{% url 'appointments:cancel_appointment' a.pk %}">{% if a.status == 'OPEN' %}<i class="fas fa-times-circle"></i>{% endif %}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
             </tbody>
         </table>
-    {%endfor%}
-{%else%}
-    <p id="no-consults"> Clear section, no data stored</p>
-{%endif%}
+    {% endfor %}
+{% else %}
+    <p id="no-appointments">Clear section, no data stored</p>
+{% endif %}

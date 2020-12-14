@@ -1,5 +1,5 @@
 """
-    This views.py file contains all the functions needed for the Patients app to perform. It contains 5 views,
+    This views.py file contains all the functions needed for the Patients app to perform. It contains 6 views,
     which perform the CRUD Operations for our Patients Class, and a function used to check if there are charges or not.
 """
 
@@ -12,8 +12,8 @@ from django.core.paginator import Paginator
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from appointments.models import Consults, MedicalExams
-from appointments.forms import ConsultsDetailsFilterForm
+from appointments.models import Consult, MedicalExam
+from appointments.forms import ConsultDetailsFilterForm
 
 
 # Functions
@@ -41,24 +41,24 @@ def patients(request):
         DOCSTRING:
         The patients function is used to display all the patients belonging to this user, first the view will check if the
         user belongs to the doctor group searching in the users groups, afterwards it will collect all the patients that are
-        related to him and paginating them in groups of 17 instances, the patient filtering form will also be sent for rendering,
+        related to him and paginate them in groups of 17 instances, the patient filtering form will also be sent for rendering,
         this function only accepts 'GET' requests, the 'page' query parameter will be evaluated every time, so the function knows
-        which page should it send, if the 'page' parameter exists, then the content will be sent in JSON Format. It accepts only
+        which page should it send, if the 'page' parameter exists, then the content will be returned in JSON Format. It accepts only
         one parameter, 'request' which expects a request object.
     """
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
     template = 'patients/patients.html'
     patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
-    paginator = Paginator(patients_list, 17)
-    page = request.GET.get('page')
-    listed_patients = paginator.get_page(page)
-    patient_filter = PatientFilter
-    context = {'patients': listed_patients, 'doctor': doctor, 'form': patient_filter}
-    if page:
+    paginator = Paginator(patients_list, 1)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    patient_filter = PatientFilterForm
+    context = {'patients': page_obj, 'form': patient_filter, 'doctor': doctor}
+    if page_number:
         data = {'html': render_to_string('patients/patients_partial_list.html', context, request)}
         return JsonResponse(data)
-    return render(request, template, context=context)
+    return render(request, template, context)
 
 
 def filter_patients(request):
@@ -71,13 +71,13 @@ def filter_patients(request):
     """
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    template = 'patients/patients_filter_list.html'
+    template = 'patients/patients_partial_list.html'
     query = request.GET.get('query')
-    page = request.GET.get('page')
+    page_number = request.GET.get('page')
     patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
-    paginator = Paginator(patients_list, 17)
-    listed_patients = paginator.get_page(page)
-    context = {'patients': listed_patients, 'doctor': doctor, 'filtered': True}
+    paginator = Paginator(patients_list, 1)
+    page_obj = paginator.get_page(page_number)
+    context = {'patients': page_obj, 'doctor': doctor, 'filtered': True}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -89,7 +89,7 @@ def add_patient(request):
         used to render the personal information of the patient, the AllergiesFormset used to instance and relate as many
         allergies as needed to this particular patient, the AntecedentsFormset used to instance and relate as many
         antecedents as needed to this particular patient, and the InsuranceForm used to relate any insurance instance to
-        this patient. It should be noted that the formsets are passed an empty queryset to the queryset paramater from the
+        this patient. It should be noted that the formsets are passed an empty queryset to the queryset parameter from the
         Formset class, this so the forms won't be pre-populated with any data. If the request.method is "GET" then the
         function will render the template with the before mentioned forms, if the request.method is "POST", then all the
         forms will be populated and checked if they are valid, if they are, they won't be commited yet, the function will
@@ -98,13 +98,13 @@ def add_patient(request):
         main page, it accepts one parameters, 'request'.
     """
     patient_form = PatientForm
-    allergies_form = AllergiesInformationFormset(queryset=AllergiesInformation.objects.none())
-    antecedents_form = AntecedentFormset(queryset=Antecedents.objects.none())
+    allergies_form = AllergyInformationFormset(queryset=AllergyInformation.objects.none())
+    antecedents_form = AntecedentFormset(queryset=Antecedent.objects.none())
     insurance_form = InsuranceInformationForm()
     template = 'patients/add_patient.html'
     if request.method == 'POST':
         patient_form = PatientForm(request.POST)
-        allergies_form = AllergiesInformationFormset(request.POST)
+        allergies_form = AllergyInformationFormset(request.POST)
         antecedents_form = AntecedentFormset(request.POST)
         insurance_form = InsuranceInformationForm(request.POST)
         if patient_form.is_valid() and allergies_form.is_valid() and antecedents_form.is_valid() and insurance_form.is_valid():
@@ -152,21 +152,21 @@ def patient_details(request, pk):
         a 'pk' which expects a patient instance pk.
     """
     patient = Patient.objects.get(pk=pk)
-    allergies = AllergiesInformation.objects.filter(patient=patient)
-    antecedents = Antecedents.objects.filter(patient=patient)
+    allergies = AllergyInformation.objects.filter(patient=patient)
+    antecedents = Antecedent.objects.filter(patient=patient)
     insurance = InsuranceInformation.objects.get(patient=patient)
-    consults = Consults.objects.filter(patient=patient, created_by=request.user).order_by('-datetime')
+    consults = Consult.objects.filter(patient=patient, created_by=request.user).order_by('-datetime')
     charges = check_charges(consults)
-    exams = MedicalExams.objects.filter(consult__patient=patient)
+    exams = MedicalExam.objects.filter(consult__patient=patient)
     template = 'patients/patient_details.html'
-    context = {'patient': patient, 'consults': consults, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'exams': exams, 'charges': charges, 'consults_form': ConsultsDetailsFilterForm}
+    context = {'patient': patient, 'consults': consults, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'exams': exams, 'charges': charges, 'consults_form': ConsultDetailsFilterForm}
     if request.method == 'POST':
-        consults_form = ConsultsDetailsFilterForm(request.POST)
+        consults_form = ConsultDetailsFilterForm(request.POST)
         if consults_form.is_valid():
             date_from = consults_form.cleaned_data['date_from']
             date_to = consults_form.cleaned_data['date_to']
-            updated_consults = Consults.objects.filter(patient=patient, created_by=request.user, datetime__date__gte=date_from, datetime__date__lte=date_to)
-            updated_exams = MedicalExams.objects.filter(consult__patient=patient, consult__datetime__date__gte=date_from, consult__datetime__date__lte=date_to)
+            updated_consults = Consult.objects.filter(patient=patient, created_by=request.user, datetime__date__gte=date_from, datetime__date__lte=date_to)
+            updated_exams = MedicalExam.objects.filter(consult__patient=patient, consult__datetime__date__gte=date_from, consult__datetime__date__lte=date_to)
             if len(updated_consults) > 0:
                 context['consults'] = updated_consults
                 context['exams'] = updated_exams
@@ -184,22 +184,21 @@ def patient_details(request, pk):
     return render(request, template, context)
 
 
-def patient_delete(request, pk):
+def delete_patient(request, pk):
     """
         DOCSTRING:
-        The patient_delete function is used to delete Patient instances, a particular functionality of this function
+        The delete_patient function is used to delete Patient instances, a particular functionality of this function
         is that it will lookup if there is any data related to this patient, if there is not, the patient will be de-
         leted successfully, else, an error will be raised, this to protect the data integrity, it will retrieve the
         updated list of patients and render a new template with this content, this data will be returned as a
         JsonResponse, it accepts two parameters, 'request' and 'pk' which expects an patients instance pk.
 
     """
-    today = timezone.localdate()
     patient = Patient.objects.get(pk=pk)
     doctor_group = Group.objects.get(name='Doctor')
     doctor = doctor_group in request.user.groups.all()
-    consults = Consults.objects.filter(created_by=request.user, patient=patient, medical_status=True)
-    template = 'patients/patients_delete.html'
+    consults = Consult.objects.filter(created_by=request.user, patient=patient, medical_status=True)
+    template = 'patients/delete_patient.html'
     context = {'patient': patient}
     data = {'html': render_to_string(template, context, request=request)}
     if request.method == 'POST':
@@ -211,17 +210,17 @@ def patient_delete(request, pk):
             context = {'patient_deleted': ' Patient has been deleted successfully'}
             patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
             paginator = Paginator(patients_list, 17)
-            page = request.GET.get('page')
-            patients = paginator.get_page(page)
-            data = {'html': render_to_string(template, context, request=request),
-                    'patients': render_to_string('patients/patients_partial_list.html', {'patients': patients, 'doctor': doctor, 'today': today}, request)}
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            data = {'html': render_to_string(template, context, request),
+                    'patients': render_to_string('patients/patients_partial_list.html', {'patients': page_obj, 'doctor': doctor}, request)}
     return JsonResponse(data)
 
 
-def patient_update(request, pk):
+def update_patient(request, pk):
     """
         DOCSTRING:
-        The update_patients function is used to update Patient instances, this function will render four forms, the PatientForm
+        The update_patient function is used to update Patient instances, this function will render four forms, the PatientForm
         used to update the personal information of the patient, the AllergiesFormset used to instance and relate as many
         allergies as needed to this particular patient, the AntecedentsFormset used to instance and relate as many
         antecedents as needed to this particular patient, and the InsuranceForm used to relate any insurance instance to
@@ -234,16 +233,16 @@ def patient_update(request, pk):
         it accepts one parameters, 'request'.
     """
 
-    template = 'patients/patients_update.html'
+    template = 'patients/update_patient.html'
     patient = Patient.objects.get(pk=pk)
     patient_insurance = InsuranceInformation.objects.get(patient=patient)
     patient_form = PatientForm(request.POST or None, instance=patient)
-    allergies_form = AllergiesInformationUpdateFormset(instance=patient)
+    allergies_form = AllergyInformationUpdateFormset(instance=patient)
     insurance_form = InsuranceInformationForm(request.POST or None, instance=patient_insurance)
     antecedents_form = AntecedentUpdateFormset(instance=patient)
     if request.method == 'POST':
         patient_form = PatientForm(request.POST or None, instance=patient)
-        allergies_form = AllergiesInformationUpdateFormset(request.POST, instance=patient)
+        allergies_form = AllergyInformationUpdateFormset(request.POST, instance=patient)
         insurance_form = InsuranceInformationForm(request.POST, instance=patient_insurance)
         antecedents_form = AntecedentUpdateFormset(request.POST, instance=patient)
         if patient_form.is_valid() and allergies_form.is_valid() and insurance_form.is_valid() and antecedents_form.is_valid():

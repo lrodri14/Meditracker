@@ -1,7 +1,7 @@
 <!-- Template used to display specific patient charges dynamically-->
-{%load static%}
+{% load static %}
 <!--If charges are present this code will be rendered-->
-{%if charges%}
+{% if charges %}
 <div>
     <table>
         <thead>
@@ -13,34 +13,34 @@
             </tr>
         </thead>
         <tbody>
-            {%for c in consults%}
-                {%if c.charge%}
-                    <tr {%if c.medical_status%} onclick="window.location='{%url 'appointments:consult_details' c.pk %}'" {%endif%}>
-                        <td>{{c.datetime|date}}</td>
-                        <td>{{c.datetime|time}}</td>
-                        <td>{{c.created_by}}</td>
-                        <td>{{c.charge}}</td>
+            {% for c in consults %}
+                {% if c.charge %}
+                    <tr {% if c.medical_status %} onclick="window.location='{%url 'appointments:consult_details' c.pk %}'" {% endif %}>
+                        <td>{{ c.datetime|date }}</td>
+                        <td>{{ c.datetime|time }}</td>
+                        <td>{{ c.created_by }}</td>
+                        <td>{{ c.charge }}</td>
                     </tr>
-                {%endif%}
-            {%endfor%}
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
 </div>
 <div>
     <!-- Filtering Form -->
     <i class="fas fa-filter charges-filter"></i><i class="fas fa-sync-alt charges-reload"></i>
-    <form method="POST" action="{%url 'patients:patients_details' patient.pk%}" class="charges-form">
+    <form method="POST" action="{% url 'patients:patients_details' patient.pk %}" class="charges-form">
         <h3>Filter Results</h3>
-        {%csrf_token%}
-        <p>{{consults_form.date_from.label}}</p>
-        <p>{{consults_form.date_from}}</p>
-        <p>{{consults_form.date_to.label}}</p>
-        <p>{{consults_form.date_to}}</p>
-        <p class="error"><small>{{error}}</small></p>
+        {% csrf_token %}
+        <p>{{ consults_form.date_from.label }}</p>
+        <p>{{ consults_form.date_from }}</p>
+        <p>{{ consults_form.date_to.label }}</p>
+        <p>{{ consults_form.date_to }}</p>
+        <p class="error"><small>{{ error }}</small></p>
         <button type="submit">Submit</button>
     </form>
 </div>
 <!--If no charges are present this code will be rendered-->
-{%else%}
+{% else %}
 <p class="no-data">No Data</p>
-{%endif%}
+{% endif %}

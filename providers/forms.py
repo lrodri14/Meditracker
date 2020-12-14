@@ -4,23 +4,23 @@
 """
 
 from django import forms
-from .models import Providers, Visitor
+from .models import Provider, Visitor
 
 # Creation Forms
 
 
-class ProvidersForm(forms.ModelForm):
+class ProviderForm(forms.ModelForm):
     """
         DOCSTRING:
         This ProvidersForm class inherits from the forms.ModelForm class
         and it is used to create providers in our providers app.
     """
     class Meta:
-        model = Providers
+        model = Provider
         exclude = ('created_by',)
 
 
-class VisitorsForm(forms.ModelForm):
+class VisitorForm(forms.ModelForm):
     """
         DOCSTRING:
         This VisitorsrsForm class inherits from the forms.ModelForm class
@@ -37,13 +37,13 @@ class VisitorsForm(forms.ModelForm):
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
         if user:
-            self.fields['company'].queryset = Providers.objects.filter(created_by=user)
+            self.fields['company'].queryset = Provider.objects.filter(created_by=user)
 
 
 # Filtering Forms
 
 
-class ProvidersFilterForm(forms.Form):
+class ProviderFilterForm(forms.Form):
     """
         DOCSTRING:
         This ProvidersFilterForm is used to retrieve data related to
@@ -52,7 +52,7 @@ class ProvidersFilterForm(forms.Form):
     company = forms.CharField(widget=forms.widgets.TextInput)
 
 
-class VisitorsFilterForm(forms.Form):
+class VisitorFilterForm(forms.Form):
     """
         DOCSTRING:
         This VisitorsFilterForm is used to retrieve data related to

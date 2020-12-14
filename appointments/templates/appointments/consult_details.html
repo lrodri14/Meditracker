@@ -1,14 +1,14 @@
 <!--Checked-->
-{%extends 'base.html'%}
-{%load static%}
-{%block title%}Consults Details{%endblock%}
-{%block return%}{%if referer == "details"%}<a href="{%url 'patients:patients_details' consult.patient.pk%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%else%}<a href="{%url 'records:records'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endif%}{%endblock%}{%block home%}{%endblock%}
-{%block body_block%}
-{%block content%}{%endblock%}
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Consults Details{% endblock %}
+{% block return %}{% if referer == "details" %}<a href="{% url 'patients:patients_details' consult.patient.pk %}"><i class="fas fa-long-arrow-alt-left"></i></a>{% else %}<a href="{% url 'records:records' %}"><i class="fas fa-long-arrow-alt-left"></i></a>{% endif %}{% endblock %}{% block home %}{% endblock %}
+{% block body_block %}
+{% block content %}{% endblock %}
 <link rel="stylesheet" href="{%static 'appointments/css/consults_details.css'%}">
 <div id="heading">
-    <h2>{{consult.patient.first_names}} {{consult.patient.last_names}}</h2>
-    <h3>Date: {{consult.datetime}}</h3>
+    <h2>{{ consult.patient.first_names }} {{ consult.patient.last_names }}</h2>
+    <h3>Date: {{ consult.datetime }}</h3>
 </div>
 
 <i class="fas fa-print" data-pdf="{{MEDIA_URL}}{{consult.prescription}}"></i>
@@ -16,69 +16,69 @@
     <div class="general">
         <h1>Appointment General Info</h1>
         <hr>
-        <h3>Patient: {{consult.patient.first_names}} {{consult.patient.last_names}}</h3>
-        <h3>Date: {{consult.datetime.date}}</h3>
-        <h3>Time: {{consult.datetime.time}}</h3>
-        <h3>Motive: {{consult.motive}}</h3>
-        <h3>Suffering: {{consult.suffering}}</h3>
+        <h3>Patient: {{ consult.patient.first_names }} {{ consult.patient.last_names }}</h3>
+        <h3>Date: {{ consult.datetime.date }}</h3>
+        <h3>Time: {{ consult.datetime.time }}</h3>
+        <h3>Motive: {{ consult.motive }}</h3>
+        <h3>Suffering: {{ consult.suffering }}</h3>
     </div>
     <div class="vital-signs">
         <h1>Vital Signs</h1>
         <hr>
-        <h3>Blood Pressure: {%if consult.blood_pressure%}{{consult.blood_pressure}}{%endif%}</h3>
-        <h3>Temperature: {%if consult.temperature%}{{consult.temperature}}{%endif%}</h3>
-        <h3>Size: {%if consult.size%}{{consult.size}}{%endif%}</h3>
-        <h3>Weight: {%if consult.weight%}{{consult.weight}}{%endif%}</h3>
+        <h3>Blood Pressure: {%if consult.blood_pressure %}{{ consult.blood_pressure }}{% endif %}</h3>
+        <h3>Temperature: {% if consult.temperature %}{{ consult.temperature }}{% endif %}</h3>
+        <h3>Size: {% if consult.size %}{{ consult.size }}{% endif %}</h3>
+        <h3>Weight: {% if consult.weight %}{{ consult.weight }}{% endif %}</h3>
     </div>
 </div>
 <div class="exams">
     <h1>Exams</h1>
     <hr>
-    {%for exam in exams%}
-        <p><a href="{{MEDIA_URL}}{{exam.image}}">{{exam}}</a></p>
-    {%endfor%}
+    {% for exam in exams %}
+        <p><a href="{{MEDIA_URL}}{{exam.image}}">{{ exam }}</a></p>
+    {% endfor %}
 </div>
 <div class="exploration">
     <div class="organ-systems">
         <h1>Organ System</h1>
         <hr>
-        <h3>Digestive System: {{consult.digestive_system}}</h3>
-        <h3>Endocrine System: {{consult.endocrine_system}}</h3>
-        <h3>Renal System: {{consult.renal_system}}</h3>
-        <h3>Lymphatic System: {{consult.lymphatic_system}}</h3>
-        <h3>Respiratory System: {{consult.respiratory_system}}</h3>
+        <h3>Digestive System: {{ consult.digestive_system }}</h3>
+        <h3>Endocrine System: {{ consult.endocrine_system }}</h3>
+        <h3>Renal System: {{ consult.renal_system }}</h3>
+        <h3>Lymphatic System: {{ consult.lymphatic_system }}</h3>
+        <h3>Respiratory System: {{ consult.respiratory_system }}</h3>
     </div>
     <div class="physical">
         <h1>Physical Exploration</h1>
         <hr>
-        <h3>Head Exploration: {{consult.head_exploration}}</h3>
-        <h3>Thorax Exploration: {{consult.thorax_exploration}}</h3>
+        <h3>Head Exploration: {{ consult.head_exploration }}</h3>
+        <h3>Thorax Exploration: {{ consult.thorax_exploration }}</h3>
     </div>
 </div>
 <div class="diagnose">
     <h1>Diagnose</h1>
     <hr>
-    <h3>CIE-10 Group: {{consult.cie_10_group}}</h3>
-    <h3>CIE-10 Detail: {{consult.cie_10_detail}}</h3>
-    <h3>Diagnose: {{consult.diagnose}}</h3>
-    <h3>Procedure: {{consult.procedure}}</h3>
-    <h3>Analysis: {{consult.analysis}}</h3>
-    <h3>Notes: {{consult.notes}}</h3>
+    <h3>CIE-10 Group: {{ consult.cie_10_group }}</h3>
+    <h3>CIE-10 Detail: {{ consult.cie_10_detail }}</h3>
+    <h3>Diagnose: {{ consult.diagnose }}</h3>
+    <h3>Procedure: {{ consult.procedure }}</h3>
+    <h3>Analysis: {{ consult.analysis }}</h3>
+    <h3>Notes: {{ consult.notes }}</h3>
 </div>
 <div class="treatment">
-<h1>Treatment: {{consult.treatment}}</h1>
+<h1>Treatment: {{ consult.treatment }}</h1>
     <hr>
     <h3>Drugs Used:</h3>
-    {%for drug in consult.drugs.all%}
-        <p>{{drug}}</p>
-    {%endfor%}
-    {%for medicine in consult.medicine.splitlines%}
-        <p>{{medicine}}</p>
-    {%endfor%}
+    {% for drug in consult.drugs.all %}
+        <p>{{ drug }}</p>
+    {% endfor %}
+    {% for medicine in consult.medicine.splitlines %}
+        <p>{{ medicine }}</p>
+    {% endfor %}
     <h3>Actions:</h3>
-    {%for actions in consult.actions.splitlines%}
-        <p>{{actions}}</p>
-    {%endfor%}
+    {% for actions in consult.actions.splitlines %}
+        <p>{{ actions }}</p>
+    {% endfor %}
 </div>
 
 <div class="prescription-modal">
@@ -92,6 +92,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.4/pdfobject.min.js" integrity="sha512-mW7siBAOOJTkMl77cTke1Krn+Wz8DJrjMzlKaorrGeGecq0DPUq28KgMrX060xQQOGjcl7MSSep+/1FOprNltw==" crossorigin="anonymous"></script>
-<script src="{%static 'appointments/js/consult_details.js'%}"></script>
-{%endblock%}
+<script src="{% static 'appointments/js/consult_details.js' %}"></script>
+{% endblock %}
 

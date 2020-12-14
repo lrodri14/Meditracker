@@ -1,12 +1,12 @@
-<!-- Template used to display the form for the add patient-->
+<!-- Template used to display the form for the updating of a specific patient-->
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Add Patient{% endblock %}
+{% block title %}Update Patient{% endblock %}
 {% block return %}{% endblock %}{% block home %}{% endblock %}
 {% block body_block %}
-<link rel="stylesheet" href="{% static 'patients/css/add_patient.css' %}">
+<link rel="stylesheet" href="{% static 'patients/css/update_patient.css' %}">
 
-    <form method="POST" autocomplete="off">
+    <form method="POST" autocomplete="off" enctype="multipart/form-data">
 
         {% csrf_token %}
 
@@ -20,36 +20,34 @@
             {{ antecedents_form.management_form }}
         </div>
 
-
         <div class="wrapper">
             <!-- General Info -->
             <div class="general-info">
                 <a href="{% url 'patients:patients' %}"><i class="fas fa-long-arrow-alt-left"></i></a>
-                <h1>Add Patient</h1>
+                <h1>Update Patient</h1>
                 <div class="info">
-
-            <!-- Errors -->
+                <!-- Errors -->
                 {% if patient_form.errors %}
                     {% for error in patient_form.errors %}
-                        <p class="error"><small>{{ error.as_text }}</small></p>
+                        <p class="error">{{ error.as_text }}</p>
                     {% endfor %}
                 {% endif %}
 
                 {% for form in allergies_form %}
                     {% if form.non_field_errors %}
-                        <p class="error"><small>{{ form.non_field_errors.as_text }}</small></p>
+                        <p class="error">{{ form.non_field_errors.as_text }}</p>
                     {% endif %}
-                {% endfor %}
+                {% endfor%}
 
                 {% for form in antecedents_form %}
                     {% if form.non_field_errors %}
-                        <p class="error"><small>{{ form.non_field_errors.as_text }}</small></p>
+                        <p class="error">{{ form.non_field_errors.as_text }}</p>
                     {% endif %}
                 {% endfor %}
 
 
                 {% if insurance_form.non_field_errors %}
-                    <p class="error"><small>{{ insurance_form.non_field_errors.as_text }}</small></p>
+                    <p class="error">{{ insurance_form.non_field_errors.as_text }}</p>
                 {% endif %}
 
                     <p>{{ patient_form.id_number.label }}</p>
@@ -72,13 +70,18 @@
                     <p>{{ patient_form.origin }}</p>
                     <p>{{ patient_form.residence.label }}</p>
                     <p>{{ patient_form.residence }}</p>
+                    {% if patient_form.error s%}
+                        {% for error in patient_form.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
                 </div>
-                <button type="submit">Save</button>
+                <button type="submit">Update</button>
             </div>
 
-
-            <div class="extra-info">
             <!-- Extra Info -->
+            <div class="extra-info">
+
                 <h1>Extra Information</h1>
                 <h2>Allergies</h2>
                     <div class="allergies-form">
@@ -98,6 +101,7 @@
                                     <td>{{ allergy_form.about }}</td>
                                     <td><i class="fas fa-trash delete-allergy-form"></i></td>
                                     <td class="allergy-delete-check">{{ allergy_form.DELETE }}</td>
+                                    <td class="hidden">{{ allergy_form.id }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -123,13 +127,14 @@
                                     <td>{{ antecedent_form.info }}</td>
                                     <td><i class="fas fa-trash delete-antecedent-form"></i></td>
                                     <td class="antecedent-delete-check">{{ antecedent_form.DELETE }}</td>
+                                    <td class="hidden">{{ antecedent_form.id }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
 
-                <!-- Insurance Form-->
+                <!-- Insurance Form -->
                 <h2>Insurance</h2>
                 <div class="insurance-form">
                     <table>
@@ -174,6 +179,5 @@
         </div>
     </div>
 
-
-<script src="{% static 'patients/js/add_patient.js' %}"></script>
-{% endblock %}
+<script src="{% static 'patients/js/update_patient.js' %}"></script>
+{%endblock%}

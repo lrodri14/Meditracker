@@ -1,14 +1,14 @@
 <!--Template used to render the main providers page, all the logic occurs here.-->
-{%extends 'base.html'%}
-{%load static%}
-{%block return%}<a href="{%url 'home:home'%}"><i class="fas fa-long-arrow-alt-left" id="backwards"></i></a>{%endblock%}
-{%block title%}Providers{%endblock%}
-{%block body_block%}
-<link rel="stylesheet" href="{%static 'providers/css/providers.css'%}">
+{% extends 'base.html' %}
+{% load static %}
+{% block return %}<a href="{% url 'home:home' %}"><i class="fas fa-long-arrow-alt-left" id="backwards"></i></a>{% endblock %}
+{% block title %}Providers{% endblock %}
+{% block body_block %}
+<link rel="stylesheet" href="{% static 'providers/css/providers.css' %}">
 <h2>Providers</h2>
 <!--Navigation bar, each of this tabs contains an data-url attribute and data-provider-type which is used to request
     data from the server side.-->
-<ul class="navigation"><li data-provider-type="LP" data-url="{%url 'providers:providers_list'%}" class="tab">Laboratories</li><li data-provider-type="MP" data-url="{%url 'providers:providers_list'%}" class="tab">Medical Providers</li><li class="tab" data-url="{%url 'providers:visitors'%}">Visitors</li></ul>
+<ul class="navigation"><li data-provider-type="LP" data-url="{% url 'providers:providers_list' %}" class="tab">Laboratories</li><li data-provider-type="MP" data-url="{% url 'providers:providers_list' %}" class="tab">Medical Providers</li><li class="tab" data-url="{% url 'providers:visitors' %}">Visitors</li></ul>
 <!--Wrapper, this container will be filled with the content retrieved from the server side asynchronously.-->
 <div class="wrapper">
 
@@ -22,5 +22,5 @@
     </div>
 </div>
 
-<script src="{%static 'providers/js/providers.js'%}"></script>
-{%endblock%}
+<script src="{% static 'providers/js/providers.js' %}"></script>
+{% endblock %}

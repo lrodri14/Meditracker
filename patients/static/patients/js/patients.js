@@ -13,7 +13,6 @@ var body = document.querySelector('body')
 
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
-    var dataTable = document.querySelector('.table')
     var i = document.querySelector('.fa-filter')
     var form = document.querySelector('form')
     var filterForm = document.querySelector('.filter-form')
@@ -140,7 +139,7 @@ if (body){
             .then(data => {
                 if (data['html']){
                     document.querySelector('#paginator').remove()
-                    dataTable.innerHTML = data['html']
+                    tbody.innerHTML = data['html']
                 }
             })
         }
@@ -356,7 +355,7 @@ if (wrapper){
             .then(data => {
                 if (data.hasOwnProperty('patients')){
                     modalContent.innerHTML = data['html']
-                    dataTable.innerHTML = data['patients']
+                    tbody.innerHTML = data['patients']
                 }else{
                     modalContent.innerHTML = data['html']
                 }
@@ -376,7 +375,7 @@ if (wrapper){
                 if (document.querySelector('#paginator')){
                     document.querySelector('#paginator').remove()
                 }
-                dataTable.innerHTML = data['html']
+                tbody.innerHTML = data['html']
             })
         }
 

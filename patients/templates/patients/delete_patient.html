@@ -2,7 +2,7 @@
 {%load static%}
 <!-- Confirmation -->
 {%if patient%}
-<form method="POST" action="{%url 'patients:patients_delete' patient.pk%}" id="modal-form">
+<form method="POST" action="{%url 'patients:delete_patient' patient.pk%}" id="modal-form">
     {%csrf_token%}
     <h2>{{patient.first_names}} {{patient.last_names}}</h2>
     <p><small>Are you sure you want to delete this record?</small></p>

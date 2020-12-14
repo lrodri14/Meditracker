@@ -11,7 +11,7 @@ User = get_user_model()
 # Create your models here.
 
 
-class Providers(models.Model):
+class Provider(models.Model):
 
     """
         DOCSTRING:
@@ -60,7 +60,7 @@ class Visitor(models.Model):
     last_name = models.CharField("Visitor's Last Name", max_length=100, blank=True, null=True, help_text="Visitor's Last Name")
     contact = models.CharField('Phone Number', max_length=100, blank=False, null=True, help_text="Visitor's Contact")
     email = models.EmailField('Email', blank=False, null=True, help_text="Visitor's Email")
-    company = models.ForeignKey(Providers, on_delete=models.CASCADE, blank=False, null=True, help_text='Providers Brand')
+    company = models.ForeignKey(Provider, on_delete=models.CASCADE, blank=False, null=True, help_text='Providers Brand')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, help_text='Created By')
 
     def save(self, *args, **kwargs):
@@ -69,6 +69,6 @@ class Visitor(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name + ' ' + self.last_name + ' - ' + self.company
+        return self.name + ' ' + self.last_name
 
 

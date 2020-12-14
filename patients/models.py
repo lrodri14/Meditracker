@@ -134,7 +134,7 @@ class InsuranceInformation(models.Model):
 # Allergies Information
 
 
-class Allergies(models.Model):
+class Allergy(models.Model):
     """
         DOCSTRING:
         The Allergies class inherits from the models.Model class, and is used to create Allergies instances,
@@ -154,19 +154,19 @@ class Allergies(models.Model):
 
     def save(self, *args, **kwargs):
         self.allergy_type = self.allergy_type.title()
-        super(Allergies, self).save(*args, **kwargs)
+        super(Allergy, self).save(*args, **kwargs)
 
 # Patient Allergies Information
 
 
-class AllergiesInformation(models.Model):
+class AllergyInformation(models.Model):
     """
         DOCSTRING:
         The AllergiesInformation class inherits from the models.Model class, and is used to create Allergies-
         Information instances, it rewrote the save() method to capitalize the self.about field in the model,
         and lastly it contains its own __str__ dunder method.
     """
-    allergy_type = models.ForeignKey(Allergies, on_delete=models.CASCADE, null=True, blank=True, verbose_name='allergy type',
+    allergy_type = models.ForeignKey(Allergy, on_delete=models.CASCADE, null=True, blank=True, verbose_name='allergy type',
                                         help_text='Allergy type of the patient', related_name='allergy')
     about = models.TextField('about allergy', help_text='Tell us about what you suffer', blank=True, null=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
@@ -177,12 +177,12 @@ class AllergiesInformation(models.Model):
 
     def save(self, *args, **kwargs):
         self.about = self.about.capitalize()
-        super(AllergiesInformation, self).save(*args, **kwargs)
+        super(AllergyInformation, self).save(*args, **kwargs)
 
 # Patient Antecedents Information
 
 
-class Antecedents(models.Model):
+class Antecedent(models.Model):
     """
         DOCSTRING:
         The Antecedents class inherits from the models.Model class, and is used to create Antecedents instances,
@@ -201,6 +201,6 @@ class Antecedents(models.Model):
         if self.antecedent and self.info:
             self.antecedent = self.antecedent.title()
             self.info = self.info.capitalize()
-        super(Antecedents, self).save(*args, **kwargs)
+        super(Antecedent, self).save(*args, **kwargs)
 
 

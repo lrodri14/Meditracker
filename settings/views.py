@@ -9,11 +9,11 @@ from django.http import JsonResponse
 from django.db import IntegrityError
 from django.apps import apps
 from django.template.loader import render_to_string
-from patients.forms import AllergiesFilterForm, AllergiesForm, InsuranceCarrierFilterForm, InsuranceCarrierForm
-from appointments.forms import DrugsForm, DrugsFilterForm
+from patients.forms import AllergyFilterForm, AllergyForm, InsuranceCarrierFilterForm, InsuranceCarrierForm
+from appointments.forms import DrugForm, DrugFilterForm
 InsuranceCarrier = apps.get_model('patients', 'InsuranceCarrier')
-Drugs = apps.get_model('appointments', 'Drugs')
-Allergies = apps.get_model('patients', 'Allergies')
+Drugs = apps.get_model('appointments', 'Drug')
+Allergies = apps.get_model('patients', 'Allergy')
 
 
 # Create your views here.
@@ -394,19 +394,19 @@ def create_drug(request):
         and if the response is valid, will be saved and the updated list will be sent as a JSON Response, if the form is
         invalid, a custom error will be the response, this view expects one single arguments: 'requests' a single object.
     """
-    drugs_form = DrugsForm
+    drugs_form = DrugForm
     template = 'settings/create_drug.html'
     context = {'form': drugs_form}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
-        drugs_form = DrugsForm(request.POST)
+        drugs_form = DrugForm(request.POST)
         if drugs_form.is_valid():
             try:
                 drug = drugs_form.save(commit=False)
                 drug.created_by = request.user
                 drug.save()
                 drugs_list = Drugs.objects.filter(created_by=request.user)
-                context = {'drugs': drugs_list, 'form': DrugsFilterForm}
+                context = {'drugs': drugs_list, 'form': DrugFilterForm}
                 data = {'updated_html': render_to_string('settings/drugs_list.html', context, request), 'updated_drugs_list': render_to_string('appointments/partial_drugs_selection.html', {'drugs': drugs_list}, request)}
             except IntegrityError:
                 context['error'] = 'This drug is already listed in your options'
