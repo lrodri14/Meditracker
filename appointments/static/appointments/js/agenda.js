@@ -198,7 +198,6 @@ if (wrapper){
             url = e.target.getAttribute('data-url')
             requestPageAW(url)
             .then(data => {
-                document.querySelector('#paginator').remove()
                 dataTable.innerHTML = data['html']
             })
         }
@@ -319,9 +318,6 @@ if (wrapper){
             filterResultsAW(url)
             .then(data => {
                 dataTable.innerHTML = data['html']
-                if(form){
-                    form.classList.add('show-form')
-                }
             })
         }
     })

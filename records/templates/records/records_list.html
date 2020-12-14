@@ -1,32 +1,45 @@
 <!--Checked-->
-{%extends 'base.html'%}
-{%load static%}
-{%block title%}All Records{%endblock%}
-{%block return%}<a href="{%url 'home:home'%}"><i class="fas fa-long-arrow-alt-left"></i></a>{%endblock%}
-{%block body_block%}
-<link rel="stylesheet" href="{%static 'records/css/records_list.css'%}">
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}All Records{% endblock %}
+{% block return %}<a href="{% url 'home:home' %}"><i class="fas fa-long-arrow-alt-left"></i></a>{% endblock %}
+{% block body_block %}
+<link rel="stylesheet" href="{% static 'records/css/records_list.css' %}">
 <h2>Records</h2>
-{%if records%}
+{% if records %}
     <div class="wrapper">
-        <div class="table">
-            {%include 'records/partial_records_list.html'%}
+        <div>
+            <table>
+                <thead>
+                    <tr id="heading">
+                        <th>ID</th>
+                        <th>Patient</th>
+                        <th>Date and Time</th>
+                        <th>Created By</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% include 'records/partial_records_list.html' %}
+                </tbody>
+            </table>
         </div>
         <div>
             <i class="fas fa-filter"></i>
-            <form method="GET" action="{%url 'records:filter_records'%}">
-                {%csrf_token%}
+            <form method="GET" action="{% url 'records:filter_records' %}">
+                {% csrf_token %}
                 <h2>Filter Results</h2>
-                <p>{{form.date_from.label}}</p>
-                <p>{{form.date_from}}</p>
-                <p>{{form.date_to.label}}</p>
-                <p>{{form.date_to}}</p>
-                <p class="error"><small>{{error}}</small></p>
+                <p>{{ form.date_from.label }}</p>
+                <p>{{ form.date_from }}</p>
+                <p>{{ form.date_to.label }}</p>
+                <p>{{ form.date_to }}</p>
+                <p class="error"><small>{{ error }}</small></p>
                 <button type="submit">Search</button>
             </form>
          </div>
     </div>
-{%else%}
+{% else %}
     <p id="no-records">There are no records filled</p>
-{%endif%}
-<script src="{%static 'records/js/records_list.js'%}"></script>
-{%endblock%}
+{% endif %}
+<script src="{% static 'records/js/records_list.js' %}"></script>
+{% endblock %}

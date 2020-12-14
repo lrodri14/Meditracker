@@ -239,9 +239,6 @@ tr:nth-child(even){
 
 /*Filter form*/
 .filter-form{
-    position: static;
-    width: 90%;
-    height: 100%;
     transform: translateY(-200%);
     background-color: #5A7FAF;
     text-align: center;

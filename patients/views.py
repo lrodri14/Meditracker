@@ -50,7 +50,7 @@ def patients(request):
     doctor = doctor_group in request.user.groups.all()
     template = 'patients/patients.html'
     patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
-    paginator = Paginator(patients_list, 1)
+    paginator = Paginator(patients_list, 17)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     patient_filter = PatientFilterForm
@@ -75,7 +75,7 @@ def filter_patients(request):
     query = request.GET.get('query')
     page_number = request.GET.get('page')
     patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
-    paginator = Paginator(patients_list, 1)
+    paginator = Paginator(patients_list, 17)
     page_obj = paginator.get_page(page_number)
     context = {'patients': page_obj, 'doctor': doctor, 'filtered': True}
     data = {'html': render_to_string(template, context, request)}

@@ -138,7 +138,7 @@ if (body){
             requestPageAW(url)
             .then(data => {
                 if (data['html']){
-                    document.querySelector('#paginator').remove()
+                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
                     tbody.innerHTML = data['html']
                 }
             })
@@ -355,6 +355,7 @@ if (wrapper){
             .then(data => {
                 if (data.hasOwnProperty('patients')){
                     modalContent.innerHTML = data['html']
+                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
                     tbody.innerHTML = data['patients']
                 }else{
                     modalContent.innerHTML = data['html']
@@ -372,9 +373,7 @@ if (wrapper){
             const url = form.action + '?query=' + e.target.value
             filterResults(url)
             .then(data => {
-                if (document.querySelector('#paginator')){
-                    document.querySelector('#paginator').remove()
-                }
+                document.querySelector('#paginator') && document.querySelector('#paginator').remove()
                 tbody.innerHTML = data['html']
             })
         }

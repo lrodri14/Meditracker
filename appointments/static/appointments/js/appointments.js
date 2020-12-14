@@ -79,7 +79,7 @@ if (body){
         const url = e.target.getAttribute('data-url')
         requestPageAW(url)
         .then(data => {
-            document.querySelector('#paginator').remove()
+            document.querySelector('#paginator') && document.querySelector('#paginator').remove()
             tbody.innerHTML = data['html']
         })
     }
@@ -274,8 +274,8 @@ if (modal){
                 if (data['success']){
                     modal.classList.remove('modal-show')
                     if (noConsults && addConsult){
-                    addConsult.classList.remove('add-consults-hide')
-                    noConsults.classList.remove('no-consults-hide')
+                        addConsult.classList.remove('add-consults-hide')
+                        noConsults.classList.remove('no-consults-hide')
                     }
                 } else {
                     modalContent.innerHTML = data['html']

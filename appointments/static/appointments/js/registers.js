@@ -126,7 +126,7 @@ if (wrapper){
             url = e.target.getAttribute('data-url')
             requestPageAW(url)
             .then(data => {
-                document.querySelector('#paginator').remove()
+                document.querySelector('#paginator') && document.querySelector('#paginator').remove()
                 tbody.innerHTML = data['html']
             })
         }
@@ -152,9 +152,7 @@ if (wrapper){
             let url = e.target.action + '?patient=' + patientQuery + '&month=' + monthQuery + '&year=' + yearQuery
             filterResultsAW(url)
             .then(data => {
-                if (document.querySelector('#paginator')){
-                    document.querySelector('#paginator').remove()
-                }
+                document.querySelector('#paginator') && document.querySelector('#paginator').remove()
                 tbody.innerHTML = data['html']
             })
         }

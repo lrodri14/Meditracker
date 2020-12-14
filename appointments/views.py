@@ -301,7 +301,7 @@ def agenda(request):
     today = timezone.localtime()
     tzone = timezone.get_current_timezone()
     appointments_list = Consult.objects.filter(created_by=request.user, datetime__date__gte=today.date(), medical_status=False).order_by('datetime')
-    paginator = Paginator(appointments_list, 1)
+    paginator = Paginator(appointments_list, 10)
     page = request.GET.get('page')
     page_obj = paginator.get_page(page)
     months_names = collect_months_names(page_obj, tzone)
@@ -328,7 +328,7 @@ def filter_agenda(request):
     query_date_to = datetime.strptime(request.GET.get('date_to'), "%Y-%m-%d")
     page = request.GET.get('page')
     consults_list = Consult.objects.filter(datetime__date__gte=query_date_from, datetime__date__lte=query_date_to, created_by=request.user).order_by('datetime')
-    paginator = Paginator(consults_list, 1)
+    paginator = Paginator(consults_list, 10)
     page_obj = paginator.get_page(page)
     months = collect_months_names(page_obj, tzone)
     context = {'appointments': page_obj, 'months': months, 'filtered': True}

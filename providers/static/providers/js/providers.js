@@ -239,7 +239,7 @@ if (wrapper){
             requestPageAW(url)
             .then(data => {
                 if (data['html']){
-                    document.querySelector('#paginator').remove()
+                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
                     document.querySelector('tbody').innerHTML = data['html']
                 }
             })
@@ -454,9 +454,7 @@ if (wrapper){
                 break
             }
 
-            if (document.querySelector('#paginator')){
-                document.querySelector('#paginator').remove()
-            }
+            document.querySelector('#paginator') && document.querySelector('#paginator').remove()
 
             if (type){
                 filterProvidersAW(url)
@@ -551,7 +549,8 @@ if (modal){
             .then(data => {
                 if (data['updated_html']){
                     modal.classList.remove('modal-show')
-                    data['is_initial'] === true ? wrapper.innerHTML = data['updated_html'] : document.querySelector('tbody').innerHTML = data['updated_html']
+                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
+                    document.querySelector('tbody').innerHTML = data['updated_html']
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)
@@ -580,6 +579,7 @@ if (modal){
                     modalContent.innerHTML = data['html']
                 }else{
                     modal.classList.remove('modal-show')
+                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
                     data['is_initial'] === true ? wrapper.innerHTML = data['updated_html'] : document.querySelector('tbody').innerHTML = data['updated_html']
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')

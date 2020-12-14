@@ -264,42 +264,6 @@ button:focus{
     cursor: pointer;
 }
 
-/*Pagination*/
-.pagination{
-    list-style: none;
-}
-
-.disabled{
-    color: #12212b;
-    background-color: #0ff5fc;
-    cursor: not-allowed;
-}
-
-#active{
-    color: #12212b;
-    background-color: #0ff5fc;
-    cursor: not-allowed;
-}
-
-.pagination li{
-    display: inline;
-    border: 1px solid #0ff5fc;
-    margin: 1%;
-    padding: 1%;
-}
-
-.pagination li:hover{
-    color: #12212b;
-    background-color: #0ff5fc;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-.list-container{
-    background-color: #12212b;
-    padding: 0.5%;
-}
-
 /*##################################################### Modal ########################################################*/
 .modal{
   background-color: rgba(0,0,0,0.3);

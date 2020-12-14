@@ -28,7 +28,7 @@ def records(request):
         be returned in JSON Format.
     """
     records_list = Consult.objects.filter(created_by=request.user, medical_status=True).order_by('-datetime')
-    paginator = Paginator(records_list, 17)
+    paginator = Paginator(records_list, 1)
     page = request.GET.get('page')
     page_obj = paginator.get_page(page)
     form = RecordsDateFilterForm
@@ -51,11 +51,11 @@ def filter_records(request):
     query_date_from = datetime.strptime(request.GET.get('date_from'), '%Y-%m-%d')
     query_date_to = datetime.strptime(request.GET.get('date_to'), '%Y-%m-%d')
     page = request.GET.get('page')
-    filtered_records = Consult.objects.filter(created_by=request.user, datetime__date__gte=query_date_from, datetime__date__lte=query_date_to).order_by('datetime')
-    paginator = Paginator(filtered_records, 17)
+    filtered_records = Consult.objects.filter(created_by=request.user, datetime__date__gte=query_date_from, datetime__date__lte=query_date_to, medical_status=True).order_by('-datetime')
+    paginator = Paginator(filtered_records, 1)
     page_obj = paginator.get_page(page)
     template = 'records/partial_records_list.html'
-    context = {'records': records, 'filtered': True}
+    context = {'records': page_obj, 'filtered': True}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 

@@ -6,7 +6,7 @@
 
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
-    var dataTable = document.querySelector('.table')
+    var tbody = document.querySelector('tbody')
     var rows = document.querySelectorAll('tr')
     var i = document.querySelector('.fa-filter')
     var button = document.querySelector('button')
@@ -108,10 +108,8 @@ if (wrapper){
             let url = e.target.getAttribute('data-url')
             requestPageAW(url)
             .then(data => {
-                if (document.querySelector('#paginator')){
-                    document.querySelector('#paginator').remove()
-                }
-                dataTable.innerHTML = data['html']
+                document.querySelector('#paginator') && document.querySelector('#paginator').remove()
+                tbody.innerHTML = data['html']
             })
         }
 
@@ -142,7 +140,8 @@ if (wrapper){
             const url = e.target.action + '?date_from=' + fromDate + '&date_to=' + toDate
             filterResultsAW(url)
             .then(data => {
-                dataTable.innerHTML = data['html']
+                document.querySelector('#paginator') && document.querySelector('#paginator').remove()
+                tbody.innerHTML = data['html']
             })
         }
     })

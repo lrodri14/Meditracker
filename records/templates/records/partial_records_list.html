@@ -1,40 +1,27 @@
-{%load static%}
+{% load static %}
 {% load records_custom_tags %}
-{%if records.has_other_pages%}
+{% if records.has_other_pages %}
     <div id="paginator">
-        <span>{{records.number}} / {{records.paginator.num_pages}}</span>
+        <span>{{ records.number }} / {{ records.paginator.num_pages }}</span>
         <div id="navigation">
-            {%if filtered%}
-                {%if records.has_previous%}<i class="fas fa-angle-left" data-url="{% url 'records:filter_records'%}{% current_url 'page' records.previous_page_number request.GET.urlencode%}"></i>{%endif%}{%if records.has_next%}<i class="fas fa-angle-right" data-url="{% url 'records:filter_records'%}{% current_url 'page' records.next_page_number request.GET.urlencode%}"></i>{%endif%}
-            {%else%}
-                {%if records.has_previous%}<i class="fas fa-angle-left" data-url="{% url 'records:records'%}{% current_url 'page' records.previous_page_number request.GET.urlencode%}"></i>{%endif%}{%if records.has_next%}<i class="fas fa-angle-right" data-url="{% url 'records:records'%}{% current_url 'page' records.next_page_number request.GET.urlencode%}"></i>{%endif%}
-            {%endif%}
+            {% if filtered %}
+                {% if records.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'records:filter_records' %}{% current_url 'page' records.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if records.has_next %}<i class="fas fa-angle-right" data-url="{% url 'records:filter_records' %}{% current_url 'page' records.next_page_number request.GET.urlencode %}"></i>{% endif %}
+            {% else %}
+                {% if records.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'records:records' %}{% current_url 'page' records.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if records.has_next %}<i class="fas fa-angle-right" data-url="{% url 'records:records'%}{% current_url 'page' records.next_page_number request.GET.urlencode %}"></i>{% endif %}
+            {% endif %}
         </div>
     </div>
-{%endif%}
-{%if records%}
-    <table>
-        <thead>
-            <tr id="heading">
-                <th>ID</th>
-                <th>Patient</th>
-                <th>Date and Time</th>
-                <th>Created By</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {%for r in records%}
-                <tr onclick="window.location='{%url 'appointments:consult_details' r.pk%}'">
-                    <td>{{r.patient.id_number}}</td>
-                    <td>{{r.patient.first_names}} {{r.patient.last_names}}</td>
-                    <td>{{r.datetime}}</td>
-                    <td>{{r.created_by}}</td>
-                    <td id="status-1">Finished</td>
-                </tr>
-            {%endfor%}
-        </tbody>
-    </table>
-{%else%}
+{% endif %}
+{% if records %}
+    {% for r in records %}
+        <tr onclick="window.location='{% url 'appointments:consult_details' r.pk %}'">
+            <td>{{ r.patient.id_number }}</td>
+            <td>{{ r.patient.first_names }} {{ r.patient.last_names }}</td>
+            <td>{{ r.datetime }}</td>
+            <td>{{ r.created_by }}</td>
+            <td id="status-1">Finished</td>
+        </tr>
+    {% endfor %}
+{% else %}
     <p id="no-records">Cleared section, no data available</p>
-{%endif%}
+{% endif %}
