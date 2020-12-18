@@ -9,57 +9,25 @@
 <!-- If any patients are present, this code will be rendered-->
 {% if patients %}
     <div class="wrapper">
-        <div>
-            <table>
-                <thead>
-                    <tr id="heading">
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Age</th>
-                        <th>Origin</th>
-                        <th>Residence</th>
-                        <th>Insurance?</th>
-                        {% if doctor %}<th>Edit</th>
-                        <th>Delete</th>{% endif %}
-                        <th><i class="fas fa-plus" onclick="window.location='{% url 'patients:add_patient' %}'"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--Included Template, this included template is used to display content dynamically in our main page. -->
-                    {% include 'patients/patients_partial_list.html' %}
-               </tbody>
-            </table>
-        </div>
+        {% include 'patients/patients_list.html' %}
+    </div>
 
-        <div>
-            <!-- Patient filtering form -->
-            <i class="fas fa-filter"></i>
-            <form method="GET" action="{% url 'patients:filter_patients' %}" autocomplete="off" class="result-filter filter-form">
-                <h3>Filter Results</h3>
-                <p>{{ form.patient.label }} Name</p>
-                <p>Or</p>
-                <p>ID Number</p>
-                <p>{{ form.patient  }}</p>
-            </form>
-            <!-- Pop-up to show any warning in the patients instances -->
-            <div class="popup">
-                <span class="popup-text"></span>
-            </div>
-        </div>
+    <!-- Pop-up to show any warning in the patients instances -->
+    <div class="popup">
+        <span class="popup-text"></span>
+    </div>
 
-        <!--Modal-->
-        <!--Modal used to confirm or cancel patient deletion.-->
-        <div class="modal">
-            <div class="modal-content">
+    <!--Modal-->
+    <!--Modal used to confirm or cancel patient deletion.-->
+    <div class="modal">
+        <div class="modal-content">
 
-            </div>
         </div>
     </div>
 <!-- If no patients are present, this code will be rendered-->
 {% else %}
     <p id="no-patients">There are no patients listed</p>
-    <a  id="add_patients" href="{% url 'patients:add_patient' %}"><i class="fas fa-plus"></i></a>
+    <a  id="add-patients" href="{% url 'patients:add_patient' %}"><i class="fas fa-plus"></i></a>
 {% endif %}
 
 <script src="{% static 'patients/js/patients.js' %}"></script>

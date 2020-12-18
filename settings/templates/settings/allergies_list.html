@@ -1,41 +1,34 @@
 {%load static%}
 {%block body_block%}
 {%if allergies%}
-<div class="box">
     <div class="table">
-        <table>
-            <thead>
-                <tr id="heading">
-                    <th>Allergy</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    <th><i class="fas fa-plus" data-url="{%url 'settings:allergy_add'%}"></i></th>
-                </tr>
-            </thead>
-            <tbody>
-             {%for a in allergies%}
-                <tr data-url="{%url 'settings:allergies_details' a.pk%}">
-                    <td>{{a.allergy_type}}</td>
-                    <td><i class="fas fa-edit" data-url="{%url 'settings:allergies_update' a.pk%}"></i></td>
-                    <td><i class="fas fa-trash" data-url="{%url 'settings:allergies_delete' a.pk%}"></i></td>
-                    <td></td>
-                </tr>
-            {%endfor%}
-            </tbody>
-        </table>
+        <div>
+            <table>
+                <thead>
+                    <tr id="heading">
+                        <th>Allergy</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <th><i class="fas fa-plus" data-url="{%url 'settings:add_allergy'%}"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% include 'settings/allergies_partial_list.html' %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <i class="fas fa-filter"></i>
+            <form method="GET" action="{%url 'settings:filter_allergies'%}" class="filter-form" autocomplete="off">
+                {%csrf_token%}
+                <h3>Filter Allergies</h3>
+                <p>{{form.allergy_type.label}}</p>
+                <p>{{form.allergy_type}}</p>
+            </form>
+        </div>
     </div>
-    <div class="filter">
-        <i class="fas fa-filter"></i>
-        <form method="GET" action="{%url 'settings:filter_allergies'%}" class="filter-form" autocomplete="off">
-            {%csrf_token%}
-            <h3>Filter Allergies</h3>
-            <p>{{form.allergy_type.label}}</p>
-            <p>{{form.allergy_type}}</p>
-        </form>
-    </div>
-</div>
 {%else%}
     <p class="no-data">No allergies listed</p>
-    <a href="{%url 'settings:allergy_add'%}" class="add-data"><i class="fas fa-plus"></i></a>
+    <i class="fas fa-plus add-data" data-url="{%url 'settings:add_allergy'%}"></i>
 {%endif%}
 {%endblock%}

@@ -100,13 +100,11 @@ def create_provider(request):
                 provider.save()
                 provider_type = 'LP' if provider.provider_type == 'LP' else 'MP'
                 updated_providers = Provider.objects.filter(provider_type=provider_type, created_by=request.user).order_by('company')
-                is_initial = True if len(updated_providers) == 1 else False
                 paginator = Paginator(updated_providers, 16)
                 page_obj = paginator.get_page(1)
-                template = 'providers/providers_partial_list.html' if is_initial is not True else 'providers/providers_list.html'
-                print(template)
+                template = 'providers/providers_list.html'
                 context = {'providers': page_obj, 'filter_form': ProviderFilterForm, 'requested_type': provider_type}
-                data = {'updated_html': render_to_string(template, context, request), 'is_initial': is_initial}
+                data = {'updated_html': render_to_string(template, context, request)}
                 return JsonResponse(data)
             except IntegrityError:
                 context['error'] = 'Provider already listed'
@@ -159,7 +157,7 @@ def update_provider(request, pk):
                 updated_providers = Provider.objects.filter(provider_type=provider_type, created_by=request.user).order_by('company')
                 paginator = Paginator(updated_providers, 16)
                 page_obj = paginator.get_page(1)
-                template = 'providers/providers_partial_list.html'
+                template = 'providers/providers_list.html'
                 context = {'providers': page_obj, 'filter_form': ProviderFilterForm, 'requested_type': provider_type}
                 data = {'updated_html': render_to_string(template, context, request)}
                 return JsonResponse(data)
@@ -192,7 +190,7 @@ def delete_provider(request, pk):
         updated_providers = Provider.objects.filter(provider_type=provider_type, created_by=request.user).order_by('company')
         paginator = Paginator(updated_providers, 16)
         page_obj = paginator.get_page(1)
-        template = 'providers/providers_partial_list.html'
+        template = 'providers/providers_list.html'
         context = {'providers': page_obj, 'filter_form': ProviderFilterForm, 'requested_type':provider_type}
         data['updated_html'] = render_to_string(template, context, request)
         return JsonResponse(data)
@@ -266,12 +264,11 @@ def create_visitor(request):
             visitor.created_by = request.user
             visitor.save()
             updated_visitors = Visitor.objects.filter(created_by=request.user).order_by('name')
-            is_initial = True if len(updated_visitors) == 1 else False
-            template = 'providers/visitors_partial_list.html' if is_initial is not True else 'providers/visitors_list.html'
+            template = 'providers/visitors_list.html'
             paginator = Paginator(updated_visitors, 16)
             page_obj = paginator.get_page(1)
             context = {'visitors': page_obj, 'filter_form': VisitorFilterForm}
-            data = {'updated_html': render_to_string(template, context, request), 'is_initial': is_initial}
+            data = {'updated_html': render_to_string(template, context, request)}
             return JsonResponse(data)
     context['form'] = form
     data['html'] = render_to_string(template, context, request)
@@ -315,7 +312,7 @@ def update_visitor(request, pk):
         if form.is_valid():
             visitor = form.save(commit=False)
             visitor.save()
-            template = 'providers/visitors_partial_list.html'
+            template = 'providers/visitors_list.html'
             listed_visitors = Visitor.objects.filter(created_by=request.user).order_by('name')
             paginator = Paginator(listed_visitors, 16)
             page_obj = paginator.get_page(1)
@@ -344,7 +341,7 @@ def delete_visitor(request, pk):
     visitor = Visitor.objects.get(pk=pk)
     if request.method == 'POST':
         visitor.delete()
-        template = 'providers/visitors_partial_list.html'
+        template = 'providers/visitors_list.html'
         listed_visitors = Visitor.objects.filter(created_by=request.user).order_by('name')
         paginator = Paginator(listed_visitors, 16)
         page_obj = paginator.get_page(1)

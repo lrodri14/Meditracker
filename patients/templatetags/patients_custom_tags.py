@@ -1,6 +1,6 @@
 """
     DOCSTRING:
-    This patients.py file contains the custom template tags that the appointments app needs
+    This patients_custom_tags.py file contains the custom template tags that the appointments app needs
     to profile extra functionality in our template logic, it consists of a single custom tag.
 """
 

@@ -9,7 +9,6 @@ var tabs = document.querySelectorAll('.tab')
 var wrapper = document.querySelector('.wrapper')
 var modal = document.querySelector('.modal')
 var modalContent = document.querySelector('.modal-content')
-var backedUpContent
 
 /*###################################################### Functions ###################################################*/
 
@@ -21,6 +20,15 @@ async function displaySettingsAW(url){
        request. The response will be converted into JSON and returned for further processing.*/
     const result = await fetch(url)
     const data = await result.json()
+    return data
+}
+
+async function requestPageAW(url){
+    /* This async function will be used to collect the data from the previous or next page, this content will be
+    received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
+    the wrapper dynamically.*/
+    const result = await fetch(url)
+    const data = result.json()
     return data
 }
 
@@ -64,13 +72,13 @@ async function viewElementAW(url){
     return data
 }
 
-async function filterResultsAW(url, method, query){
+async function filterResultsAW(url){
     /* The filterResultsAW async function is used to filter items belonging to the current user, this function is called
        whenever an input event is fired in the filter inputs every table contains, this function accepts,4 parameters:
        'url' we collect from the form.action attribute, the 'method' we collect from the form.method attribute,
        the 'csrfmiddlewaretoken' from the form's hidden input, and finally the 'formData' we collect form the forms inputs
        the response will be returned in JSON Format for further processing.*/
-    const result = await fetch(url, {method:method, headers: {'QUERY':query}})
+    const result = await fetch(url)
     const data = await result.json()
     return data
 }
@@ -88,23 +96,23 @@ async function updatePasswordAW(url, method, csrfmiddlewaretoken, formData){
 
 // Functions
 
-function addData(){
-    /* The sync function addData, is used to create the levitating effect on the 'fa-plus' signs, whenever the
-       filtering returned an empty querySet or the user is new and there are no register yet, this function will
-       grab the 'add-data' element, will also call a setInterval function that will be executed every .5s, what this
-       interval will execute is the style changing of the top attribute, in the addData element, it will change it to
-       '90%' every time the top attribute is '88%' and vice versa.*/
-    if (document.querySelector('.add-data') !== 'undefined' && document.querySelector('.add-data') !== 'null'){
-        var addData = document.querySelector('.add-data')
-        setInterval(function(){
-        if (addData.style.top == '90%'){
-            addData.style.top = '88%'
-        } else {
-            addData.style.top = '90%'
-        }
-        },500)
-        console.log(addData)
-    }
+// Sync Functions
+
+function addIconLevitate(addItemIcon){
+    /*This function is used to perform the levitation effect in the
+      .fa-plus icon every time there is no data available, it takes
+      one parameter, 'addItemIcon' is the icon itself. it will
+      execute a setInterval function every 0.5 seconds, which just
+      changes the style of the 'top' attribute in our element.*/
+      if (addItemIcon !== null && addItemIcon !== undefined){
+            setInterval(function(){
+                if (addItemIcon.style.top == '90%'){
+                    addItemIcon.style.top = '88%'
+                } else {
+                    addItemIcon.style.top = '90%'
+                }
+            },500)
+      }
 }
 
 /*###################################################### Events Listeners ############################################*/
@@ -124,13 +132,13 @@ body.addEventListener('click', (e) => {
         e.preventDefault()
         e.stopPropagation()
         tabs.forEach(tab => tab.classList.remove('tab-active'))
-        wrapper.innerHTML = ''
         e.target.classList.add('tab-active')
         let url = e.target.getAttribute('data-url')
         displaySettingsAW(url)
         .then(data => {
             wrapper.innerHTML = data['html']
-            backedUpContent = wrapper.innerHTML
+            // This function is called to ensure that the add icon levitates in case there are no more instances to display
+            addIconLevitate(document.querySelector('.add-data'))
         })
     }
 })
@@ -160,6 +168,11 @@ if (wrapper){
     var backedUpContent = wrapper.innerHTML
 
     wrapper.addEventListener('mouseover', (e) => {
+
+        // This event will be fired, every time the user hovers over a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be added.
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            e.target.classList.add('fa-angle-hover')
+        }
 
         /* This event will be fired every time a hover occurs in an element with the 'TD' nodeName of the childs are the
            'fa-trash' or 'fa-edit' icons, this event will change some styles in the table rows.*/
@@ -210,6 +223,11 @@ if (wrapper){
 
     wrapper.addEventListener('mouseout', (e) => {
 
+    // This event will be fired, every time the user hover out occurs on a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be removed.
+    if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+        e.target.classList.remove('fa-angle-hover')
+    }
+
     /* This event will be fired every time a hover occurs in an element with the 'TD' nodeName of the childs are the
        'fa-trash' or 'fa-edit' icons, this event will remove some styles in the table rows.*/
       if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
@@ -258,6 +276,20 @@ if (wrapper){
     })
 
     wrapper.addEventListener('click', (e) => {
+
+        /* This event will be fired every time an angle icon is clicked, this event will grab the url for the
+       GET request, then the response will be added to the dataTable, as well as the paginator will be deleted
+       to get the current one.*/
+        if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+            const url = e.target.getAttribute('data-url')
+            requestPageAW(url)
+            .then(data => {
+                if (data['html']){
+                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
+                    document.querySelector('tbody').innerHTML = data['html']
+                }
+            })
+        }
 
         if (e.target.nodeName === 'TD'){
         /* This event will be fired every time the target it's a table data cell, this event will open the modal and
@@ -344,15 +376,11 @@ if (wrapper){
            value. The response will be rendered in the tbody.*/
         if (e.target.nodeName === 'INPUT'){
             let form = e.target.parentNode.parentNode
-            let url = form.action
-            let method = form.method
-            let query = e.target.value
-            filterResultsAW(url, method, query)
+            let url = form.action + '?query=' + e.target.value
+            filterResultsAW(url)
             .then(data => {
-                var tbody = document.querySelector('tbody')
-                if (data['updated_html']){
-                    tbody.innerHTML = data['updated_html']
-                }
+                document.querySelector('#paginator') && document.querySelector('#paginator').remove();
+                document.querySelector('tbody').innerHTML = data['html']
             })
         }})
     }
@@ -442,7 +470,6 @@ if (modal){
                         modalContent.innerHTML = data['html']
                     }else{
                         wrapper.innerHTML = data['updated_html']
-                        backedUpContent = wrapper.innerHTML
                         modal.classList.remove('show-modal')
                     }
                 })
@@ -456,8 +483,9 @@ if (modal){
                 .then(data => {
                     wrapper.innerHTML = data['updated_html']
                     modal.classList.remove('show-modal')
-                    backedUpContent = wrapper.innerHTML
-                    }
+                    // This function is called to ensure that the add icon levitates in case there are no more instances to display
+                    addIconLevitate(document.querySelector('.add-data'))
+                }
                 )
             }
 

@@ -179,9 +179,7 @@ if (navigation){
           visitors tab is clicked, the providerType variable will be useless. Once the function
           is executed, the JSON Format data will be added to the Wrapper inner HTML.'*/
         if (e.target.classList.contains('tab')){
-            for (let i = 0; i<tabs.length; i++){
-                tabs[i].classList.remove('tab-active')
-            }
+            navigation.childNodes.forEach(tab => tab.classList.remove('tab-active'))
             e.target.classList.add('tab-active')
             let providerType = e.target.getAttribute('data-provider-type')
             let url = providerType ? e.target.getAttribute('data-url') + '?provider_type=' + providerType : e.target.getAttribute('data-url')
@@ -550,7 +548,7 @@ if (modal){
                 if (data['updated_html']){
                     modal.classList.remove('modal-show')
                     document.querySelector('#paginator') && document.querySelector('#paginator').remove()
-                    document.querySelector('tbody').innerHTML = data['updated_html']
+                    wrapper.innerHTML = data['updated_html']
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)
@@ -580,7 +578,7 @@ if (modal){
                 }else{
                     modal.classList.remove('modal-show')
                     document.querySelector('#paginator') && document.querySelector('#paginator').remove()
-                    data['is_initial'] === true ? wrapper.innerHTML = data['updated_html'] : document.querySelector('tbody').innerHTML = data['updated_html']
+                    wrapper.innerHTML = data['updated_html']
                     if (document.querySelector('.add-providers')){
                         addProvidersIcon = document.querySelector('.add-providers')
                         addIconLevitate(addProvidersIcon)

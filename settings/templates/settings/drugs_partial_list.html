@@ -4,8 +4,8 @@
         <tr data-url="{%url 'settings:drug_details' d.pk%}">
             <td>{{d.name}}</td>
             <td>{{d.get_category_display}}</td>
-            <td><i class="fas fa-edit" data-url="{%url 'settings:drug_update' d.pk%}"></i></td>
-            <td><i class="fas fa-trash" data-url="{%url 'settings:drug_delete' d.pk%}"></i></td>
+            <td><i class="fas fa-edit" data-url="{%url 'settings:update_drug' d.pk%}"></i></td>
+            <td><i class="fas fa-trash" data-url="{%url 'settings:delete_drug' d.pk%}"></i></td>
             <td></td>
         </tr>
     {%endfor%}

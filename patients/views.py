@@ -213,7 +213,7 @@ def delete_patient(request, pk):
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
             data = {'html': render_to_string(template, context, request),
-                    'patients': render_to_string('patients/patients_partial_list.html', {'patients': page_obj, 'doctor': doctor}, request)}
+                    'patients': render_to_string('patients/patients_list.html', {'patients': page_obj, 'doctor': doctor}, request)}
     return JsonResponse(data)
 
 

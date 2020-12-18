@@ -1,13 +1,13 @@
 <!--Template used to render the details of any Visitors instance-->
-{%load static%}
+{% load static %}
 <div id="provider-details">
     <h2>Visitor Details</h2>
     <h3>Name</h3>
-    <p>{{visitor.name}} {{visitor.last_name}}</p>
+    <p>{{ visitor.name }} {{ visitor.last_name }}</p>
     <h3>Company</h3>
-    <p>{{visitor.company}}</p>
+    <p>{{ visitor.company }}</p>
     <h3>Contact</h3>
-    <p>{{visitor.contact}}</p>
+    <p>{{ visitor.contact }}</p>
     <h3>Email</h3>
-    <p>{{visitor.email}}</p>
+    <p>{{ visitor.email }}</p>
 </div>

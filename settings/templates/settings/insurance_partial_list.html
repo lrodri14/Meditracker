@@ -1,0 +1,30 @@
+{% load static %}
+
+{% load settings_custom_tags %}
+
+{% if insurances.has_other_pages %}
+    <div id="paginator">
+        <span> {{ insurances.number }} / {{ insurances.paginator.num_pages }} </span>
+        <div id="navigation">
+            {% if filtered %}
+                {% if insurances.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'settings:filter_insurance' %}{% current_url 'page' insurances.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if insurances.has_next %}<i class="fas fa-angle-right" data-url="{% url 'settings:filter_insurance' %}{% current_url 'page' insurances.next_page_number request.GET.urlencode %}"></i>{% endif %}
+            {% else %}
+                {% if insurances.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'settings:insurance_list' %}{% current_url 'page' insurances.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if insurances.has_next %}<i class="fas fa-angle-right" data-url="{% url 'settings:insurance_list' %}{% current_url 'page' insurances.next_page_number request.GET.urlencode %}"></i>{% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+{% if insurances %}
+    {% for i in insurances %}
+        <tr data-url="{% url 'settings:insurance_details' i.pk %}">
+            <td>{{ i.company }}</td>
+            <td>{{ i.get_country_display }}</td>
+            <td><i class="fas fa-edit" data-url="{% url 'settings:update_insurance' i.pk %}"></i></td>
+            <td><i class="fas fa-trash" data-url="{% url 'settings:delete_insurance' i.pk %}"></i></td>
+            <td></td>
+        </tr>
+    {% endfor %}
+{% else %}
+    <p class="no-data">No insurances listed</p>
+{% endif %}

@@ -1,19 +1,19 @@
 <!--This template is used to render the form to create instances of the Providers Class-->
-{%load static%}
-<form method="POST" action="{%url 'providers:update_provider' provider.pk%}" autocomplete="off">
+{% load static %}
+<form method="POST" action="{% url 'providers:update_provider' provider.pk %}" autocomplete="off">
     <h2>Add Providers</h2>
-    {%csrf_token%}
-    <p>{{form.company.label}}</p>
-    <p>{{form.company}}</p>
-    <p>{{form.address.label}}</p>
-    <p>{{form.address}}</p>
-    <p>{{form.email.label}}</p>
-    <p>{{form.email}}</p>
-    <p>{{form.contact.label}}</p>
-    <p>{{form.contact}}</p>
+    {% csrf_token %}
+    <p>{{ form.company.label }}</p>
+    <p>{{ form.company }}</p>
+    <p>{{ form.address.label }}</p>
+    <p>{{ form.address }}</p>
+    <p>{{ form.email.label }}</p>
+    <p>{{ form.email }}</p>
+    <p>{{ form.contact.label }}</p>
+    <p>{{ form.contact }}</p>
     <!--This provider_type field is hidden, since it's pre-populated from the view.-->
-    <p>{{form.provider_type}}</p>
+    <p>{{ form.provider_type }}</p>
     <!--Custom Error-->
-    <p class="error"><small>{{error}}</small></p>
+    <p class="error"><small>{{ error }}</small></p>
     <button type="submit">Submit</button>
 </form>

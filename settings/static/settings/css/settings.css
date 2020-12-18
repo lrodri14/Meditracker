@@ -38,9 +38,47 @@ li{
     color: #496897;
 }
 
+/*################################################### Pagination #####################################################*/
+
+#paginator{
+    position: absolute;
+    left: 50%;
+    top: 16%;
+    font-size: 18px;
+    width: 30%;
+}
+
+#navigation{
+    width: 20%;
+    float: right;
+}
+
+#paginator i{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+.fa-angle-left{
+    cursor: pointer;
+    transition: 0.5s;
+    float: left;
+}
+
+.fa-angle-right{
+    cursor: pointer;
+    transition: 0.5s;
+    float: right;
+}
+
+.fa-angle-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
 /*###################################################### Wrapper #####################################################*/
 
-.box{
+.table{
     display: grid;
     grid-template-columns: 80% 19%;
     grid-gap: 1%;
@@ -306,5 +344,5 @@ button:focus{
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    transition: top 0.3s;
+    transition: 0.5s;
 }

@@ -19,7 +19,7 @@ body{
     transform: translate(-50%, -50%);
 }
 
-#add_patients{
+#add-patients{
     position: absolute;
     top: 90%;
     left: 50%;

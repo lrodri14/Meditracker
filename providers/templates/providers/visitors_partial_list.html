@@ -1,31 +1,31 @@
-{%load static%}
-{%load providers_custom_tags%}
-{%if visitors.has_other_pages%}
+{% load static %}
+{% load providers_custom_tags %}
+{% if visitors.has_other_pages %}
     <div id="paginator">
-        <span>{{visitors.number}} / {{visitors.paginator.num_pages}}</span>
+        <span>{{ visitors.number }} / {{ visitors.paginator.num_pages }}</span>
         <div id="navigation">
-            {%if filtered%}
-                {% if visitors.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'providers:filter_visitors'%}{% current_url 'page' visitors.previous_page_number request.GET.urlencode %}"></i>{%endif%}{%if visitors.has_next%}<i class="fas fa-angle-right" data-url="{%url 'providers:filter_visitors'%}{% current_url 'page' visitors.next_page_number request.GET.urlencode%}"></i>{%endif%}
-            {%else%}
-                {% if visitors.has_previous%}<i class="fas fa-angle-left" data-url="{%url 'providers:visitors'%}{% current_url 'page' visitors.previous_page_number%}"></i>{%endif%}{%if visitors.has_next%}<i class="fas fa-angle-right" data-url="{%url 'providers:visitors'%}{% current_url 'page' visitors.next_page_number%}"></i>{%endif%}
-            {%endif%}
+            {% if filtered %}
+                {% if visitors.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'providers:filter_visitors'%}{% current_url 'page' visitors.previous_page_number request.GET.urlencode %}"></i>{% endif %}{%if visitors.has_next %}<i class="fas fa-angle-right" data-url="{% url 'providers:filter_visitors' %}{% current_url 'page' visitors.next_page_number request.GET.urlencode %}"></i>{% endif %}
+            {% else %}
+                {% if visitors.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'providers:visitors'%}{% current_url 'page' visitors.previous_page_number %}"></i>{% endif %}{% if visitors.has_next %}<i class="fas fa-angle-right" data-url="{% url 'providers:visitors' %}{% current_url 'page' visitors.next_page_number %}"></i>{%endif%}
+            {% endif %}
         </div>
     </div>
-{%endif%}
-{%if visitors%}
+{% endif %}
+{% if visitors %}
     <!--For each instance-->
-    {%for visitor in visitors%}
-        <tr data-url="{%url 'providers:visitor_details' visitor.pk%}">
-            <td>{{visitor.name}}</td>
-            <td>{{visitor.last_name}}</td>
-            <td>{{visitor.company}}</td>
-            <td>{{visitor.contact}}</td>
-            <td>{{visitor.email}}</td>
-            <td><i class="fas fa-edit" data-url="{%url 'providers:update_visitor' visitor.pk%}"></i></td>
-            <td><i class="fas fa-trash" data-url="{%url 'providers:delete_visitor' visitor.pk%}"></i></td>
+    {% for visitor in visitors %}
+        <tr data-url="{% url 'providers:visitor_details' visitor.pk %}">
+            <td>{{ visitor.name }}</td>
+            <td>{{ visitor.last_name }}</td>
+            <td>{{ visitor.company }}</td>
+            <td>{{ visitor.contact }}</td>
+            <td>{{ visitor.email }}</td>
+            <td><i class="fas fa-edit" data-url="{% url 'providers:update_visitor' visitor.pk %}"></i></td>
+            <td><i class="fas fa-trash" data-url="{% url 'providers:delete_visitor' visitor.pk %}"></i></td>
             <td><i class="fas fa-envelope"></i></td>
         </tr>
-    {%endfor%}
-{%else%}
+    {% endfor %}
+{% else %}
     <p class="no-providers">No visitors listed</p>
-{%endif%}
+{% endif %}

@@ -4,6 +4,7 @@
 """
 
 # Imports
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db import IntegrityError
@@ -61,10 +62,13 @@ def insurance_list(request):
         query is set, we send it to the client side as a JSON Response. This view is passed a single argument: 'request',
         which expects a request object.
     """
-    insurances_list = InsuranceCarrier.objects.filter(created_by=request.user)
+    insurances_list = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
+    paginator = Paginator(insurances_list, 1)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
     insurance_filter_form = InsuranceCarrierFilterForm
-    template = 'settings/insurance_list.html'
-    context = {'insurances': insurances_list, 'form': insurance_filter_form}
+    template = 'settings/insurance_partial_list.html' if page else 'settings/insurance_list.html'
+    context = {'insurances': page_obj, 'form': insurance_filter_form}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -79,11 +83,14 @@ def filter_insurance(request):
         this way we can convert, our response with sent as a JsonResponse. This view accepts one single argument, the
         'request' which expects a request object.
     """
-    query = request.META.get('HTTP_QUERY')
-    updated_insurances = InsuranceCarrier.objects.filter(company__icontains=query, created_by=request.user)
-    template = 'settings/insurance_filtered_list.html'
-    context = {'insurance': updated_insurances}
-    data = {'updated_html': render_to_string(template, context, request)}
+    query = request.GET.get('query')
+    updated_insurances = InsuranceCarrier.objects.filter(company__icontains=query, created_by=request.user).order_by('company')
+    paginator = Paginator(updated_insurances, 1)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+    template = 'settings/insurance_partial_list.html'
+    context = {'insurances': page_obj, 'filtered': True}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -108,8 +115,10 @@ def add_insurance_carrier(request):
                 insurance = insurance_carrier_form.save(commit=False)
                 insurance.created_by = request.user
                 insurance.save()
-                updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
-                context = {'insurances': updated_insurances, 'form': insurance_carrier_form}
+                updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
+                paginator = Paginator(updated_insurances, 1)
+                page_obj = paginator.get_page(1)
+                context = {'insurances': page_obj, 'form': InsuranceCarrierFilterForm}
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/insurance_list.html', context, request), 'updated_selections': render_to_string('settings/insurance_partial_select.html', context=context, request=request)}
             except IntegrityError:
@@ -133,7 +142,7 @@ def insurance_details(request, pk):
     return JsonResponse(data)
 
 
-def insurance_update(request, pk):
+def update_insurance(request, pk):
     """
         DOCSTRING:
         This insurance_update view is used to update any insurance instance, the form used to update the instances will
@@ -156,8 +165,10 @@ def insurance_update(request, pk):
             try:
                 # Why do i need to provide again the user?
                 insurance_form.save()
-                updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
-                context = {'insurances': updated_insurances, 'form': forms.InsuranceCarrierFilterForm}
+                updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
+                paginator = Paginator(updated_insurances, 1)
+                page_obj = paginator.get_page(1)
+                context = {'insurances': page_obj, 'form': InsuranceCarrierFilterForm}
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
             except IntegrityError:
@@ -166,7 +177,7 @@ def insurance_update(request, pk):
     return JsonResponse(data)
 
 
-def insurance_delete(request, pk):
+def delete_insurance(request, pk):
     """
         DOCSTRING:
         This insurance_delete view is used to delete any insurance instances, the form to delete the insurance instance
@@ -180,8 +191,10 @@ def insurance_delete(request, pk):
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
             carrier.delete()
-            updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user)
-            context = {'insurances': updated_insurances, 'form': InsuranceCarrierFilterForm}
+            updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
+            paginator = Paginator(updated_insurances, 1)
+            page_obj = paginator.get_page(1)
+            context = {'insurances': page_obj, 'form': InsuranceCarrierFilterForm}
             # How to return an error from the backend to the frontend?
             data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
     return JsonResponse(data)
@@ -191,7 +204,7 @@ def insurance_delete(request, pk):
 ##################################
 
 
-def allergies_list(request):
+def allergy_list(request):
     """
         DOCSTRING:
         This allergies view is used to display the list of all the allergies created and available for this user,
@@ -202,10 +215,13 @@ def allergies_list(request):
         query is set, we send it to the client side as a JSON Response. This view is passed a single argument: 'request',
         which expects a request object.
     """
-    allergies_created = Allergies.objects.filter(created_by=request.user)
-    filter_form = AllergiesFilterForm
-    template = 'settings/allergies_list.html'
-    context = {'allergies': allergies_created, 'form': filter_form}
+    allergies_list = Allergies.objects.filter(created_by=request.user).order_by('allergy_type')
+    paginator = Paginator(allergies_list, 1)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+    filter_form = AllergyFilterForm
+    template = 'settings/allergies_partial_list.html' if page else 'settings/allergies_list.html'
+    context = {'allergies': page_obj, 'form': filter_form}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -220,15 +236,18 @@ def filter_allergies(request):
         this way we can convert, our response with sent as a JsonResponse. This view accepts one single argument, the
         'request' which expects a request object.
     """
-    query = request.META.get('HTTP_QUERY')
-    filtered_allergies = Allergies.objects.filter(allergy_type__icontains=query, created_by=request.user)
-    template = 'settings/allergies_filtered_list.html'
-    context = {'allergies': filtered_allergies}
-    data = {'updated_html': render_to_string(template, context, request)}
+    query = request.GET.get('query')
+    filtered_allergies = Allergies.objects.filter(allergy_type__icontains=query, created_by=request.user).order_by('allergy_type')
+    paginator = Paginator(filtered_allergies, 1)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+    template = 'settings/allergies_partial_list.html'
+    context = {'allergies': page_obj, 'filtered': True}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
-def allergies_create(request):
+def add_allergy(request):
     """
         The allergies_create view is used to display the allergy addition form, this form will be displayed async
         in the client side, if the request.method is 'GET' then the content from this view, in this case the form, will
@@ -238,19 +257,19 @@ def allergies_create(request):
         and if the response is valid, will be saved and the updated list will be sent as a JSON Response, if the form is
         invalid, a custom error will be the response, this view expects one single arguments: 'requests' a single object.
     """
-    allergies_form = AllergiesForm
+    allergies_form = AllergyForm
     template = 'settings/add_allergies.html'
     context = {'allergies_form': allergies_form}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
-        allergies_form = AllergiesForm(request.POST)
+        allergies_form = AllergyForm(request.POST)
         if allergies_form.is_valid():
             try:
                 allergy = allergies_form.save(commit=False)
                 allergy.created_by = request.user
                 allergy.save()
                 allergies = Allergies.objects.filter(created_by=request.user)
-                context = {'allergies': allergies,'form': AllergiesFilterForm}
+                context = {'allergies': allergies, 'form': AllergyFilterForm}
                 data = {'updated_html': render_to_string('settings/allergies_list.html', context, request), 'updated_selections': render_to_string('settings/allergies_partial_select.html', context=context, request=request)}
             except IntegrityError:
                 context['error'] = 'This allergy is already in your options'
@@ -258,7 +277,7 @@ def allergies_create(request):
     return JsonResponse(data)
 
 
-def allergies_update(request, pk):
+def update_allergy(request, pk):
     """
         DOCSTRING:
         This allergies_update view is used to update any allergy instance, the form used to update the instances will
@@ -272,18 +291,18 @@ def allergies_update(request, pk):
     """
     allergy = Allergies.objects.get(pk=pk)
     template = 'settings/update_allergy.html'
-    allergy_form = AllergiesForm(request.POST or None, instance=allergy)
+    allergy_form = AllergyForm(request.POST or None, instance=allergy)
     context = {'allergy': allergy, 'allergy_form': allergy_form}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
-        allergy_form = AllergiesForm(request.POST or None, instance=allergy)
+        allergy_form = AllergyForm(request.POST or None, instance=allergy)
         if allergy_form.is_valid():
             try:
                 allergy = allergy_form.save(commit=False)
                 allergy.created_by = request.user
                 allergy.save()
                 allergies = Allergies.objects.filter(created_by=request.user)
-                context = {'allergies': allergies, 'form': AllergiesFilterForm}
+                context = {'allergies': allergies, 'form': AllergyFilterForm}
                 data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
             except IntegrityError:
                 context['error'] = 'This allergy is already in your options'
@@ -291,7 +310,7 @@ def allergies_update(request, pk):
     return JsonResponse(data)
 
 
-def allergies_details(request, pk):
+def allergy_details(request, pk):
     """
         DOCSTRING:
         This allergies_details views is used to display the information of a particular allergy, this information
@@ -306,7 +325,7 @@ def allergies_details(request, pk):
     return JsonResponse(data)
 
 
-def allergies_delete(request, pk):
+def delete_allergy(request, pk):
     """
         DOCSTRING:
         This allergies_delete view is used to delete any allergies instances, the form to delete the allergy instance
@@ -321,7 +340,7 @@ def allergies_delete(request, pk):
     if request.method == 'POST':
         allergy.delete()
         allergies = Allergies.objects.filter(created_by=request.user)
-        context = {'allergies': allergies, 'form': AllergiesFilterForm}
+        context = {'allergies': allergies, 'form': AllergyFilterForm}
         data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
     return JsonResponse(data)
 
@@ -330,7 +349,7 @@ def allergies_delete(request, pk):
 ###############################
 
 
-def drugs_list(request):
+def drug_list(request):
     """
         DOCSTRING:
         This drugs_list view is used to display the list of all the drugs created and available for this user,
@@ -343,7 +362,7 @@ def drugs_list(request):
     """
     drugs = Drugs.objects.filter(created_by=request.user)
     template = 'settings/drugs_list.html'
-    context = {'drugs': drugs, 'form': DrugsFilterForm}
+    context = {'drugs': drugs, 'form': DrugFilterForm}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -360,9 +379,9 @@ def filter_drugs(request):
     """
     query = request.META.get('HTTP_QUERY')
     updated_drugs = Drugs.objects.filter(name__icontains=query, created_by=request.user)
-    template = 'settings/drugs_filtered_list.html'
+    template = 'settings/drugs_partial_list.html'
     context = {'drugs': updated_drugs}
-    data = {'updated_html': render_to_string(template, context, request)}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -384,7 +403,7 @@ def drug_category_filter(request):
         return JsonResponse(data)
 
 
-def create_drug(request):
+def add_drug(request):
     """
         The create_drug view is used to display the drug addition form, this form will be displayed async
         in the client side, if the request.method is 'GET' then the content from this view, in this case the form, will
@@ -442,19 +461,19 @@ def update_drug(request, pk):
         instance.
     """
     drug = Drugs.objects.get(pk=pk)
-    drug_form = DrugsForm(request.POST or None, instance=drug)
+    drug_form = DrugForm(request.POST or None, instance=drug)
     template = 'settings/update_drug.html'
     context = {'drug': drug, 'form': drug_form}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
-        drug_form = DrugsForm(request.POST or None, instance=drug)
+        drug_form = DrugForm(request.POST or None, instance=drug)
         if drug_form.is_valid():
             try:
                 drug = drug_form.save(commit=False)
                 drug.created_by = request.user
                 drug.save()
                 drugs_list = Drugs.objects.filter(created_by=request.user)
-                context = {'drugs': drugs_list, 'form': DrugsFilterForm}
+                context = {'drugs': drugs_list, 'form': DrugFilterForm}
                 data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
             except IntegrityError:
                 context['error'] = 'This drug is already listed in your options'
@@ -477,7 +496,7 @@ def delete_drug(request, pk):
     if request.method == 'POST':
         drug.delete()
         drugs_list = Drugs.objects.filter(created_by=request.user)
-        context = {'drugs': drugs_list, 'form': DrugsFilterForm}
+        context = {'drugs': drugs_list, 'form': DrugFilterForm}
         data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
     return JsonResponse(data)
 

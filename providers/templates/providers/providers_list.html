@@ -14,11 +14,11 @@
                     <th>Edit</th>
                     <th>Delete</th>
                     <!--Depending on the requested type, a unique icon will be rendered, with it's own data-url and data-provider-type attribute.-->
-                    {%if requested_type == 'LP'%}
-                    <th><i class="fas fa-plus" data-url="{%url 'providers:create_provider'%}" data-provider-type="LP"></i></th>
-                    {%else%}
-                    <th><i class="fas fa-plus" data-url="{%url 'providers:create_provider'%}" data-provider-type="MP"></i></th>
-                    {%endif%}
+                    {% if requested_type == 'LP' %}
+                    <th><i class="fas fa-plus" data-url="{% url 'providers:create_provider' %}" data-provider-type="LP"></i></th>
+                    {% else %}
+                    <th><i class="fas fa-plus" data-url="{% url 'providers:create_provider' %}" data-provider-type="MP"></i></th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>

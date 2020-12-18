@@ -1,8 +1,8 @@
 {%load static%}
 {%block body_block%}
 {%if drugs%}
-    <div class="box">
-        <div class="table">
+    <div class="table">
+        <div>
             <table>
                 <thead>
                     <tr id="heading">
@@ -10,7 +10,7 @@
                         <th>Category</th>
                         <th>Edit</th>
                         <th>Delete</th>
-                        <th><i class="fas fa-plus" data-url="{%url 'settings:drug_add'%}"></i></th>
+                        <th><i class="fas fa-plus" data-url="{%url 'settings:add_drug'%}"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,15 +18,15 @@
                     <tr data-url="{%url 'settings:drug_details' d.pk%}">
                         <td>{{d.name}}</td>
                         <td>{{d.get_category_display}}</td>
-                        <td><i class="fas fa-edit" data-url="{%url 'settings:drug_update' d.pk%}"></i></td>
-                        <td><i class="fas fa-trash" data-url="{%url 'settings:drug_delete' d.pk%}"></i></td>
+                        <td><i class="fas fa-edit" data-url="{%url 'settings:update_drug' d.pk%}"></i></td>
+                        <td><i class="fas fa-trash" data-url="{%url 'settings:delete_drug' d.pk%}"></i></td>
                         <td></td>
                     </tr>
                 {%endfor%}
                 </tbody>
             </table>
         </div>
-        <div class="form">
+        <div>
             <i class="fas fa-filter"></i>
             <form method="GET" action="{%url 'settings:filter_drugs'%}" class="filter-form" autocomplete="off">
                 <h3>Drug Filter</h3>
@@ -37,6 +37,6 @@
     </div>
 {%else%}
     <p class="no-data">No drugs listed</p>
-    <a href="{%url 'settings:drug_add'%}" class="add-data"><i class="fas fa-plus"></i></a>
+    <a href="{%url 'settings:add_drug'%}" class="add-data"><i class="fas fa-plus"></i></a>
 {%endif%}
 {%endblock%}

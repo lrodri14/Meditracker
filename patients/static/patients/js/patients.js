@@ -38,8 +38,8 @@ if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector
 }
 
 // No Data Available
-if (document.querySelector('#add_patients') !== 'undefined' && document.querySelector('#add_patients') !== 'null'){
-    var addPatient = document.querySelector('#add_patients')
+if (document.querySelector('#add-patients') !== 'undefined' && document.querySelector('#add-patients') !== 'null'){
+    var addPatient = document.querySelector('#add-patients')
 }
 
 // ################################################ Functions ##########################################################
@@ -96,6 +96,23 @@ function retrieveWarningMessage(messageCode){
     return warningMessages[messageCode]
 }
 
+// Sync Functions
+
+function addIconLevitate(addPatientIcon){
+    /*This function is used to perform the levitation effect in the
+      .fa-plus icon every time there is no data available, it takes
+      one parameter, 'addPatientIcon' is the icon itself. it will
+      execute a setInterval function every 0.5 seconds, which just
+      changes the style of the 'top' attribute in our element.*/
+    setInterval(function(){
+        if (addProvidersIcon.style.top == '90%'){
+            addProvidersIcon.style.top = '88%'
+        } else {
+            addProvidersIcon.style.top = '90%'
+        }
+    },500)
+}
+
 // ############################################ Event Listeners ########################################################
 
 // addPatient Event Listeners, this events will be fired when there is not data available to show.
@@ -146,17 +163,31 @@ if (body){
     })
 
     body.addEventListener('mouseover', (e) => {
+
         // This event will be fired, every time the user hovers over a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be added.
         if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
             e.target.classList.add('fa-angle-hover')
         }
+
+        // This event will be fired, every time the user hovers over a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be added.
+        if (e.target.classList.contains('fa-plus')){
+            e.target.classList.add('add-patient-hover')
+        }
+
     })
 
     body.addEventListener('mouseout', (e) => {
+
         // This event will be fired, every time the user hover out occurs on a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be removed.
         if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
             e.target.classList.remove('fa-angle-hover')
         }
+
+        // This event will be fired, every time the user hover out occurs on a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be removed.
+        if (e.target.classList.contains('fa-plus')){
+            e.target.classList.remove('add-patient-hover')
+        }
+
     })
 
 }
@@ -238,17 +269,6 @@ if (wrapper){
             })
         }
 
-
-        // This event will be fired, every time the user hovers over an input, the input-hover class will be added.
-        if (e.target.nodeName === 'INPUT'){
-            e.target.classList.add('input-hover')
-        }
-
-        // This event will be fired, every time the user hovers over a button, the button-form-hover class will be added.
-        if (e.target.nodeName === 'BUTTON'){
-            e.target.classList.add('button-form-hover')
-        }
-
        // This event will be fired, every time the user hovers over fa-plus icon, the fa-plus-hover class will be added.
        if (e.target.classList.contains('fa-plus')){
             e.target.classList.add('fa-plus-hover')
@@ -283,16 +303,6 @@ if (wrapper){
             row.style.color = ''
       }
 
-        // This event will be fired, every time the user hovers out over an input, the input-hover class will removed.
-        if (e.target.nodeName === 'INPUT'){
-            e.target.classList.remove('input-hover')
-        }
-
-        // This event will be fired, every time the user hovers out a button, the button-form-hover class will be removed.
-        if (e.target.nodeName === 'BUTTON'){
-            e.target.classList.remove('button-form-hover')
-        }
-
        // This event will be fired, every time the user hovers out a fa-plus icon, the fa-plus-hover class will be removed.
        if (e.target.classList.contains('fa-plus')){
             e.target.classList.remove('fa-plus-hover')
@@ -318,49 +328,12 @@ if (wrapper){
     // Wrapper Click Events
     wrapper.addEventListener('click', (e) => {
 
-        // This event will be fired if the target is the modal, it will remove the class 'modal-show' from the modal.
-        if (e.target === modal){
-            modal.classList.remove('modal-show')
-        }
-
-        /* This event will be fired if the target is a button and contains the 'no' textContent or 'ok',
-           it will remove the class 'modal-show' from the modal.*/
-        if (e.target.value === 'no' || e.target.textContent === 'Ok'){
-            e.stopPropagation()
-            e.preventDefault()
-            modal.classList.remove('modal-show')
-        }
-
         /* This event will be fired if the target is a fa-filter icon, and depending if the filter form contains the
            show-form class or not, will add or remove this class.*/
         if (e.target.classList.contains('fa-filter')){
             warningPopup.classList.remove('popup-show')
             warningPopup.style.top = ''
             !form.classList.contains('show-form') ? form.classList.add('show-form') : form.classList.remove('show-form')
-        }
-
-    })
-
-    // Wrapper Submit Events
-    wrapper.addEventListener('submit', (e) => {
-        const form = document.querySelector('#modal-form')
-        const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-        /*This event will be fired every time the target is a form, it will collect some data from the target, as the
-          action attribute value and the csrfmiddlwaretoken, it will make a request using the submitFormAW and depending
-          if the form used was filter, it will insert that data inside the backedUpContent variable inside the wrapper,
-          else the new data retrieved will be added to the wrapper.*/
-        if (e.target === form){
-            e.preventDefault()
-            submitFormAW(form, csrfmiddlewaretoken)
-            .then(data => {
-                if (data.hasOwnProperty('patients')){
-                    modalContent.innerHTML = data['html']
-                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
-                    tbody.innerHTML = data['patients']
-                }else{
-                    modalContent.innerHTML = data['html']
-                }
-            })
         }
 
     })
@@ -375,6 +348,87 @@ if (wrapper){
             .then(data => {
                 document.querySelector('#paginator') && document.querySelector('#paginator').remove()
                 tbody.innerHTML = data['html']
+            })
+        }
+
+    })
+}
+
+// Modal Event Listeners
+if (modal){
+
+    // Modal click event listeners
+    modal.addEventListener('click', (e) => {
+
+        // This event will be fired if the target is the modal, it will remove the class 'modal-show' from the modal.
+        if (e.target === modal){
+            modal.classList.remove('modal-show')
+        }
+
+
+        /* This event will be fired if the target is a button and contains the 'no' textContent or 'ok',
+           it will remove the class 'modal-show' from the modal.*/
+        if (e.target.value === 'no' || e.target.textContent === 'Ok'){
+            e.stopPropagation()
+            e.preventDefault()
+            modal.classList.remove('modal-show')
+        }
+
+    })
+
+    // Modal Mouseover Events
+    modal.addEventListener('mouseover', (e) =>{
+
+//      This event will be fired, every time the user hovers over an input, the input-hover class will be added.
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.add('input-hover')
+        }
+
+        // This event will be fired, every time the user hovers over a button, the button-form-hover class will be added.
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.add('button-form-hover')
+        }
+
+    })
+
+    // Modal Mouseout Events
+    modal.addEventListener('mouseout', (e) =>{
+
+        // This event will be fired, every time the user hovers out a button, the button-form-hover class will be removed.
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.remove('button-form-hover')
+        }
+
+        // This event will be fired, every time the user hovers out over an input, the input-hover class will removed.
+        if (e.target.nodeName === 'INPUT'){
+            e.target.classList.remove('input-hover')
+        }
+
+    })
+
+
+    // Modal Submit Events
+    modal.addEventListener('submit', (e) => {
+
+        const form = document.querySelector('#modal-form')
+        const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+        /*This event will be fired every time the target is a form, it will collect some data from the target, as the
+          action attribute value and the csrfmiddlwaretoken, it will make a request using the submitFormAW and depending
+          if the form used was filter, it will insert that data inside the backedUpContent variable inside the wrapper,
+          else the new data retrieved will be added to the wrapper.*/
+        if (e.target === form){
+            e.preventDefault()
+            submitFormAW(form, csrfmiddlewaretoken)
+            .then(data => {
+                if (data.hasOwnProperty('patients')){
+                    modalContent.innerHTML = data['html']
+                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
+                    wrapper.innerHTML = data['patients']
+                    // This function is called in case there are no more instances available, the add button will be displayed and levitated
+                    addIconLevitate(document.querySelector('#add-patients'))
+                }else{
+                    modalContent.innerHTML = data['html']
+                }
             })
         }
 
