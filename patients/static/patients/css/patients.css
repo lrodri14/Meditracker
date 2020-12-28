@@ -162,6 +162,7 @@ tr:nth-child(even){
 /* Pop-Up */
 .popup{
     position: absolute;
+    left: 81%;
     visibility: hidden;
     opacity: 0;
     transition: 0.5s;

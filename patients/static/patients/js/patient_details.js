@@ -63,24 +63,81 @@ function chargesScroll(){
     })
 }
 
+function defineQuerystring(classList){
+    let dayFrom
+    let monthFrom
+    let yearFrom
+    let dayTo
+    let monthTo
+    let yearTo
+    let filterRequestType
+    switch (classList[0]){
+        case 'appointments-form':
+            dayFrom = document.querySelector('.appointments-form #id_date_from_day').value
+            monthFrom = document.querySelector('.appointments-form #id_date_from_month').value
+            yearFrom = document.querySelector('.appointments-form #id_date_from_year').value
+            dayTo = document.querySelector('.appointments-form #id_date_to_day').value
+            monthTo = document.querySelector('.appointments-form #id_date_to_month').value
+            yearTo = document.querySelector('.appointments-form #id_date_to_year').value
+            filterRequestType = 'appointments'
+            break
+        case 'exams-form':
+            dayFrom = document.querySelector('.exams-form #id_date_from_day').value
+            monthFrom = document.querySelector('.exams-form #id_date_from_month').value
+            yearFrom = document.querySelector('.exams-form #id_date_from_year').value
+            dayTo = document.querySelector('.exams-form #id_date_to_day').value
+            monthTo = document.querySelector('.exams-form #id_date_to_month').value
+            yearTo = document.querySelector('.exams-form #id_date_to_year').value
+            filterRequestType = 'exams'
+            break
+        case 'charges-form':
+            dayFrom = document.querySelector('.charges-form #id_date_from_day').value
+            monthFrom = document.querySelector('.charges-form #id_date_from_month').value
+            yearFrom = document.querySelector('.charges-form #id_date_from_year').value
+            dayTo = document.querySelector('.charges-form #id_date_to_day').value
+            monthTo = document.querySelector('.charges-form #id_date_to_month').value
+            yearTo = document.querySelector('.charges-form #id_date_to_year').value
+            filterRequestType = 'charges'
+            break
+    }
+
+    let dateFrom = yearFrom + '-' + monthFrom + '-' + dayFrom
+    let dateTo = yearTo + '-' + monthTo + '-' + dayTo
+    return queryString = '?date_from=' +  dateFrom + '&date_to=' + dateTo + '&filter_request_type=' + filterRequestType
+}
+
 // Async Functions
-async function filterResultsAW(url, method,type, csrfmiddlewaretoken, formData){
+async function filterResultsAW(url){
     /* This function will be used to perform the filtering functionality for every data related to the specific patient,
        it requites 4 parameters we will grab to make the POST request successfully: 'url', required to make the POST
        request to this address, 'method' is the method used for the request, 'csrfmiddlewaretoken' we grab from the form
        hidden input and lastly the 'formData', we create a new FormData object using the information in the inputs of the
        form, we send this information and the response we return it in JSON Format.*/
-    const result = await fetch(url, {'method':method, headers: {'X-CSRFToken':csrfmiddlewaretoken, 'FilterType': type}, body:formData})
+    const result = await fetch(url)
     const data = await result.json()
     return data
 }
 
+
+async function requestPageAW(url){
+    /* This async function will be used to collect the data from the previous or next page, this content will be
+    received as a promise, so we need to return it in JSON format so we can process it, this content will be set to
+    the tbody dynamically.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
 
 // ##################################################### Event Listeners ###############################################
 
 // Body Event Listeners
 // Body Mouseover events
 body.addEventListener('mouseover', (e) => {
+
+    // This event will be fired, every time the user hovers over a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be added.
+    if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+        e.target.classList.add('fa-angle-hover')
+    }
 
     /* This event will be fired every time a hover occurs in the icons or a td cell, this will change many style
        properties from the row and add tr-hover and td-hover class*/
@@ -90,7 +147,6 @@ body.addEventListener('mouseover', (e) => {
         row.style.backgroundColor = '#C7E8F3'
         row.style.color = '#496897'
     }
-
 
     /* This event will be fired every time a hover occurs over the target and the target or parentNode contains the
        info-tab class, and will add the tab-hover class*/
@@ -119,6 +175,11 @@ body.addEventListener('mouseover', (e) => {
 
 // Body Mouseout Events
 body.addEventListener('mouseout', (e) => {
+
+    // This event will be fired, every time the user hover out occurs on a 'fa-angle-right' or 'fa-angle-left', the fa-angle-hover class will be removed.
+    if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+        e.target.classList.remove('fa-angle-hover')
+    }
 
   /* This event will be fired every time a hover occurs in the icons or a td cell, this will change many style
      properties from the row and removed tr-hover and td-hover class*/
@@ -155,6 +216,40 @@ body.addEventListener('mouseout', (e) => {
 })
 
 body.addEventListener('click', (e) => {
+
+    /* This event will be fired every time an angle icon is clicked, this event will grab the url for the
+       GET request, then the response will be added to the dataTable, as well as the paginator will be deleted
+       to get the current one.*/
+    if (e.target.classList.contains('fa-angle-left') || e.target.classList.contains('fa-angle-right')){
+        let requestedDetails
+        let paginator
+        let tableData
+        switch (e.target.parentNode.parentNode.id){
+            case 'consults-paginator':
+                requestedDetails = 'consults'
+                paginator = document.querySelector('#consults-paginator')
+                tableData = document.querySelector('.appointments tbody')
+                break
+            case 'exams-paginator':
+                requestedDetails = 'exams'
+                paginator = document.querySelector('#exams-paginator')
+                tableData = document.querySelector('.exams tbody')
+                break
+            case 'charges-paginator':
+                requestedDetails = 'charges'
+                paginator = document.querySelector('#charges-paginator')
+                tableData = document.querySelector('.charges tbody')
+                break
+        }
+        const url = e.target.getAttribute('data-url') + '&requested_details=' + requestedDetails
+        requestPageAW(url)
+        .then(data => {
+            if (data['html']){
+                paginator && paginator.remove()
+                tableData.innerHTML = data['html']
+            }
+        })
+    }
 
     /* This event will be fired every time a click occurs over the target and the target or parentNode contains the
        info-tab class, and will add the tab-hover class, the function will grab the tab clicked, and all the exiting
@@ -242,42 +337,28 @@ body.addEventListener('click', (e) => {
 body.addEventListener('submit', (e) => {
         e.preventDefault()
         e.stopPropagation()
-        let container
+        let tableData
+        let queryString = defineQuerystring(e.target.classList)
     if (e.target.classList.contains('appointments-form')){
-        container = document.querySelector('.appointments')
-        const url = e.target.action
-        const method = e.target.method
-        const type = 'appointments'
-        const csrfmiddlewaretoken = document.querySelector('.appointments-form > [name=csrfmiddlewaretoken]').value
-        const formData = new FormData(e.target)
-        filterResultsAW(url, method, type, csrfmiddlewaretoken, formData)
+        tableData = document.querySelector('.appointments tbody')
+        const url = e.target.action + queryString
+        filterResultsAW(url)
         .then(data => {
-            container.innerHTML = data['html']
-            document.querySelector('.appointments-form').classList.add('show-form')
+            tableData.innerHTML = data['html']
         })
     } else if (e.target.classList.contains('exams-form')){
-        container = document.querySelector('.exams')
-        const url = e.target.action
-        const method = e.target.method
-        const type = 'exams'
-        const csrfmiddlewaretoken = document.querySelector('.exams-form > [name=csrfmiddlewaretoken]').value
-        const formData = new FormData(e.target)
-        filterResultsAW(url, method, type, csrfmiddlewaretoken, formData)
+        tableData = document.querySelector('.exams tbody')
+        const url = e.target.action + queryString
+        filterResultsAW(url)
         .then(data => {
-            container.innerHTML = data['html']
-            document.querySelector('.exams-form').classList.add('show-form')
+            tableData.innerHTML = data['html']
         })
     } else{
-        container = document.querySelector('.charges')
-        const url = e.target.action
-        const method = e.target.method
-        const type = 'charges'
-        const csrfmiddlewaretoken = document.querySelector('.charges-form > [name=csrfmiddlewaretoken]').value
-        const formData = new FormData(e.target)
-        filterResultsAW(url, method, type, csrfmiddlewaretoken, formData)
+        tableData = document.querySelector('.charges tbody')
+        const url = e.target.action + queryString
+        filterResultsAW(url)
         .then(data => {
-            container.innerHTML = data['html']
-            document.querySelector('.charges-form').classList.add('show-form')
+            tableData.innerHTML = data['html']
         })
     }
 })

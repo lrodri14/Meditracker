@@ -177,7 +177,7 @@
 
 <div class="add-drug-modal">
     <div class="add-drug-modal-content">
-        <form method="POST" action="{% url 'settings:drug_add' %}" autocomplete="off" class="add-drug-form">
+        <form method="POST" action="{% url 'settings:add_drug' %}" autocomplete="off" class="add-drug-form">
             {% csrf_token %}
             <h1>Add Drug</h1>
             <p>{{ drug_form.name.label }}</p>

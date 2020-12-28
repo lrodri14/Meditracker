@@ -1,46 +1,33 @@
 <!-- Template used to display specific patient exams dynamically-->
 {% load static %}
+
+<!-- If paginator is available -->
+{% load patients_custom_tags %}
+
+{% if exams.has_other_pages %}
+    <div id="exams-paginator" class="paginator">
+        <span> {{ exams.number }} / {{ exams.paginator.num_pages }} </span>
+        <div class="navigation">
+            {% if filtered %}
+
+            {% else %}
+                {% if exams.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'patients:patients_details' patient.pk %}{% current_url 'page' exams.previous_page_number %}"></i>{% endif %}{% if exams.has_next %}<i class="fas fa-angle-right" data-url="{% url 'patients:patients_details' patient.pk %}{% current_url 'page' exams.next_page_number %}"></i>{% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
 <!--If exams are present this code will be rendered-->
 {% if exams %}
-<div>
-    <table>
-        <thead>
-            <tr id="heading">
-                <th>Date</th>
-                <th>Time</th>
-                <th>Created By</th>
-                <th>Type</th>
-                <th>Exams</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for e in exams %}
-            <tr onclick="window.location='{% url 'appointments:consult_details' e.consult.pk %}'">
-                <td>{{ e.consult.datetime|date }}</td>
-                <td>{{ e.consult.datetime|time }}</td>
-                <td>{{ e.consult.created_by }}</td>
-                <td>{{ e.get_type_display }}</td>
-                <td data-img-src="{{ MEDIA_URL }}{{ e.image }}" class="exam-filename">{{e}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-<div>
-    <!-- Filtering form -->
-    <i class="fas fa-filter exams-filter"></i></i><i class="fas fa-sync-alt exams-reload"></i>
-    <form method="POST" action="{% url 'patients:patients_details' patient.pk %}" class="exams-form">
-        <h3>Filter Results</h3>
-        {% csrf_token %}
-        <p>{{ consults_form.date_from.label }}</p>
-        <p>{{ consults_form.date_from }}</p>
-        <p>{{ consults_form.date_to.label }}</p>
-        <p>{{ consults_form.date_to }}</p>
-        <p class="error"><small>{{ error }}</small></p>
-        <button type="submit">Submit</button>
-    </form>
-</div>
-<!--If no exams are present this code will be rendered-->
+    {% for e in exams %}
+        <tr onclick="window.location='{% url 'appointments:consult_details' e.consult.pk %}'">
+            <td>{{ e.consult.datetime|date }}</td>
+            <td>{{ e.consult.datetime|time }}</td>
+            <td>{{ e.consult.created_by }}</td>
+            <td>{{ e.get_type_display }}</td>
+            <td data-img-src="{{ MEDIA_URL }}{{ e.image }}" class="exam-filename">{{e}}</td>
+        </tr>
+    {% endfor %}
 {% else %}
-<p class="no-data">No Data</p>
+    <p class="no-data">No Data</p>
 {% endif %}

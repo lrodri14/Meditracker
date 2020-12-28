@@ -64,7 +64,7 @@ async function requestPageAW(url){
     return data
 }
 
-async function filterResults(url, method, query){
+async function filterResults(url){
     /*This filterResults async functions it's purpose is to retrieve the patients
       related data from the database based on a query the user inputs in the filter form,
       it accepts 4 arguments 'url' to where the POST request is done, the method which
@@ -72,7 +72,7 @@ async function filterResults(url, method, query){
       from the input's hidden input and the formData, the data inputted into the form.
       after the data was retrieved from the server, it's converted to JSON format and
       returned*/
-    const result = await fetch(url, {method:method, headers:{'QUERY': query}})
+    const result = await fetch(url)
     const data = await result.json()
     return data
 }

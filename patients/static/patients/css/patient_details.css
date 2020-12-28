@@ -60,6 +60,60 @@ a{
     margin-left: 45%;
 }
 
+/*##################################################### Paginator ####################################################*/
+
+#consults-paginator{
+    position: absolute;
+    left: 154%;
+    top: 16%;
+    font-size: 18px;
+    width: 25%;
+}
+
+#exams-paginator{
+    position: absolute;
+    left: 254%;
+    top: 16%;
+    font-size: 18px;
+    width: 25%;
+}
+
+#charges-paginator{
+    position: absolute;
+    left: 354%;
+    top: 16%;
+    font-size: 18px;
+    width: 25%;
+}
+
+.navigation{
+    width: 20%;
+    float: right;
+}
+
+.paginator i{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+.fa-angle-left{
+    cursor: pointer;
+    transition: 0.5s;
+    float: left;
+}
+
+.fa-angle-right{
+    cursor: pointer;
+    transition: 0.5s;
+    float: right;
+}
+
+.fa-angle-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
 /*##################################################### Data Table ###################################################*/
 
 table{
@@ -96,8 +150,8 @@ tr:nth-child(even){
     transition: 0.5s;
 }
 
-#heading{
-    background-color: #456387;
+.heading{
+    background-color: #456387 !important;
     line-height: 25px;
     cursor: default;
 }
@@ -178,7 +232,7 @@ form{
 
 .show-form{
     visibility: visible;
-    margin-top: 2%;
+    margin-top: 5%;
     transition: 0.5s;
 }
 
@@ -247,13 +301,7 @@ button:focus{
     cursor: pointer;
 }
 
-.no-data{
-    margin-top: 30%;
-    margin-left: 60%;
-}
-
 /*##################################################### Navigation ###################################################*/
-
 
 .info{
     width: 50%;
@@ -313,4 +361,11 @@ button:focus{
 .previewed-image{
     width: 100%;
     height: auto;
+}
+
+/*##################################################### No Data ######################################################*/
+
+.no-data{
+    margin-top: 100%;
+    margin-left: 100%;
 }

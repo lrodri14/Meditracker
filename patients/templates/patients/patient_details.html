@@ -39,7 +39,7 @@
                     <p>{{ forloop.counter }}. {{ allergy.allergy_type }} - {{ allergy.about }}</p>
                 {% endfor %}
             {% else %}
-                <p class="no-data">No Data</p>
+                <p>No Data</p>
             {% endif %}
             <div class="title">Antecedents</div>
             {% if patient.antecedents.all %}
@@ -47,7 +47,7 @@
                     <p>{{ forloop.counter }}. {{ antecedent.antecedent }} - {{ antecedent.info }}</p>
                 {% endfor %}
             {% else %}
-                <p class="no-data">No Data</p>
+                <p>No Data</p>
             {% endif %}
             <div class="title">Insurance</div>
             {% if patient.insurance.insurance_carrier or patient.type_of_insurance %}
@@ -55,28 +55,126 @@
                 <p>Insurance Type: {{ patient.insurance.insurance_type }}</p>
                 <p>Expiration Date: {{ patient.insurance.expiration_date }}</p>
             {% else %}
-                <p class="no-data">No Data</p>
+                <p>No Data</p>
             {% endif %}
         </div>
     </div>
     <div class="filterable appointments">
-        <!-- Included template for dynamic displaying of results-->
-        {% include 'patients/patient_consults_partial_list.html' %}
+        <!--If no consults are present this code will be rendered-->
+        {% if consults %}
+            <div>
+                <table>
+                    <thead>
+                        <tr class="heading">
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Medical Status</th>
+                            <th>Status</th>
+                            <th>Created By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Included template for dynamic displaying of results-->
+                        {% include 'patients/patient_consults_partial_list.html' %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <!--Filtering form-->
+                <i class="fas fa-filter appointments-filter"></i>
+                <form method="GET" action="{% url 'patients:filter_patient_details' %}" class="appointments-form">
+                    <h3>Filter Results</h3>
+                    <p>{{ consults_form.date_from.label }}</p>
+                    <p>{{ consults_form.date_from }}</p>
+                    <p>{{ consults_form.date_to.label }}</p>
+                    <p>{{ consults_form.date_to }}</p>
+                    <p class="error"><small>{{ error }}</small></p>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        {% else %}
+            <p class="no-data">No Data</p>
+        {% endif %}
     </div>
     <div class="filterable exams">
-        <!-- Included template for dynamic displaying of results-->
-        {% include 'patients/patient_exams_partial_list.html' %}
+        {% if exams %}
+            <div>
+                <table>
+                    <thead>
+                        <tr class="heading">
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Created By</th>
+                            <th>Type</th>
+                            <th>Exams</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Included template for dynamic displaying of results-->
+                    {% include 'patients/patient_exams_partial_list.html' %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <!-- Filtering form -->
+                <i class="fas fa-filter exams-filter"></i>
+                <form method="GET" action="{% url 'patients:filter_patient_details' %}" class="exams-form">
+                    <h3>Filter Results</h3>
+                    <p>{{ consults_form.date_from.label }}</p>
+                    <p>{{ consults_form.date_from }}</p>
+                    <p>{{ consults_form.date_to.label }}</p>
+                    <p>{{ consults_form.date_to }}</p>
+                    <p class="error"><small>{{ error }}</small></p>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        <!--If no exams are present this code will be rendered-->
+        {% else %}
+            <p class="no-data">No Data</p>
+        {% endif %}
     </div>
     <div class="filterable charges">
-        <!-- Included template for dynamic displaying of results-->
-        {% include 'patients/patient_charges_partial_list.html' %}
+        <!--If charges are present this code will be rendered-->
+        {% if charges %}
+            <div>
+                <table>
+                    <thead>
+                        <tr class="heading">
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Created By</th>
+                            <th>$</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Included template for dynamic displaying of results-->
+                        {% include 'patients/patient_charges_partial_list.html' %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <!-- Filtering Form -->
+                <i class="fas fa-filter charges-filter"></i>
+                <form method="GET" action="{% url 'patients:filter_patient_details' %}" class="charges-form">
+                    <h3>Filter Results</h3>
+                    <p>{{ consults_form.date_from.label }}</p>
+                    <p>{{ consults_form.date_from }}</p>
+                    <p>{{ consults_form.date_to.label }}</p>
+                    <p>{{ consults_form.date_to }}</p>
+                    <p class="error"><small>{{ error }}</small></p>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        <!--If no charges are present this code will be rendered-->
+        {% else %}
+            <p class="no-data">No Data</p>
+        {% endif %}
     </div>
 </div>
-
 <!--Modal used for image previewing.-->
 <div class="image-preview">
     <img class="previewed-image" src="" alt="">
 </div>
 
 <script src="{% static 'patients/js/patient_details.js' %}"></script>
-{%endblock%}
+{% endblock %}
