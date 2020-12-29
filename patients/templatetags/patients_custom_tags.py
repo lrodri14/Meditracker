@@ -34,7 +34,7 @@ def current_url(key, value, urlencode=None):
     url = '?{}={}'.format(key, value)
 
     if urlencode:
-        querystring = urlencode.split('&')
+        querystring = set(urlencode.split('&'))
         filtered_querystring = filter(lambda p: p.split('=')[0] != key, querystring)
         encoded_url = '&'.join(filtered_querystring)
         url = '{}&{}'.format(url, encoded_url)

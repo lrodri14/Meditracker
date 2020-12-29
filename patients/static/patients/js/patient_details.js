@@ -224,6 +224,7 @@ body.addEventListener('click', (e) => {
         let requestedDetails
         let paginator
         let tableData
+        let url
         switch (e.target.parentNode.parentNode.id){
             case 'consults-paginator':
                 requestedDetails = 'consults'
@@ -241,7 +242,13 @@ body.addEventListener('click', (e) => {
                 tableData = document.querySelector('.charges tbody')
                 break
         }
-        const url = e.target.getAttribute('data-url') + '&requested_details=' + requestedDetails
+
+        if (e.target.getAttribute('data-url').includes('requested_details')){
+            url = e.target.getAttribute('data-url')
+        }else{
+            url = e.target.getAttribute('data-url') + '&requested_details=' + requestedDetails
+        }
+
         requestPageAW(url)
         .then(data => {
             if (data['html']){
@@ -344,6 +351,7 @@ body.addEventListener('submit', (e) => {
         const url = e.target.action + queryString
         filterResultsAW(url)
         .then(data => {
+            document.querySelector('#consults-paginator') && document.querySelector('#consults-paginator').remove()
             tableData.innerHTML = data['html']
         })
     } else if (e.target.classList.contains('exams-form')){
@@ -351,6 +359,7 @@ body.addEventListener('submit', (e) => {
         const url = e.target.action + queryString
         filterResultsAW(url)
         .then(data => {
+            document.querySelector('#exams-paginator') && document.querySelector('#exams-paginator').remove()
             tableData.innerHTML = data['html']
         })
     } else{
@@ -358,6 +367,7 @@ body.addEventListener('submit', (e) => {
         const url = e.target.action + queryString
         filterResultsAW(url)
         .then(data => {
+            document.querySelector('#charges-paginator') && document.querySelector('#charges-paginator').remove()
             tableData.innerHTML = data['html']
         })
     }

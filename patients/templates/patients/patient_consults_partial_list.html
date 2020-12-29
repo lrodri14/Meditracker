@@ -9,7 +9,7 @@
         <span> {{ consults.number }} / {{ consults.paginator.num_pages }} </span>
         <div class="navigation">
             {% if filtered %}
-
+                {% if consults.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'patients:filter_patient_details' %}{% current_url 'page' consults.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if consults.has_next %}<i class="fas fa-angle-right" data-url="{% url 'patients:filter_patient_details' %}{% current_url 'page' consults.next_page_number request.GET.urlencode %}"></i>{% endif %}
             {% else %}
                 {% if consults.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'patients:patients_details' patient.pk %}{% current_url 'page' consults.previous_page_number %}"></i>{% endif %}{% if consults.has_next %}<i class="fas fa-angle-right" data-url="{% url 'patients:patients_details' patient.pk %}{% current_url 'page' consults.next_page_number %}"></i>{% endif %}
             {% endif %}
@@ -41,5 +41,5 @@
         </tr>
     {% endfor %}
 {% else %}
-    <p class="no-data">No Data</p>
+    <p id="no-consults-data">No Data</p>
 {% endif %}

@@ -9,7 +9,7 @@
         <span> {{ exams.number }} / {{ exams.paginator.num_pages }} </span>
         <div class="navigation">
             {% if filtered %}
-
+                {% if exams.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'patients:filter_patient_details' %}{% current_url 'page' exams.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if exams.has_next %}<i class="fas fa-angle-right" data-url="{% url 'patients:filter_patient_details' %}{% current_url 'page' exams.next_page_number request.GET.urlencode %}"></i>{% endif %}
             {% else %}
                 {% if exams.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'patients:patients_details' patient.pk %}{% current_url 'page' exams.previous_page_number %}"></i>{% endif %}{% if exams.has_next %}<i class="fas fa-angle-right" data-url="{% url 'patients:patients_details' patient.pk %}{% current_url 'page' exams.next_page_number %}"></i>{% endif %}
             {% endif %}
@@ -29,5 +29,5 @@
         </tr>
     {% endfor %}
 {% else %}
-    <p class="no-data">No Data</p>
+    <p id="no-exams-data">No Data</p>
 {% endif %}

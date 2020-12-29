@@ -198,9 +198,14 @@ def filter_patient_details(request):
         template = 'patients/patient_consults_partial_list.html' if requested_details == 'appointments' else 'patients/patient_charges_partial_list.html'
         context = {'consults': consults_page_obj, 'charges': charges, 'filtered': True}
         data = {'html': render_to_string(template, context, request)}
-        return JsonResponse(data)
     else:
-        pass
+        filtered_results = MedicalExam.objects.filter(date__gte=date_from, date__lte=date_to, consult__created_by=request.user)
+        paginator = Paginator(filtered_results, 1)
+        exams_page_obj = paginator.get_page(page)
+        template = 'patients/patient_exams_partial_list.html'
+        context = {'exams': exams_page_obj, 'filtered': True}
+        data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 
 def delete_patient(request, pk):

@@ -39,7 +39,7 @@
                     <p>{{ forloop.counter }}. {{ allergy.allergy_type }} - {{ allergy.about }}</p>
                 {% endfor %}
             {% else %}
-                <p>No Data</p>
+                <p class="no-data">No Data</p>
             {% endif %}
             <div class="title">Antecedents</div>
             {% if patient.antecedents.all %}
@@ -47,7 +47,7 @@
                     <p>{{ forloop.counter }}. {{ antecedent.antecedent }} - {{ antecedent.info }}</p>
                 {% endfor %}
             {% else %}
-                <p>No Data</p>
+                <p class="no-data">No Data</p>
             {% endif %}
             <div class="title">Insurance</div>
             {% if patient.insurance.insurance_carrier or patient.type_of_insurance %}
@@ -55,7 +55,7 @@
                 <p>Insurance Type: {{ patient.insurance.insurance_type }}</p>
                 <p>Expiration Date: {{ patient.insurance.expiration_date }}</p>
             {% else %}
-                <p>No Data</p>
+                <p class="no-data">No Data</p>
             {% endif %}
         </div>
     </div>
@@ -93,7 +93,7 @@
                 </form>
             </div>
         {% else %}
-            <p class="no-data">No Data</p>
+            <p id="no-consults-data">No Data</p>
         {% endif %}
     </div>
     <div class="filterable exams">
@@ -130,7 +130,7 @@
             </div>
         <!--If no exams are present this code will be rendered-->
         {% else %}
-            <p class="no-data">No Data</p>
+            <p id="no-exams-data">No Data</p>
         {% endif %}
     </div>
     <div class="filterable charges">
@@ -167,7 +167,7 @@
             </div>
         <!--If no charges are present this code will be rendered-->
         {% else %}
-            <p class="no-data">No Data</p>
+            <p id="no-charges-data">No Data</p>
         {% endif %}
     </div>
 </div>

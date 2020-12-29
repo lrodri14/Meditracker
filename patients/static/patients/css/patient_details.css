@@ -204,18 +204,6 @@ tr:nth-child(even){
     transition: 0.5s;
 }
 
-.fa-sync-alt{
-    padding-left: 8px;
-    margin-top: 20%;
-    transition: 0.5s;
-}
-
-.fa-sync-alt-hover{
-    color: #00CCFF;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
 form{
     text-align: center;
     background-color: #5A7FAF;
@@ -365,7 +353,29 @@ button:focus{
 
 /*##################################################### No Data ######################################################*/
 
-.no-data{
-    margin-top: 100%;
-    margin-left: 100%;
+#no-consults-data{
+    width: 80px;
+    position: absolute;
+    top: 50%;
+    left: 150%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+#no-exams-data{
+    width: 80px;
+    position: absolute;
+    top: 50%;
+    left: 250%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+#no-charges-data{
+    width: 80px;
+    position: absolute;
+    top: 50%;
+    left: 350%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 }
