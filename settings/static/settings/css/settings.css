@@ -210,6 +210,19 @@ tr:nth-child(even){
     margin-top: 12%;
 }
 
+.error-response{
+    text-align: center;
+    background-color: #5A7FAF;
+    padding: 20px;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 12%;
+}
+
 .modal-content form{
     text-align: center;
     background-color: #5A7FAF;
@@ -305,7 +318,7 @@ select:focus{
     outline: none;
 }
 
-form button{
+button{
     cursor: pointer;
     width: 30%;
     height: 30px;

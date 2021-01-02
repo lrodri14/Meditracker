@@ -5,6 +5,7 @@
 """
 
 # Imports
+from django.apps import apps
 from django.db import models
 from patients.models import Patient
 from django.contrib.auth import get_user_model
@@ -70,6 +71,13 @@ class Drug(models.Model):
     def save(self, *args, **kwargs):
         self.name = self.name.capitalize()
         super(Drug, self).save(*args, **kwargs)
+
+    def operative(self, user):
+        consults = Consult.objects.filter(created_by=user)
+        if consults:
+            for c in consults:
+                if self in c.drugs.all():
+                    return True
 
 
 class Consult(models.Model):

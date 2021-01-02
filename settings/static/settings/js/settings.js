@@ -400,7 +400,7 @@ if (modal){
         }
 
         // This event will be fired every time the target is the a button with the value of 'no', the 'show-modal' class will be removed from the modal.
-        if (e.target.value === 'no'){
+        if (e.target.value === 'no' || e.target.textContent === "Ok"){
             e.preventDefault()
             e.stopPropagation()
             modal.classList.remove('show-modal')
@@ -481,10 +481,14 @@ if (modal){
                the wrapper's html is updated and the backedUpContent variable reassigned and the modal is closed.*/
                 deleteItemAW(url, method, csrfmiddlewaretoken)
                 .then(data => {
-                    wrapper.innerHTML = data['updated_html']
-                    modal.classList.remove('show-modal')
-                    // This function is called to ensure that the add icon levitates in case there are no more instances to display
-                    addIconLevitate(document.querySelector('.add-data'))
+                    if (data['updated_html']){
+                        wrapper.innerHTML = data['updated_html']
+                        modal.classList.remove('show-modal')
+                        // This function is called to ensure that the add icon levitates in case there are no more instances to display
+                        addIconLevitate(document.querySelector('.add-data'))
+                    }else{
+                        modalContent.innerHTML = data["error"]
+                    }
                 }
                 )
             }

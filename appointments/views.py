@@ -20,7 +20,7 @@ import calendar
 # Import is unused because we will use it in a future update.
 from .tasks import save_new_drug
 from django.core.paginator import Paginator
-from weasyprint import HTML
+# from weasyprint import HTML
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.http import JsonResponse
@@ -108,32 +108,32 @@ def filter_conditional_results(user, **kwargs):
         return Consult.objects.filter(datetime__date__month=month, datetime__date__year=year, created_by=user)
 
 
-def generate_pdf(user, consult):
-    """
-        DOCSTRING:
-        This generate_pdf() is used to generate the pdf's for each consult if necessary, this function will check if there
-        are any drugs, indications or actions to be followed, if so, it will generate a pdf and save it to the consult.
-        prescription field in the model, if not it will skip this process. The process is:
-        1. Grab the context to render the PDF
-        2. Render the HTML as a string
-        3. We make use of the HTML function from WeasyPrint and pass the python file object to it, this function will
-        check what type of file we are passing and will convert it to a pdf with the write.pdf() method.
-        4. We return the file as an HttpResponse object, and to make the browser treat this response as a file attachment
-        we set the content_type argument to the type of file we want to attach, in this case = 'application/pdf'
-        5. We set the Content-Disposition header to the filename of the file we want to set.
-        6. Lastly we just create a representation of this file using the SimpleUploadedFile function that will return us
-        a file, we set the following parameters: 'name' which is the name of the file, 'content' which is the content we
-        he are passing to this function in this case the pdf and finally the content_type.
-
-    """
-    if consult.indications != '' or consult.actions != '':
-        context = {'user': user, 'consult': consult}
-        template = render_to_string('appointments/pdf.html', context)
-        pdf = HTML(string=template).write_pdf()
-        prescription = HttpResponse(pdf, content_type='application/pdf')
-        prescription['Content-Disposition'] = 'filename={}{}.pdf'.format(consult.patient, consult.datetime.date())
-        return SimpleUploadedFile(name='prescrition-{}-{}.pdf'.format(consult.patient, consult.datetime.date()), content=pdf,content_type='application/pdf')
-
+# def generate_pdf(user, consult):
+#     """
+#         DOCSTRING:
+#         This generate_pdf() is used to generate the pdf's for each consult if necessary, this function will check if there
+#         are any drugs, indications or actions to be followed, if so, it will generate a pdf and save it to the consult.
+#         prescription field in the model, if not it will skip this process. The process is:
+#         1. Grab the context to render the PDF
+#         2. Render the HTML as a string
+#         3. We make use of the HTML function from WeasyPrint and pass the python file object to it, this function will
+#         check what type of file we are passing and will convert it to a pdf with the write.pdf() method.
+#         4. We return the file as an HttpResponse object, and to make the browser treat this response as a file attachment
+#         we set the content_type argument to the type of file we want to attach, in this case = 'application/pdf'
+#         5. We set the Content-Disposition header to the filename of the file we want to set.
+#         6. Lastly we just create a representation of this file using the SimpleUploadedFile function that will return us
+#         a file, we set the following parameters: 'name' which is the name of the file, 'content' which is the content we
+#         he are passing to this function in this case the pdf and finally the content_type.
+#
+#     """
+#     if consult.indications != '' or consult.actions != '':
+#         context = {'user': user, 'consult': consult}
+#         template = render_to_string('appointments/pdf.html', context)
+#         pdf = HTML(string=template).write_pdf()
+#         prescription = HttpResponse(pdf, content_type='application/pdf')
+#         prescription['Content-Disposition'] = 'filename={}{}.pdf'.format(consult.patient, consult.datetime.date())
+#         return SimpleUploadedFile(name='prescrition-{}-{}.pdf'.format(consult.patient, consult.datetime.date()), content=pdf,content_type='application/pdf')
+#
 
 # Create your views here.
 
@@ -275,7 +275,7 @@ def update_consult(request, pk):
                     exam.date = timezone.localtime()
                     exam.save()
             consult.medical_status = True
-            consult.prescription = generate_pdf(request.user, consult)
+            # consult.prescription = generate_pdf(request.user, consult)
             consult.save()
             consult_form.save_m2m()
             if consult.prescription:

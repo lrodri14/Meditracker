@@ -190,13 +190,16 @@ def delete_insurance(request, pk):
     template = 'settings/insurance_delete.html'
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
+        if not carrier.operative(request.user):
             carrier.delete()
             updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
             paginator = Paginator(updated_insurances, 16)
             page_obj = paginator.get_page(1)
             context = {'insurances': page_obj, 'form': InsuranceCarrierFilterForm}
-            # How to return an error from the backend to the frontend?
             data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
+        else:
+            context = {'error': "This carrier is linked to some registers, deletion is impossible"}
+            data = {'error': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -342,12 +345,16 @@ def delete_allergy(request, pk):
     context = {'allergy': allergy}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
-        allergy.delete()
-        allergies_list = Allergies.objects.filter(created_by=request.user)
-        paginator = Paginator(allergies_list, 16)
-        page_obj = paginator.get_page(1)
-        context = {'allergies': allergies, 'form': AllergyFilterForm}
-        data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
+        if not allergy.operative(request.user):
+            allergy.delete()
+            allergies_list = Allergies.objects.filter(created_by=request.user)
+            paginator = Paginator(allergies_list, 16)
+            page_obj = paginator.get_page(1)
+            context = {'allergies': page_obj, 'form': AllergyFilterForm}
+            data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
+        else:
+            context = {'error': 'This allergy is linked to some registers, deletion is impossible'}
+            data = {'error': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
@@ -510,12 +517,16 @@ def delete_drug(request, pk):
     context = {'drug': drug}
     data = {'html': render_to_string(template, context, request)}
     if request.method == 'POST':
-        drug.delete()
-        drugs_list = Drugs.objects.filter(created_by=request.user)
-        paginator = Paginator(drugs_list, 16)
-        page_obj = paginator.get_page(1)
-        context = {'drugs': page_obj, 'form': DrugFilterForm}
-        data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
+        if not drug.operative(request.user):
+            drug.delete()
+            drugs_list = Drugs.objects.filter(created_by=request.user)
+            paginator = Paginator(drugs_list, 16)
+            page_obj = paginator.get_page(1)
+            context = {'drugs': page_obj, 'form': DrugFilterForm}
+            data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
+        else:
+            context = {'error': 'This drug is linked to some registers, deletion is impossible'}
+            data = {'error': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 

@@ -49,6 +49,7 @@ var addDrug = document.querySelector('.add-drug')
 var addDrugModal = document.querySelector('.add-drug-modal')
 var addDrugModalContent = document.querySelector('.add-drug-modal-content')
 var addDrugForm = document.querySelector('.add-drug-modal-content form')
+var checkedDrugs = []
 
 // Modals
 
@@ -607,7 +608,6 @@ if (drugList){
 
     // Whenever we do a filtering of the drugs options, we will keep a backup of the drugsPrescribed and the checkedDrugs.
     let drugsPrescribed = []
-    let checkedDrugs = []
 
     // DrugList Event Listeners
     drugList.addEventListener('change', function(e){
@@ -816,26 +816,28 @@ if (modal){
            in the actions input, we will call the submitConsultAW to add the consult async to the server, this will return
            a response, it contains the prescription in PDF format, this will be displayed in the prescriptionModal, if there
            is no values in these inputs, then the form will be submitted automatically.*/
-        if (e.target.nodeName === 'BUTTON' && e.target.textContent === 'Yes'){
-            let url = form.action
-            let method = form.method
-            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-            let formData = new FormData(form)
-            if (indications.value || actions.value){
-                submitConsultAW(url, method, csrfmiddlewaretoken, formData)
-                .then(data => {
-                    if (data['prescription_path']){
-                        prescriptionModalContent.setAttribute('data-pdf', data['prescription_path'])
-                        pdfPath = prescriptionModalContent.getAttribute('data-pdf')
-                        PDFObject.embed(pdfPath, prescriptionModalContent)
-                        prescriptionModal.classList.add('prescription-modal-show')
-                        modal.classList.remove('modal-show')
-                    }
-                })
-            }else{
-                form.submit()
-            }
-        }
+//        if (e.target.nodeName === 'BUTTON' && e.target.textContent === 'Yes'){
+//            let url = form.action
+//            let method = form.method
+//            let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+//            let formData = new FormData(form)
+//            if (indications.value || actions.value){
+//                submitConsultAW(url, method, csrfmiddlewaretoken, formData)
+//                .then(data => {
+//                    if (data['prescription_path']){
+//                        prescriptionModalContent.setAttribute('data-pdf', data['prescription_path'])
+//                        pdfPath = prescriptionModalContent.getAttribute('data-pdf')
+//                        PDFObject.embed(pdfPath, prescriptionModalContent)
+//                        prescriptionModal.classList.add('prescription-modal-show')
+//                        modal.classList.remove('modal-show')
+//                    }
+//                })
+//            }else{
+//                form.submit()
+//            }
+//        }
+
+        form.submit()
 
 
    })

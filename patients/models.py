@@ -3,6 +3,7 @@
     It is composed of 6 models.
 """
 
+from django.apps import apps
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
@@ -107,6 +108,13 @@ class InsuranceCarrier(models.Model):
         self.company = self.company.title()
         super(InsuranceCarrier, self).save(*args, **kwargs)
 
+    def operative(self, current_user):
+        insurance_information_list = InsuranceInformation.objects.filter(patient__created_by=current_user)
+        if insurance_information_list:
+            for insurance_information in insurance_information_list:
+                if insurance_information.insurance_carrier == self:
+                    return True
+
 
 # Patients Insurance Information
 
@@ -155,6 +163,13 @@ class Allergy(models.Model):
     def save(self, *args, **kwargs):
         self.allergy_type = self.allergy_type.title()
         super(Allergy, self).save(*args, **kwargs)
+
+    def operative(self, current_user):
+        allergy_information_list = AllergyInformation.objects.filter(patient__created_by=current_user)
+        if allergy_information_list:
+            for allergy_information in allergy_information_list:
+                if allergy_information.allergy_type == self:
+                    return True
 
 # Patient Allergies Information
 
