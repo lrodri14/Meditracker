@@ -84,8 +84,17 @@ class UsersProfile(models.Model):
 
     class Meta:
         ordering = ['user']
-        verbose_name = 'User Profile'
-        verbose_name_plural = 'User Profiles'
+        verbose_name = 'user_profile'
+        verbose_name_plural = 'user_profiles'
 
-    def __str__(self):
+    def _str__(self):
         return str(self.user) + ' ' + 'Profile Information'
+
+
+class MailingCredential(models.Model):
+    smtp_server = models.CharField("SMTP Server", max_length=100, blank=True, null=True, help_text="Provide the SMTP Server", default="")
+    port = models.IntegerField("Port", blank=True, null=True, help_text="Provide the port used by your server")
+    email = models.EmailField("Email", blank=True, null=True, help_text="Provide your email")
+    password = models.CharField("Password", max_length=254, blank=True, null=True, help_text="Provide your password")
+    use_tls = models.BooleanField("TLS", default=False)
+    user = models.ForeignKey(CustomUser, blank=True, null=True, related_name="mailing_credentials", on_delete=models.CASCADE)

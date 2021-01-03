@@ -11,8 +11,11 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.db import IntegrityError
 from django.template.loader import render_to_string
+from django.utils import timezone
+
+
 from .models import Provider, Visitor
-from .forms import ProviderForm, ProviderFilterForm, VisitorForm, VisitorFilterForm
+from .forms import ProviderForm, ProviderFilterForm, VisitorForm, VisitorFilterForm, EmailForm
 
 # Create your views here.
 # Providers Related Logic
@@ -352,6 +355,20 @@ def delete_visitor(request, pk):
     context['visitor'] = visitor
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
+
+
+def send_email(request, pk=None):
+    if request.POST:
+        pass
+    template = 'providers/email_form.html'
+    provider_email = Provider.objects.get(pk=pk).email
+    context = {'form': EmailForm, 'sender': request.user.email, 'receiver': provider_email, 'today': timezone.localdate()}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+
+
 
 
 

@@ -25,4 +25,7 @@ urlpatterns = [
     path('visitor_details/<int:pk>', visitor_details, name='visitor_details'),
     path('update_visitor/<int:pk>', update_visitor, name='update_visitor'),
     path('delete_visitor/<int:pk>', delete_visitor, name='delete_visitor'),
+    # Email Sending
+    path('send_email', send_email, name='send_email'),
+    path('send_email/<int:pk>', send_email, name='send_email')
 ]

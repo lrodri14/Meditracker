@@ -41,6 +41,9 @@ class Drug(models.Model):
         drug belongs, we added some functionality through the META CLASS indicating that the 'name' and 'created_by'
         are unique inside our instances, we also set our own __str__ dunder method and we overwrote the save method to
         capitalize the name of the drug every time it reaches the database.
+
+        The operative method in the Drug model is used in the delete_drug view to check that this instance is used in
+        any registers, if it is, then the delete operation will not be performed.
     """
 
     CATEGORY_CHOICES = (

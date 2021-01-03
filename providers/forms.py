@@ -56,6 +56,18 @@ class VisitorFilterForm(forms.Form):
     """
         DOCSTRING:
         This VisitorsFilterForm is used to retrieve data related to
-         visitors based on query.
+        visitors based on query.
     """
     name = forms.CharField(widget=forms.widgets.TextInput)
+
+
+class EmailForm(forms.Form):
+    """
+        DOCSTRING:
+        This EmailForm is used to retrieve the content of the email
+        that will be sent to any of the providers chosen by the user.
+        Content such as the: Subject And Email Body
+    """
+
+    subject = forms.CharField(widget=forms.TextInput)
+    body = forms.CharField(widget=forms.Textarea(attrs={"cols": 100}))

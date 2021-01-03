@@ -145,6 +145,12 @@ async function providerDetailsAW(url){
     return data
 }
 
+async function sendEmailFormAW(url){
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
 // Sync Functions
 
 function addIconLevitate(addProvidersIcon){
@@ -310,6 +316,15 @@ if (wrapper){
             let url = e.target.getAttribute('data-url')
             deleteProvidersFormAW(url)
             .then(data => {
+                modalContent.innerHTML = data['html']
+                modal.classList.add('modal-show')
+            })
+        }
+
+        if (e.target.classList.contains('fa-envelope')){
+            let url = e.target.getAttribute('data-url')
+            sendEmailFormAW(url).
+            then(data => {
                 modalContent.innerHTML = data['html']
                 modal.classList.add('modal-show')
             })

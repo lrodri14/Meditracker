@@ -6,6 +6,8 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView,
 from .forms import DoctorSignUpForm, AssistantSignUpForm, ProfileForm, ProfilePictureForm, ProfileBackgroundForm
 from django.contrib.auth.models import Group
 from .models import UsersProfile
+from utilities.accounts_utilities import set_mailing_credentials
+
 # Create your views here.
 
 

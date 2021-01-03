@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import CustomUser, UsersProfile
+from .models import CustomUser, UsersProfile, MailingCredential
 from .forms import UserChangeForm, UserCreationForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 # Register your models here.
+
 
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
@@ -14,3 +15,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(UsersProfile)
+admin.site.register(MailingCredential)

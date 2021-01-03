@@ -87,6 +87,9 @@ class InsuranceCarrier(models.Model):
         an ORIGIN_CHOICES tuple is defined for the country field choices, a class META is set to define the
         unique_together class attribute to ['company', 'created_by'], the save() method has been overwritten
         to title the self.company field, and lastly it contains its own __str__ dunder method.
+
+        The operative method in the InsuranceCarrier model is used in the delete_insurance_carrier view to check that
+        this instance is used in any registers, if it is, then the delete operation will not be performed.
     """
     ORIGIN_CHOICES = (
         ('HND', 'Honduras'),
@@ -149,6 +152,9 @@ class Allergy(models.Model):
          a class META is set to define the unique_together class attribute to ['allergy_type', 'created_by'],
         the save() method has been overwritten to title the self.allergy_type field, and lastly it contains
         its own __str__ dunder method.
+
+        The operative method in the Allergy model is used in the delete_allergy view to check that this instance is used in
+        any registers, if it is, then the delete operation will not be performed.
     """
     allergy_type = models.CharField('allergy', max_length=100, null=False, blank=False, help_text='Allergy Type')
     created_by = models.ForeignKey(user, blank=False, on_delete=models.CASCADE, null=True,
