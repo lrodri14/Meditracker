@@ -112,7 +112,6 @@ def signup(request):
                 user.groups.add(assistant)
         else:
             context['form'] = form
-            data['error'] = 'Invalid Information'
     data['html'] = render_to_string('accounts/signup.html', context, request)
     return JsonResponse(data)
 

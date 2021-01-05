@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.utils import timezone
-from smtplib import SMTPAuthenticationError, SMTPSenderRefused
+from smtplib import SMTPAuthenticationError, SMTPSenderRefused, SMTPNotSupportedError
 
 from .models import Provider, Visitor
 from .forms import ProviderForm, ProviderFilterForm, VisitorForm, VisitorFilterForm, EmailForm
@@ -381,6 +381,8 @@ def send_email(request, pk):
             context = {'error': 'Incomplete credentials in SMTP Server settings'}
         except SMTPAuthenticationError:
             context = {'error': 'Incorrect credentials in SMTP Server Settings'}
+        except SMTPNotSupportedError:
+            context = {'error': 'TLS Protocol must be active to open connection'}
         data = {'html': render_to_string(template, context, request)}
         return JsonResponse(data)
     return JsonResponse(data)

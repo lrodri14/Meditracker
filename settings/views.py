@@ -147,7 +147,7 @@ def add_insurance_carrier(request):
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/insurance_list.html', context, request), 'updated_selections': render_to_string('settings/insurance_partial_select.html', context=context, request=request)}
             except IntegrityError:
-                context['error'] = 'This insurance is already listed in your options'
+                context['error'] = 'Insurance already listed in your options'
                 data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -197,7 +197,7 @@ def update_insurance(request, pk):
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
             except IntegrityError:
-                context['error'] = 'This insurance is already listed in your options'
+                context['error'] = 'Insurance already listed in your options'
                 data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -223,7 +223,7 @@ def delete_insurance(request, pk):
             context = {'insurances': page_obj, 'form': InsuranceCarrierFilterForm}
             data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
         else:
-            context = {'error': "This carrier is linked to some registers, deletion is impossible"}
+            context = {'error': "Carrier linked to some registers, deletion prohibited"}
             data = {'error': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -302,7 +302,7 @@ def add_allergy(request):
                 context = {'allergies': page_obj, 'form': AllergyFilterForm}
                 data = {'updated_html': render_to_string('settings/allergies_list.html', context, request), 'updated_selections': render_to_string('settings/allergies_partial_select.html', context=context, request=request)}
             except IntegrityError:
-                context['error'] = 'This allergy is already in your options'
+                context['error'] = 'Allergy is already listed in your options'
                 data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -337,7 +337,7 @@ def update_allergy(request, pk):
                 context = {'allergies': page_obj, 'form': AllergyFilterForm}
                 data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
             except IntegrityError:
-                context['error'] = 'This allergy is already in your options'
+                context['error'] = 'Allergy is already listed in your options'
                 data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -378,7 +378,7 @@ def delete_allergy(request, pk):
             context = {'allergies': page_obj, 'form': AllergyFilterForm}
             data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
         else:
-            context = {'error': 'This allergy is linked to some registers, deletion is impossible'}
+            context = {'error': 'Allergy linked to some registers, deletion prohibited'}
             data = {'error': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -474,7 +474,7 @@ def add_drug(request):
                 context = {'drugs': page_obj, 'form': DrugFilterForm}
                 data = {'updated_html': render_to_string('settings/drugs_list.html', context, request), 'updated_drugs_list': render_to_string('appointments/partial_drugs_selection.html', {'drugs': drugs_list}, request)}
             except IntegrityError:
-                context['error'] = 'This drug is already listed in your options'
+                context['error'] = 'Drug already listed in your options'
                 data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -524,7 +524,7 @@ def update_drug(request, pk):
                 context = {'drugs': page_obj, 'form': DrugFilterForm}
                 data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
             except IntegrityError:
-                context['error'] = 'This drug is already listed in your options'
+                context['error'] = 'Drug already listed in your options'
                 data = {'html': render_to_string('settings/update_drug.html', context, request)}
     return JsonResponse(data)
 
@@ -550,11 +550,9 @@ def delete_drug(request, pk):
             context = {'drugs': page_obj, 'form': DrugFilterForm}
             data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
         else:
-            context = {'error': 'This drug is linked to some registers, deletion is impossible'}
+            context = {'error': 'Drug linked to some registers, deletion prohibited'}
             data = {'error': render_to_string(template, context, request)}
     return JsonResponse(data)
-
-
 
 
 

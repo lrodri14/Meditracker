@@ -44,7 +44,7 @@ class ConsultForm(forms.ModelForm):
         cleaned_data = super().clean()
         datetime = cleaned_data.get('datetime')
         if datetime < (timezone.localtime() - timedelta(hours=0, minutes=1)):
-            raise ValidationError('Unable to create a consult for this date and time.', code='invalid_date')
+            raise ValidationError('Unable to create a consult for this date and time', code='invalid_date')
         return cleaned_data
 
 
@@ -92,7 +92,7 @@ class UpdateConsultForm(forms.ModelForm):
         cie_group = cleaned_data.get('cie_10_group')
         cie_detail = cleaned_data.get('cie_10_detail')
         if (cie_group and not cie_detail) or (cie_detail and not cie_group):
-            raise ValidationError("CIE-10 diagnose details are not completed.", code='invalid_cie_10_details')
+            raise ValidationError("CIE-10 diagnose details incomplete", code='invalid_cie_10_details')
         return cleaned_data
 
 
@@ -116,7 +116,7 @@ class MedicalExamForm(forms.ModelForm):
         image = cleaned_data.get('image')
 
         if (exam_type and not image) or (image and not exam_type):
-            raise ValidationError("'Type' and 'Image', both must be provided in your exams.", code='invalid_exams')
+            raise ValidationError("Both 'Type' and 'Image' fields must be provided", code='invalid_exams')
         return cleaned_data
 
 

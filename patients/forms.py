@@ -144,7 +144,7 @@ class AllergyInformationForm(forms.ModelForm):
         allergy_type = cleaned_data.get('allergy_type')
         about = cleaned_data.get('about')
         if (allergy_type and not about) or (about and not allergy_type):
-            raise ValidationError("Both 'Type' and 'About' fields must be provided", code='incomplete_data')
+            raise ValidationError("Both 'Type' and 'About' fields must be provided", code='incomplete_allergy_data')
         return cleaned_data
 
 
@@ -178,7 +178,7 @@ class AntecedentForm(forms.ModelForm):
         antecedent = cleaned_data.get('antecedent')
         info = cleaned_data.get('info')
         if (antecedent and not info) or (info and not antecedent):
-            raise ValidationError("Both 'Antecedent' and 'Info' fields must be provided", code='incomplete_data')
+            raise ValidationError("Both 'Antecedent' and 'Info' fields must be provided", code='incomplete_antecedent_data')
         return cleaned_data
 
 

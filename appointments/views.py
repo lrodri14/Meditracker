@@ -7,7 +7,6 @@
 # Imports
 import asyncio
 from datetime import datetime
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -16,124 +15,21 @@ from .forms import ConsultForm, DrugForm, DrugCategoryFilterForm, UpdateConsultF
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.db.models import Q
-import calendar
 # Import is unused because we will use it in a future update.
 from .tasks import save_new_drug
 from django.core.paginator import Paginator
+# Implementing PDF Creation Functionality
 # from weasyprint import HTML
 from django.http import HttpResponse
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.conf import settings
 
-# Async Functions
-
-
-# Since the power of asynchronous coroutines only come in handy when you yield the control to other coroutine
-# in our loop, we will create two async functions and await for one of them.
-
-
-async def close_consult(delayed_consults, tz, date):
-    """
-        DOCSTRING:
-        This async function will be responsible to close all the consults that have been delayed or where never
-        attended by the doctor. It will the set the status consult to 'CLOSED'. It expects three arguments,
-        'delayed_consults' expects a queryset of consults which date is than today and the medical_status is False,
-        'tz' is the timezone the user is in, 'date' is the current date.
-    """
-    for c in delayed_consults:
-        if c.datetime.astimezone(tz).date() < date.date():
-            c.status = 'CLOSED'
-            c.save()
-
-
-async def check_delayed_consults(user):
-    """
-        DOCSTRING:
-        This async function will be the one responsible to retrieve the delayed consults, will collect the current
-        date and the collect the timezone active for this user session. It only expects one argument, 'user', is the
-        current user, it is used to collect the delayed consults. This async function will await for the close_consults()
-        coroutine.
-    """
-    today = timezone.localtime()
-    tzone = timezone.get_current_timezone()
-    not_attended_consults = Consult.objects.filter(created_by=user, datetime__date__lte=today.date())
-    await close_consult(not_attended_consults, tzone, today)
+from utilities.appointments_utilities import check_delayed_consults, collect_months_names, filter_conditional_results
 
 # New Event Loop
 loop = asyncio.new_event_loop()
-
-# Sync Functions
-
-
-def collect_months_names(consults_list, tz):
-    """ 
-        DOCSTRING: This function is used to collect each of the months in which there are consults pending. It takes
-        two arguments, 'consults_list' which takes a consults querySet to evalutate and extract all it's months and
-        'tz' which is the current timezone in which the user resides. It will return a list of months names. We will
-        make use of the calendar module and the calendar.month_name function to collect the names of the months.
-    """
-    months_names = []
-    for c in consults_list:
-        month = calendar.month_name[c.datetime.astimezone(tz).month]
-        if month not in months_names:
-            months_names.append(month)
-    return months_names
-
-
-def filter_conditional_results(user, **kwargs):
-    """
-        DOCSTRING:
-        This filter_conditional_results() function is used to filter appointments in the All Registers page, there can be
-        three different type of individual filters: 'patient', 'month' and 'year', the same way you can mix them to get
-        the results expected.
-    """
-    cleaned_data = kwargs.pop('cleaned_data')
-    patient = cleaned_data.get('patient')
-    month = int(cleaned_data.get('month'))
-    year = int(cleaned_data.get('year'))
-    if patient == '' and month == 0 and year == 1920:
-        return Consult.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__month=month, datetime__date__year=year, created_by=user)
-    elif patient != '' and month == 0 and year == 1920:
-        return Consult.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient), created_by=user)
-    elif patient == '' and month != 0 and year == 1920:
-        return Consult.objects.filter(datetime__date__month=month, created_by=user)
-    elif patient == '' and month == 0 and year != 1920:
-        return Consult.objects.filter(datetime__date__year=year, created_by=user)
-    elif patient != '' and month != 0 and year == 1920:
-        return Consult.objects.filter(Q(patient__first_names__icontains=patient)|Q(patient__last_names__icontains=patient),datetime__date__month=month, created_by=user)
-    elif patient != '' and month == 0 and year != 1920:
-        return Consult.objects.filter(Q(patient__first_names__icontains=patient) | Q(patient__last_names__icontains=patient), datetime__date__year=year, created_by=user)
-    else:
-        return Consult.objects.filter(datetime__date__month=month, datetime__date__year=year, created_by=user)
-
-
-# def generate_pdf(user, consult):
-#     """
-#         DOCSTRING:
-#         This generate_pdf() is used to generate the pdf's for each consult if necessary, this function will check if there
-#         are any drugs, indications or actions to be followed, if so, it will generate a pdf and save it to the consult.
-#         prescription field in the model, if not it will skip this process. The process is:
-#         1. Grab the context to render the PDF
-#         2. Render the HTML as a string
-#         3. We make use of the HTML function from WeasyPrint and pass the python file object to it, this function will
-#         check what type of file we are passing and will convert it to a pdf with the write.pdf() method.
-#         4. We return the file as an HttpResponse object, and to make the browser treat this response as a file attachment
-#         we set the content_type argument to the type of file we want to attach, in this case = 'application/pdf'
-#         5. We set the Content-Disposition header to the filename of the file we want to set.
-#         6. Lastly we just create a representation of this file using the SimpleUploadedFile function that will return us
-#         a file, we set the following parameters: 'name' which is the name of the file, 'content' which is the content we
-#         he are passing to this function in this case the pdf and finally the content_type.
-#
-#     """
-#     if consult.indications != '' or consult.actions != '':
-#         context = {'user': user, 'consult': consult}
-#         template = render_to_string('appointments/pdf.html', context)
-#         pdf = HTML(string=template).write_pdf()
-#         prescription = HttpResponse(pdf, content_type='application/pdf')
-#         prescription['Content-Disposition'] = 'filename={}{}.pdf'.format(consult.patient, consult.datetime.date())
-#         return SimpleUploadedFile(name='prescrition-{}-{}.pdf'.format(consult.patient, consult.datetime.date()), content=pdf,content_type='application/pdf')
-#
 
 # Create your views here.
 
@@ -282,7 +178,7 @@ def update_consult(request, pk):
                 return JsonResponse({'prescription_path': settings.MEDIA_URL + consult.prescription.name})
             return redirect('appointments:appointments')
         elif not medical_exams_form.is_valid():
-            context['error'] = '* Exams not filled correctly. "Type" & "Image" must be provided.'
+            context['error'] = '* Exams not filled correctly. "Type" & "Image" fields must be provided.'
     return render(request, template, context)
 
 

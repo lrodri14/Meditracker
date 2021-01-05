@@ -1,3 +1,10 @@
+"""
+    This accounts_utilities.py file contains all the imports, variable definitions and the function definitions needed for
+    the accounts app to perform correctly, it is composed of one variable definition,'domains' which is a dictionary containing
+    all the most used smtp servers worldwide, this way every time a user is created if the account email meets these requirements
+    some initial information will be filled, this file contains two function definitions.
+"""
+
 from django.core.mail.backends.smtp import EmailBackend
 
 domains = {
@@ -9,6 +16,12 @@ domains = {
 
 
 def set_mailing_credentials(email, user):
+    """
+        DOCSTRING:
+        This set_mailing_credentials function is used to create a MailingCredential instance whenever a new user is created
+        independently if the email meets the requirements to fill the instance with initial data, this function only
+        takes two parameters the user itself and the email which we use to fill the instance with data if needed.
+    """
     from accounts.models import MailingCredential
     domain = email.split("@")[1]
     if domains.get(domain):
@@ -23,6 +36,12 @@ def set_mailing_credentials(email, user):
 
 
 def open_connection(user_mailing_credentials):
+    """
+        DOCSTRING:
+        This open_connection function is used to open an SMTP connection when the user tries to send a message to someone,
+        this function only expects one argument, the mailing_credentials of the sender, we will open the connection creating
+        an instance of the EmailBackend class, and returning this instance.
+    """
     smtp_server = user_mailing_credentials.smtp_server
     port = user_mailing_credentials.port
     email = user_mailing_credentials.email

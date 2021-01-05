@@ -17,23 +17,7 @@ from django.template.loader import render_to_string
 from appointments.models import Consult, MedicalExam
 from appointments.forms import ConsultDetailsFilterForm
 
-
-# Functions
-
-def check_charges(consults):
-    """
-        DOCSTRING:
-        This function is used to check if there are any charges inside the consults, if there are not then the
-        charges section of the patient details would not be rendered. It takes a single argument: 'consults' and
-        it expects a querySet.
-    """
-    charges = None
-    for c in consults:
-        if c.charge:
-            charges = True
-            break
-    return charges
-
+from utilities.patients_utilities import check_charges
 
 # Create your views here.
 
@@ -227,7 +211,7 @@ def delete_patient(request, pk):
     data = {'html': render_to_string(template, context, request=request)}
     if request.method == 'POST':
         if len(consults) > 0:
-            context = {'error': 'Sorry this patient can not be deleted, it is linked to {} records'.format(len(consults))}
+            context = {'error': 'Patient linked to {} records, deletion prohibited'.format(len(consults))}
             data = {'html': render_to_string(template, context, request)}
         else:
             patient.delete()
