@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.utils import timezone
-from smtplib import SMTPAuthenticationError
+from smtplib import SMTPAuthenticationError, SMTPSenderRefused
 
 from .models import Provider, Visitor
 from .forms import ProviderForm, ProviderFilterForm, VisitorForm, VisitorFilterForm, EmailForm
@@ -375,10 +375,13 @@ def send_email(request, pk):
         try:
             send_mail(subject, message, sender, (receiver,), connection=connection, fail_silently=False)
             context = {'success': 'Email has been sent successfully'}
-            data = {'html': render_to_string(template, context, request)}
-        except (ConnectionRefusedError, SMTPAuthenticationError):
-            context = {'error': 'Your Mailing Settings are either not configured properly or not configured at all'}
-            data = {'html': render_to_string(template, context, request)}
+        except ConnectionRefusedError:
+            context = {'error': 'SMTP Server not configured, set up your credentials in settings'}
+        except SMTPSenderRefused:
+            context = {'error': 'Incomplete credentials in SMTP Server settings'}
+        except SMTPAuthenticationError:
+            context = {'error': 'Incorrect credentials in SMTP Server Settings'}
+        data = {'html': render_to_string(template, context, request)}
         return JsonResponse(data)
     return JsonResponse(data)
 
