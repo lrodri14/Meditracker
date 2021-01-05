@@ -105,6 +105,7 @@ def signup(request):
                 user.roll = 'Doctor'
                 user.save()
                 user.groups.add(doctor)
+                set_mailing_credentials(user.email, user)
             else:
                 user.roll = 'Assistant'
                 user.save()

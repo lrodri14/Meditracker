@@ -1,5 +1,5 @@
 /* This settings.css stylesheet contains all the styles needed to display the settings web page correctly, it is divided
-   into 5 sections: Nav-bar, Wrapper, Tables, Modal, No Data*/
+   into 5 sections: Nav-bar, Wrapper, Mailing,Tables, Modal, No Data*/
 
 /*###################################################### Nav Bar #####################################################*/
 
@@ -116,6 +116,17 @@ button{
     border-color: #C7E8F3;
     color: #FFFFFF;
     transition: background-color 0.5s;
+}
+
+/*####################################################### Mailing #####################################################*/
+
+.mailing-info-form input{
+    width: 25%;
+    background-color: #496897;
+}
+
+.mailing-info-form input[type=checkbox]{
+    width: 3%;
 }
 
 /*####################################################### Tables #####################################################*/

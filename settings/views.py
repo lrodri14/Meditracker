@@ -12,6 +12,8 @@ from django.apps import apps
 from django.template.loader import render_to_string
 from patients.forms import AllergyFilterForm, AllergyForm, InsuranceCarrierFilterForm, InsuranceCarrierForm
 from appointments.forms import DrugForm, DrugFilterForm
+from accounts.forms import MailingCredentialForm
+MailingCredential = apps.get_model('accounts', 'MailingCredential')
 InsuranceCarrier = apps.get_model('patients', 'InsuranceCarrier')
 Drugs = apps.get_model('appointments', 'Drug')
 Allergies = apps.get_model('patients', 'Allergy')
@@ -46,6 +48,29 @@ def account(request):
     template = 'settings/account.html'
     data = {'html': render_to_string(template, request=request)}
     return JsonResponse(data)
+
+# Mailing
+###############################
+
+
+def mailing(request):
+    mailing_form = MailingCredentialForm(instance=MailingCredential.objects.get(user=request.user))
+    template = 'settings/mailing.html'
+    context = {'mailing_form': mailing_form}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def update_mailing_information(request):
+    template = 'settings/mailing.html'
+    if request.method == "POST":
+        mailing_info = MailingCredentialForm(request.POST, instance=MailingCredential.objects.get(user=request.user))
+        if mailing_info.is_valid():
+            mailing_info.save()
+            mailing_form = MailingCredentialForm(instance=MailingCredential.objects.get(user=request.user))
+            context = {'mailing_form': mailing_form}
+            data = {'html': render_to_string(template, context, request)}
+            return JsonResponse(data)
 
 # Insurances Logic
 #####################################

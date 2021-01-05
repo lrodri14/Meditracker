@@ -285,10 +285,25 @@ tr:nth-child(even){
 .email-form input{
     width: 40%;
     text-align: left;
-    border: 1px solid #C7E8F3;
 }
 
 .email-form button{
+    width: 20%;
+}
+
+.server-response{
+    width: 50%;
+    text-align: center;
+    background-color: #5A7FAF;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.server-response button{
     width: 20%;
 }
 

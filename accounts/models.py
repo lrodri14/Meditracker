@@ -96,5 +96,8 @@ class MailingCredential(models.Model):
     port = models.IntegerField("Port", blank=True, null=True, help_text="Provide the port used by your server")
     email = models.EmailField("Email", blank=True, null=True, help_text="Provide your email")
     password = models.CharField("Password", max_length=254, blank=True, null=True, help_text="Provide your password")
-    use_tls = models.BooleanField("TLS", default=False)
+    use_tls = models.BooleanField("Use TLS? (Recommended)", default=False)
     user = models.ForeignKey(CustomUser, blank=True, null=True, related_name="mailing_credentials", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.user) + ' - ' + 'Mailing Credentials'

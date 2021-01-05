@@ -501,7 +501,7 @@ if (modal){
         /*This click event is fired every time the button inside the modal
         or the modal content is clicked and it's text content contains the
         'No' word, it will remove the 'modal-show' class from the modal.*/
-        if (e.target.textContent === 'No'){
+        if (e.target.textContent === 'No' || e.target.textContent === 'Continue'){
             e.preventDefault()
             e.stopPropagation()
             modal.classList.remove('modal-show')

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm as CreationForm
 from django.contrib.auth.forms import UserChangeForm as ChangeForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .models import CustomUser, UsersProfile
+from .models import CustomUser, UsersProfile, MailingCredential
 from PIL import Image, ExifTags
 import pytz
 
@@ -132,6 +132,16 @@ class ProfileBackgroundForm(forms.ModelForm):
         cropped_image.save(background_image.background_pic.path)
 
         return background_image
+
+
+class MailingCredentialForm(forms.ModelForm):
+    class Meta:
+        model = MailingCredential
+        exclude = ('user',)
+        widgets = {
+            'password': forms.PasswordInput(render_value=True),
+        }
+
 
 
 

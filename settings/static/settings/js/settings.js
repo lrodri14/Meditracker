@@ -52,7 +52,7 @@ async function addUpdateElementAW(url, method, csrfmiddlewaretoken, formData){
     return data
 }
 
-async function deleteItemAW(url, method, csrfmiddlewaretoken){
+async function deleteElementAW(url, method, csrfmiddlewaretoken){
     /* The deleteItemAW async function is used to delete items belonging to the current user, this function will display
        corresponding form for the operation, it will be displayed in the modal container, this function accepts,3 parameters:
        'url' we collect from the form.action attribute, the 'method' we collect from the form.method attribute and finally
@@ -90,6 +90,12 @@ async function updatePasswordAW(url, method, csrfmiddlewaretoken, formData){
        'csrfmiddlewaretoken' that we collect form the form's hidden input, and finally the 'formData' we collect from
        the form's inputs, the response will be returned in JSON format for further processing.*/
     const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
+    const data = result.json()
+    return data
+}
+
+async function updateSettingsAW(url, method, csrfmiddlewaretoken, formData){
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body: formData})
     const data = result.json()
     return data
 }
@@ -355,7 +361,7 @@ if (wrapper){
             })
         }
 
-        if (e.target.nodeName === 'BUTTON'){
+        if (e.target.nodeName === 'BUTTON' && !e.target.type === 'submit'){
             /* This event will be fired every time the target is a button, this event will present any form
             if needed in the modal, the form that will be presented in the modal based on the
             'data-url' attribute in the target.*/
@@ -374,7 +380,7 @@ if (wrapper){
            server, for filtering purposes, we need ro collect some before making the request, data such as the 'url' for
            the request, 'method' we collect from the form.method attribute and finally the query, we grab from the target
            value. The response will be rendered in the tbody.*/
-        if (e.target.nodeName === 'INPUT'){
+        if (e.target.nodeName === 'INPUT' && e.target.classList.contains('filter-form')){
             let form = e.target.parentNode.parentNode
             let url = form.action + '?query=' + e.target.value
             filterResultsAW(url)
@@ -383,7 +389,24 @@ if (wrapper){
                 document.querySelector('tbody').innerHTML = data['html']
             })
         }})
-    }
+
+
+    wrapper.addEventListener('submit', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        if (e.target.nodeName === 'FORM'){
+            const url = e.target.action
+            const method = e.target.method
+            const csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+            const formData = new FormData(e.target)
+            updateSettingsAW(url, method, csrfmiddlewaretoken, formData)
+            .then(data => {
+                wrapper.innerHTML = data['html']
+            })
+        }
+    })
+
+}
 
 
 // Modal Event Listeners
@@ -479,7 +502,7 @@ if (modal){
             /* This event will be fired every time the form contains the 'delete' class in it's classList, this
                form will collect make use of the information collected above to make the request, after we receive a response,
                the wrapper's html is updated and the backedUpContent variable reassigned and the modal is closed.*/
-                deleteItemAW(url, method, csrfmiddlewaretoken)
+                deleteElementAW(url, method, csrfmiddlewaretoken)
                 .then(data => {
                     if (data['updated_html']){
                         wrapper.innerHTML = data['updated_html']

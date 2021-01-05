@@ -5,6 +5,7 @@
 
 
 # Imports
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
@@ -12,10 +13,12 @@ from django.http import JsonResponse
 from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.utils import timezone
-
+from smtplib import SMTPAuthenticationError
 
 from .models import Provider, Visitor
 from .forms import ProviderForm, ProviderFilterForm, VisitorForm, VisitorFilterForm, EmailForm
+from accounts.models import MailingCredential
+from utilities.accounts_utilities import open_connection
 
 # Create your views here.
 # Providers Related Logic
@@ -357,13 +360,26 @@ def delete_visitor(request, pk):
     return JsonResponse(data)
 
 
-def send_email(request, pk=None):
-    if request.POST:
-        pass
+def send_email(request, pk):
     template = 'providers/email_form.html'
-    provider_email = Provider.objects.get(pk=pk).email
-    context = {'form': EmailForm, 'sender': request.user.email, 'receiver': provider_email, 'today': timezone.localdate()}
+    provider = Provider.objects.get(pk=pk)
+    context = {'form': EmailForm, 'sender': request.user.email, 'receiver': provider, 'today': timezone.localdate()}
     data = {'html': render_to_string(template, context, request)}
+    if request.POST:
+        mailing_credentials = MailingCredential.objects.get(user=request.user)
+        connection = open_connection(mailing_credentials)
+        sender = mailing_credentials.email
+        receiver = provider.email
+        subject = request.POST.get('subject')
+        message = request.POST.get('body')
+        try:
+            send_mail(subject, message, sender, (receiver,), connection=connection, fail_silently=False)
+            context = {'success': 'Email has been sent successfully'}
+            data = {'html': render_to_string(template, context, request)}
+        except (ConnectionRefusedError, SMTPAuthenticationError):
+            context = {'error': 'Your Mailing Settings are either not configured properly or not configured at all'}
+            data = {'html': render_to_string(template, context, request)}
+        return JsonResponse(data)
     return JsonResponse(data)
 
 
