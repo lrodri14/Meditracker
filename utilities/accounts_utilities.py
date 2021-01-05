@@ -1,5 +1,4 @@
 from django.core.mail.backends.smtp import EmailBackend
-from cryptography.fernet import Fernet
 
 domains = {
     'gmail.com': {'smtp_server': 'smtp.gmail.com', 'port': 587, 'use_tls': True},

@@ -5,7 +5,6 @@
 """
 
 # Imports
-from django.apps import apps
 from django.db import models
 from patients.models import Patient
 from django.contrib.auth import get_user_model
