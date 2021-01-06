@@ -32,14 +32,12 @@
         <!--Depending on the requested type, a unique form will be rendered.-->
         {% if requested_type == 'LP' %}
             <form method="GET" action="{% url 'providers:filter_providers' %}" class="filter-form" data-provider-type="LP" autocomplete="off">
-                {% csrf_token %}
                 <h2>Filter Result</h2>
                 <p>{{filter_form.company.label}}</p>
                 <p>{{filter_form.company}}</p>
             </form>
         {% else %}
             <form method="GET" action="{% url 'providers:filter_providers' %}" class="filter-form" data-provider-type="MP" autocomplete="off">
-                {% csrf_token %}
                 <h3>Filter Result</h3>
                 <p>{{ filter_form.company.label }}</p>
                 <p>{{ filter_form.company }}</p>

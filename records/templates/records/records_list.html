@@ -27,7 +27,6 @@
         <div>
             <i class="fas fa-filter"></i>
             <form method="GET" action="{% url 'records:filter_records' %}">
-                {% csrf_token %}
                 <h2>Filter Results</h2>
                 <p>{{ form.date_from.label }}</p>
                 <p>{{ form.date_from }}</p>

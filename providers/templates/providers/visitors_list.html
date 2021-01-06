@@ -27,7 +27,6 @@
         <i class="fas fa-filter"></i>
         <form method="GET" action="{% url 'providers:filter_visitors' %}" class="filter-form" autocomplete="off">
             <h3>Visitors Filter</h3>
-            {% csrf_token %}
             <p>{{ filter_form.name.label }}</p>
             <p>{{ filter_form.name }}</p>
         </form>

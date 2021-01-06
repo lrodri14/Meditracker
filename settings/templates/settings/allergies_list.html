@@ -20,7 +20,6 @@
         <div>
             <i class="fas fa-filter"></i>
             <form method="GET" action="{% url 'settings:filter_allergies' %}" class="filter-form" autocomplete="off">
-                {% csrf_token %}
                 <h3>Filter Allergies</h3>
                 <p>{{ form.allergy_type.label }}</p>
                 <p>{{ form.allergy_type }}</p>
