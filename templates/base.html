@@ -1,10 +1,10 @@
 <!--Checked-->
 <!DOCTYPE html>
-{%load static%}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{%block title%}{%endblock%}</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
@@ -15,21 +15,21 @@
 </head>
 <body>
 
-    {%block return%}<a href=""><i class="fas fa-long-arrow-alt-left" id="backwards"></i></a>{%endblock%}{%block home%}<i class="fas fa-bars" id="bars"></i>{%endblock%}
+    {% block return %}<a href=""><i class="fas fa-long-arrow-alt-left" id="backwards"></i></a>{% endblock %}{% block home %}<i class="fas fa-bars" id="bars"></i>{% endblock %}
     <div class="menu">
         <h2 id="Menu">Menu <span class="close">X</span></h2>
-        <div onclick="window.location='{%url 'home:home'%}'"><p><i class="fas fa-home"></i></p></div>
-        <div onclick="window.location='{%url 'patients:patients'%}'"><p><i class="fas fa-user-injured"></i></p></div>
-        <div onclick="window.location='{%url 'appointments:appointments'%}'"><p><i class="far fa-calendar-check"></i></p></div>
-        <div onclick="window.location='{%url 'records:records'%}'"><p><i class="far fa-clipboard"></i></p></div>
+        <div onclick="window.location='{% url 'home:home' %}'"><p><i class="fas fa-home"></i></p></div>
+        <div onclick="window.location='{% url 'patients:patients' %}'"><p><i class="fas fa-user-injured"></i></p></div>
+        <div onclick="window.location='{% url 'appointments:appointments'%}'"><p><i class="far fa-calendar-check"></i></p></div>
+        <div onclick="window.location='{% url 'records:records' %}'"><p><i class="far fa-clipboard"></i></p></div>
         <div><p><i class="fas fa-file-invoice"></i></p></div>
         <div><p><i class="fas fa-handshake"></i></p></div>
-        <div onclick="window.location='{%url 'settings:settings'%}'"><p><i class="fas fa-cog"></i></p></div>
-        <div onclick="window.location='{%url 'accounts:profile'%}'"><p><i class="fas fa-user"></i></p></div>
+        <div onclick="window.location='{% url 'settings:settings' %}'"><p><i class="fas fa-cog"></i></p></div>
+        <div onclick="window.location='{% url 'accounts:profile' %}'"><p><i class="fas fa-user"></i></p></div>
         <p id="watermark">Telematica</p>
     </div>
-    {%block body_block%}
-    {%endblock%}
-    <script src="{%static 'base/js/base.js'%}"></script>
+    {% block body_block %}
+    {% endblock %}
+    <script src="{% static 'base/js/base.js' %}"></script>
 </body>
 </html>

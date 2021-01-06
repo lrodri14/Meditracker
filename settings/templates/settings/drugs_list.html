@@ -1,6 +1,6 @@
-{%load static%}
-{%block body_block%}
-{%if drugs%}
+{% load static %}
+{% block body_block %}
+{% if drugs %}
     <div class="table">
         <div>
             <table>
@@ -10,7 +10,7 @@
                         <th>Category</th>
                         <th>Edit</th>
                         <th>Delete</th>
-                        <th><i class="fas fa-plus" data-url="{%url 'settings:add_drug'%}"></i></th>
+                        <th><i class="fas fa-plus" data-url="{% url 'settings:add_drug' %}"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,15 +20,15 @@
         </div>
         <div>
             <i class="fas fa-filter"></i>
-            <form method="GET" action="{%url 'settings:filter_drugs'%}" class="filter-form" autocomplete="off">
+            <form method="GET" action="{% url 'settings:filter_drugs' %}" class="filter-form" autocomplete="off">
                 <h3>Drug Filter</h3>
-                <p>{{form.name.label}}</p>
-                <p>{{form.name}}</p>
+                <p>{{ form.name.label }}</p>
+                <p>{{ form.name }}</p>
             </form>
         </div>
     </div>
-{%else%}
+{% else %}
     <p class="no-data">No drugs listed</p>
     <i class="fas fa-plus add-data" data-url="{% url 'settings:add_drug' %}"></i>
-{%endif%}
-{%endblock%}
+{% endif %}
+{% endblock %}

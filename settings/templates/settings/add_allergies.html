@@ -1,11 +1,11 @@
-{%load static%}
-{%block body_block%}
-<form method="POST" autocomplete="off" action="{%url 'settings:add_allergy'%}" class="add add-allergy">
-    {%csrf_token%}
+{% load static %}
+{% block body_block %}
+<form method="POST" autocomplete="off" action="{% url 'settings:add_allergy' %}" class="add add-allergy">
+    {% csrf_token %}
     <h2>Add Allergy</h2>
-    <p>{{allergies_form.allergy_type.label}}</p>
-    <p>{{allergies_form.allergy_type}}</p>
-    <p class="error"><small>{{error}}</small></p>
+    <p>{{ allergies_form.allergy_type.label }}</p>
+    <p>{{ allergies_form.allergy_type }}</p>
+    <p class="error"><small>{{ error }}</small></p>
     <button type="submit">Add Allergy</button>
 </form>
 {%endblock%}

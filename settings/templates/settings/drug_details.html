@@ -1,10 +1,10 @@
-{%load static%}
-{%block body_block%}
+{% load static %}
+{% block body_block %}
 <div id="details">
     <h2>Drug Details</h2>
     <h3>Name</h3>
-    <p>{{drug.name}}</p>
+    <p>{{ drug.name }}</p>
     <h3>Category</h3>
-    <p>{{drug.get_category_display}}</p>
+    <p>{{ drug.get_category_display }}</p>
 </div>
-{%endblock%}
+{% endblock %}

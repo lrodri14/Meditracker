@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 {% if allergy %}
     <form method="POST" action="{% url 'settings:delete_allergy' allergy.pk %}" id="delete">
         {% csrf_token %}

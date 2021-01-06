@@ -1,23 +1,23 @@
 <!--Checked-->
-{%extends 'base.html'%}
-{%load static%}
-{%block title%}Home{%endblock%}
-{%block body_block%}
-{%block return%}{%endblock%}{%block home%}{%endblock%}
-<link rel="stylesheet" href="{%static 'home/css/home.css'%}">
-<audio src="{%static 'home/js/sound-effect.mp3'%}"></audio>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block body_block %}
+{% block return %}{% endblock %}{% block home %}{% endblock %}
+<link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+<audio src="{% static 'home/js/sound-effect.mp3' %}"></audio>
 <div class="container">
     <h1>Menu</h1>
     <div class="wrapper-one">
-        <div class="tile" onclick="window.location='{%url 'patients:patients'%}'">
+        <div class="tile" onclick="window.location='{% url 'patients:patients' %}'">
             <i class="fas fa-user-injured"></i>
             <h3>Patients</h3>
         </div>
-        <div class="tile" onclick="window.location='{%url 'appointments:appointments'%}'">
+        <div class="tile" onclick="window.location='{% url 'appointments:appointments' %}'">
             <i class="far fa-calendar-check"></i>
             <h3>Appointments</h3>
         </div>
-        <div class="tile" onclick="window.location='{%url 'records:records'%}'">
+        <div class="tile" onclick="window.location='{% url 'records:records' %}'">
             <i class="far fa-clipboard"></i>
             <h3>Records</h3>
         </div>
@@ -28,15 +28,15 @@
     </div>
 
     <div class="wrapper-two">
-        <div class="tile" onclick="window.location='{%url 'providers:providers'%}'">
+        <div class="tile" onclick="window.location='{% url 'providers:providers' %}'">
             <i class="fas fa-handshake"></i>
             <h3>Providers</h3>
         </div>
-        <div class="tile" onclick="window.location='{%url 'settings:settings'%}'">
+        <div class="tile" onclick="window.location='{% url 'settings:settings' %}'">
             <i class="fas fa-cog"></i>
             <h3>Settings</h3>
         </div>
-        <div class="tile" onclick="window.location='{%url 'accounts:profile'%}'">
+        <div class="tile" onclick="window.location='{% url 'accounts:profile' %}'">
             <i class="fas fa-user"></i>
             <h3>Profile</h3>
         </div>
@@ -50,10 +50,10 @@
 <div class="modal">
     <div class="modal-content">
         <h3>Are you sure you want to log out?</h3>
-        <button type="button" onclick="window.location='{%url 'accounts:logout'%}'">Yes</button>
+        <button type="button" onclick="window.location='{% url 'accounts:logout' %}'">Yes</button>
         <button type="button">No</button>
 
     </div>
 </div>
-<script src="{%static 'home/js/home.js'%}"></script>
-{%endblock%}
+<script src="{% static 'home/js/home.js' %}"></script>
+{% endblock %}

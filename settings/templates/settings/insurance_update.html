@@ -1,12 +1,12 @@
-{%block body_block%}
-<form method="POST" autocomplete="off" action="{%url 'settings:update_insurance' carrier.pk%}" class="update">
-    {%csrf_token%}
+{% block body_block %}
+<form method="POST" autocomplete="off" action="{% url 'settings:update_insurance' carrier.pk %}" class="update">
+    {% csrf_token %}
     <h2>Update Insurance Carrier</h2>
-    <p>{{insurance.company.label}}</p>
-    <p>{{insurance.company}}</p>
-    <p>{{insurance.country.label}}</p>
-    <p>{{insurance.country}}</p>
-    <p class="error">{{error}}</p>
+    <p>{{ insurance.company.label }}</p>
+    <p>{{ insurance.company }}</p>
+    <p>{{ insurance.country.label }}</p>
+    <p>{{ insurance.country }}</p>
+    <p class="error">{{ error }}</p>
     <button type="submit">Update Carrier</button>
 </form>
-{%endblock%}
+{% endblock %}

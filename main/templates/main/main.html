@@ -1,18 +1,18 @@
 <!--Checked-->
-{%extends 'base.html'%}
-{%load static%}
-{%block title%}MediTracker{%endblock%}
-{%block body_block%}
-{%block return%}{%endblock%}{%block home%}{%endblock%}
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}MediTracker{% endblock %}
+{% block body_block %}
+{% block return %}{% endblock %}{% block home %}{% endblock %}
 <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
     <video autoplay muted loop>
         <source src="{% static 'main/backgrounds/background_video.mp4' %}">
     </video>
     <div class="overlay">
         <div id="wrapper">
-            <img id="logo" src="{%static 'main/logo/logo.png'%}">
+            <img id="logo" src="{% static 'main/logo/logo.png'% }">
             <ul>
-                <li data-url="{%url 'accounts:login'%}" class="login">
+                <li data-url="{% url 'accounts:login' %}" class="login">
                     Log In
                 </li>
                 <li class="sign-up">
@@ -29,15 +29,15 @@
     </div>
 
     <div class="account-type-selector">
-        <div class="doctor-type tile" data-url="{%url 'accounts:signup'%}" data-type="doctor">
+        <div class="doctor-type tile" data-url="{% url 'accounts:signup' %}" data-type="doctor">
             <i class="fas fa-user-md"></i>
             Doctor
         </div>
-        <div class="assistant-type tile" data-url="{%url 'accounts:signup'%}" data-type="assistant">
+        <div class="assistant-type tile" data-url="{% url 'accounts:signup' %}" data-type="assistant">
             <i class="fas fa-user-nurse"></i>
             Assistant
         </div>
     </div>
 
-    <script src="{%static 'main/js/main.js'%}"></script>
+    <script src="{% static 'main/js/main.js' %}"></script>
 {%endblock%}

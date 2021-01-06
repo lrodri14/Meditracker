@@ -1,29 +1,29 @@
-{%load static%}
-<form action="{%url 'accounts:profile_change'%}" method="POST" class="edit-profile">
-    {%csrf_token%}
+{% load static %}
+<form action="{% url 'accounts:profile_change' %}" method="POST" class="edit-profile">
+    {% csrf_token %}
     <div class="form-wrapper">
         <div>
             <div class="profile-general-information">
                 <div class="profile-picture-container profile-picture-container-modal">
-                    {%if user_profile.profile_pic.url == '' %}
-                        {%if user_profile.gender == 'Femenine'%}
-                            <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="" class="profile-modal-picture">
-                        {%else%}
-                            <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="" class="profile-modal-picture">
-                        {%endif%}
-                    {%else%}
-                        <img src="{{MEDIA_URL}}{{user_profile.profile_pic}}" alt="" class="profile-modal-picture">
-                    {%endif%}
+                    {% if user_profile.profile_pic.url == '' %}
+                        {% if user_profile.gender == 'Femenine' %}
+                            <img src="{% static 'accounts/avatars/female-avatar.png' %}" alt="" class="profile-modal-picture">
+                        {% else %}
+                            <img src="{% static 'accounts/avatars/male-avatar.png' %}" alt="" class="profile-modal-picture">
+                        {% endif %}
+                    {% else %}
+                        <img src="{{ MEDIA_URL }}{{ user_profile.profile_pic }}" alt="" class="profile-modal-picture">
+                    {% endif %}
                 </div>
-                <p>@{{user}}</p>
-                <p>{{user.first_name}} {{user.last_name}}</p>
-                {%if form.errors%}
-                    {%for error in form.errors%}
-                        <p class="error">{{error}}</p>
-                    {%endfor%}
-                {%endif%}
+                <p>@{{ user }}</p>
+                <p>{{ user.first_name }} {{ user.last_name }}</p>
+                {% if form.errors %}
+                    {% for error in form.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
                 <p>Biography</p>
-                <p>{{form.bio}}</p>
+                <p>{{ form.bio }}</p>
                 <button type="submit">Update</button>
             </div>
         </div>
@@ -33,33 +33,33 @@
             <hr>
             <div class="personal-info-edit">
                 <div>
-                    <p>Name: {{user.first_name}} {{user.last_name}}</p>
-                    <p>Contact: {{form.phone_number}}</p>
-                    <p>Email: {{user.email}}</p>
+                    <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+                    <p>Contact: {{ form.phone_number }}</p>
+                    <p>Email: {{ user.email }}</p>
                 </div>
                 <div>
-                    <p>Birth Date: {{form.birth_date}}</p>
-                    <p>Gender: {{form.gender}}</p>
-                    <p>Origin: {{form.origin}}</p>
+                    <p>Birth Date: {{ form.birth_date }}</p>
+                    <p>Gender: {{ form.gender }}</p>
+                    <p>Origin: {{ form.origin }}</p>
                 </div>
             </div>
 
             <div class="professional-info-edit">
                 <h4>Professional</h4>
                 <hr>
-                <p>Roll: {{user.roll}}</p>
-                <p>Speciality: {{user.speciality}}</p>
+                <p>Roll: {{ user.roll }}</p>
+                <p>Speciality: {{ user.speciality }}</p>
             </div>
 
             <div class="addressing-info-edit">
                 <h4>Addressing</h4>
                 <hr>
                 <p>Timezone</p>
-                <p>{{form.tzone}}</p>
+                <p>{{ form.tzone }}</p>
                 <p>Location</p>
-                <p>{{form.location}}</p>
-                <p>{{form.address.label}}</p>
-                <p>{{form.address}}</p>
+                <p>{{ form.location }}</p>
+                <p>{{ form.address.label }}</p>
+                <p>{{ form.address }}</p>
             </div>
         </div>
     </div>

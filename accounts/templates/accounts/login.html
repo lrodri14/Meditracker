@@ -1,14 +1,14 @@
-{%load staticfiles%}
-<form action="{%url 'accounts:login'%}" method="POST" autocomplete="off" class="login-form">
+{% load staticfiles %}
+<form action="{% url 'accounts:login' %}" method="POST" autocomplete="off" class="login-form">
     <h1>Log In</h1>
-    {%csrf_token%}
-    <p>{{form.username.label}}</p>
-    <p>{{form.username}}</p>
-    <p>{{form.password.label}}</p>
-    <p>{{form.password}}</p>
-    {%if form.errors%}
+    {% csrf_token %}
+    <p>{{ form.username.label }}</p>
+    <p>{{ form.username  }}</p>
+    <p>{{ form.password.label}}</p>
+    <p>{{ form.password }}</p>
+    {% if form.errors %}
         <p class="error"><small>Your credentials are incorrect, please try again.</small></p>
-        <p><a href="{%url 'accounts:password_reset'%}" class="password-reset">Did you forgot your password?</a></p>
-    {%endif%}
+        <p><a href="{% url 'accounts:password_reset' %}" class="password-reset">Did you forgot your password?</a></p>
+    {% endif %}
     <button type="submit">Log In</button>
 </form>

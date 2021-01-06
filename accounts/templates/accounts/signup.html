@@ -1,37 +1,37 @@
-{%load static%}
-<form method="POST" autocomplete="off" class="signup-form" action="{%url 'accounts:signup'%}">
-    {%csrf_token%}
+{% load static %}
+<form method="POST" autocomplete="off" class="signup-form" action="{% url 'accounts:signup' %}">
+    {% csrf_token %}
     <div class="wrapper">
         <div class="personal-info">
             <h1>Sign Up</h1>
-            <p>{{form.first_name.label}}</p>
-            <p>{{form.first_name}}</p>
-            <p>{{form.last_name.label}}</p>
-            <p>{{form.last_name}}</p>
-            <p>{{form.email.label}}</p>
-            <p>{{form.email}}</p>
-            <p id="speciality-label">{{form.speciality.label}}</p>
-            <p>{{form.speciality}}</p>
+            <p>{{ form.first_name.label }}</p>
+            <p>{{ form.first_name }}</p>
+            <p>{{ form.last_name.label }}</p>
+            <p>{{ form.last_name }}</p>
+            <p>{{ form.email.label }}</p>
+            <p>{{ form.email }}</p>
+            <p id="speciality-label">{{ form.speciality.label }}</p>
+            <p>{{ form.speciality }}</p>
         </div>
         <div class="account-info">
-            <p>{{form.username.label}}</p>
-            <p>{{form.username}}</p>
-            <p>{{form.password1.label}}</p>
-            <p>{{form.password1}}</p>
+            <p>{{ form.username.label }}</p>
+            <p>{{ form.username }}</p>
+            <p>{{ form.password1.label }}</p>
+            <p>{{ form.password1 }}</p>
             <p>Password Confirmation</p>
-            <p>{{form.password2}}</p>
+            <p>{{ form.password2 }}</p>
             <button type="submit">Sign Up</button>
-            {%if form.errors%}
-                {%for error in form.email.errors%}
-                    <p class="error"><small>{{error}}</small></p>
-                {%endfor%}
-                {%for error in form.username.errors%}
-                    <p class="error"><small>{{error}}</small></p>
-                {%endfor%}
-                {%for error in form.password2.errors%}
-                    <p class="error"><small>{{error}}</small></p>
-                {%endfor%}
-            {%endif%}
+            {% if form.errors %}
+                {% for error in form.email.errors %}
+                    <p class="error"><small>{{ error }}</small></p>
+                {% endfor %}
+                {% for error in form.username.errors %}
+                    <p class="error"><small>{{ error }}</small></p>
+                {% endfor %}
+                {% for error in form.password2.errors %}
+                    <p class="error"><small>{{ error }}</small></p>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </form>

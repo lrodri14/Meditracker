@@ -1,13 +1,13 @@
-{%load static%}
-{%block body_block%}
-<form method="POST" autocomplete="off" action="{%url 'settings:add_insurance'%}" class="add add-insurance">
-    {%csrf_token%}
+{% load static %}
+{% block body_block %}
+<form method="POST" autocomplete="off" action="{% url 'settings:add_insurance' %}" class="add add-insurance">
+    {% csrf_token %}
     <h2>Add Insurance Carrier</h2>
-    <p>{{insurance_carrier_form.company.label}}</p>
-    <p>{{insurance_carrier_form.company}}</p>
-    <p>{{insurance_carrier_form.country.label}}</p>
-    <p>{{insurance_carrier_form.country}}</p>
-    <p class="error"><small>{{error}}</small></p>
+    <p>{{ insurance_carrier_form.company.label }}</p>
+    <p>{{ insurance_carrier_form.company }}</p>
+    <p>{{ insurance_carrier_form.country.label }}</p>
+    <p>{{ insurance_carrier_form.country }}</p>
+    <p class="error"><small>{{ error }}</small></p>
     <button type="submit">Add Carrier</button>
 </form>
 {%endblock%}

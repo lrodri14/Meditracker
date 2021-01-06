@@ -1,12 +1,12 @@
-{%load static%}
-<form method="POST" action="{%url 'accounts:profile_picture_change'%}" enctype="multipart/form-data"  class="edit-profile-picture">
-    {%csrf_token%}
+{% load static %}
+<form method="POST" action="{% url 'accounts:profile_picture_change' %}" enctype="multipart/form-data"  class="edit-profile-picture">
+    {% csrf_token %}
     <!--Hidden Inputs-->
-        <p id="profile-pic-input">{{form.profile_pic}}</p>
-        <p>{{form.x}}</p>
-        <p>{{form.y}}</p>
-        <p>{{form.width}}</p>
-        <p>{{form.height}}</p>
+        <p id="profile-pic-input">{{ form.profile_pic }}</p>
+        <p>{{ form.x }}</p>
+        <p>{{ form.y }}</p>
+        <p>{{ form.width }}</p>
+        <p>{{ form.height }}</p>
     <!---->
     <h3>Selected Picture</h3>
     <div class="selected-picture">

@@ -1,13 +1,13 @@
-{%load static%}
-{%block body_block%}
-<form method="POST" autocomplete="off" action="{%url 'settings:update_drug' drug.pk%}" class="update">
-    {%csrf_token%}
+{% load static %}
+{% block body_block %}
+<form method="POST" autocomplete="off" action="{% url 'settings:update_drug' drug.pk %}" class="update">
+    {% csrf_token%}
     <h2>Update Drug</h2>
-    <p>{{form.name.label}}</p>
-    <p>{{form.name}}</p>
-    <p>{{form.category.label}}</p>
-    <p>{{form.category}}</p>
-    <p class="error">{{error}}</p>
+    <p>{{ form.name.label }}</p>
+    <p>{{ form.name }}</p>
+    <p>{{ form.category.label }}</p>
+    <p>{{ form.category }}</p>
+    <p class="error">{{ error }}</p>
     <button type="submit">Update Drug</button>
 </form>
 {%endblock%}

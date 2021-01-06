@@ -1,6 +1,6 @@
-{%load static%}
-{%block body_block%}
-{%if allergies%}
+{% load static %}
+{% block body_block %}
+{% if allergies %}
     <div class="table">
         <div>
             <table>
@@ -9,7 +9,7 @@
                         <th>Allergy</th>
                         <th>Edit</th>
                         <th>Delete</th>
-                        <th><i class="fas fa-plus" data-url="{%url 'settings:add_allergy'%}"></i></th>
+                        <th><i class="fas fa-plus" data-url="{% url 'settings:add_allergy' %}"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,16 +19,16 @@
         </div>
         <div>
             <i class="fas fa-filter"></i>
-            <form method="GET" action="{%url 'settings:filter_allergies'%}" class="filter-form" autocomplete="off">
-                {%csrf_token%}
+            <form method="GET" action="{% url 'settings:filter_allergies' %}" class="filter-form" autocomplete="off">
+                {% csrf_token %}
                 <h3>Filter Allergies</h3>
-                <p>{{form.allergy_type.label}}</p>
-                <p>{{form.allergy_type}}</p>
+                <p>{{ form.allergy_type.label }}</p>
+                <p>{{ form.allergy_type }}</p>
             </form>
         </div>
     </div>
 {%else%}
     <p class="no-data">No allergies listed</p>
-    <i class="fas fa-plus add-data" data-url="{%url 'settings:add_allergy'%}"></i>
+    <i class="fas fa-plus add-data" data-url="{% url 'settings:add_allergy' %}"></i>
 {%endif%}
 {%endblock%}

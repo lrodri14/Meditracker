@@ -1,11 +1,11 @@
-{%load static%}
-{%block body_block%}
-<form method="POST" autocomplete="off" action="{%url 'settings:update_allergy' allergy.pk%}" class="update" id="update-allergy">
-    {%csrf_token%}
+{% load static %}
+{% block body_block %}
+<form method="POST" autocomplete="off" action="{% url 'settings:update_allergy' allergy.pk %}" class="update" id="update-allergy">
+    {% csrf_token %}
     <h2>Update Allergy</h2>
-    <p>{{allergy_form.allergy_type.label}}</p>
-    <p>{{allergy_form.allergy_type}}</p>
-    <p class="error">{{error}}</p>
+    <p>{{ allergy_form.allergy_type.label }}</p>
+    <p>{{ allergy_form.allergy_type }}</p>
+    <p class="error">{{ error }}</p>
     <button type="submit">Update Allergy</button>
 </form>
-{%endblock%}
+{% endblock %}

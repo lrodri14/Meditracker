@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 
 {% load settings_custom_tags %}
 
@@ -15,15 +15,15 @@
     </div>
 {% endif %}
 
-{%if allergies%}
-     {%for a in allergies%}
-        <tr data-url="{%url 'settings:allergy_details' a.pk%}">
-            <td>{{a.allergy_type}}</td>
-            <td><i class="fas fa-edit" data-url="{%url 'settings:update_allergy' a.pk%}"></i></td>
-            <td><i class="fas fa-trash" data-url="{%url 'settings:delete_allergy' a.pk%}"></i></td>
+{% if allergies %}
+     {% for a in allergies %}
+        <tr data-url="{% url 'settings:allergy_details' a.pk %}">
+            <td>{{ a.allergy_type }}</td>
+            <td><i class="fas fa-edit" data-url="{% url 'settings:update_allergy' a.pk %}"></i></td>
+            <td><i class="fas fa-trash" data-url="{% url 'settings:delete_allergy' a.pk %}"></i></td>
             <td></td>
         </tr>
-    {%endfor%}
-{%else%}
+    {% endfor %}
+{% else %}
     <p class="no-data">No allergies listed</p>
-{%endif%}
+{% endif %}
