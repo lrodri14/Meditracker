@@ -11,12 +11,6 @@
             {% include 'appointments/partial_agenda_list.html' %}
         </div>
 
-        <div class="modal">
-            <div class="modal-content">
-
-            </div>
-        </div>
-
         <div>
             <i class="fas fa-filter"></i>
             <form method="GET" action="{% url 'appointments:filter_agenda' %}" class="filter-results-form filter-form">
@@ -27,6 +21,13 @@
                 <p>{{ form.date_to }}</p>
                 <button type="submit">Search</button><br>
             </form>
+        </div>
+
+        <div class="modal">
+            <div class="modal-content">
+
+            </div>
+        </div>
     </div>
 {% else %}
     <p id="no-appointments">No Data Available</p>

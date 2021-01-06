@@ -46,8 +46,6 @@ sections: Wrapper, Table, Forms, Cancel and Update Form, Pagination and No Data*
     transition: 0.5s;
 }
 
-
-
 /*########################################################## Table ###################################################*/
 
 table{
@@ -150,9 +148,6 @@ form{
 }
 
 .filter-form{
-    text-align: center;
-    background-color: #5A7FAF;
-    padding: 10px;
     transform: translateY(-200%);
     transition: 0.5s;
 }
@@ -276,7 +271,6 @@ button:focus{
 }
 
 .modal-content{
-    display: inline-block;
     margin-left: 25%;
     width: 50%;
 }
