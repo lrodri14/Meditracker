@@ -47,12 +47,9 @@ class Patient(models.Model):
         ('HND', 'Honduras'),
     )
 
-    id_number = models.CharField('ID Number', max_length=20, null=True, blank=True,
-                                 help_text='Provide you ID Card Number')
-    first_names = models.CharField("Patient's Name", max_length=50, null=False, blank=False,
-                                help_text="Patient's Name")
-    last_names = models.CharField("Patient's Last Name", max_length=50, null=False, blank=False,
-                                 help_text="Patient's Last Name")
+    id_number = models.CharField('ID Number', max_length=20, null=True, blank=True, help_text='Provide you ID Card Number')
+    first_names = models.CharField("Patient's Name", max_length=50, null=False, blank=False, help_text="Patient's Name")
+    last_names = models.CharField("Patient's Last Name", max_length=50, null=False, blank=False, help_text="Patient's Last Name")
     gender = models.CharField("Patient's Gender", max_length=20, null=True, blank=False, help_text='Gender', choices=GENDER_CHOICES)
     birthday = models.DateField("Patient's Birthday", help_text="Patients date of birth")
     phone_number = models.CharField('Phone Number', max_length=20, blank=True, null=True, help_text='Phone Number')
@@ -60,9 +57,7 @@ class Patient(models.Model):
     civil_status = models.CharField(max_length=12, choices=CIVIL_STATUS_CHOICES)
     origin = models.CharField(max_length=50, choices=PROCEDENCE_CHOICES)
     residence = models.CharField(max_length=50, choices=RESIDENCE_CHOICES)
-    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=False, null=True,
-                                   help_text='User who created this patient', verbose_name='created_by',
-                                   related_name='creator')
+    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Created By')
 
     def age(self):
         today = timezone.localtime(timezone.now())
@@ -96,10 +91,9 @@ class InsuranceCarrier(models.Model):
         ('NIC', 'Nicaragua'),
     )
 
-    company = models.CharField('company', max_length=100, blank=False, null=False, help_text='Insurance Carrier')
-    country = models.CharField('country', max_length=100, blank=False, null=True, help_text='Insurance Carrier origin',
-                               choices=ORIGIN_CHOICES, default=None)
-    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=False, null=True, help_text='Who created this insurance carrier', verbose_name='created_by', related_name='Author')
+    company = models.CharField('Company', max_length=100, blank=False, null=False, help_text='Insurance Carrier')
+    country = models.CharField('Country', max_length=100, blank=False, null=True, help_text='Insurance Carrier origin', choices=ORIGIN_CHOICES, default=None)
+    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=False, null=True, verbose_name='created_by', related_name='insurance_carrier')
 
     class Meta:
         unique_together = ['company', 'created_by']
@@ -132,12 +126,10 @@ class InsuranceInformation(models.Model):
     INSURANCE_TYPE_CHOICES = (
         ('MEDICAL', 'Medical'),
     )
-    insurance_carrier = models.ForeignKey(InsuranceCarrier, on_delete=models.CASCADE, blank=True, null=True,
-                                             verbose_name='insurance carrier', related_name='insurance')
-    type_of_insurance = models.CharField('insurance type', max_length=50, blank=True, null=True,
-                                         help_text='Type of insurance', choices=INSURANCE_TYPE_CHOICES)
-    expiration_date = models.DateField('insurance date expiration', help_text='insurance date expiration')
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='insurance owner', related_name='insurance')
+    insurance_carrier = models.ForeignKey(InsuranceCarrier, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Insurance Carrier',)
+    type_of_insurance = models.CharField('Insurance Type', max_length=50, blank=True, null=True, help_text='Type of insurance', choices=INSURANCE_TYPE_CHOICES)
+    expiration_date = models.DateField('Expiration Date', help_text="Insurance's Expiration Date")
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Insurance Owner', related_name='insurance')
 
     def __str__(self):
         return str(self.patient) + "'s" + ' ' + 'Insurance Information'
@@ -156,9 +148,8 @@ class Allergy(models.Model):
         The operative method in the Allergy model is used in the delete_allergy view to check that this instance is used in
         any registers, if it is, then the delete operation will not be performed.
     """
-    allergy_type = models.CharField('allergy', max_length=100, null=False, blank=False, help_text='Allergy Type')
-    created_by = models.ForeignKey(user, blank=False, on_delete=models.CASCADE, null=True,
-                                      help_text='User by who this allergy was created', related_name='user')
+    allergy_type = models.CharField('Allergy', max_length=100, null=False, blank=False, help_text='Allergy Type')
+    created_by = models.ForeignKey(user, blank=False, on_delete=models.CASCADE, null=True,help_text='User by who this allergy was created', related_name='user')
 
     class Meta:
         unique_together = ['allergy_type', 'created_by']
@@ -187,11 +178,9 @@ class AllergyInformation(models.Model):
         Information instances, it rewrote the save() method to capitalize the self.about field in the model,
         and lastly it contains its own __str__ dunder method.
     """
-    allergy_type = models.ForeignKey(Allergy, on_delete=models.CASCADE, null=True, blank=True, verbose_name='allergy type',
-                                        help_text='Allergy type of the patient', related_name='allergy')
-    about = models.TextField('about allergy', help_text='Tell us about what you suffer', blank=True, null=True)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
-                                                                                            related_name='allergies')
+    allergy_type = models.ForeignKey(Allergy, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Allergy Type', help_text='Allergy type of the patient')
+    about = models.TextField('About Allergy', blank=True, null=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient', related_name='allergy_information')
 
     def __str__(self):
         return str(self.patient) + "'s" + ' ' + 'Allergies Information'
@@ -210,10 +199,9 @@ class Antecedent(models.Model):
         it rewrote the save() method to capitalize the self.antecedent and self.info field in the model,
         and lastly it contains its own __str__ dunder method.
     """
-    antecedent = models.CharField('antecedent', max_length=150, blank=True, null=True, help_text='Antecedent Type')
-    info = models.TextField('antecedent info', blank=True, null=True, help_text='About this antecedent')
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient',
-                                                                                            related_name='antecedents')
+    antecedent = models.CharField('Antecedent', max_length=150, blank=True, null=True, help_text='Antecedent Type')
+    info = models.TextField('Antecedent Information', blank=True, null=True, help_text='About this antecedent')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient', related_name='antecedent')
 
     def __str__(self):
         return str(self.patient) + "'s" + ' ' + 'Antecedents Information'

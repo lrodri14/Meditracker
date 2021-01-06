@@ -33,7 +33,7 @@ class Provider(models.Model):
     email = models.EmailField('Email', blank=False, null=True, help_text="Company's Email")
     contact = models.CharField('Phone Number', max_length=100, blank=False, null=True, help_text='Providers Contact')
     provider_type = models.CharField('Type', max_length=100, blank=True, null=True, help_text="Provider's Type", choices=PROVIDERS_TYPE_CHOICES)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, help_text='Created By')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, help_text='provider')
 
     class Meta:
         unique_together = ['company', 'created_by']
@@ -61,7 +61,7 @@ class Visitor(models.Model):
     contact = models.CharField('Phone Number', max_length=100, blank=False, null=True, help_text="Visitor's Contact")
     email = models.EmailField('Email', blank=False, null=True, help_text="Visitor's Email")
     company = models.ForeignKey(Provider, on_delete=models.CASCADE, blank=False, null=True, help_text='Providers Brand')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, help_text='Created By')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, help_text='Created By', related_name='visitor')
 
     def save(self, *args, **kwargs):
         self.name = self.name.title()

@@ -62,7 +62,7 @@ class Drug(models.Model):
     name = models.CharField('drug', max_length=200, blank=False, null=True, help_text='drugs name')
     category = models.CharField('category', max_length=50, blank=False, null=True, help_text='Category', choices=CATEGORY_CHOICES)
     created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True, help_text='Drug created by',
-                                   related_name='created_by', verbose_name='Created By')
+                                   related_name='drug', verbose_name='Created By')
 
     class Meta:
         unique_together = ['name', 'created_by']
@@ -104,48 +104,43 @@ class Consult(models.Model):
     )
 
     # Consult creator
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='patient',
-                                help_text='Patient assisting this consult', related_name='patient')
-    datetime = models.DateTimeField('Date of the consult', blank=False, null=True, help_text='Date the consult will be done')
-    motive = models.TextField('motive of the consult', blank=False, null=True,
-                              help_text='The motive of your assistance to the consult')
-    suffering = models.TextField('suffering', blank=False, null=True,
-                                 help_text='What is the patient suffering?')
-    charge = models.DecimalField('charge', blank=False, null=True, max_digits=10, decimal_places=2, help_text='Charge Amount')
-    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True,
-                                   help_text='Creator of the consult', verbose_name='created by', related_name='author')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient', help_text='Patient assisting this consult', related_name='consult')
+    datetime = models.DateTimeField('Date & Time', blank=False, null=True, help_text='Date the consult will be done')
+    motive = models.TextField('Motive', blank=False, null=True, help_text='The motive of your assistance to the consult')
+    suffering = models.TextField('Suffering', blank=False, null=True, help_text='What is the patient suffering?')
+    charge = models.DecimalField('Charges', blank=False, null=True, max_digits=10, decimal_places=2, help_text='Charge Amount')
+    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Created By')
     # Consult Content
     # Vital Signs
-    blood_pressure = models.FloatField('blood pressure', blank=True, null=True, help_text='blood pressure')
-    temperature = models.FloatField('temperature', blank=True, null=True, help_text='body temperature')
-    weight = models.FloatField('weight', blank=True, null=True, help_text='weight')
-    size = models.FloatField('size', blank=True, null=True, help_text='size')
+    blood_pressure = models.FloatField('Blood Pressure', blank=True, null=True, help_text='Blood Pressure')
+    temperature = models.FloatField('Temperature', blank=True, null=True, help_text='Corporal Temperature')
+    weight = models.FloatField('Weight', blank=True, null=True, help_text='Weight')
+    size = models.FloatField('Height', blank=True, null=True, help_text='Size')
     # Organ System
-    digestive_system = models.TextField('digestive system', blank=True, null=True, help_text='digestive system analysis')
-    endocrine_system = models.TextField('endocrine system', blank=True, null=True, help_text='endocrine system analysis')
-    renal_system = models.TextField('renal system', blank=True, null=True, help_text='renal system analysis')
-    lymphatic_system = models.TextField('lymphatic system', blank=True, null=True, help_text='lymphatic system analysis')
-    respiratory_system = models.TextField('respiratory system', blank=True, null=True, help_text='respiratory system analysis')
+    digestive_system = models.TextField('Digestive System', blank=True, null=True, help_text='Digestive System Analysis')
+    endocrine_system = models.TextField('Endocrine System', blank=True, null=True, help_text='Endocrine System Analysis')
+    renal_system = models.TextField('Renal System', blank=True, null=True, help_text='Renal System Analysis')
+    lymphatic_system = models.TextField('Lymphatic System', blank=True, null=True, help_text='Lymphatic System Analysis')
+    respiratory_system = models.TextField('Respiratory System', blank=True, null=True, help_text='Respiratory System Analysis')
     # Physical Exploration
-    head_exploration = models.TextField('head exploration', blank=True, null=True, help_text='head exploration analysis')
-    thorax_exploration = models.TextField('thorax exploration', blank=True, null=True, help_text='thorax exploration analysis')
+    head_exploration = models.TextField('Head Exploration', blank=True, null=True, help_text='Head Exploration Analysis')
+    thorax_exploration = models.TextField('Thorax Exploration', blank=True, null=True, help_text='Thorax Exploration Analysis')
     # Diagnose
-    cie_10_group = models.OneToOneField(Cie10Group, on_delete=models.CASCADE, blank=True, null=True, help_text='CIE-10 group for the diagnose',
-                                        verbose_name='CIE-10 Group', related_name='ciegroup')
-    cie_10_detail = models.TextField('CIE-10 Detail', blank=True, null=True, help_text='CIE-10 diagnose details')
-    diagnose = models.TextField('diagnose', blank=True, null=True, help_text='Diagnose')
-    procedure = models.TextField('procedure', blank=True, null=True, help_text='Procedure')
-    analysis = models.TextField('analysis', blank=True, null=True, help_text='Analysis')
-    notes = models.TextField('notes', blank=True, null=True, help_text='Notes')
+    cie_10_group = models.OneToOneField(Cie10Group, on_delete=models.CASCADE, blank=True, null=True, help_text='CIE-10 group for the diagnose', verbose_name='CIE-10 Group')
+    cie_10_detail = models.TextField('CIE-10 Detail', blank=True, null=True, help_text='CIE-10 Diagnose Details')
+    diagnose = models.TextField('Diagnose', blank=True, null=True, help_text='Diagnose')
+    procedure = models.TextField('Procedure', blank=True, null=True, help_text='Procedure')
+    analysis = models.TextField('Analysis', blank=True, null=True, help_text='Analysis')
+    notes = models.TextField('Notes', blank=True, null=True, help_text='Notes')
     # Treatmenet
-    drugs = models.ManyToManyField(Drug, blank=True, help_text='Drugs recommended', verbose_name='Drugs', related_name='drugs')
-    indications = models.TextField('indications', blank=True, null=True, help_text='Indications')
-    actions = models.TextField('actions', blank=True, null=True, help_text='actions')
-    prescription = models.FileField('prescription', blank=True, null=True, help_text="Current consult's prescription", upload_to='appointments/prescriptions')
+    drugs = models.ManyToManyField(Drug, blank=True, help_text='Drugs recommended', verbose_name='Drugs')
+    indications = models.TextField('Indications', blank=True, null=True, help_text='Indications')
+    actions = models.TextField('Actions', blank=True, null=True, help_text='Actions')
+    prescription = models.FileField('Prescription', blank=True, null=True, help_text="Prescription", upload_to='appointments/prescriptions')
     # Status
-    medical_status = models.BooleanField('medical_status', blank=True, null=True, help_text='Handles the medical consult status', default=False)
-    status = models.CharField('status', max_length=10, blank=True, null=True, help_text='Handles the consult status', default=STATUS_CHOICES[0][0], choices=STATUS_CHOICES)
-    lock = models.BooleanField('lock', default=True, blank=False, null=True, help_text='Consult lock status')
+    medical_status = models.BooleanField('Medical Status', blank=True, null=True, help_text='Handles the medical consult status', default=False)
+    status = models.CharField('Status', max_length=10, blank=True, null=True, help_text='Handles the consult status', default=STATUS_CHOICES[0][0], choices=STATUS_CHOICES)
+    lock = models.BooleanField('Lock', default=True, blank=False, null=True, help_text='Consult lock status')
 
     class Meta:
         unique_together = ['created_by', 'datetime']
@@ -171,7 +166,7 @@ class MedicalExam(models.Model):
     EXAMS_CHOICES = (
         ('T', 'Test'),
     )
-    consult = models.ForeignKey(Consult, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Medical Exams', help_text='Medical Exams', related_name='exams')
+    consult = models.ForeignKey(Consult, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Medical Exams', help_text='Medical Exams', related_name='exam')
     date = models.DateField('date', blank=True, null=True, help_text='Date the exams were presented')
     type = models.CharField('type of exams', max_length=100, blank=False, null=True, help_text='Type of exams', choices=EXAMS_CHOICES)
     image = models.ImageField('exam', blank=True, null=True, help_text='Exam IMG', upload_to='appointments/exams')
