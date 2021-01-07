@@ -37,7 +37,7 @@ async def check_delayed_consults(user):
     """
     today = timezone.localtime()
     tzone = timezone.get_current_timezone()
-    not_attended_consults = Consult.objects.filter(created_by=user, datetime__date__lte=today.date())
+    not_attended_consults = Consult.objects.filter(created_by=user, datetime__date__lte=today.date(), status="OPEN")
     await close_consult(not_attended_consults, tzone, today)
 
 

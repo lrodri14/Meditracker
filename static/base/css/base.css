@@ -244,3 +244,63 @@ a {
     font-size: 10px;
     margin-left: 40%;
 }
+
+.loader-modal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.loader-modal-hide{
+    display: none;
+}
+
+.global-loader{
+    position: absolute;
+    top: 41%;
+    left: 44.5%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 5px solid rgba(0,0,0,0);
+    border-top: 5px solid #FFFFFF;
+    animation: spin 2s linear infinite;
+}
+
+.fa-heart{
+    font-size: 32px;
+    position: absolute;
+    top: 48%;
+    left: 49%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    animation: beat 1s infinite alternate;
+}
+
+@keyframes spin{
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+@keyframes beat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

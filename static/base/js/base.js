@@ -1,3 +1,5 @@
+var loaderModal = document.querySelector('.loader-modal')
+
 if (document.querySelector('.fa-bars') !== 'null' && document.querySelector('.fa-bars') !== 'undefined'){
     var bars = document.querySelector('.fa-bars')
     var menu = document.querySelector('.menu')
@@ -17,3 +19,7 @@ if (bars){
     })
 
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    loaderModal.classList.add('loader-modal-hide')
+})
