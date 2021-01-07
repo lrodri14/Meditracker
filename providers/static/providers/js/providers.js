@@ -72,7 +72,7 @@ async function deleteProvidersFormAW(url){
     return data
 }
 
-async function addProvidersAW(url, method, csrfmiddlewaretoken, formData){
+async function addUpdateProvidersAW(url, method, csrfmiddlewaretoken, formData){
     /*Function used to add providers to the database, this functions takes
       four parameters, the 'url' for the "POST" request, the 'method' which
       we collect from the form's method attribute, the 'csrfmiddlewaretoken'
@@ -146,7 +146,22 @@ async function providerDetailsAW(url){
 }
 
 async function sendEmailFormAW(url){
+    /*This function is used to display the send email form
+      in our page, it takes one parameter, the 'url' for the "GET"
+      request. This function will return it's result in JSON Format.*/
     const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+async function sendEmailAW(url, method, csrfmiddlewaretoken, formData){
+    /*Function used to send emails to any providers, this functions takes
+      three parameters, the 'url' for the "POST" request, the 'method' which
+      we collect from the form's method attribute, the 'csrfmiddlewaretoken'
+      parameter, which receives the value from the csrfmiddlewaretoken attribute
+      in every form's hidden input. This function will return the
+      result in JSON Format.*/
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
     const data = result.json()
     return data
 }
@@ -580,28 +595,35 @@ if (modal){
           '[name=csrfmiddlewaretoken]' hidden input value, the data received in JSON Format will be added
           to the wrapper InnerHTML, it will also make a check in if the'.add-providers' element is present
           , if it is, it will call the addIconLevitate function.*/
+
         if (e.target.nodeName === 'FORM' && !e.target.id){
             let form = e.target
             let url = form.action
             let method = form.method
             let csrfmiddlewaretoken = document.querySelector('[name=csrfmiddlewaretoken]').value
             let formData = new FormData(form)
-            addProvidersAW(url, method, csrfmiddlewaretoken, formData)
-            .then(data => {
-                if (data['html']){
-                    modalContent.innerHTML = data['html']
-                }else{
-                    modal.classList.remove('modal-show')
-                    document.querySelector('#paginator') && document.querySelector('#paginator').remove()
-                    wrapper.innerHTML = data['updated_html']
-                    if (document.querySelector('.add-providers')){
-                        addProvidersIcon = document.querySelector('.add-providers')
-                        addIconLevitate(addProvidersIcon)
+            if (e.target.classList.contains('add-element-form') || e.target.classList.contains('update-element-form')){
+                addUpdateProvidersAW(url, method, csrfmiddlewaretoken, formData)
+                .then(data => {
+                    if (data['html']){
+                        modalContent.innerHTML = data['html']
+                    }else{
+                        modal.classList.remove('modal-show')
+                        document.querySelector('#paginator') && document.querySelector('#paginator').remove()
+                        wrapper.innerHTML = data['updated_html']
+                        if (document.querySelector('.add-providers')){
+                            addProvidersIcon = document.querySelector('.add-providers')
+                            addIconLevitate(addProvidersIcon)
+                        }
                     }
-                }
+                })
+            }else{
+                document.querySelector('.loader').classList.add('loader-show')
+                sendEmailAW(url, method, csrfmiddlewaretoken, formData)
+                .then(data => {
+                    modalContent.innerHTML = data['html']
+                })
             }
-          )
         }
-
     })
 }
