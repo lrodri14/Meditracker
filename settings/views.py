@@ -296,7 +296,7 @@ def add_allergy(request):
                 allergy = allergies_form.save(commit=False)
                 allergy.created_by = request.user
                 allergy.save()
-                allergies_list = Allergies.objects.filter(created_by=request.user)
+                allergies_list = Allergies.objects.filter(created_by=request.user).order_by('allergy_type')
                 paginator = Paginator(allergies_list, 16)
                 page_obj = paginator.get_page(1)
                 context = {'allergies': page_obj, 'form': AllergyFilterForm}
@@ -331,7 +331,7 @@ def update_allergy(request, pk):
                 allergy = allergy_form.save(commit=False)
                 allergy.created_by = request.user
                 allergy.save()
-                allergies_list = Allergies.objects.filter(created_by=request.user)
+                allergies_list = Allergies.objects.filter(created_by=request.user).order_by('allergy_type')
                 paginator = Paginator(allergies_list, 16)
                 page_obj = paginator.get_page(1)
                 context = {'allergies': page_obj, 'form': AllergyFilterForm}
@@ -372,7 +372,7 @@ def delete_allergy(request, pk):
     if request.method == 'POST':
         if not allergy.operative(request.user):
             allergy.delete()
-            allergies_list = Allergies.objects.filter(created_by=request.user)
+            allergies_list = Allergies.objects.filter(created_by=request.user).order_by('allergy_type')
             paginator = Paginator(allergies_list, 16)
             page_obj = paginator.get_page(1)
             context = {'allergies': page_obj, 'form': AllergyFilterForm}
@@ -398,7 +398,7 @@ def drug_list(request):
         query is set, we send it to the client side as a JSON Response. This view is passed a single argument: 'request',
         which expects a request object.
     """
-    drugs_list = Drugs.objects.filter(created_by=request.user)
+    drugs_list = Drugs.objects.filter(created_by=request.user).order_by('name')
     paginator = Paginator(drugs_list, 16)
     page = request.GET.get('page')
     page_obj = paginator.get_page(page)
@@ -420,7 +420,7 @@ def filter_drugs(request):
     """
     query = request.GET.get('query')
     page = request.GET.get('page')
-    filtered_drugs = Drugs.objects.filter(name__icontains=query, created_by=request.user)
+    filtered_drugs = Drugs.objects.filter(name__icontains=query, created_by=request.user).order_by('name')
     paginator = Paginator(filtered_drugs, 16)
     page_obj = paginator.get_page(page)
     template = 'settings/drugs_partial_list.html'
@@ -440,9 +440,9 @@ def drug_category_filter(request):
     if request.method == 'GET':
         category = request.GET.get('category')
         if category != '':
-            drugs = Drugs.objects.filter(created_by=request.user, category=category)
+            drugs = Drugs.objects.filter(created_by=request.user, category=category).order_by('name')
         else:
-            drugs = Drugs.objects.filter(created_by=request.user)
+            drugs = Drugs.objects.filter(created_by=request.user).order_by('name')
         data = {'updated_drugs': render_to_string('appointments/partial_drugs_selection.html', context={'drugs': drugs}, request=request)}
         return JsonResponse(data)
 
@@ -468,7 +468,7 @@ def add_drug(request):
                 drug = drugs_form.save(commit=False)
                 drug.created_by = request.user
                 drug.save()
-                drugs_list = Drugs.objects.filter(created_by=request.user)
+                drugs_list = Drugs.objects.filter(created_by=request.user).order_by('name')
                 paginator = Paginator(drugs_list, 16)
                 page_obj = paginator.get_page(1)
                 context = {'drugs': page_obj, 'form': DrugFilterForm}
@@ -518,7 +518,7 @@ def update_drug(request, pk):
                 drug = drug_form.save(commit=False)
                 drug.created_by = request.user
                 drug.save()
-                drugs_list = Drugs.objects.filter(created_by=request.user)
+                drugs_list = Drugs.objects.filter(created_by=request.user).order_by('name')
                 paginator = Paginator(drugs_list, 16)
                 page_obj = paginator.get_page(1)
                 context = {'drugs': page_obj, 'form': DrugFilterForm}
@@ -544,7 +544,7 @@ def delete_drug(request, pk):
     if request.method == 'POST':
         if not drug.operative(request.user):
             drug.delete()
-            drugs_list = Drugs.objects.filter(created_by=request.user)
+            drugs_list = Drugs.objects.filter(created_by=request.user).order_by('name')
             paginator = Paginator(drugs_list, 16)
             page_obj = paginator.get_page(1)
             context = {'drugs': page_obj, 'form': DrugFilterForm}
