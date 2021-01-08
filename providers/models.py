@@ -37,6 +37,8 @@ class Provider(models.Model):
 
     class Meta:
         unique_together = ['company', 'created_by']
+        verbose_name = 'Provider'
+        verbose_name_plural = 'Providers'
         
     def save(self, *args, **kwargs):
         self.company = self.company.title()
@@ -62,6 +64,10 @@ class Visitor(models.Model):
     email = models.EmailField('Email', blank=False, null=True, help_text="Visitor's Email")
     company = models.ForeignKey(Provider, on_delete=models.CASCADE, blank=False, null=True, help_text='Providers Brand')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, help_text='Created By', related_name='visitor')
+
+    class Meta:
+        verbose_name = 'Visitor'
+        verbose_name_plural = 'Visitors'
 
     def save(self, *args, **kwargs):
         self.name = self.name.title()

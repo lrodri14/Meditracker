@@ -24,6 +24,10 @@ class Cie10Group(models.Model):
 
     code = models.CharField('code', max_length=50, blank=False, null=True, help_text='CIE-10 Code')
 
+    class Meta:
+        verbose_name = 'CIE-10 Group'
+        verbose_name_plural = 'CIE-10 Groups'
+
     def __str__(self):
         return self.code
 
@@ -66,6 +70,8 @@ class Drug(models.Model):
 
     class Meta:
         unique_together = ['name', 'created_by']
+        verbose_name = 'Drug'
+        verbose_name_plural = 'Drugs'
 
     def __str__(self):
         return self.name
@@ -144,6 +150,8 @@ class Consult(models.Model):
 
     class Meta:
         unique_together = ['created_by', 'datetime']
+        verbose_name = 'Consult'
+        verbose_name_plural = 'Consults'
 
     def __str__(self):
         return str(self.patient) + "'s consult for " + str(self.datetime)
@@ -170,6 +178,10 @@ class MedicalExam(models.Model):
     date = models.DateField('date', blank=True, null=True, help_text='Date the exams were presented')
     type = models.CharField('type of exams', max_length=100, blank=False, null=True, help_text='Type of exams', choices=EXAMS_CHOICES)
     image = models.ImageField('exam', blank=True, null=True, help_text='Exam IMG', upload_to='appointments/exams')
+
+    class Meta:
+        verbose_name = 'Medical Exam'
+        verbose_name_plural = 'Medical Exams'
 
     def __str__(self):
         return self.type + ' ' + str(self.date)

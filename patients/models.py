@@ -59,6 +59,10 @@ class Patient(models.Model):
     residence = models.CharField(max_length=50, choices=RESIDENCE_CHOICES)
     created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Created By')
 
+    class Meta:
+        verbose_name = 'Patient'
+        verbose_name_plural = 'Patients'
+
     def age(self):
         today = timezone.localtime(timezone.now())
         age = today.date() - self.birthday
@@ -97,6 +101,8 @@ class InsuranceCarrier(models.Model):
 
     class Meta:
         unique_together = ['company', 'created_by']
+        verbose_name = 'Insurance Carrier'
+        verbose_name_plural = 'Insurance Carriers'
 
     def __str__(self):
         return self.company
@@ -131,6 +137,10 @@ class InsuranceInformation(models.Model):
     expiration_date = models.DateField('Expiration Date', help_text="Insurance's Expiration Date")
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Insurance Owner', related_name='insurance')
 
+    class Meta:
+        verbose_name = 'Insurance Information'
+        verbose_name_plural = "Patient's Insurance Data"
+
     def __str__(self):
         return str(self.patient) + "'s" + ' ' + 'Insurance Information'
 
@@ -153,6 +163,8 @@ class Allergy(models.Model):
 
     class Meta:
         unique_together = ['allergy_type', 'created_by']
+        verbose_name = 'Allergy'
+        verbose_name_plural = 'Allergies'
 
     def __str__(self):
         return self.allergy_type
@@ -182,8 +194,12 @@ class AllergyInformation(models.Model):
     about = models.TextField('About Allergy', blank=True, null=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient', related_name='allergy_information')
 
+    class Meta:
+        verbose_name = 'Allergy Information'
+        verbose_name_plural = "Patient's Allergic Information"
+
     def __str__(self):
-        return str(self.patient) + "'s" + ' ' + 'Allergies Information'
+        return str(self.patient) + "'s" + ' ' + 'Allergic Information'
 
     def save(self, *args, **kwargs):
         self.about = self.about.capitalize()
@@ -202,6 +218,10 @@ class Antecedent(models.Model):
     antecedent = models.CharField('Antecedent', max_length=150, blank=True, null=True, help_text='Antecedent Type')
     info = models.TextField('Antecedent Information', blank=True, null=True, help_text='About this antecedent')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Patient', related_name='antecedent')
+
+    class Meta:
+        verbose_name = 'Antecedent'
+        verbose_name_plural = 'Antecedents'
 
     def __str__(self):
         return str(self.patient) + "'s" + ' ' + 'Antecedents Information'

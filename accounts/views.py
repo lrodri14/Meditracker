@@ -90,11 +90,9 @@ class PasswordResetComplete(PasswordResetCompleteView):
 
 
 def signup(request):
-    context = {}
     data = {}
-    account_type = request.META.get('HTTP_TYPE')
+    account_type = request.GET.get('account_type')
     form = DoctorSignUpForm if account_type == 'doctor' else AssistantSignUpForm
-    context['form'] = form
     if request.method == 'POST':
         doctor = Group.objects.get(name='Doctor')
         assistant = Group.objects.get(name='Assistant')
@@ -111,7 +109,8 @@ def signup(request):
                 user.save()
                 user.groups.add(assistant)
         else:
-            context['form'] = form
+            data['error'] = True
+    context = {'form': form}
     data['html'] = render_to_string('accounts/signup.html', context, request)
     return JsonResponse(data)
 

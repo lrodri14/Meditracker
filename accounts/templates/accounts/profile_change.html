@@ -5,7 +5,7 @@
         <div>
             <div class="profile-general-information">
                 <div class="profile-picture-container profile-picture-container-modal">
-                    {% if user_profile.profile_pic.url == '' %}
+                    {% if not user_profile.profile_pic %}
                         {% if user_profile.gender == 'Femenine' %}
                             <img src="{% static 'accounts/avatars/female-avatar.png' %}" alt="" class="profile-modal-picture">
                         {% else %}

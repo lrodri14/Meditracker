@@ -57,7 +57,6 @@ i:not(.fa-camera){
     height: 30%;
     left: 0;
     top: 0;
-    background-color: rgba(0,0,0,0.3);
     overflow: hidden;
     padding: 0px;
 }
@@ -68,7 +67,6 @@ i:not(.fa-camera){
     width: 100%;
     left: 0;
     top: 0;
-    background-color: rgba(0,0,0,0.3);
     overflow: hidden;
 }
 
@@ -116,7 +114,6 @@ i:not(.fa-camera){
 
 /*Profile Picture*/
 .profile-picture-container{
-    background-color: white;
     position: absolute;
     z-index: 1;
     width: 200px;
@@ -180,6 +177,12 @@ i:not(.fa-camera){
 
 .biography{
     text-align: justify;
+}
+
+.not-available-biography{
+    position: absolute;
+    top: 50%;
+    left: 5%;
 }
 
 .biography h4{

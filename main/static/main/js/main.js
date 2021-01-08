@@ -39,8 +39,8 @@ async function loginAW(formData, url, method, csrfmiddlewaretoken){
     return data
 }
 
-async function signUpFormAW(url, type){
-    const result = await fetch(url, {headers: {'Type':type}})
+async function signUpFormAW(url){
+    const result = await fetch(url)
     const data = result.json()
     return data
 }
@@ -108,8 +108,8 @@ if (accountType){
     accountType.addEventListener('click', (e) => {
         if (e.target === doctorType || e.target === assistantType){
             let type = e.target.getAttribute('data-type')
-            let url = e.target.getAttribute('data-url')
-            signUpFormAW(url, type)
+            let url = e.target.getAttribute('data-url') + '?account_type=' + type
+            signUpFormAW(url)
             .then(data => {
                 accountType.classList.remove('account-type-selector-show')
                 modal.classList.add('modal-show')
@@ -295,7 +295,7 @@ if (modal){
             let csrfmiddlewaretoken = document.querySelector('input[type=hidden]').value
             signUpAW(formData, url, method, csrfmiddlewaretoken)
             .then(data => {
-                if (data['html'] && data['error']){
+                if (data['error']){
                     modalContent.innerHTML = data['html']
                 }else{
                     modal.classList.remove('modal-show')

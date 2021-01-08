@@ -1,10 +1,10 @@
 {% load static %}
 <div class="background">
     <div class="background-container">
-        {% if user_profile.profile_pic.url == '' %}
+        {% if not user_profile.background_pic %}
             <i class="fas fa-camera" data-url="{% url 'accounts:profile_background_change' %}" data-type="background-pic"></i>
         {% else %}
-            <img src="{{user_profile.background_pic.url}}" alt="" class="background-picture">
+            <img src="{{ user_profile.background_pic.url }}" alt="" class="background-picture">
         {% endif %}
     </div>
     <div class="background-edit-modal">
@@ -12,7 +12,7 @@
     </div>
 </div>
 <div class="profile-picture-container">
-    {% if user_profile.profile_pic.url == '' %}
+    {% if not user_profile.profile_pic  %}
         {% if user_profile.gender == 'Femenine' %}
             <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="" class="profile-picture">
         {% else %}
@@ -29,7 +29,11 @@
     <div class="biography">
         <h4>@{{ user }}</h4>
         <h3>About Me</h3>
-        <p class="biography-content">{{ user_profile.bio }}</p>
+        {% if user_profile.bio %}
+            <p class="biography-content">{{ user_profile.bio }}</p>
+        {% else %}
+            <p class="not-available-biography">Not Available</p>
+        {% endif %}
     </div>
     <div class="activity-information">
         <p class="last-seen"><small>Last Seen - {{ user.last_login|date:"g:i a" }}</small></p>
@@ -42,7 +46,7 @@
         <div>
             <ul>
                 <li><h5>Name: {{ user.first_name }} {{ user.last_name }}</h5></li>
-                <li><h5>Contact: {% if user_profile.phone_number %}{{ user_profile.phone_number }}{% else %}Not available{% endif %}</h5></li>
+                <li><h5>Contact: {% if user_profile.phone_number %}{{ user_profile.phone_number }}{% else %}Not Available{% endif %}</h5></li>
                 <li><h5>Email: {{ user.email }}</h5></li>
             </ul>
         </div>
@@ -74,7 +78,7 @@
                     <h5>Location: {% if user_profile.location %}{{ user_profile.get_location_display }}{% else %}Not Available{% endif %}</h5>
                 </li>
                 <li>
-                    <h5>Address: {% if user_profile.address %}{{ user_profile.address }}{% else %}No Address available{% endif %}</h5>
+                    <h5>Address: {% if user_profile.address %}{{ user_profile.address }}{% else %}No Address Available{% endif %}</h5>
                 </li>
             </ul>
         </div>
