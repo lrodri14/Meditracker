@@ -8,6 +8,7 @@
 <audio src="{% static 'home/js/sound-effect.mp3' %}"></audio>
 <div class="container">
     <h1>Menu</h1>
+    <input type="text" id="search-bar" autocomplete="off" data-url="{% url 'accounts:user_lookup' %}"><i class="fas fa-search"></i>
     <div class="wrapper-one">
         <div class="tile" onclick="window.location='{% url 'patients:patients' %}'">
             <i class="fas fa-user-injured"></i>
@@ -45,6 +46,10 @@
             <h3>Log Out</h3>
         </div>
     </div>
+</div>
+
+<div class="query-results">
+
 </div>
 
 <div class="modal">

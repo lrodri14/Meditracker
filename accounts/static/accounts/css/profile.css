@@ -22,8 +22,20 @@ i:not(.fa-camera){
     transition: 0.5s;
 }
 
+.fa-envelope{
+    cursor: pointer;
+    float:right;
+    margin-right: 10px;
+    transition: 0.5s;
+}
+
 .fa-edit-hover{
     color: #CBA415;
+    transition: 0.5s;
+}
+
+.fa-envelope-hover{
+    color: #00CCFF;
     transition: 0.5s;
 }
 

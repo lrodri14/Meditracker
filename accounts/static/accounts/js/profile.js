@@ -24,15 +24,23 @@ if (body){
 
     body.addEventListener('mouseover', (e) => {
         if (e.target.className === 'profile-picture' || e.target === editProfilePicture || e.target.classList.contains('profile-picture-edit-button')){
-            editProfilePicture.classList.add('edit-profile-picture-modal-show')
+            if (editProfilePicture){
+                editProfilePicture.classList.add('edit-profile-picture-modal-show')
+            }
         }
 
         if (e.target.classList.contains('background-picture') || e.target === editBackgroundPicture || e.target.classList.contains('background-edit-button')){
-            editBackgroundPicture.classList.add('background-edit-modal-show')
+            if (editBackgroundPicture){
+                editBackgroundPicture.classList.add('background-edit-modal-show')
+            }
         }
 
         if (e.target.classList.contains('fa-edit')){
             e.target.classList.add('fa-edit-hover')
+        }
+
+        if (e.target.classList.contains('fa-envelope')){
+            e.target.classList.add('fa-envelope-hover')
         }
 
         if (e.target.classList.contains('fa-camera')){
@@ -62,16 +70,25 @@ if (body){
 
     body.addEventListener('mouseout', (e) => {
         if (e.target.classList.contains('profile-picture') || e.target === editProfilePicture){
-            editProfilePicture.classList.remove('edit-profile-picture-modal-show')
+            if (editProfilePicture){
+                editProfilePicture.classList.remove('edit-profile-picture-modal-show')
+            }
         }
 
         if (e.target.classList.contains('background-picture') ||  e.target == editBackgroundPicture){
-            editBackgroundPicture.classList.remove('background-edit-modal-show')
+            if (editBackgroundPicture){
+                editBackgroundPicture.classList.remove('background-edit-modal-show')
+            }
         }
 
         if (e.target.classList.contains('fa-edit')){
             e.target.classList.remove('fa-edit-hover')
         }
+
+        if (e.target.classList.contains('fa-envelope')){
+            e.target.classList.remove('fa-envelope-hover')
+        }
+
 
         if (e.target.classList.contains('fa-camera')){
             e.target.classList.remove('fa-camera-hover')

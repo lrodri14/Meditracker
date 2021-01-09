@@ -16,6 +16,7 @@
     #25BB41;
     #CBA415;
     rgba(0,0,0,0)
+    rgba(0,0,0,0.3)
     #00E083;
     #EAC234;
     #D73533;
@@ -37,7 +38,8 @@
     Forms: #5A7FAF;
     Icons: #FFFFFF;
     Icons Hover: #00CCFF;
-
+    Search Bar: #496897;
+    Query Results: #496897;
 
     Main Forms
     ----------
@@ -141,6 +143,10 @@ body{
 
 ::-webkit-scrollbar-thumb {
     background: #C7E8F3;
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0,0,0,0);
 }
 
 /*Icons*/

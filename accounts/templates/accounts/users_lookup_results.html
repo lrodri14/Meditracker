@@ -1,0 +1,24 @@
+{% load static %}
+{% if users %}
+    <table>
+        {% for u in users %}
+            <tr onclick="window.location='{% url 'accounts:profile' u.pk %}'">
+                {% if u.profile.profile_pic %}
+                    <td><img src="{{ u.profile.profile_pic.url }}" alt=""></td>
+                {% else %}
+                    {% if u.profile.gender == 'Femenine' %}
+                        <td><img src="{% static 'accounts/avatars/female-avatar.png' %}" alt=""></td>
+                    {% else %}
+                        <td><img src="{% static 'accounts/avatars/male-avatar.png' %}" alt=""></td>
+                    {% endif %}
+                {% endif %}
+                <td>{{ u.first_name }} {{ u.last_name }}</td>
+                <td>{{ u.get_speciality_display }}</td>
+                <td>{{ u.profile.get_origin_display }}</td>
+                <td>{{ u }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p class="no-results">No results found</p>
+{% endif %}

@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -7,6 +8,8 @@ from .forms import DoctorSignUpForm, AssistantSignUpForm, ProfileForm, ProfilePi
 from django.contrib.auth.models import Group
 from .models import UsersProfile
 from utilities.accounts_utilities import set_mailing_credentials
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # Create your views here.
 
@@ -115,61 +118,70 @@ def signup(request):
     return JsonResponse(data)
 
 
-def profile(request):
-    user_profile = get_object_or_404(UsersProfile, user=request.user)
-    context = {'user_profile': user_profile}
+def profile(request, pk=None):
+    user = User.objects.get(username=request.user) if not pk else User.objects.get(pk=pk)
+    context = {'user': user, 'authenticated_user': request.user}
     return render(request, 'accounts/profile.html', context)
 
 
 def profile_picture_change(request):
-    user_profile = get_object_or_404(UsersProfile, user=request.user)
-    form = ProfilePictureForm(instance=user_profile)
+    form = ProfilePictureForm(instance=request.user.profile)
     template = 'accounts/profile_picture_change.html'
     context = {}
     data = {}
     if request.method == 'POST':
-        form = ProfilePictureForm(request.POST, request.FILES, instance=user_profile)
+        form = ProfilePictureForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            context['user_profile'] = user_profile
+            context['user'] = request.user
+            context['authenticated_user'] = request.user
             data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
     context['form'] = form
-    context['user_profile'] = user_profile
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 
 
 def profile_background_change(request):
-    user_profile = get_object_or_404(UsersProfile, user=request.user)
-    form = ProfileBackgroundForm(instance=user_profile)
+    form = ProfileBackgroundForm(instance=request.user.profile)
     template = 'accounts/profile_background_change.html'
     context = {}
     data = {}
     if request.method == 'POST':
-        form = ProfileBackgroundForm(request.POST, request.FILES, instance=user_profile)
+        form = ProfileBackgroundForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            context['user_profile'] = user_profile
+            context['user'] = request.user
+            context['authenticated_user'] = request.user
             data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
     context['form'] = form
-    context['user_profile'] = user_profile
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 
 
 def profile_change(request):
-    user_profile = get_object_or_404(UsersProfile, user=request.user)
-    form = ProfileForm(instance=user_profile)
+    form = ProfileForm(instance=request.user.profile)
     template = 'accounts/profile_change.html'
     context = {}
     data = {}
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
+        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            context['user_profile'] = user_profile
+            context['user'] = request.user
+            context['authenticated_user'] = request.user
             data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
     context['form'] = form
-    context['user_profile'] = user_profile
+    context['user_profile'] = request.user.profile
     data['html'] = render_to_string(template, context, request)
+    return JsonResponse(data)
+
+
+def user_lookup(request):
+    query = request.GET.get('query')
+    close_users = User.objects.filter(Q(username__startswith=query) | Q(first_name__startswith=query) | Q(last_name__startswith=query)).order_by('first_name')
+    # other_users = User.objects.filter(Q(username__icontains=query) | Q(first_name__icontains=query) | Q(last_name__icontains=query)).order_by('first_name')
+    users = close_users
+    template = 'accounts/users_lookup_results.html'
+    context = {'users': users}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
