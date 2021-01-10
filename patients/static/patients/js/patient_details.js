@@ -15,14 +15,13 @@ let exams = document.querySelector('.exams')
 let charges = document.querySelector('.charges')
 let title = document.querySelector('#title')
 
-// Back Up Content
-let appointmentsBackUp = document.querySelector('.appointments').innerHTML
-let examsBackUp = document.querySelector('.exams').innerHTML
-let chargesBackUp = document.querySelector('.charges').innerHTML
-
 // Image Preview
 let previewImg = document.querySelector('.image-preview')
 let image = document.querySelector('.previewed-image')
+
+// Modal
+let modal = document.querySelector('.modal')
+let modalContent = document.querySelector('.modal-content')
 
 // Title
 let titleOriginalContent = title.innerText
@@ -128,6 +127,27 @@ async function requestPageAW(url){
     return data
 }
 
+async function sendEmailFormAW(url){
+    /*This function is used to display the send email form
+      in our page, it takes one parameter, the 'url' for the "GET"
+      request. This function will return it's result in JSON Format.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+async function sendEmailAW(url, method, csrfmiddlewaretoken, formData){
+    /*Function used to send emails to any providers, this functions takes
+      three parameters, the 'url' for the "POST" request, the 'method' which
+      we collect from the form's method attribute, the 'csrfmiddlewaretoken'
+      parameter, which receives the value from the csrfmiddlewaretoken attribute
+      in every form's hidden input. This function will return the
+      result in JSON Format.*/
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken': csrfmiddlewaretoken}, body:formData})
+    const data = result.json()
+    return data
+}
+
 // ##################################################### Event Listeners ###############################################
 
 // Body Event Listeners
@@ -154,6 +174,12 @@ body.addEventListener('mouseover', (e) => {
         let tab = e.target.classList.contains('info-tab') ? e.target : e.target.parentNode
         tab.classList.add('tab-hover')
     }
+
+    /*This event will be fired every time a hover occurs over the fa-envelope icon and the fa-envelope-hover class will be added*/
+    if (e.target.classList.contains('fa-envelope')){
+        e.target.classList.add('fa-envelope-hover')
+    }
+
 
     /*This event will be fired every time a hover occurs over the fa-filter icon and the fa-filter-hover class will be added*/
     if (e.target.classList.contains('fa-filter')){
@@ -195,6 +221,11 @@ body.addEventListener('mouseout', (e) => {
   if (e.target.classList.contains('info-tab') || e.target.parentNode.classList.contains('info-tab')){
         let tab = e.target.classList.contains('info-tab') ? e.target : e.target.parentNode
         tab.classList.remove('tab-hover')
+    }
+
+    /*This event will be fired every time a mouseout occurs off the fa-envelope icon and the fa-envelope-hover class will be removed*/
+    if (e.target.classList.contains('fa-envelope')){
+        e.target.classList.remove('fa-envelope-hover')
     }
 
     /*This event will be fired every time a mouseout occurs off the fa-filter icon and the fa-filter-hover class will be removed*/
@@ -309,25 +340,14 @@ body.addEventListener('click', (e) => {
 
     }
 
-    /* These event listeners are used to reload the backedUpData and display it in the container, the backed up data
-       display, will depend on the icon clicked and the classes it contains in it's classlist.*/
-    if (e.target.classList.contains('fa-sync-alt') && e.target.classList.contains('appointments-reload')){
-
-        appointments.innerHTML = appointmentsBackUp
-        document.querySelector('.appointments-filter').classList.remove('fa-filter-hover')
-
-    } else if (e.target.classList.contains('fa-sync-alt') && e.target.classList.contains('exams-reload')){
-
-        exams.innerHTML = examsBackUp
-        document.querySelector('.exams-filter').classList.remove('fa-filter-hover')
-
-    }else if (e.target.classList.contains('fa-sync-alt') && e.target.classList.contains('charges-reload')){
-
-        charges.innerHTML = chargesBackUp
-        document.querySelector('.charges-filter').classList.remove('fa-filter-hover')
-
+    if (e.target.classList.contains('fa-envelope')){
+        let url = e.target.getAttribute('data-url')
+        sendEmailFormAW(url).
+        then(data => {
+            modalContent.innerHTML = data['html']
+            modal.classList.add('modal-show')
+        })
     }
-
 
 })
 
@@ -406,6 +426,40 @@ if (exams){
         }
     })
 }
+
+
+// Modal Event Listeners
+
+if (modal){
+
+    modal.addEventListener('click', (e) => {
+
+        if (e.target === modal || e.target.textContent === 'Continue'){
+            modal.classList.remove('modal-show')
+        }
+
+    })
+
+
+    modal.addEventListener('submit', (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        if (e.target.nodeName === 'FORM'){
+            let form = e.target
+            let url = form.action
+            let method = form.method
+            let csrfmiddlewaretoken = document.querySelector('.modal [name=csrfmiddlewaretoken]').value
+            let formData = new FormData(form)
+            sendEmailAW(url, method, csrfmiddlewaretoken, formData)
+            .then(data => {
+                modalContent.innerHTML = data['html']
+            })
+        }
+
+    })
+
+}
+
 
 /* This event listener will be fired every time the page is loaded and will set the window scroll 0 to the left. */
 window.addEventListener('load', (e) => {

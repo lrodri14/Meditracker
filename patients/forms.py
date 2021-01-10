@@ -185,3 +185,14 @@ class AntecedentForm(forms.ModelForm):
 AntecedentFormset = modelformset_factory(model=Antecedent, form=AntecedentForm, can_delete=True)
 AntecedentUpdateFormset = inlineformset_factory(parent_model=Patient, model=Antecedent, form=AntecedentForm, can_delete=True, extra=1)
 
+
+class EmailForm(forms.Form):
+    """
+        DOCSTRING:
+        This EmailForm is used to retrieve the content of the email
+        that will be sent to any of the providers chosen by the user.
+        Content such as the: Subject And Email Body
+    """
+
+    subject = forms.CharField(widget=forms.TextInput)
+    body = forms.CharField(widget=forms.Textarea(attrs={"cols": 100}))

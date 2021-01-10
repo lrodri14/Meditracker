@@ -6,18 +6,21 @@
 # Imports
 
 import datetime
+
 from .forms import *
 from .models import *
 from django.db.models import Q
 from django.http import JsonResponse
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
+from accounts.models import MailingCredential
 from django.template.loader import render_to_string
 from appointments.models import Consult, MedicalExam
 from appointments.forms import ConsultDetailsFilterForm
-
-from utilities.patients_utilities import check_charges
+from utilities.accounts_utilities import open_connection
+from smtplib import SMTPSenderRefused, SMTPAuthenticationError, SMTPNotSupportedError
 
 # Create your views here.
 
@@ -276,3 +279,31 @@ def update_patient(request, pk):
     return render(request, template, context={'patient_form': patient_form, 'allergies_form': allergies_form,
                                                                             'insurance_form': insurance_form,
                                                                             'antecedents_form': antecedents_form})
+
+
+def send_email(request, pk):
+    template = 'patients/email_form.html'
+    patient = Patient.objects.get(pk=pk)
+    context = {'form': EmailForm, 'receiver': patient, 'today': timezone.localdate()}
+    data = {'html': render_to_string(template, context, request)}
+    if request.POST:
+        mailing_credentials = MailingCredential.objects.get(user=request.user)
+        connection = open_connection(mailing_credentials)
+        sender = mailing_credentials.email
+        receiver = patient.email
+        subject = request.POST.get('subject')
+        message = request.POST.get('body')
+        try:
+            send_mail(subject, message, sender, (receiver,), connection=connection, fail_silently=False)
+            context = {'success': 'Email has been sent successfully'}
+        except ConnectionRefusedError:
+            context = {'error': 'SMTP Server not configured, set up your credentials in settings'}
+        except SMTPSenderRefused:
+            context = {'error': 'Incomplete credentials in SMTP Server settings'}
+        except SMTPAuthenticationError:
+            context = {'error': 'Incorrect credentials in SMTP Server Settings'}
+        except SMTPNotSupportedError:
+            context = {'error': 'TLS Protocol must be active to open connection'}
+        data = {'html': render_to_string(template, context, request)}
+        return JsonResponse(data)
+    return JsonResponse(data)

@@ -15,4 +15,6 @@ urlpatterns = [
     path('filter_patient_details', filter_patient_details, name='filter_patient_details'),
     path('update/<int:pk>', update_patient, name='update_patient'),
     path('delete/<int:pk>', delete_patient, name='delete_patient'),
+    path('send_email', send_email, name='send_email'),
+    path('send_email/<int:pk>', send_email, name='send_email')
 ]

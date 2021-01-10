@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{% static 'patients/css/patient_details.css' %}">
 
 <h2 id="title">{{ patient.first_names }} {{ patient.last_names }}</h2>
+{% if patient.email %}<i class="fas fa-envelope" data-url="{% url 'patients:send_email' patient.pk %}"></i>{% endif %}
 
 <!--Info Navigation, this is used to select what information the user wants to see.-->
 <div class="info">
@@ -171,6 +172,14 @@
         {% endif %}
     </div>
 </div>
+
+<!-- Email Sending Modal -->
+<div class="modal">
+    <div class="modal-content">
+
+    </div>
+</div>
+
 <!--Modal used for image previewing.-->
 <div class="image-preview">
     <img class="previewed-image" src="" alt="">

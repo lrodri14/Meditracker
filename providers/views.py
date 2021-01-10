@@ -363,7 +363,7 @@ def delete_visitor(request, pk):
 def send_email(request, pk):
     template = 'providers/email_form.html'
     provider = Provider.objects.get(pk=pk)
-    context = {'form': EmailForm, 'sender': request.user.email, 'receiver': provider, 'today': timezone.localdate()}
+    context = {'form': EmailForm, 'receiver': provider, 'today': timezone.localdate()}
     data = {'html': render_to_string(template, context, request)}
     if request.POST:
         mailing_credentials = MailingCredential.objects.get(user=request.user)
