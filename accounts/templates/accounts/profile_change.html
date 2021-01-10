@@ -5,14 +5,14 @@
         <div>
             <div class="profile-general-information">
                 <div class="profile-picture-container profile-picture-container-modal">
-                    {% if not user_profile.profile_pic %}
-                        {% if user_profile.gender == 'Femenine' %}
+                    {% if not profile.profile_pic %}
+                        {% if profile.gender == 'Femenine' %}
                             <img src="{% static 'accounts/avatars/female-avatar.png' %}" alt="" class="profile-modal-picture">
                         {% else %}
                             <img src="{% static 'accounts/avatars/male-avatar.png' %}" alt="" class="profile-modal-picture">
                         {% endif %}
                     {% else %}
-                        <img src="{{ MEDIA_URL }}{{ user_profile.profile_pic }}" alt="" class="profile-modal-picture">
+                        <img src="{{ MEDIA_URL }}{{ profile.profile_pic }}" alt="" class="profile-modal-picture">
                     {% endif %}
                 </div>
                 <p>@{{ user }}</p>

@@ -1,68 +1,80 @@
 {% load static %}
+
+
 <div class="background">
     <div class="background-container">
-        {% if not user.profile.background_pic %}
-            {% if user == authenticated_user %}
+        {% if not profile.background_pic %}
+            {% if user.profile == profile %}
                 <i class="fas fa-camera" data-url="{% url 'accounts:profile_background_change' %}" data-type="background-pic"></i>
             {% endif %}
         {% else %}
-            <img src="{{ user.profile.background_pic.url }}" alt="" class="background-picture">
+            <img src="{{ profile.background_pic.url }}" alt="" class="background-picture">
         {% endif %}
     </div>
-    {% if user == authenticated_user %}
+    {% if user.profile == profile %}
         <div class="background-edit-modal">
             <i class="fas fa-pen background-edit-button" data-url="{% url 'accounts:profile_background_change' %}"></i>
         </div>
     {% endif %}
 </div>
+
+
 <div class="profile-picture-container">
-    {% if not user.profile.profile_pic  %}
-        {% if user.profile.gender == 'Femenine' %}
+    {% if not profile.profile_pic  %}
+        {% if profile.gender == 'Femenine' %}
             <img src="{%static 'accounts/avatars/female-avatar.png'%}" alt="" class="profile-picture">
         {% else %}
             <img src="{%static 'accounts/avatars/male-avatar.png'%}" alt="" class="profile-picture">
         {% endif %}
     {% else %}
-        <img src="{{ MEDIA_URL }}{{ user.profile.profile_pic }}" alt="" class="profile-picture">
+        <img src="{{ MEDIA_URL }}{{ profile.profile_pic }}" alt="" class="profile-picture">
     {% endif %}
-    {% if user == authenticated_user %}
+    {% if user.profile == profile %}
         <div class="edit-profile-picture-modal">
             <i class="fas fa-pen profile-picture-edit-button" data-url="{% url 'accounts:profile_picture_change' %}"></i>
         </div>
     {% endif %}
 </div>
+
+
 <div class="information">
+
+
     <div class="biography">
-        <h4>@{{ user }}</h4>
+        <h4>@{% if user.profile == profile %}{{ user }}{% else %}{{ profile.user }}{% endif %}</h4>
         <h3>About Me</h3>
-        {% if user.profile.bio %}
-            <p class="biography-content">{{ user.profile.bio }}</p>
+        {% if profile.bio %}
+            <p class="biography-content">{{ profile.bio }}</p>
         {% else %}
             <p class="not-available-biography">Not Available</p>
         {% endif %}
     </div>
+
+
     <div class="activity-information">
-        {% if user != authenticated_user %}
+        {% if user.profile != profile %}
             <p class="last-seen"><small>Last Seen - {{ user.last_login|date:"g:i a" }}</small></p>
         {% endif %}
         <p class="member-since"><small>Member Since - {{ user.date_joined|date }}</small></p>
     </div>
+
+
     <div class="personal-information">
-        <h4>Personal Information {% if user == authenticated_user %}<i class="fas fa-edit" data-url="{% url 'accounts:profile_change' %}" data-type="profile"></i> {% else %} <i class="fas fa-envelope"></i>{% endif %}</h4>
+        <h4>Personal Information {% if user.profile == profile %}<i class="fas fa-edit" data-url="{% url 'accounts:profile_change' %}" data-type="profile"></i> {% else %} <i class="fas fa-envelope"></i>{% endif %}</h4>
         <hr>
         <div class="personal">
         <div>
             <ul>
-                <li><h5>Name: {{ user.first_name }} {{ user.last_name }}</h5></li>
-                <li><h5>Contact: {% if user.profile.phone_number %}{{ user.profile.phone_number }}{% else %}Not Available{% endif %}</h5></li>
-                <li><h5>Email: {{ user.email }}</h5></li>
+                <li><h5>Name: {{ profile.user.first_name }} {{ profile.user.last_name }}</h5></li>
+                <li><h5>Contact: {% if profile.phone_number %}{{ profile.phone_number }}{% else %}Not Available{% endif %}</h5></li>
+                <li><h5>Email: {{ profile.user.email }}</h5></li>
             </ul>
         </div>
         <div>
             <ul>
-                <li><h5>Birth Date: {% if user.profile.birth_date %}{{ user.profile.birth_date }}{% else %}Not Available{% endif %}</h5></li>
-                <li><h5>Gender: {% if user.profile.gender %}{{ user.profile.gender }}{% else %}Not Available{% endif %}</h5></li>
-                <li><h5>Origin: {% if user.profile.origin %}{{ user.profile.get_origin_display }}{% else %}Not Available{% endif %}</h5></li>
+                <li><h5>Birth Date: {% if profile.birth_date %}{{ profile.birth_date }}{% else %}Not Available{% endif %}</h5></li>
+                <li><h5>Gender: {% if profile.gender %}{{ profile.gender }}{% else %}Not Available{% endif %}</h5></li>
+                <li><h5>Origin: {% if profile.origin %}{{ profile.get_origin_display }}{% else %}Not Available{% endif %}</h5></li>
             </ul>
         </div>
         </div>
@@ -71,10 +83,10 @@
         <div class="medical">
             <ul>
                 <li>
-                    <h5>Roll: {{ user.roll }}</h5>
+                    <h5>Roll: {{ profile.user.roll }}</h5>
                 </li>
                 <li>
-                    <h5>Speciality: {{ user.get_speciality_display }}</h5>
+                    <h5>Speciality: {{ profile.user.get_speciality_display }}</h5>
                 </li>
             </ul>
         </div>
@@ -83,12 +95,14 @@
         <div class="addressing">
             <ul>
                 <li>
-                    <h5>Location: {% if user.profile.location %}{{ user.profile.get_location_display }}{% else %}Not Available{% endif %}</h5>
+                    <h5>Location: {% if profile.location %}{{ profile.get_location_display }}{% else %}Not Available{% endif %}</h5>
                 </li>
                 <li>
-                    <h5>Address: {% if user.profile.address %}{{ user.profile.address }}{% else %}No Address Available{% endif %}</h5>
+                    <h5>Address: {% if profile.address %}{{ profile.address }}{% else %}No Address Available{% endif %}</h5>
                 </li>
             </ul>
         </div>
     </div>
+
+
 </div>

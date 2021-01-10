@@ -119,60 +119,53 @@ def signup(request):
 
 
 def profile(request, pk=None):
-    user = User.objects.get(username=request.user) if not pk else User.objects.get(pk=pk)
-    context = {'user': user, 'authenticated_user': request.user}
+    user_profile = UsersProfile.objects.get(user__pk=pk) if pk else request.user.profile
+    context = {'profile': user_profile}
     return render(request, 'accounts/profile.html', context)
 
 
 def profile_picture_change(request):
     form = ProfilePictureForm(instance=request.user.profile)
     template = 'accounts/profile_picture_change.html'
-    context = {}
-    data = {}
     if request.method == 'POST':
         form = ProfilePictureForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            context['user'] = request.user
-            context['authenticated_user'] = request.user
-            data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
-    context['form'] = form
-    data['html'] = render_to_string(template, context, request)
+            context = {'profile': request.user.profile}
+            data = {'success': render_to_string('accounts/partial_profile.html', context=context, request=request)}
+            return JsonResponse(data)
+    context = {'form': form}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
 def profile_background_change(request):
     form = ProfileBackgroundForm(instance=request.user.profile)
     template = 'accounts/profile_background_change.html'
-    context = {}
-    data = {}
     if request.method == 'POST':
         form = ProfileBackgroundForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            context['user'] = request.user
-            context['authenticated_user'] = request.user
-            data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
-    context['form'] = form
-    data['html'] = render_to_string(template, context, request)
+            context = {'profile': request.user.profile}
+            data = {'success': render_to_string('accounts/partial_profile.html', context=context, request=request)}
+            return JsonResponse(data)
+    context = {'form': form}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
 def profile_change(request):
     form = ProfileForm(instance=request.user.profile)
     template = 'accounts/profile_change.html'
-    context = {}
-    data = {}
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            context['user'] = request.user
-            context['authenticated_user'] = request.user
-            data['success'] = render_to_string('accounts/partial_profile.html', context=context, request=request)
-    context['form'] = form
-    context['user_profile'] = request.user.profile
-    data['html'] = render_to_string(template, context, request)
+            context = {'profile': request.user.profile}
+            data = {'success': render_to_string('accounts/partial_profile.html', context=context, request=request)}
+            return JsonResponse(data)
+    context = {'form': form, 'profile': request.user.profile}
+    data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
 
