@@ -73,6 +73,7 @@ class UsersProfile(models.Model):
     location = models.CharField('Location', max_length=100, blank=False, null=True, choices=LOCATION_CHOICES, help_text='Provide your location')
     address = models.TextField('Address', max_length=200, blank=False, null=True, help_text='Provide your exact address')
     tzone = models.CharField('Timezone', max_length=40, blank=False, null=True, help_text='Provide your timezone')
+    contacts = models.ManyToManyField(to=CustomUser, blank=True, help_text='Contacts List')
 
     class Meta:
         ordering = ['user']

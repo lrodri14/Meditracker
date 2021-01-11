@@ -11,6 +11,12 @@
     height: 98vh;
 }
 
+.fa-users{
+    position: absolute;
+    top: 1.5%;
+    right: 1%;
+}
+
 .fa-long-arrow-alt-left{
     float: left;
 }

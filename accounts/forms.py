@@ -59,7 +59,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = UsersProfile
-        exclude = ('user', 'profile_pic', 'background_pic')
+        exclude = ('user', 'profile_pic', 'background_pic', 'contacts')
         widgets = {
             'address': forms.widgets.Textarea(attrs={'rows': 1, 'wrap': 'off'})
         }

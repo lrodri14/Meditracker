@@ -1,21 +1,21 @@
 {% load static %}
 {% if users %}
     <table>
-        {% for u in users %}
-            <tr onclick="window.location='{% url 'accounts:profile' u.pk %}'">
-                {% if u.profile.profile_pic %}
-                    <td><img src="{{ u.profile.profile_pic.url }}" alt=""></td>
+        {% for user in users %}
+            <tr onclick="window.location='{% url 'accounts:profile' user.pk %}'">
+                {% if user.profile.profile_pic %}
+                    <td><img src="{{ user.profile.profile_pic.url }}" alt=""></td>
                 {% else %}
-                    {% if u.profile.gender == 'Femenine' %}
+                    {% if user.profile.gender == 'Femenine' %}
                         <td><img src="{% static 'accounts/avatars/female-avatar.png' %}" alt=""></td>
                     {% else %}
                         <td><img src="{% static 'accounts/avatars/male-avatar.png' %}" alt=""></td>
                     {% endif %}
                 {% endif %}
-                <td>{{ u.first_name }} {{ u.last_name }}</td>
-                <td>{{ u.get_speciality_display }}</td>
-                <td>{{ u.profile.get_origin_display }}</td>
-                <td>{{ u }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.get_speciality_display }}</td>
+                <td>{{ user.profile.get_origin_display }}</td>
+                <td>{{ user }}</td>
             </tr>
         {% endfor %}
     </table>

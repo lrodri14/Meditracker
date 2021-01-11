@@ -212,7 +212,6 @@ tr:nth-child(even){
 .show-modal{
     visibility: visible;
     opacity: 1;
-    position: fixed;
     transition: all 0.3s;
 }
 

@@ -138,6 +138,7 @@ body{
     font-family: 'Nunito', sans-serif;
     background-color: #496897;
     color: #FFFFFF;
+    overflow: hidden;
 }
 
 /*Scrollbar*/
@@ -211,7 +212,7 @@ a {
 
 /* Navigator */
 
-.navigator{
+.global-navigator{
     background-color: #496897;
     text-align: justify;
     position: absolute;
@@ -224,28 +225,28 @@ a {
     transition: all 0.5s;
 }
 
-.navigator-show{
+.global-navigator-show{
     margin-left: 0%;
     transition: margin-left 0.5s;
 }
 
-#close-navigator{
+.close-global-navigator{
     float: right;
     margin-right: 10px;
     transition: 0.5s;
 }
 
-#close-navigator:hover{
+.close-global-navigator:hover{
     color: #e85858;
     cursor:pointer;
     transition: 0.5s;
 }
 
-.navigator-title{
+.global-navigator-title{
     padding: 5px;
 }
 
-.navigator-tabs{
+.global-navigator-tab{
     border-top: 1px solid #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
     width: 100%;
@@ -254,14 +255,14 @@ a {
     transition: 0.5s;
 }
 
-.navigator-tabs:hover{
+.global-navigator-tab-hover{
     background-color: #FFFFFF;
     cursor: pointer;
     color: #496897;
     transition: 0.5s;
 }
 
-.navigator-tabs p i{
+.global-navigator-tab i{
     padding: 10px;
     font-size: 25px;
     float: left;
@@ -275,24 +276,27 @@ a {
 
 /* Social Content */
 
-.social-content{
+.social-section{
     position: fixed;
     top: 0;
     right: 0;
     width: 30%;
     height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
     margin-right: -30%;
     background-color: #496897;
     z-index: 1;
     transition: 0.5s;
 }
 
-.social-content-show{
+.social-section-show{
     margin-right: 0%;
     transition: margin-right 0.5s;
 }
 
-#close-social-content{
+.close-social-section{
     position: absolute;
     top: 1.5%;
     left: 5%;
@@ -300,13 +304,14 @@ a {
     transition: 0.5s;
 }
 
-#close-social-content:hover{
+.close-social-section:hover{
     color: #e85858;
     cursor:pointer;
     transition: 0.5s;
 }
 
-#social-content-search{
+.social-section-search{
+    text-align: center;
     background-color: #496897;
     border: none;
     border-bottom: 1px solid #C7E8F3;
@@ -317,15 +322,15 @@ a {
     color: #FFFFFF;
 }
 
-#social-content-search::placeholder{
+.social-section-search::placeholder{
     color: #C7E8F3;
 }
 
-#social-content-search:focus{
+.social-section-search:focus{
     outline: none;
 }
 
-.social-content-tab{
+.social-section-tab{
     display: inline-block;
     border-bottom: 1px solid #C7E8F3;
     width: 33.3%;
@@ -334,19 +339,79 @@ a {
     transition: 0.5s;
 }
 
-.social-content-tab:hover{
+.social-section-tab-hover{
     background-color: #FFFFFF;
     color: #496897;
     cursor: pointer;
     transition: 0.5s;
 }
 
-.social-content-tab-active{
+.social-section-tab-active{
     background-color: #FFFFFF;
     color: #496897;
     cursor: pointer;
     transition: 0.5s;
 }
+
+.no-contacts{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.social-section img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.delete-contact{
+    font-size: 18px;
+}
+
+.delete-contact-hover{
+    color: #A31621;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.social-section table{
+    border-collapse: collapse;
+    margin: auto;
+    width: 100%;
+}
+
+.social-section tr{
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.social-section tr th{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.social-section tr td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.social-section tr:nth-child(odd){
+    background-color: #6082AD;
+}
+
+.social-section tr:nth-child(even){
+    background-color: #6E8DB4;
+}
+
 
 /* Loader */
 

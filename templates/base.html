@@ -17,26 +17,28 @@
 
     <body>
 
-        {% block return %}<a href=""><i class="fas fa-long-arrow-alt-left" ></i></a>{% endblock %}{% block home %}<i class="fas fa-bars"></i>{% endblock %}{% block social %} <i class="fas fa-users"></i> {% endblock %}
+        {% block return %}<a href=""><i class="fas fa-long-arrow-alt-left" ></i></a>{% endblock %}{% block home %}<i class="fas fa-bars"></i>{% endblock %}{% block social %} <i class="fas fa-users" data-url="{% url 'accounts:contacts' %}"></i> {% endblock %}
 
-        <div class="navigator">
-            <h2 class="navigator-title">Menu <span id="close-navigator"><i class="fas fa-times"></i></span></h2>
-            <div class="navigator-tabs" onclick="window.location='{% url 'home:home' %}'"><p><i class="fas fa-home"></i></p></div>
-            <div class="navigator-tabs" onclick="window.location='{% url 'patients:patients' %}'"><p><i class="fas fa-user-injured"></i></p></div>
-            <div class="navigator-tabs" onclick="window.location='{% url 'appointments:appointments'%}'"><p><i class="far fa-calendar-check"></i></p></div>
-            <div class="navigator-tabs" onclick="window.location='{% url 'records:records' %}'"><p><i class="far fa-clipboard"></i></p></div>
-            <div class="navigator-tabs"><p><i class="fas fa-file-invoice"></i></p></div>
-            <div class="navigator-tabs" onclick="window.location='{% url 'providers:providers' %}'"><p><i class="fas fa-handshake"></i></p></div>
-            <div class="navigator-tabs" onclick="window.location='{% url 'settings:settings' %}'"><p><i class="fas fa-cog"></i></p></div>
-            <div class="navigator-tabs" onclick="window.location='{% url 'accounts:profile' %}'"><p><i class="fas fa-user"></i></p></div>
+        <!-- Navigator -->
+        <div class="global-navigator">
+            <!-- Tabs -->
+            <h2 class="global-navigator-title">Menu <span class="close-global-navigator"><i class="fas fa-times"></i></span></h2>
+            <div class="global-navigator-tab" onclick="window.location='{% url 'home:home' %}'"><p><i class="fas fa-home"></i></p></div>
+            <div class="global-navigator-tab" onclick="window.location='{% url 'patients:patients' %}'"><p><i class="fas fa-user-injured"></i></p></div>
+            <div class="global-navigator-tab" onclick="window.location='{% url 'appointments:appointments'%}'"><p><i class="fas fa-calendar-check"></i></p></div>
+            <div class="global-navigator-tab" onclick="window.location='{% url 'records:records' %}'"><p><i class="fas fa-clipboard"></i></p></div>
+            <div class="global-navigator-tab"><p><i class="fas fa-file-invoice"></i></p></div>
+            <div class="global-navigator-tab" onclick="window.location='{% url 'providers:providers' %}'"><p><i class="fas fa-handshake"></i></p></div>
+            <div class="global-navigator-tab" onclick="window.location='{% url 'settings:settings' %}'"><p><i class="fas fa-cog"></i></p></div>
+            <div class="global-navigator-tab" onclick="window.location='{% url 'accounts:profile' %}'"><p><i class="fas fa-user"></i></p></div>
             <p id="watermark">Telematica</p>
         </div>
 
-        <div class="social-content">
-            <div><i id="close-social-content" class="fas fa-times"></i><input id="social-content-search" type="text" placeholder="Search..."></div>
-            <div class="social-content-navigator">
-                <div class="social-content-tab">Contacts</div><div class="social-content-tab">Messages</div><div class="social-content-tab">Requests</div>
-            </div>
+        <!-- Social Content -->
+        <div class="social-section">
+            <div><i class="fas fa-times close-social-section"></i><input class="social-section-search" type="text" placeholder="Search..."></div>
+            <div class="social-section-navigator"><div class="social-section-tab social-section-tab-active" data-url="{% url 'accounts:contacts' %}">Contacts</div><div class="social-section-tab">Messages</div><div class="social-section-tab">Requests</div></div>
+            <div class="social-section-data"></div>
         </div>
 
         {% block body_block %}

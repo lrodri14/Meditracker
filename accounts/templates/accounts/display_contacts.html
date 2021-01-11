@@ -1,0 +1,23 @@
+{% load static %}
+
+{% if contacts %}
+    <table>
+        {% for c in contacts %}
+            <tr onclick="window.location='{% url 'accounts:profile' c.user.pk %}'">
+                {% if not c.profile_pic %}
+                    {% if c.gender == 'Masculine' %}
+                        <td><img src="{% static 'accounts/avatars/male-avatar.png' %}" alt=""></td>
+                    {% else %}
+                        <td><img src="{% static 'accounts/avatars/female-avatar.png' %}" alt=""></td>
+                    {% endif %}
+                {% else %}
+                    <td><img src="{{ MEDIA_URL }}{{ c.profile_pic }}" alt=""></td>
+                {% endif %}
+                <td>{{ c.user.first_name }} {{ c.user.last_name }}</td>
+                <td><i class="fas fa-trash delete-contact"></i></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p class="no-contacts">No Contacts</p>
+{% endif %}

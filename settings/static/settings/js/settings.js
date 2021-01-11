@@ -361,12 +361,11 @@ if (wrapper){
             })
         }
 
-        if (e.target.nodeName === 'BUTTON' && !e.target.type === 'submit'){
+        if (e.target.nodeName === 'BUTTON' && e.target.type !== 'submit'){
             /* This event will be fired every time the target is a button, this event will present any form
             if needed in the modal, the form that will be presented in the modal based on the
             'data-url' attribute in the target.*/
             let url = e.target.getAttribute('data-url')
-            modal.classList.add('show-modal')
             showForm(url)
             .then(data => {
                 modalContent.innerHTML = data['html']

@@ -178,3 +178,13 @@ def user_lookup(request):
     context = {'users': users}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
+
+
+def contacts(request):
+    query = request.GET.get('query')
+    contacts_list = UsersProfile.objects.filter(Q(user__first_name__startswith=query) | Q(user__last_name__startswith=query), contacts__in=[request.user])
+    template = 'accounts/display_contacts.html'
+    context = {'contacts': contacts_list}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+

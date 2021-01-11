@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import Login, Logout, ChangePassword, ChangePasswordDone, PasswordReset, PasswordResetDone, \
     PasswordResetConfirm, PasswordResetComplete, signup, profile_change,profile_picture_change, \
-    profile_background_change, profile, user_lookup
+    profile_background_change, profile, user_lookup, contacts
 
 app_name = 'accounts'
 urlpatterns = [
@@ -19,5 +19,6 @@ urlpatterns = [
     path('profile_picture_change', profile_picture_change, name='profile_picture_change'),
     path('profile_background_change', profile_background_change, name='profile_background_change'),
     path('profile_change', profile_change, name='profile_change'),
-    path('user_lookup', user_lookup, name='user_lookup')
+    path('user_lookup', user_lookup, name='user_lookup'),
+    path('contacts', contacts, name='contacts')
 ]
