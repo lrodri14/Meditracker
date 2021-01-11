@@ -21,7 +21,6 @@ async function userLookupAW(url){
     return data
 }
 
-
 searchBar.addEventListener('input', (e) => {
     let url = e.target.getAttribute('data-url') + '?query=' + e.target.value
     if (e.target.value !== ''){

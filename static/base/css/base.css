@@ -21,6 +21,7 @@
     #EAC234;
     #D73533;
     #95B6C6;
+    #E85858;
 
 
     Base
@@ -111,6 +112,13 @@
     Reminders: #FFFFFF;
 
 
+    Navigator
+    _________
+    Navigator Background: #496897;
+    Navigator Text: #FFFFFF;
+    Navigator Tile Hover: #FFFFFF;
+    Navigator Text Hover: #3C567C;
+    Navigator Exit: #E85858;
 
     # Titles
     Titles: H2
@@ -181,33 +189,63 @@ body{
     display: none;
 }
 
+.fa-users{
+    position: relative;
+    float: right;
+    font-size: 25px;
+    transition: 0.5s;
+    margin-top: 0.5%;
+    margin-right: 0.5%;
+}
+
+.fa-users:hover{
+    color: #00CCFF;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
 a {
     text-decoration: none;
     color: #FFFFFF;
 }
 
-.menu{
+/* Navigator */
+
+.navigator{
     background-color: #496897;
     text-align: justify;
-    position: fixed;
-    margin-left: -20%;
+    position: absolute;
+    margin-left: -25%;
     height: 100%;
     width: 20%;
     top: 0;
     left:0;
+    z-index: 1;
     transition: all 0.5s;
 }
 
-.menu-show{
+.navigator-show{
     margin-left: 0%;
     transition: margin-left 0.5s;
 }
 
-.menu > h2{
+#close-navigator{
+    float: right;
+    margin-right: 10px;
+    transition: 0.5s;
+}
+
+#close-navigator:hover{
+    color: #e85858;
+    cursor:pointer;
+    transition: 0.5s;
+}
+
+.navigator h2{
     padding: 5px;
 }
 
-.menu > div{
+.navigator div{
     border-top: 1px solid #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
     width: 100%;
@@ -216,40 +254,101 @@ a {
     transition: 0.5s;
 }
 
-.menu > div:hover{
+.navigator div:hover{
     background-color: #FFFFFF;
     cursor: pointer;
     color: #496897;
     transition: 0.5s;
 }
 
-.menu > div > p > i{
+.navigator div p i{
     padding: 10px;
     font-size: 25px;
     float: left;
     margin-left: 40%;
 }
 
-#menu{
-    float: left;
-}
-
-.close{
-    float: right;
-    margin-right: 10px;
-    transition: 0.5s;
-}
-
-.close:hover{
-    color: #D73533;
-    cursor:pointer;
-    transition: 0.5s;
-}
-
 #watermark{
     font-size: 10px;
     margin-left: 40%;
 }
+
+/* Social Content */
+
+.social-content{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    margin-right: -30%;
+    background-color: #496897;
+    z-index: 1;
+    transition: 0.5s;
+}
+
+.social-content-show{
+    margin-right: 0%;
+    transition: margin-right 0.5s;
+}
+
+#close-social-content{
+    position: absolute;
+    top: 1.5%;
+    left: 5%;
+    font-size: 24px;
+    transition: 0.5s;
+}
+
+#close-social-content:hover{
+    color: #e85858;
+    cursor:pointer;
+    transition: 0.5s;
+}
+
+#social-content-search{
+    background-color: #496897;
+    border: none;
+    border-bottom: 1px solid #C7E8F3;
+    margin-bottom: 10px;
+    height: 35px;
+    width: 80%;
+    margin-left: 20%;
+    color: #FFFFFF;
+}
+
+#social-content-search::placeholder{
+    color: #C7E8F3;
+}
+
+#social-content-search:focus{
+    outline: none;
+}
+
+.social-content-tab{
+    display: inline-block;
+    border-bottom: 1px solid #C7E8F3;
+    width: 33.3%;
+    text-align: center;
+    padding: 10px 0px;
+    transition: 0.5s;
+}
+
+.social-content-tab-hover{
+    background-color: #FFFFFF;
+    color: #496897;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.social-content-tab-active{
+    background-color: #FFFFFF;
+    color: #496897;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/* Loader */
 
 .loader-modal{
     position: absolute;

@@ -39,8 +39,12 @@ if (body){
             e.target.classList.add('fa-edit-hover')
         }
 
-        if (e.target.classList.contains('fa-envelope')){
-            e.target.classList.add('fa-envelope-hover')
+        if (e.target.classList.contains('fa-comment')){
+            e.target.classList.add('fa-comment-hover')
+        }
+
+        if (e.target.classList.contains('fa-user-plus')){
+            e.target.classList.add('fa-user-plus-hover')
         }
 
         if (e.target.classList.contains('fa-camera')){
@@ -85,8 +89,12 @@ if (body){
             e.target.classList.remove('fa-edit-hover')
         }
 
-        if (e.target.classList.contains('fa-envelope')){
-            e.target.classList.remove('fa-envelope-hover')
+        if (e.target.classList.contains('fa-comment')){
+            e.target.classList.remove('fa-comment-hover')
+        }
+
+        if (e.target.classList.contains('fa-user-plus')){
+            e.target.classList.remove('fa-user-plus-hover')
         }
 
 

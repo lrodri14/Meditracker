@@ -2,39 +2,54 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
-</head>
-<body>
 
-    {% block return %}<a href=""><i class="fas fa-long-arrow-alt-left" id="backwards"></i></a>{% endblock %}{% block home %}<i class="fas fa-bars" id="bars"></i>{% endblock %}
-    <div class="menu">
-        <h2 id="Menu">Menu <span class="close">X</span></h2>
-        <div onclick="window.location='{% url 'home:home' %}'"><p><i class="fas fa-home"></i></p></div>
-        <div onclick="window.location='{% url 'patients:patients' %}'"><p><i class="fas fa-user-injured"></i></p></div>
-        <div onclick="window.location='{% url 'appointments:appointments'%}'"><p><i class="far fa-calendar-check"></i></p></div>
-        <div onclick="window.location='{% url 'records:records' %}'"><p><i class="far fa-clipboard"></i></p></div>
-        <div><p><i class="fas fa-file-invoice"></i></p></div>
-        <div><p><i class="fas fa-handshake"></i></p></div>
-        <div onclick="window.location='{% url 'settings:settings' %}'"><p><i class="fas fa-cog"></i></p></div>
-        <div onclick="window.location='{% url 'accounts:profile' %}'"><p><i class="fas fa-user"></i></p></div>
-        <p id="watermark">Telematica</p>
-    </div>
-    {% block body_block %}
-    {% endblock %}
-    <div class="loader-modal">
-        <i class="fas fa-heart"></i>
-        <div class="global-loader">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    </head>
+
+    <body>
+
+        {% block return %}<a href=""><i class="fas fa-long-arrow-alt-left" ></i></a>{% endblock %}{% block home %}<i class="fas fa-bars"></i>{% endblock %}{% block social %} <i class="fas fa-users"></i> {% endblock %}
+
+        <div class="navigator">
+            <h2>Menu <span id="close-navigator"><i class="fas fa-times"></i></span></h2>
+            <div onclick="window.location='{% url 'home:home' %}'"><p><i class="fas fa-home"></i></p></div>
+            <div onclick="window.location='{% url 'patients:patients' %}'"><p><i class="fas fa-user-injured"></i></p></div>
+            <div onclick="window.location='{% url 'appointments:appointments'%}'"><p><i class="far fa-calendar-check"></i></p></div>
+            <div onclick="window.location='{% url 'records:records' %}'"><p><i class="far fa-clipboard"></i></p></div>
+            <div><p><i class="fas fa-file-invoice"></i></p></div>
+            <div onclick="window.location='{% url 'providers:providers' %}'"><p><i class="fas fa-handshake"></i></p></div>
+            <div onclick="window.location='{% url 'settings:settings' %}'"><p><i class="fas fa-cog"></i></p></div>
+            <div onclick="window.location='{% url 'accounts:profile' %}'"><p><i class="fas fa-user"></i></p></div>
+            <p id="watermark">Telematica</p>
         </div>
-    </div>
-    <script src="{% static 'base/js/base.js' %}"></script>
-</body>
+
+        <div class="social-content">
+            <div><i id="close-social-content" class="fas fa-times"></i><input id="social-content-search" type="text" placeholder="Search..."></div>
+            <div class="social-content-navigator">
+                <div class="social-content-tab">Contacts</div><div class="social-content-tab">Messages</div><div class="social-content-tab">Requests</div>
+            </div>
+        </div>
+
+        {% block body_block %}
+        {% endblock %}
+
+        <div class="loader-modal">
+            <i class="fas fa-heart"></i>
+            <div class="global-loader">
+            </div>
+        </div>
+
+        <script src="{% static 'base/js/base.js' %}"></script>
+
+    </body>
+
 </html>

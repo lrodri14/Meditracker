@@ -60,7 +60,7 @@
 
 
     <div class="personal-information">
-        <h4>Personal Information {% if user.profile == profile %}<i class="fas fa-edit" data-url="{% url 'accounts:profile_change' %}" data-type="profile"></i> {% else %} <i class="fas fa-envelope"></i>{% endif %}</h4>
+        <h4>Personal Information {% if user.profile == profile %}<i class="fas fa-edit" data-url="{% url 'accounts:profile_change' %}" data-type="profile"></i> {% else %} <i class="fas fa-user-plus"></i><i class="fas fa-comment"></i> {% endif %}</h4>
         <hr>
         <div class="personal">
         <div>

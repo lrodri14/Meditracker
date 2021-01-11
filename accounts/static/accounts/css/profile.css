@@ -2,7 +2,15 @@
 
 /*Main Content*/
 body{
-    overflow:hidden;
+    overflow: hidden;
+}
+
+.navigator{
+    z-index: 2;
+}
+
+.social-content{
+    z-index: 2;
 }
 
 i:not(.fa-camera){
@@ -22,10 +30,27 @@ i:not(.fa-camera){
     transition: 0.5s;
 }
 
-.fa-envelope{
+.fa-user-plus{
     cursor: pointer;
     float:right;
     margin-right: 10px;
+    transition: 0.5s;
+}
+
+.fa-user-plus-hover{
+    color: #25BB41;
+    transition: 0.5s;
+}
+
+.fa-comment{
+    cursor: pointer;
+    float:right;
+    margin-right: 15px;
+    transition: 0.5s;
+}
+
+.fa-comment-hover{
+    color: #CBA415;
     transition: 0.5s;
 }
 
@@ -34,10 +59,6 @@ i:not(.fa-camera){
     transition: 0.5s;
 }
 
-.fa-envelope-hover{
-    color: #00CCFF;
-    transition: 0.5s;
-}
 
 .edit-profile-picture-modal .fa-pen{
     cursor: pointer;
@@ -55,11 +76,6 @@ i:not(.fa-camera){
 .fa-pen-hover{
     color: #CBA415;
     transition: 0.5s;
-}
-
-.menu{
-    position: absolute;
-    z-index: 2;
 }
 
 .background{
