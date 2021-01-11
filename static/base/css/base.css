@@ -241,11 +241,11 @@ a {
     transition: 0.5s;
 }
 
-.navigator h2{
+.navigator-title{
     padding: 5px;
 }
 
-.navigator div{
+.navigator-tabs{
     border-top: 1px solid #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
     width: 100%;
@@ -254,14 +254,14 @@ a {
     transition: 0.5s;
 }
 
-.navigator div:hover{
+.navigator-tabs:hover{
     background-color: #FFFFFF;
     cursor: pointer;
     color: #496897;
     transition: 0.5s;
 }
 
-.navigator div p i{
+.navigator-tabs p i{
     padding: 10px;
     font-size: 25px;
     float: left;
@@ -334,7 +334,7 @@ a {
     transition: 0.5s;
 }
 
-.social-content-tab-hover{
+.social-content-tab:hover{
     background-color: #FFFFFF;
     color: #496897;
     cursor: pointer;

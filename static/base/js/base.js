@@ -40,14 +40,6 @@ if (socialContentTabs){
 
     for (let i = 0; i<socialContentTabs.length; i++){
 
-        socialContentTabs[i].addEventListener('mouseover', (e) => {
-            socialContentTabs[i].classList.add('social-content-tab-hover')
-        })
-
-        socialContentTabs[i].addEventListener('mouseout', (e) => {
-            socialContentTabs[i].classList.remove('social-content-tab-hover')
-        })
-
         socialContentTabs[i].addEventListener('click', (e) => {
             for (let i = 0; i<socialContentTabs.length; i++){
                 socialContentTabs[i].classList.remove('social-content-tab-active')

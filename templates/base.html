@@ -20,15 +20,15 @@
         {% block return %}<a href=""><i class="fas fa-long-arrow-alt-left" ></i></a>{% endblock %}{% block home %}<i class="fas fa-bars"></i>{% endblock %}{% block social %} <i class="fas fa-users"></i> {% endblock %}
 
         <div class="navigator">
-            <h2>Menu <span id="close-navigator"><i class="fas fa-times"></i></span></h2>
-            <div onclick="window.location='{% url 'home:home' %}'"><p><i class="fas fa-home"></i></p></div>
-            <div onclick="window.location='{% url 'patients:patients' %}'"><p><i class="fas fa-user-injured"></i></p></div>
-            <div onclick="window.location='{% url 'appointments:appointments'%}'"><p><i class="far fa-calendar-check"></i></p></div>
-            <div onclick="window.location='{% url 'records:records' %}'"><p><i class="far fa-clipboard"></i></p></div>
-            <div><p><i class="fas fa-file-invoice"></i></p></div>
-            <div onclick="window.location='{% url 'providers:providers' %}'"><p><i class="fas fa-handshake"></i></p></div>
-            <div onclick="window.location='{% url 'settings:settings' %}'"><p><i class="fas fa-cog"></i></p></div>
-            <div onclick="window.location='{% url 'accounts:profile' %}'"><p><i class="fas fa-user"></i></p></div>
+            <h2 class="navigator-title">Menu <span id="close-navigator"><i class="fas fa-times"></i></span></h2>
+            <div class="navigator-tabs" onclick="window.location='{% url 'home:home' %}'"><p><i class="fas fa-home"></i></p></div>
+            <div class="navigator-tabs" onclick="window.location='{% url 'patients:patients' %}'"><p><i class="fas fa-user-injured"></i></p></div>
+            <div class="navigator-tabs" onclick="window.location='{% url 'appointments:appointments'%}'"><p><i class="far fa-calendar-check"></i></p></div>
+            <div class="navigator-tabs" onclick="window.location='{% url 'records:records' %}'"><p><i class="far fa-clipboard"></i></p></div>
+            <div class="navigator-tabs"><p><i class="fas fa-file-invoice"></i></p></div>
+            <div class="navigator-tabs" onclick="window.location='{% url 'providers:providers' %}'"><p><i class="fas fa-handshake"></i></p></div>
+            <div class="navigator-tabs" onclick="window.location='{% url 'settings:settings' %}'"><p><i class="fas fa-cog"></i></p></div>
+            <div class="navigator-tabs" onclick="window.location='{% url 'accounts:profile' %}'"><p><i class="fas fa-user"></i></p></div>
             <p id="watermark">Telematica</p>
         </div>
 
