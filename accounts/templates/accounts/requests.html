@@ -1,0 +1,23 @@
+{% load static %}
+{% if contact_requests %}
+    <table>
+            {% for contact_request in contact_requests %}
+                <tr>
+                    {% if not contact_request.from_user.profile.profile_pic %}
+                        {% if contact_request.from_user.profile.gender == 'Masculine' %}
+                            <td><img src="{% static 'accounts/avatars/male-avatar.png' %}" alt=""></td>
+                        {% else %}
+                            <td><img src="{% static 'accounts/avatars/female-avatar.png' %}" alt=""></td>
+                        {% endif %}
+                    {% else %}
+                            <td><img src="{{ MEDIA_URL }}{{ contact_request.from_user.profile.profile_pic }}" alt=""></td>
+                    {% endif %}
+                    <td>{{ contact_request.from_user.first_name }} {{ contact_request.from_user.last_name }}</td>
+                    <td><i class="fas fa-check accept-contact-request" data-url="{% url 'accounts:contact_request_response' contact_request.pk %}" data-response="accepted"></i></td>
+                    <td><i class="fas fa-times deny-contact-request" data-url="{% url 'accounts:contact_request_response' contact_request.pk %}" data-response="denied"></i></td>
+                </tr>
+            {% endfor %}
+    </table>
+{% else %}
+    <p class="no-requests">No Requests</p>
+{% endif %}

@@ -5,15 +5,15 @@ body{
     overflow: hidden;
 }
 
-.navigator{
+.global-navigator{
     z-index: 2;
 }
 
-.social-content{
+.social-section{
     z-index: 2;
 }
 
-i:not(.fa-camera){
+i:not(.fa-camera):not(.fa-times){
     position: relative;
     z-index:1;
 }
@@ -42,6 +42,30 @@ i:not(.fa-camera){
     transition: 0.5s;
 }
 
+.fa-user-slash{
+    cursor: pointer;
+    float:right;
+    margin-right: 10px;
+    transition: 0.5s;
+}
+
+.fa-user-slash-hover{
+    color: #A31621;
+    transition: 0.5s;
+}
+
+.fa-trash{
+    cursor: pointer;
+    float:right;
+    margin-right: 10px;
+    transition: 0.5s;
+}
+
+.fa-trash-hover{
+    color: #A31621;
+    transition: 0.5s;
+}
+
 .fa-comment{
     cursor: pointer;
     float:right;
@@ -58,7 +82,6 @@ i:not(.fa-camera){
     color: #CBA415;
     transition: 0.5s;
 }
-
 
 .edit-profile-picture-modal .fa-pen{
     cursor: pointer;

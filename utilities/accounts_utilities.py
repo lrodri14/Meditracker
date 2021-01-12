@@ -6,6 +6,7 @@
 """
 
 from django.core.mail.backends.smtp import EmailBackend
+from accounts.models import ContactRequest
 
 domains = {
     'gmail.com': {'smtp_server': 'smtp.gmail.com', 'port': 587, 'use_tls': True},
@@ -49,3 +50,9 @@ def open_connection(user_mailing_credentials):
     use_tls = user_mailing_credentials.use_tls
     connection = EmailBackend(host=smtp_server, port=port, username=email, password=password, use_tls=use_tls)
     return connection
+
+
+def check_requests(user):
+    if not ContactRequest.objects.filter(to_user=user):
+        return False
+    return True

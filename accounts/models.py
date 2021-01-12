@@ -98,3 +98,17 @@ class MailingCredential(models.Model):
 
     def __str__(self):
         return str(self.user) + ' - ' + 'Mailing Credentials'
+
+
+class ContactRequest(models.Model):
+    to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True, help_text='User to send the request', verbose_name='Request Receive', related_name='request')
+    from_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True, help_text='User sending the request', verbose_name='Request Sender')
+
+    class Meta:
+        verbose_name = 'Contact Request'
+        verbose_name_plural = 'Contact Requests'
+        unique_together = ['from_user', 'to_user']
+
+    def __str__(self):
+        return 'Contact request sent from: {} to {}'.format(self.from_user, self.to_user)
+

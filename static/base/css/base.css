@@ -361,6 +361,14 @@ a {
     transform: translate(-50%, -50%);
 }
 
+.no-requests{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
 .social-section img{
     width: 30px;
     height: 30px;
@@ -372,6 +380,26 @@ a {
 }
 
 .delete-contact-hover{
+    color: #A31621;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.accept-contact-request{
+    font-size: 18px;
+}
+
+.accept-contact-request-hover{
+    color: #25BB41;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.deny-contact-request{
+    font-size: 18px;
+}
+
+.deny-contact-request-hover{
     color: #A31621;
     cursor: pointer;
     transition: 0.5s;

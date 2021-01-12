@@ -20,6 +20,18 @@ async function editProfileAW(url, method, csrfmiddlewaretoken, formData){
     return data
 }
 
+async function sendCancelContactRequest(url){
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+async function removeContactAW(url){
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
 if (body){
 
     body.addEventListener('mouseover', (e) => {
@@ -45,6 +57,14 @@ if (body){
 
         if (e.target.classList.contains('fa-user-plus')){
             e.target.classList.add('fa-user-plus-hover')
+        }
+
+        if (e.target.classList.contains('fa-user-slash')){
+            e.target.classList.add('fa-user-slash-hover')
+        }
+
+        if (e.target.classList.contains('fa-trash')){
+            e.target.classList.add('fa-trash-hover')
         }
 
         if (e.target.classList.contains('fa-camera')){
@@ -97,6 +117,13 @@ if (body){
             e.target.classList.remove('fa-user-plus-hover')
         }
 
+        if (e.target.classList.contains('fa-user-slash')){
+            e.target.classList.remove('fa-user-slash-hover')
+        }
+
+        if (e.target.classList.contains('fa-trash')){
+            e.target.classList.remove('fa-trash-hover')
+        }
 
         if (e.target.classList.contains('fa-camera')){
             e.target.classList.remove('fa-camera-hover')
@@ -133,6 +160,41 @@ if (body){
             editFormAW(url, type)
             .then(data => {
                 modalContent.innerHTML = data['html']
+            })
+        }
+
+        if (e.target.classList.contains('fa-user-plus') || e.target.classList.contains('fa-user-slash')){
+            let url = e.target.getAttribute('data-url') + '?procedure=' + e.target.getAttribute('data-procedure')
+            sendCancelContactRequest(url)
+            .then(data => {
+                if (data['success']){
+                    if (e.target.classList.contains('fa-user-plus')){
+                        e.target.classList.remove('fa-user-plus')
+                        e.target.classList.remove('fa-user-plus-hover')
+                        e.target.setAttribute('data-procedure', 'cancel')
+                        e.target.classList.add('fa-user-slash')
+                    }else{
+                        e.target.classList.remove('fa-user-slash')
+                        e.target.classList.remove('fa-user-slash-hover')
+                        e.target.setAttribute('data-procedure', 'send')
+                        e.target.classList.add('fa-user-plus')
+                    }
+                }
+            })
+        }
+
+        if (e.target.classList.contains('fa-trash')){
+            let url = e.target.getAttribute('data-url')
+            let contactID = url.slice(url.length - 2, url.length)
+            removeContactAW(url)
+            .then(data => {
+                if (data['success']){
+                    e.target.classList.remove('fa-trash')
+                    e.target.classList.remove('fa-trash-hover')
+                    e.target.setAttribute('data-url', '/accounts/send_cancel_contact_request/' + contactID)
+                    e.target.setAttribute('data-procedure', 'send')
+                    e.target.classList.add('fa-user-plus')
+                }
             })
         }
 

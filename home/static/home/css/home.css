@@ -159,7 +159,7 @@ a{
     color: inherit;
 }
 
-i:not(.fa-search):not(.fa-users):not(.fa-times):not(.fa-trash){
+i:not(.fa-search):not(.fa-users):not(.fa-times):not(.fa-check):not(.fa-trash){
     font-size: 50px;
     pointer-events: none;
 }

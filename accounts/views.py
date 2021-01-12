@@ -1,13 +1,14 @@
 from django.db.models import Q
+from django.db import IntegrityError
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
 from .forms import DoctorSignUpForm, AssistantSignUpForm, ProfileForm, ProfilePictureForm, ProfileBackgroundForm
 from django.contrib.auth.models import Group
-from .models import UsersProfile
-from utilities.accounts_utilities import set_mailing_credentials
+from .models import UsersProfile, ContactRequest
+from utilities.accounts_utilities import set_mailing_credentials, check_requests
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -120,7 +121,8 @@ def signup(request):
 
 def profile(request, pk=None):
     user_profile = UsersProfile.objects.get(user__pk=pk) if pk else request.user.profile
-    context = {'profile': user_profile}
+    pending_request = check_requests(user_profile.user)
+    context = {'profile': user_profile, 'pending_request': pending_request}
     return render(request, 'accounts/profile.html', context)
 
 
@@ -183,8 +185,60 @@ def user_lookup(request):
 def contacts(request):
     query = request.GET.get('query')
     contacts_list = UsersProfile.objects.filter(Q(user__first_name__startswith=query) | Q(user__last_name__startswith=query), contacts__in=[request.user])
-    template = 'accounts/display_contacts.html'
+    template = 'accounts/contacts.html'
     context = {'contacts': contacts_list}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def remove_contact(request, pk):
+    contact = User.objects.get(pk=pk)
+    request.user.profile.contacts.remove(contact)
+    contact.profile.contacts.remove(request.user)
+    data = {'success': 'Contact removed successfully'}
+    return JsonResponse(data)
+
+
+def contact_requests(request):
+    contact_requests_list = ContactRequest.objects.filter(to_user=request.user)
+    template = 'accounts/requests.html'
+    context = {'contact_requests': contact_requests_list}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def send_cancel_contact_request(request, pk):
+    procedure = request.GET.get('procedure')
+    sender = request.user
+    receiver = User.objects.get(pk=pk)
+    if procedure == 'send':
+        try:
+            contact_request = ContactRequest(to_user=receiver, from_user=sender)
+            contact_request.save()
+            data = {'success': 'Request sent successfully'}
+        except IntegrityError:
+            data = {'unsuccessful': 'Request has not been sent'}
+    else:
+        contact_request = ContactRequest.objects.get(to_user=receiver, from_user=sender)
+        contact_request.delete()
+        data = {'success': 'Request cancelled successfully'}
+    return JsonResponse(data)
+
+
+def contact_request_response(request, pk):
+    response = request.GET.get('response')
+    contact_request = ContactRequest.objects.get(pk=pk)
+    sender = contact_request.from_user
+    receiver = request.user
+    if response == 'accepted':
+        receiver.profile.contacts.add(contact_request.from_user)
+        sender.profile.contacts.add(request.user)
+        contact_request.delete()
+    else:
+        contact_request.delete()
+    contact_requests_list = ContactRequest.objects.filter(to_user=request.user)
+    template = 'accounts/requests.html'
+    context = {'contact_requests': contact_requests_list}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 

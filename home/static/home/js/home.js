@@ -22,6 +22,7 @@ async function userLookupAW(url){
 }
 
 searchBar.addEventListener('input', (e) => {
+
     let url = e.target.getAttribute('data-url') + '?query=' + e.target.value
     if (e.target.value !== ''){
         topMenuElements.classList.add('hide-menu')
@@ -53,6 +54,14 @@ if (queryResults){
             row.style.color = '#496897'
         }
 
+        if (e.target.classList.contains('fa-user-plus')){
+            e.target.classList.add('fa-user-plus-hover')
+        }
+
+        if (e.target.classList.contains('fa-user-slash')){
+            e.target.classList.add('fa-user-slash-hover')
+        }
+
     })
 
     queryResults.addEventListener('mouseout', (e) => {
@@ -65,8 +74,8 @@ if (queryResults){
             row.style.backgroundColor = ''
             row.style.color = ''
       }
-
     })
+
 }
 
 for (let i = 0; i<tiles.length; i++){

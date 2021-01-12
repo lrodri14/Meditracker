@@ -60,7 +60,21 @@
 
 
     <div class="personal-information">
-        <h4>Personal Information {% if user.profile == profile %}<i class="fas fa-edit" data-url="{% url 'accounts:profile_change' %}" data-type="profile"></i> {% else %} <i class="fas fa-user-plus"></i><i class="fas fa-comment"></i> {% endif %}</h4>
+        <h4>Personal Information
+            {% if user.profile == profile %}
+                <i class="fas fa-edit" data-url="{% url 'accounts:profile_change' %}" data-type="profile"></i>
+            {% else %}
+                {% if profile.user in user.profile.contacts.all %}
+                    <i class="fas fa-trash" data-url="{% url 'accounts:remove_contact' profile.user.pk %}"></i>
+                {% else %}
+                    {% if pending_request %}
+                        <i class="fas fa-user-slash" data-url="{% url 'accounts:send_cancel_contact_request' profile.user.pk %}" data-procedure="cancel"></i>
+                    {% else %}
+                        <i class="fas fa-user-plus" data-url="{% url 'accounts:send_cancel_contact_request' profile.user.pk %}" data-procedure="send"></i>
+                    {% endif %}
+                {% endif %}<i class="fas fa-comment"></i>
+            {% endif %}
+        </h4>
         <hr>
         <div class="personal">
         <div>
@@ -103,6 +117,5 @@
             </ul>
         </div>
     </div>
-
 
 </div>
