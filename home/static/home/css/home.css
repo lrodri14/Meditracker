@@ -68,15 +68,10 @@ table{
 }
 
 tr{
-    line-height: 20px;
-    max-line-height: 20px;
+    line-height: 15px;
+    max-line-height: 15px;
     cursor: pointer;
     transition: 0.5s;
-}
-
-tr th{
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 tr td{
@@ -89,11 +84,11 @@ tr td{
     text-overflow: ellipsis;
 }
 
-td img{
-    width: 20px;
-    height: 20px;
+.query-results img{
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
-    margin-top: 5px;
+    margin-top: 2px;
 }
 
 tr:nth-child(odd){

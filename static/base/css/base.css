@@ -280,7 +280,7 @@ a {
     position: fixed;
     top: 0;
     right: 0;
-    width: 30%;
+    width: 25%;
     height: 100%;
     max-height: 100%;
     overflow: hidden;
@@ -370,8 +370,8 @@ a {
 }
 
 .social-section img{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
 }
 
@@ -387,6 +387,7 @@ a {
 
 .accept-contact-request{
     font-size: 18px;
+    float: left;
 }
 
 .accept-contact-request-hover{
@@ -396,7 +397,8 @@ a {
 }
 
 .deny-contact-request{
-    font-size: 18px;
+    font-size: 20px;
+    float: left;
 }
 
 .deny-contact-request-hover{
@@ -415,11 +417,6 @@ a {
     line-height: 20px;
     cursor: pointer;
     transition: 0.5s;
-}
-
-.social-section tr th{
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 .social-section tr td{
