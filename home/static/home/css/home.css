@@ -1,10 +1,13 @@
-/*Checked*/
+/* This home.css file contains all the styles needed to present the home page correctly. */
+
+/*//////////////////////////////////////////////////// Body //////////////////////////////////////////////////////////*/
 
 body{
     overflow: hidden;
 }
 
-/*Container*/
+/*//////////////////////////////////////////////////// Container /////////////////////////////////////////////////////*/
+
 .container{
     position: absolute;
     top: 15%;
@@ -14,13 +17,15 @@ body{
     height: 80%;
 }
 
-/*Menu Title*/
+/*//////////////////////////////////////////////////// Menu Title ////////////////////////////////////////////////////*/
+
 h1{
     color: #FFFFFF;
     transition: 0.5s;
 }
 
-/* Search Bar */
+/*//////////////////////////////////////////////////// Search Bar ////////////////////////////////////////////////////*/
+
 #search-bar{
     position: absolute;
     top: 6%;
@@ -47,6 +52,8 @@ h1{
     font-size: 20px;
     color: #FFFFFF;
 }
+
+/*//////////////////////////////////////////////////// Query Results /////////////////////////////////////////////////*/
 
 .query-results{
     position: absolute;
@@ -117,13 +124,16 @@ tr:nth-child(even){
     transition: 0.5s;
 }
 
-/*Wrapper One Top*/
+/*//////////////////////////////////////////////////// Top Wrapper ///////////////////////////////////////////////////*/
+
 .wrapper-one{
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
     transition: 0.5s;
 }
+
+/*//////////////////////////////////////////////////// Bottom Wrapper ////////////////////////////////////////////////*/
 
 .wrapper-two{
     display: grid;
@@ -132,6 +142,8 @@ tr:nth-child(even){
     margin-top: 20px;
     transition: 0.5s;
 }
+
+/*/////////////////////////////////////////////////////// Tiles //////////////////////////////////////////////////////*/
 
 .tile{
     text-align: center;
@@ -154,7 +166,7 @@ a{
     color: inherit;
 }
 
-i:not(.fa-search):not(.fa-users):not(.fa-times):not(.fa-check):not(.fa-trash){
+i:not(.fa-search):not(.fa-users):not(.fa-times):not(.fa-check):not(.fa-trash):not(.fa-paper-plane){
     font-size: 50px;
     pointer-events: none;
 }
@@ -163,7 +175,8 @@ h3{
     pointer-events: none;
 }
 
-/*Modal*/
+/*/////////////////////////////////////////////////////// Modal //////////////////////////////////////////////////////*/
+
 .modal{
     background-color: rgba(0,0,0,0.3);
     position: absolute;
@@ -181,7 +194,9 @@ h3{
     visibility: visible;
     transition: 0.3s;
 }
-/*Modal Content*/
+
+/*//////////////////////////////////////////////////// Modal Content /////////////////////////////////////////////////*/
+
 .modal-content{
     background-color: #5A7FAF;
     text-align: center;

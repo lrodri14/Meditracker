@@ -5,6 +5,7 @@
 # Imports
 from django.urls import path
 from .views import *
+from utilities.global_utilities import collect_country_number_code
 
 
 app_name = 'providers'
@@ -12,6 +13,7 @@ urlpatterns = [
     # Main Page
     path('', providers, name='providers'),
     # Providers related views
+    path('collect_country_number_code', collect_country_number_code, name='collect_country_number_code'),
     path('providers_list', providers_list, name='providers_list'),
     path('filter_providers', filter_providers, name='filter_providers'),
     path('create_provider', create_provider, name='create_provider'),

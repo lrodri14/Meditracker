@@ -1,0 +1,21 @@
+{% load static %}
+{% load accounts_custom_tags %}
+{% if chats %}
+    {% for chat in chats %}
+        {% get_destination chat user as destination %}
+        <div class="cell chat" data-url="{% url 'accounts:display_chat' destination.pk %}">
+            {% if not destination.profile.profile_pic %}
+                {% if destination.profile.gender == 'Masculine' %}
+                    <img class="contact-profile-picture" src="{% static 'accounts/avatars/male-avatar.png' %}" alt="">
+                {% else %}
+                    <img class="contact-profile-picture" src="{% static 'accounts/avatars/female-avatar.png' %}" alt="">
+                {% endif %}
+            {% else %}
+                <img class="contact-profile-picture" src="{{ MEDIA_URL }}{{ destination.profile.profile_pic }}" alt="">
+            {% endif %}
+            <h4 class="chat-identification">{{ destination.first_name }} {{ destination.last_name }}</h4>
+        </div>
+    {% endfor %}
+{% else %}
+    <p id="no-content">No Chats</p>
+{% endif %}

@@ -1,6 +1,6 @@
 {% load static %}
 {% if users %}
-    <table>
+    <table id="query-results-table">
         {% for user in users %}
             <tr onclick="window.location='{% url 'accounts:profile' user.pk %}'">
                 {% if user.profile.profile_pic %}

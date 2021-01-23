@@ -10,6 +10,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.forms import modelformset_factory, inlineformset_factory
+from utilities.global_utilities import ORIGIN_CHOICES
 
 # List containing all the available years
 years = [years for years in range(1920, 2101)]
@@ -26,6 +27,7 @@ class PatientForm(forms.ModelForm):
         Patient instances, the birthday field is been set the forms.selectDateWidget widget.
     """
 
+    country_code = forms.CharField(widget=forms.Select(choices=ORIGIN_CHOICES))
     birthday = forms.DateField(widget=forms.SelectDateWidget(years=years))
 
     class Meta:

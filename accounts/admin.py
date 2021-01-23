@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, UsersProfile, MailingCredential, ContactRequest
+from .models import CustomUser, UsersProfile, MailingCredential, ContactRequest, Chat
 from .forms import UserChangeForm, UserCreationForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -17,3 +17,4 @@ admin.site.register(CustomUser, UserAdmin)
 admin.site.register(UsersProfile)
 admin.site.register(MailingCredential)
 admin.site.register(ContactRequest)
+admin.site.register(Chat)

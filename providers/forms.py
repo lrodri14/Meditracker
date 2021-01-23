@@ -5,6 +5,7 @@
 
 from django import forms
 from .models import Provider, Visitor
+from utilities.global_utilities import ORIGIN_CHOICES
 
 # Creation Forms
 
@@ -15,6 +16,9 @@ class ProviderForm(forms.ModelForm):
         This ProvidersForm class inherits from the forms.ModelForm class
         and it is used to create providers in our providers app.
     """
+
+    country_code = forms.CharField(widget=forms.Select(choices=ORIGIN_CHOICES))
+
     class Meta:
         model = Provider
         exclude = ('created_by',)
@@ -29,6 +33,9 @@ class VisitorForm(forms.ModelForm):
         which is the 'user' argument, it is used to filter the selections in the
         'company field' and shows only used related data.
     """
+
+    country_code = forms.CharField(widget=forms.Select(choices=ORIGIN_CHOICES))
+
     class Meta:
         model = Visitor
         exclude = ('created_by',)

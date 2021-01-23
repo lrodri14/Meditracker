@@ -26,6 +26,9 @@ var antecedentsFormsContainer = document.querySelector('.antecedents-form tbody'
 var modal = document.querySelector('.modal')
 var modalContent = document.querySelector('.modal-content')
 var saveConfirmationModal = document.querySelector('.save-confirmation-modal')
+var flagIcon = document.querySelector('.flag-icon')
+var selectCountryCode = document.querySelector('#id_country_code')
+var phoneNumberField = document.querySelector('#id_phone_number')
 
 
 // ############################################# Functions #############################################################
@@ -50,6 +53,15 @@ async function addElementAsync(url, method, csrfmiddlewaretoken, formData){
     return data
 }
 
+async function collectCountryNumberCode(url){
+    /* The collectCountryNumberCode async function is used to request a country number code from the server, this
+       function is used to display the correct flag whenever a phone number field is being filled, it expects one
+       single argument, url, which is used to make the request to the server, the response will be returned in JSON
+       format.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
 
 // ############################################# Event Listeners #######################################################
 
@@ -73,6 +85,24 @@ form.addEventListener('submit', (e) => {
     }
     unfilledInputs === 0 ? form.submit() : saveConfirmationModal.classList.add('save-confirmation-modal-show')
 })
+
+
+if (selectCountryCode){
+    /* This event is fired whenever a change is being detected in one of the fields inside the form this event will
+       create the url form the location.origin attribute inside the window object and a path we specified with the
+       necessary parameters needed to make the request, the response contains a country number code we will need to
+       display a new value inside the #id_contact element. We will change the flag dynamically grabbing the value from
+       the target to create a whole new class and add it to the flagIcon element.*/
+    selectCountryCode.addEventListener('change', (e) => {
+        let url = window.location.origin + '/patients/collect_country_number_code?country_code=' + e.target.value
+        flagIcon.classList.remove(flagIcon.classList[1])
+        flagIcon.classList.add('flag-icon-' + e.target.value.toLowerCase())
+        collectCountryNumberCode(url)
+        .then(dialling_code => {
+            phoneNumberField.value = dialling_code['dialling_code']
+        })
+    })
+}
 
 
 // Button Event Listeners
@@ -129,6 +159,7 @@ if (extraInfo){
 
     // Click Events
     extraInfo.addEventListener('click', (e) =>{
+
         /*This event will be fired every time a target will the add-allergy class is clicked, this event will perform
           the following: will extract the 'url' from the data-url attribute, will define the allergySelection variable
           to the current elements inside the select of the allergiesInformation form, the data received will be displayed

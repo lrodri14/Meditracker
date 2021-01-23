@@ -1,13 +1,14 @@
-<!--Checked-->
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}MediTracker{% endblock %}
 {% block body_block %}
 {% block return %}{% endblock %}{% block home %}{% endblock %}
 <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <!-- Background Video -->
     <video autoplay muted loop>
         <source src="{% static 'main/backgrounds/background_video.mp4' %}">
     </video>
+    <!-- Login and Sign Up Buttons -->
     <div class="overlay">
         <div id="wrapper">
             <img id="logo" src="{% static 'main/logo/logo.png' %}">
@@ -22,12 +23,14 @@
         </div>
     </div>
 
+    <!-- Modal -->
     <div class="modal">
         <div class="modal-content">
 
         </div>
     </div>
 
+    <!-- Account Type Selector -->
     <div class="account-type-selector">
         <div class="doctor-type tile" data-url="{% url 'accounts:signup' %}" data-type="doctor">
             <i class="fas fa-user-md"></i>

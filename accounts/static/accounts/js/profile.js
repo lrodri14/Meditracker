@@ -51,10 +51,6 @@ if (body){
             e.target.classList.add('fa-edit-hover')
         }
 
-        if (e.target.classList.contains('fa-comment')){
-            e.target.classList.add('fa-comment-hover')
-        }
-
         if (e.target.classList.contains('fa-user-plus')){
             e.target.classList.add('fa-user-plus-hover')
         }
@@ -107,10 +103,6 @@ if (body){
 
         if (e.target.classList.contains('fa-edit')){
             e.target.classList.remove('fa-edit-hover')
-        }
-
-        if (e.target.classList.contains('fa-comment')){
-            e.target.classList.remove('fa-comment-hover')
         }
 
         if (e.target.classList.contains('fa-user-plus')){

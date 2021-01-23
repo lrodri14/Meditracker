@@ -143,5 +143,10 @@ class MailingCredentialForm(forms.ModelForm):
         }
 
 
+class ChatForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea(attrs={'cols': 35, 'rows': 2, 'placeholder': 'Send Message...'}))
+
+
+
 
 

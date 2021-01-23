@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from smtplib import SMTPAuthenticationError, SMTPSenderRefused, SMTPNotSupportedError
 
+from utilities.global_utilities import country_number_codes, collect_country_code
 from .models import Provider, Visitor
 from .forms import ProviderForm, ProviderFilterForm, VisitorForm, VisitorFilterForm, EmailForm
 from accounts.models import MailingCredential
@@ -114,9 +115,11 @@ def create_provider(request):
                 return JsonResponse(data)
             except IntegrityError:
                 context['error'] = 'Provider already listed'
-    form = ProviderForm(data={'provider_type': 'LP'}) if request.GET.get('provider_type') == 'LP' else ProviderForm(data={'provider_type': 'MP'})
+    number_code = country_number_codes[request.user.profile.location]
+    form = ProviderForm(initial={'provider_type': 'LP', 'contact': number_code}) if request.GET.get('provider_type') == 'LP' else ProviderForm(initial={'provider_type': 'MP', 'contact': number_code})
     template = 'providers/create_providers.html'
     context['form'] = form
+    context['country_code'] = 'flag-icon-' + request.user.profile.location.lower()
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 
@@ -173,6 +176,7 @@ def update_provider(request, pk):
     template = 'providers/update_providers.html'
     context['form'] = form
     context['provider'] = provider
+    context['country_code'] = 'flag-icon-' + collect_country_code(provider.contact)
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 
@@ -261,7 +265,7 @@ def create_visitor(request):
     """
     context = {}
     data = {}
-    form = VisitorForm(user=request.user)
+    form = VisitorForm(user=request.user, initial={'contact': country_number_codes[request.user.profile.location]})
     template = 'providers/create_visitor.html'
     if request.method == 'POST':
         form = VisitorForm(request.POST, user=request.user)
@@ -277,6 +281,7 @@ def create_visitor(request):
             data = {'updated_html': render_to_string(template, context, request)}
             return JsonResponse(data)
     context['form'] = form
+    context['country_code'] = 'flag-icon-' + request.user.profile.location.lower()
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 
@@ -329,6 +334,7 @@ def update_visitor(request, pk):
     template = 'providers/update_visitor.html'
     context['form'] = form
     context['visitor'] = visitor
+    context['country_code'] = 'flag-icon-' + collect_country_code(visitor.contact)
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 

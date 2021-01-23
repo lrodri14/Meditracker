@@ -117,6 +117,21 @@ input:focus{
     outline: none;
 }
 
+#id_phone_number{
+    width: 60%;
+}
+
+#id_country_code{
+    width: 15%;
+    margin-left: -21%;
+    opacity: 0;
+}
+
+.flag-icon{
+    position: relative;
+    left: -10%;
+}
+
 textarea{
   font-family: 'Alegreya Sans SC', sans-serif;
   color: #FFFFFF;

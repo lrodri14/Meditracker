@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from utilities.global_utilities import LOCATION_CHOICES, ORIGIN_CHOICES
 # Create your models here.
 
 
@@ -54,14 +55,6 @@ class UsersProfile(models.Model):
         ('Undefined', 'Undefined')
     )
 
-    LOCATION_CHOICES = (
-        ('HND', 'Honduras'),
-    )
-
-    ORIGIN_CHOICES = (
-        ('HND', 'Honduras'),
-    )
-
     user = models.OneToOneField(CustomUser, blank=True, null=True, on_delete=models.CASCADE, verbose_name='user', related_name='profile')
     profile_pic = models.ImageField('Profile Picture', blank=True, null=True, upload_to='accounts/profile_pictures')
     background_pic = models.ImageField('Background Picture', blank=True, null=True, upload_to='accounts/background_pictures')
@@ -112,3 +105,18 @@ class ContactRequest(models.Model):
     def __str__(self):
         return 'Contact request sent from: {} to {}'.format(self.from_user, self.to_user)
 
+
+class Chat(models.Model):
+
+    participants = models.ManyToManyField(to=CustomUser, blank=True, verbose_name='Participants', related_name='participants', help_text='Chat Participants')
+
+    class Meta:
+        verbose_name = 'Chat'
+        verbose_name_plural = 'Chats'
+
+    def __str__(self):
+        return "{}'s and {}'s private chat".format(self.participants.all()[0], self.participants.all()[1])
+
+    def get_destination(self, user):
+        destination = self.participants.all()[1] if user == self.participants.all()[0] else self.participants.all()[0]
+        return destination

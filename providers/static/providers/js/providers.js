@@ -166,6 +166,17 @@ async function sendEmailAW(url, method, csrfmiddlewaretoken, formData){
     return data
 }
 
+async function collectCountryNumberCode(url){
+    /* The collectCountryNumberCode async function is used to request a country number code from the server, this
+       function is used to display the correct flag whenever a phone number field is being filled, it expects one
+       single argument, url, which is used to make the request to the server, the response will be returned in JSON
+       format.*/
+    const result = await fetch(url)
+    const data = result.json()
+    return data
+}
+
+
 // Sync Functions
 
 function addIconLevitate(addProvidersIcon){
@@ -553,6 +564,26 @@ if (modal){
             e.target.classList.remove('input-hover')
         }
 
+    })
+
+    // Modal Change Events
+    modal.addEventListener('change', (e) => {
+        /* This event is fired whenever a change is being detected in one of the fields inside the form which resides
+           inside the modal, this event will create the url form the location.origin attribute inside the window
+           object and a path we specified with the necessary parameters needed to make the request, the response contains
+           a country number code we will need to display a new value inside the #id_contact element. We will change the
+           flag dynamically grabbing the value from the target to create a whole new class and add it to the flagIcon
+           element.*/
+        let flagIcon = document.querySelector('.flag-icon')
+        if (e.target.id === 'id_country_code'){
+            let url = window.location.origin + '/providers/collect_country_number_code?country_code=' + e.target.value
+            flagIcon.classList.remove(flagIcon.classList[1])
+            flagIcon.classList.add('flag-icon-' + e.target.value.toLowerCase())
+            collectCountryNumberCode(url)
+            .then(dialling_code => {
+                document.querySelector('#id_contact').value = dialling_code['dialling_code']
+            })
+        }
     })
 
     // Modal Submit Events

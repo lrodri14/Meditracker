@@ -5,6 +5,7 @@
 # Imports
 from django.urls import path
 from .views import *
+from utilities.global_utilities import collect_country_number_code
 
 app_name = 'patients'
 urlpatterns = [
@@ -16,5 +17,6 @@ urlpatterns = [
     path('update/<int:pk>', update_patient, name='update_patient'),
     path('delete/<int:pk>', delete_patient, name='delete_patient'),
     path('send_email', send_email, name='send_email'),
-    path('send_email/<int:pk>', send_email, name='send_email')
+    path('send_email/<int:pk>', send_email, name='send_email'),
+    path('collect_country_number_code', collect_country_number_code, name='collect_country_number_code'),
 ]

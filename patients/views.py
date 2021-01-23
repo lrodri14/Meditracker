@@ -6,7 +6,6 @@
 # Imports
 
 import datetime
-
 from .forms import *
 from .models import *
 from django.db.models import Q
@@ -20,6 +19,7 @@ from django.template.loader import render_to_string
 from appointments.models import Consult, MedicalExam
 from appointments.forms import ConsultDetailsFilterForm
 from utilities.accounts_utilities import open_connection
+from utilities.global_utilities import country_number_codes, collect_country_code
 from smtplib import SMTPSenderRefused, SMTPAuthenticationError, SMTPNotSupportedError
 
 # Create your views here.
@@ -86,7 +86,7 @@ def add_patient(request):
         is set to the current patient and saved, after all this process is completed, we will be redirected to the patients
         main page, it accepts one parameters, 'request'.
     """
-    patient_form = PatientForm
+    patient_form = PatientForm(initial={'phone_number': country_number_codes[request.user.profile.location]})
     allergies_form = AllergyInformationFormset(queryset=AllergyInformation.objects.none())
     antecedents_form = AntecedentFormset(queryset=Antecedent.objects.none())
     insurance_form = InsuranceInformationForm()
@@ -124,7 +124,7 @@ def add_patient(request):
 
             return redirect('patients:patients')
 
-    context_data = {'patient_form': patient_form, 'allergies_form': allergies_form, 'insurance_form': insurance_form, 'antecedents_form': antecedents_form}
+    context_data = {'patient_form': patient_form, 'allergies_form': allergies_form, 'insurance_form': insurance_form, 'antecedents_form': antecedents_form, 'country_code': 'flag-icon-' + request.user.profile.location.lower()}
     return render(request, template, context=context_data)
 
 
@@ -181,6 +181,14 @@ def patient_details(request, pk):
 
 
 def filter_patient_details(request):
+    """
+        DOCSTRING:
+        The filter_patient_details view is used to filter the details either of appoinments, exams or charges of a speci-
+        fic patient, the request url contains some parameters we must extract, these are the request_details, the
+        date_from and the date_to key values, they are used to filter the results between those dates, the results of that
+        filtering will be paginated in groups of 16 items, the response will be sent in JSON Format, using the JsonRes-
+        ponse class.
+    """
     date_from = datetime.datetime.strptime(request.GET.get('date_from'), '%Y-%m-%d')
     date_to = datetime.datetime.strptime(request.GET.get('date_to'), '%Y-%m-%d')
     requested_details = request.GET.get('filter_request_type')
@@ -278,10 +286,23 @@ def update_patient(request, pk):
             return redirect('patients:patients_details', pk=patient.pk)
     return render(request, template, context={'patient_form': patient_form, 'allergies_form': allergies_form,
                                                                             'insurance_form': insurance_form,
-                                                                            'antecedents_form': antecedents_form})
+                                                                            'antecedents_form': antecedents_form,
+                                                                            'country_code': 'flag-icon-' + collect_country_code(patient.phone_number)})
 
 
 def send_email(request, pk):
+    """
+        DOCSTRING:
+        The send_email function is used to send emails to the patient whenever is needed, this function takes two args
+        the request itself and the pk of a specific patient, used to grab it's email, if the request.method is the same
+        as 'GET' then the form will be displayed, the content will return in JSON Format using the JsonResponse class,
+        if the request.method attribute is the same as 'POST', then the following will happen:
+        - Grab the user Mailing Credentials
+        - We will open a connection using the open_connection function and we will pass the credential as its params
+        - We will collect the email subject and body
+        - Finally if no errors occur, our message will be sent using the send_mail function
+        - If errors occur, a proper error will be displayed to the user.
+    """
     template = 'patients/email_form.html'
     patient = Patient.objects.get(pk=pk)
     context = {'form': EmailForm, 'receiver': patient, 'today': timezone.localdate()}

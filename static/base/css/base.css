@@ -1,4 +1,5 @@
-/*Checked*/
+/* This base.css file contains all the styles needed to present the base.html template, this file also contains the guide
+   of the colors used in each element aroung the whole application, as well as the title size used in each element.*/
 
 /*
     Color Listing
@@ -130,10 +131,9 @@
     #Modal Timing
     Timing: 0.3s;
     Background opacity: rgba(0,0,0,0.3)
-
 */
 
-/*Body*/
+/*////////////////////////////////////////////////////// Body ////////////////////////////////////////////////////////*/
 body{
     font-family: 'Nunito', sans-serif;
     background-color: #496897;
@@ -141,7 +141,7 @@ body{
     overflow: hidden;
 }
 
-/*Scrollbar*/
+/*///////////////////////////////////////////////// ScrollBar ////////////////////////////////////////////////////////*/
 ::-webkit-scrollbar {
     width: 14px;
 }
@@ -158,7 +158,7 @@ body{
   background: rgba(0,0,0,0);
 }
 
-/*Icons*/
+/*///////////////////////////////////////////////// Icons ////////////////////////////////////////////////////////////*/
 .fa-long-arrow-alt-left{
     position: relative;
     font-size: 25px;
@@ -210,7 +210,7 @@ a {
     color: #FFFFFF;
 }
 
-/* Navigator */
+/*////////////////////////////////////////////////// Global Navigator ////////////////////////////////////////////////*/
 
 .global-navigator{
     background-color: #496897;
@@ -274,7 +274,7 @@ a {
     margin-left: 40%;
 }
 
-/* Social Content */
+/*//////////////////////////////////////////////////// Social Content ////////////////////////////////////////////////*/
 
 .social-section{
     position: fixed;
@@ -296,7 +296,7 @@ a {
     transition: margin-right 0.5s;
 }
 
-.close-social-section{
+#close-social-section{
     position: absolute;
     top: 1.5%;
     left: 5%;
@@ -304,13 +304,13 @@ a {
     transition: 0.5s;
 }
 
-.close-social-section:hover{
+#close-social-section:hover{
     color: #e85858;
     cursor:pointer;
     transition: 0.5s;
 }
 
-.social-section-search{
+#social-section-search{
     text-align: center;
     background-color: #496897;
     border: none;
@@ -322,11 +322,11 @@ a {
     color: #FFFFFF;
 }
 
-.social-section-search::placeholder{
+#social-section-search::placeholder{
     color: #C7E8F3;
 }
 
-.social-section-search:focus{
+#social-section-search:focus{
     outline: none;
 }
 
@@ -353,15 +353,7 @@ a {
     transition: 0.5s;
 }
 
-.no-contacts{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
-
-.no-requests{
+#no-content{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -375,19 +367,10 @@ a {
     border-radius: 50%;
 }
 
-.delete-contact{
-    font-size: 18px;
-}
-
-.delete-contact-hover{
-    color: #A31621;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
 .accept-contact-request{
     font-size: 18px;
-    float: left;
+    float: right;
+    margin-right: 10px;
 }
 
 .accept-contact-request-hover{
@@ -398,7 +381,8 @@ a {
 
 .deny-contact-request{
     font-size: 20px;
-    float: left;
+    float: right;
+    margin-right: 20px;
 }
 
 .deny-contact-request-hover{
@@ -407,38 +391,124 @@ a {
     transition: 0.5s;
 }
 
-.social-section table{
-    border-collapse: collapse;
-    margin: auto;
-    width: 100%;
-}
-
-.social-section tr{
-    line-height: 5%;
+.cell{
+    width: 95%;
+    height: 5%;
+    padding: 10px;
     cursor: pointer;
     transition: 0.5s;
 }
 
-.social-section tr td{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: center;
-    max-width: 100px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.social-section tr:nth-child(odd){
+.cell:nth-child(odd){
     background-color: #6082AD;
 }
 
-.social-section tr:nth-child(even){
+.cell:nth-child(even){
     background-color: #6E8DB4;
 }
 
+.contact-profile-picture{
+    display: inline;
+    float: left;
+}
 
-/* Loader */
+.contact-identification{
+    display: inline;
+    margin-left: 15px;
+}
+
+.chat-identification{
+    display: inline;
+    margin-left: 15px;
+}
+
+.request-identification{
+    display: inline;
+    margin-left: 15px;
+}
+
+/*//////////////////////////////////////////////////////// Chat //////////////////////////////////////////////////////*/
+
+
+#destination-profile-picture{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 2%;
+    top: 11.5%;
+}
+
+#destination-user{
+    position: absolute;
+    top: 10%;
+    left: 15.5%;
+}
+
+#chat-content{
+    margin-top: 20%;
+    width: 94%;
+    height: 630px;
+    max-height: 630px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.reply{
+    clear: both;
+    float: left;
+    color: #52d43b;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: left;
+    text-justify: justify;
+    max-width: 60%;
+}
+
+.message{
+    clear: both;
+    float: right;
+    margin-right: 5%;
+    margin-bottom: 25px;
+    font-size: 14px;
+    text-align: left;
+    text-justify: justify;
+    max-width: 60%;
+}
+
+#id_message{
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    background-color: #496897;
+    border: 1px solid #C7E8F3;
+    resize: none;
+    color: #FFFFFF;
+    margin-left: 10px;
+}
+
+#id_message:focus{
+    outline: none;
+}
+
+#id_message::placeholder{
+    color: #FFFFFF;
+}
+
+#send-message-btn{
+    cursor: pointer;
+    position: absolute;
+    right: 4%;
+    bottom: 4.5%;
+    font-size: 22px;
+    transition: 0.5s;
+}
+
+.send-message-btn-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
+
+/*////////////////////////////////////////////////// Global Loader ///////////////////////////////////////////////////*/
 
 .loader-modal{
     position: absolute;

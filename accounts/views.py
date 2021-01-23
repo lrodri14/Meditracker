@@ -1,15 +1,18 @@
-from django.db.models import Q
 from django.db import IntegrityError
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
-from .forms import DoctorSignUpForm, AssistantSignUpForm, ProfileForm, ProfilePictureForm, ProfileBackgroundForm
+from .forms import DoctorSignUpForm, AssistantSignUpForm, ProfileForm, ProfilePictureForm, ProfileBackgroundForm, ChatForm
 from django.contrib.auth.models import Group
-from .models import UsersProfile, ContactRequest
+from .models import UsersProfile, ContactRequest, Chat
 from utilities.accounts_utilities import set_mailing_credentials, check_requests
 from django.contrib.auth import get_user_model
+from meditracker.settings import TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET_KEY, TWILIO_CHAT_SERVICE_SID
+from twilio.jwt.access_token import AccessToken
+from twilio.jwt.access_token.grants import ChatGrant
 User = get_user_model()
 
 # Create your views here.
@@ -193,9 +196,40 @@ def contacts(request):
 
 def remove_contact(request, pk):
     contact = User.objects.get(pk=pk)
+    chat = Chat.objects.filter(participants__in=[request.user, contact])
     request.user.profile.contacts.remove(contact)
     contact.profile.contacts.remove(request.user)
+    chat.delete()
     data = {'success': 'Contact removed successfully'}
+    return JsonResponse(data)
+
+
+def chats(request):
+    chats_list = Chat.objects.filter(participants__in=[request.user])
+    template = 'accounts/chats.html'
+    context = {'chats': chats_list}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def display_chat(request, pk):
+    identity = request.user.username
+    device_id = request.GET.get('device')
+    account_sid = TWILIO_ACCOUNT_SID
+    api_key = TWILIO_API_KEY
+    secret_key = TWILIO_API_SECRET_KEY
+    chat_service_sid = TWILIO_CHAT_SERVICE_SID
+    token = AccessToken(account_sid, api_key, secret_key, identity=identity)
+    endpoint = "PrivateChat:{}:{}".format(identity, device_id)
+    if chat_service_sid:
+        chat_grant = ChatGrant(endpoint_id=endpoint, service_sid=chat_service_sid)
+        token.add_grant(chat_grant)
+    template = 'accounts/chat.html'
+    form = ChatForm
+    destination = User.objects.get(pk=pk)
+    channel_name = str(Chat.objects.filter(participants__in=[request.user, destination])[0])
+    context = {'chat_form': form, 'destination': destination}
+    data = {'html': render_to_string(template, context, request), 'identity': identity, 'channel_name': channel_name,'token': token.to_jwt().decode('utf-8')}
     return JsonResponse(data)
 
 
@@ -211,17 +245,20 @@ def send_cancel_contact_request(request, pk):
     procedure = request.GET.get('procedure')
     sender = request.user
     receiver = User.objects.get(pk=pk)
-    if procedure == 'send':
-        try:
+    try:
+        if procedure == 'send':
             contact_request = ContactRequest(to_user=receiver, from_user=sender)
             contact_request.save()
             data = {'success': 'Request sent successfully'}
-        except IntegrityError:
-            data = {'unsuccessful': 'Request has not been sent'}
-    else:
-        contact_request = ContactRequest.objects.get(to_user=receiver, from_user=sender)
-        contact_request.delete()
-        data = {'success': 'Request cancelled successfully'}
+        else:
+            contact_request = ContactRequest.objects.get(to_user=receiver, from_user=sender)
+            contact_request.delete()
+            data = {'success': 'Request cancelled successfully'}
+        return JsonResponse(data)
+    except IntegrityError:
+        data = {'unsuccessfulSending': 'Unsuccessful request sending'}
+    except ContactRequest.DoesNotExist:
+        data = {'unsuccessfulCancellation': 'Request has already been accepted'}
     return JsonResponse(data)
 
 
@@ -234,6 +271,9 @@ def contact_request_response(request, pk):
         receiver.profile.contacts.add(contact_request.from_user)
         sender.profile.contacts.add(request.user)
         contact_request.delete()
+        private_chat = Chat.objects.create()
+        private_chat.participants.add(receiver)
+        private_chat.participants.add(sender)
     else:
         contact_request.delete()
     contact_requests_list = ContactRequest.objects.filter(to_user=request.user)
@@ -241,4 +281,8 @@ def contact_request_response(request, pk):
     context = {'contact_requests': contact_requests_list}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
+
+
+def generate_token(request):
+    pass
 

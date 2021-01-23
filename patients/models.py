@@ -3,10 +3,10 @@
     It is composed of 6 models.
 """
 
-from django.apps import apps
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from utilities.global_utilities import LOCATION_CHOICES, ORIGIN_CHOICES
 user = get_user_model()
 # Create your models here.
 
@@ -39,14 +39,6 @@ class Patient(models.Model):
         ('SP', 'Separated'),
     )
 
-    PROCEDENCE_CHOICES = (
-        ('HND', 'Honduras'),
-    )
-
-    RESIDENCE_CHOICES = (
-        ('HND', 'Honduras'),
-    )
-
     id_number = models.CharField('ID Number', max_length=20, null=True, blank=True, help_text='Provide you ID Card Number')
     first_names = models.CharField("Patient's Name", max_length=50, null=False, blank=False, help_text="Patient's Name")
     last_names = models.CharField("Patient's Last Name", max_length=50, null=False, blank=False, help_text="Patient's Last Name")
@@ -55,8 +47,8 @@ class Patient(models.Model):
     phone_number = models.CharField('Phone Number', max_length=20, blank=True, null=True, help_text='Phone Number')
     email = models.EmailField("Patient's Email", null=True, blank=True, help_text='Email')
     civil_status = models.CharField(max_length=12, choices=CIVIL_STATUS_CHOICES)
-    origin = models.CharField(max_length=50, choices=PROCEDENCE_CHOICES)
-    residence = models.CharField(max_length=50, choices=RESIDENCE_CHOICES)
+    origin = models.CharField(max_length=50, choices=ORIGIN_CHOICES)
+    residence = models.CharField(max_length=50, choices=LOCATION_CHOICES)
     created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=False, null=True, verbose_name='Created By')
 
     class Meta:

@@ -1,22 +1,20 @@
 {% load static %}
 
 {% if contacts %}
-    <table>
-        {% for c in contacts %}
-            <tr onclick="window.location='{% url 'accounts:profile' c.user.pk %}'">
-                {% if not c.profile_pic %}
-                    {% if c.gender == 'Masculine' %}
-                        <td><img src="{% static 'accounts/avatars/male-avatar.png' %}" alt=""></td>
-                    {% else %}
-                        <td><img src="{% static 'accounts/avatars/female-avatar.png' %}" alt=""></td>
-                    {% endif %}
+    {% for contact in contacts %}
+        <div class="cell" onclick="window.location='{% url 'accounts:profile' contact.user.pk %}'">
+            {% if not contact.profile_pic %}
+                {% if contact.gender == 'Masculine' %}
+                    <img class="contact-profile-picture" src="{% static 'accounts/avatars/male-avatar.png' %}" alt="">
                 {% else %}
-                    <td><img src="{{ MEDIA_URL }}{{ c.profile_pic }}" alt=""></td>
+                    <img class="contact-profile-picture" src="{% static 'accounts/avatars/female-avatar.png' %}" alt="">
                 {% endif %}
-                <td>{{ c.user.first_name }} {{ c.user.last_name }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+            {% else %}
+                <img class="contact-profile-picture" src="{{ MEDIA_URL }}{{ contact.profile_pic }}" alt="">
+            {% endif %}
+            <h4 class="contact-identification" >{{ contact.user.first_name }} {{ contact.user.last_name }}</h4>
+        </div>
+    {% endfor %}
 {% else %}
-    <p class="no-contacts">No Contacts</p>
+    <p id="no-content">No Contacts</p>
 {% endif %}

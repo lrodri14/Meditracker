@@ -1,6 +1,6 @@
 <!--This template is used to render the form to create instances of the Providers Class-->
 {% load static %}
-<form method="POST" action="{% url 'providers:create_provider' %}" autocomplete="off">
+<form class="add-element-form" method="POST" action="{% url 'providers:create_provider' %}" autocomplete="off">
     {% csrf_token %}
     <h2>Create Provider</h2>
     <p>{{ form.company.label }}</p>
@@ -10,7 +10,7 @@
     <p>{{ form.email.label }}</p>
     <p>{{ form.email }}</p>
     <p>{{ form.contact.label }}</p>
-    <p>{{ form.contact }}</p>
+    <p><span class="flag-icon {{ country_code }}"></span>{{ form.country_code }}{{ form.contact }}</p>
     <!--This provider_type field is hidden, since it's pre-populated from the view.-->
     <p>{{ form.provider_type }}</p>
     <!--Custom Error-->
