@@ -1,4 +1,5 @@
 {% load staticfiles %}
+<!-- Login Forms -->
 <form action="{% url 'accounts:login' %}" method="POST" autocomplete="off" class="login-form">
     <h1>Log In</h1>
     {% csrf_token %}

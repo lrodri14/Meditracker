@@ -1,4 +1,4 @@
-<!--Checked-->
+<!-- User Profile display Template -->
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Profile{% endblock %}
@@ -8,9 +8,11 @@
 <link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}">
 
 <div class="content">
+    <!-- Included partial profile template for dynamic purposes -->
     {% include 'accounts/partial_profile.html' %}
 </div>
 
+<!-- Modal -->
 <div class="modal">
     <div class="modal-content">
 

@@ -1,6 +1,7 @@
-/*Test*/
+/* This profile.css file contains all the styles to display the profile template properly. */
 
-/*Main Content*/
+/*//////////////////////////////////////////////// Main Content //////////////////////////////////////////////////////*/
+
 body{
     overflow: hidden;
 }
@@ -12,6 +13,8 @@ body{
 .social-section{
     z-index: 2;
 }
+
+/*//////////////////////////////////////////////// Operations ////////////////////////////////////////////////////////*/
 
 i:not(.fa-camera):not(.fa-times){
     position: relative;
@@ -89,6 +92,8 @@ i:not(.fa-camera):not(.fa-times){
     transition: 0.5s;
 }
 
+/*//////////////////////////////////////////////// Background ////////////////////////////////////////////////////////*/
+
 .background{
     position: absolute;
     text-align: center;
@@ -151,7 +156,8 @@ i:not(.fa-camera):not(.fa-times){
     float: right;
 }
 
-/*Profile Picture*/
+/*//////////////////////////////////////////////// Profile Picture ///////////////////////////////////////////////////*/
+
 .profile-picture-container{
     position: absolute;
     z-index: 1;
@@ -203,6 +209,8 @@ i:not(.fa-camera):not(.fa-times){
     opacity: 1;
     transition: transform 0.5s, opacity 0.5s;
 }
+
+/*///////////////////////////////////////////////// User Info ////////////////////////////////////////////////////////*/
 
 .information{
     display: grid;
@@ -281,7 +289,6 @@ i:not(.fa-camera):not(.fa-times){
     text-align: left;
 }
 
-
 .medical ul{
     list-style: none;
     float: left;
@@ -291,13 +298,12 @@ i:not(.fa-camera):not(.fa-times){
     text-align: left;
 }
 
-
 .addressing ul{
     list-style: none;
     float: left;
 }
 
-/*Modal*/
+/*///////////////////////////////////////////////////// Modal ////////////////////////////////////////////////////////*/
 
 .modal{
     position: absolute;
@@ -318,7 +324,7 @@ i:not(.fa-camera):not(.fa-times){
     transition: opacity 0.3s;
 }
 
-/*Form*/
+/*///////////////////////////////////////////////////// Forms ////////////////////////////////////////////////////////*/
 
 form{
     background-color: #5A7FAF;
@@ -349,7 +355,7 @@ button{
     transition: 0.5s;
 }
 
-/*Profile Update Form*/
+/*//////////////////////////////////////////////// Profile Update Form ///////////////////////////////////////////////*/
 
 .edit-profile{
     width: 80%;
@@ -451,7 +457,7 @@ button{
     outline: none;
 }
 
-/*Edit Profile Picture Form*/
+/*////////////////////////////////////////////// Profile Picture Form ////////////////////////////////////////////////*/
 
 .edit-profile-picture{
     width: 50%;
@@ -494,7 +500,7 @@ label[for=id_profile_pic]{
     width: 20%;
 }
 
-/*Edit Profile Background Form*/
+/*//////////////////////////////////////////////// Profile Background Form ///////////////////////////////////////////*/
 
 .edit-background-picture{
     width: 50%;

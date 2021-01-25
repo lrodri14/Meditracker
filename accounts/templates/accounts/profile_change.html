@@ -1,4 +1,5 @@
 {% load static %}
+<!-- Profile Change Form -->
 <form action="{% url 'accounts:profile_change' %}" method="POST" class="edit-profile">
     {% csrf_token %}
     <div class="form-wrapper">

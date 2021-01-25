@@ -1,3 +1,7 @@
+"""
+    This admin.py file contains all our models registers.
+"""
+
 from django.contrib import admin
 from .models import CustomUser, UsersProfile, MailingCredential, ContactRequest, Chat
 from .forms import UserChangeForm, UserCreationForm

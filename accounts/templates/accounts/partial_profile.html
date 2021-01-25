@@ -1,6 +1,6 @@
 {% load static %}
 
-
+<!-- User Profile background image -->
 <div class="background">
     <div class="background-container">
         {% if not profile.background_pic %}
@@ -18,7 +18,7 @@
     {% endif %}
 </div>
 
-
+<!-- User Profile profile picture -->
 <div class="profile-picture-container">
     {% if not profile.profile_pic  %}
         {% if profile.gender == 'Femenine' %}
@@ -36,10 +36,10 @@
     {% endif %}
 </div>
 
-
+<!-- User's information -->
 <div class="information">
 
-
+    <!-- User's biography -->
     <div class="biography">
         <h4>@{% if user.profile == profile %}{{ user }}{% else %}{{ profile.user }}{% endif %}</h4>
         <h3>About Me</h3>
@@ -50,7 +50,7 @@
         {% endif %}
     </div>
 
-
+    <!-- User's activity information -->
     <div class="activity-information">
         {% if user.profile != profile %}
             <p class="last-seen"><small>Last Seen - {{ user.last_login|date:"g:i a" }}</small></p>
@@ -58,7 +58,7 @@
         <p class="member-since"><small>Member Since - {{ user.date_joined|date }}</small></p>
     </div>
 
-
+    <!-- User's personal information -->
     <div class="personal-information">
         <h4>Personal Information
             {% if user.profile == profile %}

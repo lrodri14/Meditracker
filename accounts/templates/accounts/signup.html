@@ -1,7 +1,9 @@
 {% load static %}
+<!-- Sign Up Form -->
 <form method="POST" autocomplete="off" class="signup-form" action="{% url 'accounts:signup' %}">
     {% csrf_token %}
     <div class="wrapper">
+        <!-- Personal Information -->
         <div class="personal-info">
             <h1>Sign Up</h1>
             <p>{{ form.first_name.label }}</p>
@@ -13,6 +15,7 @@
             <p id="speciality-label">{{ form.speciality.label }}</p>
             <p>{{ form.speciality }}</p>
         </div>
+        <!-- Account Information -->
         <div class="account-info">
             <p>{{ form.username.label }}</p>
             <p>{{ form.username }}</p>

@@ -1,5 +1,7 @@
 {% load static %}
+<!-- Display destination custom tag -->
 {% load accounts_custom_tags %}
+<!-- If any chats in existence, they will be displayed. -->
 {% if chats %}
     {% for chat in chats %}
         {% get_destination chat user as destination %}
@@ -16,6 +18,7 @@
             <h4 class="chat-identification">{{ destination.first_name }} {{ destination.last_name }}</h4>
         </div>
     {% endfor %}
+<!-- If no chats in existence, this message will be displayed -->
 {% else %}
     <p id="no-content">No Chats</p>
 {% endif %}

@@ -1,6 +1,9 @@
 {% load static %}
+<!-- Destination Profile Picture -->
 <img id="destination-profile-picture" src="{{ destination.profile.profile_pic.url }}" alt="" onclick="window.location='{% url 'accounts:profile' destination.pk %}'"><h4 id="destination-user">{{ destination.first_name }} {{ destination.last_name }}</h4>
+<!-- Chat content area -->
 <div id="chat-content">
 
 </div>
+<!-- Chat message input field and send button -->
 <p>{{ chat_form.message }}</p><i id="send-message-btn" class="fas fa-paper-plane"></i>

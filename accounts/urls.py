@@ -1,3 +1,7 @@
+"""
+    This urls.py file contains all the needed routes for the account app to work properly. It is composed of 21 urls.
+"""
+
 from django.urls import path
 from .views import Login, Logout, ChangePassword, ChangePasswordDone, PasswordReset, PasswordResetDone, \
     PasswordResetConfirm, PasswordResetComplete, signup, profile_change,profile_picture_change, \
