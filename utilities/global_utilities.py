@@ -97,7 +97,7 @@ def collect_north_american_country_code(phone_number):
     return 'US'.lower()
 
 
-def collect_country_code(phone_number):
+def collect_country_code(phone_number, user):
     """
         DOCSTRING:
         The collect_country_code() function returns the country code based on a phone number validation, the
@@ -105,12 +105,17 @@ def collect_country_code(phone_number):
         the collect_north_american_country_code function will be called, if the condition is not fulfilled, an iteration
         over the country_number_codes dict keys will be perform, the country code will be returned.
     """
-    if phone_number.startswith('+1'):
-        return collect_north_american_country_code(phone_number)
-    else:
-        for key in country_number_codes.keys():
-            if country_number_codes[key] in phone_number:
-                return key.lower()
+    try:
+        if phone_number.startswith('+1'):
+            return collect_north_american_country_code(phone_number)
+        else:
+            for key in country_number_codes.keys():
+                if country_number_codes[key] in phone_number:
+                    return key.lower()
+                else:
+                    return user.profile.location.lower()
+    except AttributeError:
+        return user.profile.location.lower()
 
 # Country Code view
 

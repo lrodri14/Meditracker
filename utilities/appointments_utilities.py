@@ -2,10 +2,16 @@
     This appointments_utilities.py file contains all the async and sync functions needed for the appointments app to perform
     correctly.
 """
-
-from appointments.models import Consult
-from django.utils import timezone
 import calendar
+import requests
+from twilio.rest import Client
+from django.utils import timezone
+from appointments.models import Consult
+from twilio.base.exceptions import TwilioRestException
+from meditracker.settings import TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, NUMVERIFY_API_KEY
+
+# Twilio Client instance
+client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 # Async Functions
 
@@ -40,6 +46,38 @@ async def check_delayed_consults(user):
     not_attended_consults = Consult.objects.filter(created_by=user, datetime__date__lte=today.date(), status="OPEN")
     await close_consult(not_attended_consults, tzone, today)
 
+
+async def validate_number(phone_number):
+    """
+        DOCSTRING:
+        This validate_number async function is used to validate that a phone number exists in the international number-
+        ing plan database, this function will make a request to the NumVerify API, if the response contains the 'valid'
+        key, then the success key will be set to it's value, else, it won't be affected, the success variable will be
+        returned.
+    """
+    success = False
+    payload = {'access_key': NUMVERIFY_API_KEY, 'number': phone_number}
+    response = requests.get('http://apilayer.net/api/validate', params=payload).json()
+    if 'valid' in response.keys():
+        success = response['valid']
+    return success
+
+
+async def send_sms(consult):
+    """
+        DOCSTRING:
+        This send_sms async function is used to send SMS to any client, whenever a phone number is registered in his
+        information, the function will pass control to the validate_number function and wait for a response, depending
+        on the response, the message will be sent using the Twilio API.
+    """
+    if consult.patient.phone_number:
+        response = await validate_number(consult.patient.phone_number)
+        if response:
+            message = consult.generate_message()
+            try:
+                client.messages.create(from_='+12534997932', to=consult.patient.phone_number, body=message)
+            except TwilioRestException:
+                pass
 
 # Sync Functions
 

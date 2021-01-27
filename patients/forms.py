@@ -10,7 +10,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.forms import modelformset_factory, inlineformset_factory
-from utilities.global_utilities import ORIGIN_CHOICES
+from utilities.global_utilities import ORIGIN_CHOICES, country_number_codes
 
 # List containing all the available years
 years = [years for years in range(1920, 2101)]

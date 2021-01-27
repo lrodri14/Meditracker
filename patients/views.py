@@ -102,6 +102,9 @@ def add_patient(request):
             antecedents_instances = antecedents_form.save(commit=False)
             insurance = insurance_form.save(commit=False)
 
+            if patient.phone_number is None:
+                patient.phone_number = country_number_codes[request.user.profile.location]
+            patient.save()
             patient.created_by = request.user
             patient.save()
 
@@ -279,7 +282,10 @@ def update_patient(request, pk):
         insurance_form = InsuranceInformationForm(request.POST, instance=patient_insurance)
         antecedents_form = AntecedentUpdateFormset(request.POST, instance=patient)
         if patient_form.is_valid() and allergies_form.is_valid() and insurance_form.is_valid() and antecedents_form.is_valid():
-            patient_form.save()
+            patient = patient_form.save(commit=False)
+            if patient.phone_number is None:
+                patient.phone_number = country_number_codes[request.user.profile.location]
+            patient.save()
             allergies_form.save()
             insurance_form.save()
             antecedents_form.save()
@@ -287,7 +293,7 @@ def update_patient(request, pk):
     return render(request, template, context={'patient_form': patient_form, 'allergies_form': allergies_form,
                                                                             'insurance_form': insurance_form,
                                                                             'antecedents_form': antecedents_form,
-                                                                            'country_code': 'flag-icon-' + collect_country_code(patient.phone_number)})
+                                                                            'country_code': 'flag-icon-' + collect_country_code(patient.phone_number, request.user)})
 
 
 def send_email(request, pk):

@@ -5,6 +5,7 @@
 """
 
 # Imports
+from django.utils import timezone
 from django.db import models
 from patients.models import Patient
 from django.contrib.auth import get_user_model
@@ -160,6 +161,15 @@ class Consult(models.Model):
         self.suffering = self.suffering.capitalize()
         self.motive = self.motive.capitalize()
         super(Consult, self).save(*args, **kwargs)
+
+    def generate_message(self):
+        first_names = self.patient.first_names
+        last_names = self.patient.last_names
+        date = self.datetime.date()
+        time = self.datetime.time().strftime('%I:%M %p')
+        message = 'Dear Mr/Mrs. {} {}, \nyou have a pending appointment in {} at {}'.format(first_names, last_names, date, time)
+        return message
+
 
 
 class MedicalExam(models.Model):

@@ -26,7 +26,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.conf import settings
 
-from utilities.appointments_utilities import check_delayed_consults, collect_months_names, filter_conditional_results
+from utilities.appointments_utilities import send_sms,check_delayed_consults, collect_months_names, filter_conditional_results
 
 # New Event Loop
 loop = asyncio.new_event_loop()
@@ -86,6 +86,7 @@ def create_appointment(request):
                 consult = consults_form.save(commit=False)
                 consult.created_by = request.user
                 consult.save()
+                loop.run_until_complete(send_sms(consult))
                 data['success'] = 'Consult created successfully'
             except IntegrityError:
                 date = consults_form.cleaned_data.get('datetime').date()
