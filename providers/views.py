@@ -176,7 +176,7 @@ def update_provider(request, pk):
     template = 'providers/update_providers.html'
     context['form'] = form
     context['provider'] = provider
-    context['country_code'] = 'flag-icon-' + collect_country_code(provider.contact)
+    context['country_code'] = 'flag-icon-' + collect_country_code(provider.contact, request.user)
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 
@@ -334,7 +334,7 @@ def update_visitor(request, pk):
     template = 'providers/update_visitor.html'
     context['form'] = form
     context['visitor'] = visitor
-    context['country_code'] = 'flag-icon-' + collect_country_code(visitor.contact)
+    context['country_code'] = 'flag-icon-' + collect_country_code(visitor.contact, request.user)
     data['html'] = render_to_string(template, context, request)
     return JsonResponse(data)
 
