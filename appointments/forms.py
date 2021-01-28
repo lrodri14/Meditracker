@@ -7,12 +7,13 @@
 # Imports
 from datetime import timedelta
 from django.core.exceptions import ValidationError
-from .models import Consult, MedicalExam, Drug
+from .models import Consult, MedicalTest, MedicalTestResult, Drug
 from django import forms
 from django.forms import modelformset_factory
 from django.utils import timezone
 from dateutil import relativedelta
 from patients.models import Patient
+from utilities.appointments_utilities import CATEGORY_CHOICES, MEDICAL_TEST_CHOICES
 
 
 class ConsultForm(forms.ModelForm):
@@ -78,7 +79,9 @@ class UpdateConsultForm(forms.ModelForm):
             'notes': forms.Textarea(attrs={'rows': 2, 'cols': 150}),
             'drugs': forms.CheckboxSelectMultiple(),
             'indications': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Indications Here'}),
-            'actions': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Extra Considerations'}),
+            'actions': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Extra Considerations (Optional)'}),
+            'testing': forms.CheckboxSelectMultiple(),
+            'instructions': forms.Textarea(attrs={'rows': 5, 'cols': 10, 'placeholder': 'Medical Testing Instructions (Optional)'}),
             'lock': forms.widgets.HiddenInput(),
         }
 
@@ -96,7 +99,7 @@ class UpdateConsultForm(forms.ModelForm):
         return cleaned_data
 
 
-class MedicalExamForm(forms.ModelForm):
+class MedicalTestResultForm(forms.ModelForm):
     """
         DOCSTRING:
         MedicalExamForm class inherits from forms.ModelForm class, and is used to create MedicalExamsForm instances,
@@ -107,20 +110,19 @@ class MedicalExamForm(forms.ModelForm):
     """
 
     class Meta:
-        model = MedicalExam
+        model = MedicalTestResult
         fields = ('type', 'image',)
 
     def clean(self):
         cleaned_data = super().clean()
         exam_type = cleaned_data.get('type')
         image = cleaned_data.get('image')
-
         if (exam_type and not image) or (image and not exam_type):
             raise ValidationError("Both 'Type' and 'Image' fields must be provided", code='invalid_exams')
         return cleaned_data
 
 
-MedicalExamFormset = modelformset_factory(model=MedicalExam, form=MedicalExamForm, can_delete=True)
+MedicalTestResultFormset = modelformset_factory(model=MedicalTestResult, form=MedicalTestResultForm, can_delete=True)
 
 # Range of years displayed in the filter forms.
 
@@ -241,21 +243,40 @@ class DrugForm(forms.ModelForm):
         exclude = ('created_by',)
 
 
-class DrugFilterForm(forms.ModelForm):
+class DrugFilterForm(forms.Form):
     """
         DOCSTRING:
-        The DrugFilterForm inherits from forms.ModelForm class and is used to filter drugs and display them
-        dynamically in our template,  we defined our META Class as usual and the fields, we also rewrote the
-        __init__ method, since we need to perform some extra functionality to our form, the category field, not always
-        will be required, so we turned the required field into False.
+        The DrugFilterForm is used to filter drugs and display them dynamically in our template.
     """
+    category = forms.CharField(label='Category', required=False, widget=forms.Select(choices=CATEGORY_CHOICES))
 
+
+class MedicalTestForm(forms.ModelForm):
+    """
+        DOCSTRING:
+        The MedicalTestForm inherits from the models.ModelForm class, it is used to create MedicalTest form instances,
+        we defined it's META class as usual, defining the model to create the form for, and the fields we want the
+        form to display.
+    """
     class Meta:
-        model = Drug
+        model = MedicalTest
         exclude = ('created_by',)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['category'].required = False
+
+class MedicalTestFilterForm(forms.Form):
+    """
+        DOCSTRING:
+        The MedicalTestFilterForm form inherits form the forms.Form class, and it is used to filter Medical Tests
+        data from the server side.
+    """
+    name = forms.CharField(widget=forms.TextInput)
+
+
+class MedicalTestTypeFilterForm(forms.Form):
+    """
+        DOCSTRING:
+        The MedicalTestFilterForm is used to filter medical tests and display them dynamically in our template.
+    """
+    test_type = forms.CharField(label='Test Type', required=False, widget=forms.Select(choices=MEDICAL_TEST_CHOICES))
 
 

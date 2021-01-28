@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.db import models
 from patients.models import Patient
 from django.contrib.auth import get_user_model
+from utilities.appointments_utilities import CATEGORY_CHOICES, MEDICAL_TEST_CHOICES
 # Getting the user model
 user = get_user_model()
 
@@ -50,20 +51,6 @@ class Drug(models.Model):
         any registers, if it is, then the delete operation will not be performed.
     """
 
-    CATEGORY_CHOICES = (
-        ('AP', 'Antipyretics'),
-        ('AG', 'Analgesics'),
-        ('AM', 'Antimalarial'),
-        ('AB', 'Antibiotics'),
-        ('AS', 'Antiseptics'),
-        ('MS', 'Mood Stabilizers'),
-        ('HR', 'Hormone Replacement'),
-        ('OC', 'Oral Contraceptives'),
-        ('S', 'Stimulants'),
-        ('T', 'Tranquilizers'),
-        ('ST', 'Statins'),
-
-    )
     name = models.CharField('drug', max_length=200, blank=False, null=True, help_text='drugs name')
     category = models.CharField('category', max_length=50, blank=False, null=True, help_text='Category', choices=CATEGORY_CHOICES)
     created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True, help_text='Drug created by',
@@ -87,6 +74,31 @@ class Drug(models.Model):
             for c in consults:
                 if self in c.drugs.all():
                     return True
+
+
+class MedicalTest(models.Model):
+    test_type = models.CharField('Test Type', max_length=100, blank=False, null=True, help_text='Medical Test Type', choices=MEDICAL_TEST_CHOICES)
+    name = models.CharField('Test Name', max_length=150, blank=False, null=True, help_text='Medical Test Name')
+    created_by = models.ForeignKey(user, on_delete=models.CASCADE, blank=True, null=True, help_text='Created By', related_name='medical_test')
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Medical Test'
+        verbose_name_plural = 'Medical Tests'
+
+    def __str__(self):
+        return self.name
+
+    def operative(self, user):
+        consults = Consult.objects.filter(created_by=user)
+        if consults:
+            for c in consults:
+                if self in c.testing.all():
+                    return True
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.title()
+        super().save(*args, **kwargs)
 
 
 class Consult(models.Model):
@@ -144,6 +156,9 @@ class Consult(models.Model):
     indications = models.TextField('Indications', blank=True, null=True, help_text='Indications')
     actions = models.TextField('Actions', blank=True, null=True, help_text='Actions')
     prescription = models.FileField('Prescription', blank=True, null=True, help_text="Prescription", upload_to='appointments/prescriptions')
+    # Medical Testing
+    testing = models.ManyToManyField(MedicalTest, blank=True, help_text='Pending Testing', verbose_name='Testing')
+    instructions = models.CharField(max_length=512, blank=True, null=True, help_text='Instructions', verbose_name='Instructions')
     # Status
     medical_status = models.BooleanField('Medical Status', blank=True, null=True, help_text='Handles the medical consult status', default=False)
     status = models.CharField('Status', max_length=10, blank=True, null=True, help_text='Handles the consult status', default=STATUS_CHOICES[0][0], choices=STATUS_CHOICES)
@@ -171,8 +186,7 @@ class Consult(models.Model):
         return message
 
 
-
-class MedicalExam(models.Model):
+class MedicalTestResult(models.Model):
 
     """
         DOCSTRING:
@@ -181,17 +195,14 @@ class MedicalExam(models.Model):
         created our own dunder __str__ dunder method.
     """
 
-    EXAMS_CHOICES = (
-        ('T', 'Test'),
-    )
     consult = models.ForeignKey(Consult, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Medical Exams', help_text='Medical Exams', related_name='exam')
     date = models.DateField('date', blank=True, null=True, help_text='Date the exams were presented')
-    type = models.CharField('type of exams', max_length=100, blank=False, null=True, help_text='Type of exams', choices=EXAMS_CHOICES)
+    type = models.CharField('type of exams', max_length=100, blank=False, null=True, help_text='Type of exams', choices=MEDICAL_TEST_CHOICES)
     image = models.ImageField('exam', blank=True, null=True, help_text='Exam IMG', upload_to='appointments/exams')
 
     class Meta:
-        verbose_name = 'Medical Exam'
-        verbose_name_plural = 'Medical Exams'
+        verbose_name = 'Medical Test Result'
+        verbose_name_plural = 'Medical Test Results'
 
     def __str__(self):
         return self.type + ' ' + str(self.date)

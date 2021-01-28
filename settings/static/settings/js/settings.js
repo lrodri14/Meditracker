@@ -379,7 +379,7 @@ if (wrapper){
            server, for filtering purposes, we need ro collect some before making the request, data such as the 'url' for
            the request, 'method' we collect from the form.method attribute and finally the query, we grab from the target
            value. The response will be rendered in the tbody.*/
-        if (e.target.nodeName === 'INPUT' && e.target.classList.contains('filter-form')){
+        if (e.target.nodeName === 'INPUT' && e.target.parentNode.parentNode.classList.contains('filter-form')){
             let form = e.target.parentNode.parentNode
             let url = form.action + '?query=' + e.target.value
             filterResultsAW(url)

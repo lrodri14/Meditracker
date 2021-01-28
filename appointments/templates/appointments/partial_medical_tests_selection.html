@@ -1,0 +1,12 @@
+{% if medical_tests %}
+    {% for mt in medical_tests %}
+    <li>
+        <label for="id_testing_{{ forloop.counter0 }}">
+            <input type="checkbox" name="testing" value="{{ mt.pk }}" id="id_testing_{{ forloop.counter0 }}">
+            {{ mt.name }}
+        </label>
+    </li>
+    {% endfor %}
+{% else %}
+    <p>No medical tests for this category</p>
+{% endif %}

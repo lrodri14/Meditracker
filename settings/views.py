@@ -11,18 +11,19 @@ from django.db import IntegrityError
 from django.apps import apps
 from django.template.loader import render_to_string
 from patients.forms import AllergyFilterForm, AllergyForm, InsuranceCarrierFilterForm, InsuranceCarrierForm
-from appointments.forms import DrugForm, DrugFilterForm
+from appointments.forms import DrugForm, DrugFilterForm, MedicalTestForm, MedicalTestFilterForm
 from accounts.forms import MailingCredentialForm
 MailingCredential = apps.get_model('accounts', 'MailingCredential')
 InsuranceCarrier = apps.get_model('patients', 'InsuranceCarrier')
 Drugs = apps.get_model('appointments', 'Drug')
 Allergies = apps.get_model('patients', 'Allergy')
-
+MedicalTest = apps.get_model('appointments', 'MedicalTest')
 
 # Create your views here.
 
 # Settings
 ############################
+
 
 def settings(request):
     """
@@ -71,6 +72,179 @@ def update_mailing_information(request):
             context = {'mailing_form': mailing_form}
             data = {'html': render_to_string(template, context, request)}
             return JsonResponse(data)
+
+# Medical Testing Logic
+#####################################
+
+
+def medical_testing_list(request):
+    """
+        DOCSTRING:
+        This medical_testing_list view is used to display the list of all the medical tests created and available for this user,
+        the content of this view will be displayed async in the front end so we must send our data im Json Format, for
+        this we will make use of our render_to_string function, if the request.method is 'GET' then we will send our
+        content through a JsonResponse, if the request.method is 'POST', then we will fill our MedicalTestFilterForm
+        with our request.POST dict content, and proceed the filtering with the value inside the 'company' key, when our
+        query is set, we send it to the client side as a JSON Response. This view is passed a single argument: 'request',
+        which expects a request object.
+    """
+    page = request.GET.get('page')
+    medical_test_list = MedicalTest.objects.filter(created_by=request.user).order_by('name')
+    medical_test_filter_form = MedicalTestFilterForm
+    paginator = Paginator(medical_test_list, 16)
+    page_obj = paginator.get_page(page)
+    template = 'settings/medical_tests_partial_list.html' if page else 'settings/medical_testing.html'
+    context = {'medical_tests': page_obj, 'form': medical_test_filter_form}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def filter_medical_testing(request):
+    """
+        DOCSTRING:
+        This filter_medical_testing view is used to filter the results of the available medical tests for the user, this view
+        will perform the filtering and will return the data collected based on a query made by the user, this query
+        will be extracted from the 'HTTP_QUERY' inside the request.META dictionary, the results will be sent to the
+        client side in JSON Format for dynamic displaying, so for this we will make use of the render_to_string function,
+        this way we can convert, our response with sent as a JsonResponse. This view accepts one single argument, the
+        'request' which expects a request object.
+    """
+    query = request.GET.get('query')
+    updated_medical_tests = MedicalTest.objects.filter(name__icontains=query, created_by=request.user).order_by('name')
+    paginator = Paginator(updated_medical_tests, 16)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+    template = 'settings/medical_tests_partial_list.html'
+    context = {'medical_tests': page_obj, 'filtered': True}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def medical_test_type_filter(request):
+    """
+        DOCSTRING:
+        This medical_test_type_filter view is used to filter the select options inside our appointments update view, this view
+        will only receive "GET" requests and will return a querySet depending on the 'type' value inside the 'type'
+        key inside the request.GET dictionary, if the key is empty, then it will return a querySet with all the tests
+        available for this user.
+    """
+    if request.method == 'GET':
+        test_type = request.GET.get('test_type')
+        if test_type != '':
+            medical_tests = MedicalTest.objects.filter(created_by=request.user, test_type=test_type).order_by('name')
+        else:
+            medical_tests = MedicalTest.objects.filter(created_by=request.user).order_by('name')
+        data = {'updated_tests': render_to_string('appointments/partial_medical_tests_selection.html', context={'medical_tests': medical_tests}, request=request)}
+        return JsonResponse(data)
+
+
+def add_medical_test(request):
+    """
+        The add_medical_test view is used to display the medical_test addition form, this form will be displayed async
+        in the client side, if the request.method is 'GET' then the content from this view, in this case the form, will
+        be sent as a response in JSON Format, we convert the rendered content in the template to a string using the
+        render_to_string function, this data will be sent as a JSON Response to the client side, if the request.method
+        is 'POST' then the form will be filled with the request.POST content inside our dictionary, will be evaluated,
+        and if the response is valid, will be saved and the updated list will be sent as a JSON Response, if the form is
+        invalid, a custom error will be the response, this view expects one single arguments: 'requests' a single object.
+    """
+    medical_test_form = MedicalTestForm
+    context = {'medical_test_form': medical_test_form}
+    template = 'settings/medical_test_add.html'
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        medical_test_form = MedicalTestForm(request.POST)
+        if medical_test_form.is_valid():
+            try:
+                medical_test = medical_test_form.save(commit=False)
+                medical_test.created_by = request.user
+                medical_test.save()
+                updated_medical_test = MedicalTest.objects.filter(created_by=request.user).order_by('name')
+                paginator = Paginator(updated_medical_test, 16)
+                page_obj = paginator.get_page(1)
+                context = {'medical_tests': page_obj, 'form': MedicalTestFilterForm}
+                # How to return an error from the backend to the frontend?
+                data = {'updated_html': render_to_string('settings/medical_testing.html', context, request), 'updated_tests_list': render_to_string('appointments/partial_medical_tests_selection.html', context=context, request=request)}
+            except IntegrityError:
+                context['error'] = 'Medical Test already listed in your options'
+                data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def medical_test_details(request, pk):
+    """
+        DOCSTRING:
+        This medical_test_details views is used to display the information of a particular medical test, this information
+        will be displayed async in the client side, so our content must be sent in JSON Format, for this we will make use
+        of our render_to_string function and send this string as a JsonResponse. This view requires two arguments,
+        'request' which expects a request object and 'pk' which expects a pk of a particular insurance.
+    """
+    medical_test = MedicalTest.objects.get(pk=pk)
+    template = 'settings/medical_test_details.html'
+    context = {'medical_test': medical_test}
+    data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def update_medical_test(request, pk):
+    """
+        DOCSTRING:
+        This update_medical_test view is used to update any medical test instance, the form used to update the instances will
+        be displayed async in the client side, so the content must be sent in JSON Format, for this we make use of
+        our render_to_string function to convert into a string the rendered template, if the request.method is 'GET', then
+        this form will be sent to the client side as a JsonResponse object, if the request.method is a 'POST' then the form
+        will be populated with the content inside our request.POST dictionary, we will evaluate this form, if the form is
+        valid then the medical test instance will be updated, if not a custom error will be sent instead. This view requires
+        two arguments: 'request' which expects request object, and 'pk' which expects an insurance pk of a particular test
+     instance.
+    """
+    medical_test = MedicalTest.objects.get(pk=pk)
+    medical_test_form = MedicalTestForm(request.POST or None, instance=medical_test)
+    template = 'settings/medical_test_update.html'
+    context = {'medical_test_form': medical_test_form, 'medical_test':medical_test}
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        medical_test_form = MedicalTestForm(request.POST or None, instance=medical_test)
+        if medical_test_form.is_valid():
+            try:
+                # Why do i need to provide again the user?
+                medical_test_form.save()
+                updated_medical_tests = MedicalTest.objects.filter(created_by=request.user).order_by('name')
+                paginator = Paginator(updated_medical_tests, 16)
+                page_obj = paginator.get_page(1)
+                context = {'medical_tests': page_obj, 'form': MedicalTestForm}
+                # How to return an error from the backend to the frontend?
+                data = {'updated_html': render_to_string('settings/medical_testing.html', context, request)}
+            except IntegrityError:
+                context['error'] = 'Medical Test already listed in your options'
+                data = {'html': render_to_string(template, context, request)}
+    return JsonResponse(data)
+
+
+def delete_medical_test(request, pk):
+    """
+        DOCSTRING:
+        This delete_medical_test view is used to delete any test instances, the form to delete the test instance
+        will be displayed async in the client side, for this we will make use of our render_to_string function to
+        convert our content into a string, if the request.method is a 'GET' then the content will be sent as a Json-
+        Response, if the request.method is 'POST' then the instance will be deleted automatically.
+    """
+    medical_test = MedicalTest.objects.get(pk=pk)
+    context = {'medical_test': medical_test}
+    template = 'settings/medical_test_delete.html'
+    data = {'html': render_to_string(template, context, request)}
+    if request.method == 'POST':
+        if not medical_test.operative(request.user):
+            medical_test.delete()
+            updated_medical_tests = MedicalTest.objects.filter(created_by=request.user).order_by('name')
+            paginator = Paginator(updated_medical_tests, 16)
+            page_obj = paginator.get_page(1)
+            context = {'medical_tests': page_obj, 'form': MedicalTestForm}
+            data = {'updated_html': render_to_string('settings/medical_testing.html', context, request)}
+        else:
+            context = {'error': "Medical Test linked to some registers, deletion prohibited"}
+            data = {'error': render_to_string(template, context, request)}
+    return JsonResponse(data)
 
 # Insurances Logic
 #####################################

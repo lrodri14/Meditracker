@@ -6,7 +6,7 @@
 {% block return %}{% endblock %}{% block home %}{% endblock %}
 <form method="POST" action="{% url 'appointments:update_consult' consult.pk %}" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ medical_exams_form.management_form }}
+    {{ medical_test_result_formset.management_form }}
     <div class="wrapper">
         <div class="general-info">
             <a href="{% url 'appointments:appointments' %}"><i class="fas fa-long-arrow-alt-left"></i></a><i class="fas fa-book-medical" data-url="{% url 'records:personal_records' consult.patient.pk %}"></i>
@@ -73,6 +73,16 @@
                 </div>
             </div>
             <div class="data">
+                <h2>Medical Testing</h2>
+                <p>{{ medical_test_filter_form.test_type.label }}</p>
+                <p data-url="{% url 'settings:medical_test_type_filter' %}">{{ medical_test_filter_form.test_type }}</p>
+                <p>{{ consult_form.testing.label }} <i class="fas fa-plus add-test"></i></p>
+                <div id="medical-tests">
+                    <p>{{ consult_form.testing }}</p>
+                </div>
+                <p>{{ consult_form.instructions.label }}{{ consult_form.instructions }}</p>
+            </div>
+            <div class="data">
                 <h2>Treatment</h2>
                 <p>{{ drug_category_filter_form.category.label }}</p>
                 <p data-url="{% url 'settings:drug_category' %}">{{ drug_category_filter_form.category }}</p>
@@ -90,17 +100,19 @@
 
 <div class="exams-modal">
     <div class="exams-data">
-        <h2>Exams <i class="far fa-eye" id="show-preview"></i></h2>
+        <h2>Medical Test Results <i class="far fa-eye" id="show-preview"></i></h2>
         <div class="exams-list">
             <table class="exams-table">
                 <thead>
-                    <th>Type</th>
-                    <th>File</th>
-                    <th>Filename</th>
-                    <th><i class="fas fa-plus add-form"></i></th>
+                    <tr>
+                        <th>Type</th>
+                        <th>File</th>
+                        <th>Filename</th>
+                        <th><i class="fas fa-plus add-form"></i></th>
+                    </tr>
                 </thead>
                 <tbody>
-                    {% for form in medical_exams_form %}
+                    {% for form in medical_test_result_formset %}
                         <tr class="form-container">
                             <td>{{ form.type }}</td>
                             <td>{{ form.image }}<label class="add-exam" for="id_form-{{ forloop.counter0 }}-image">Add Image</label></td>
@@ -175,6 +187,21 @@
     <img class="previewed-image" src="" alt="">
 </div>
 
+<div class="add-test-modal">
+    <div class="add-test-modal-content">
+        <form method="POST" action="{% url 'settings:add_medical_test' %}" autocomplete="off" class="add-medical-test-form">
+            {% csrf_token %}
+            <h1>Add Medical Test</h1>
+            <p>{{ medical_test_form.test_type.label }}</p>
+            <p>{{ medical_test_form.test_type }}</p>
+            <p>{{ medical_test_form.name.label }}</p>
+            <p>{{ medical_test_form.name }}</p>
+            <p class="error"></p>
+            <p><button type="submit" id="medical-test-submit">Add Test</button></p>
+        </form>
+    </div>
+</div>
+
 <div class="add-drug-modal">
     <div class="add-drug-modal-content">
         <form method="POST" action="{% url 'settings:add_drug' %}" autocomplete="off" class="add-drug-form">
@@ -184,7 +211,7 @@
             <p>{{ drug_form.name }}</p>
             <p>{{ drug_form.category.label }}</p>
             <p>{{ drug_form.category }}</p>
-            <p id="error"></p>
+            <p class="error"></p>
             <p><button type="submit" id="drug-submit">Add Drug</button></p>
         </form>
     </div>

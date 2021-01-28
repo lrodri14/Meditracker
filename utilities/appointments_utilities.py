@@ -6,12 +6,50 @@ import calendar
 import requests
 from twilio.rest import Client
 from django.utils import timezone
-from appointments.models import Consult
 from twilio.base.exceptions import TwilioRestException
 from meditracker.settings import TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, NUMVERIFY_API_KEY
 
 # Twilio Client instance
 client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+# Variables
+CATEGORY_CHOICES = (
+    ('AP', 'Antipyretics'),
+    ('AG', 'Analgesics'),
+    ('AM', 'Antimalarial'),
+    ('AB', 'Antibiotics'),
+    ('AS', 'Antiseptics'),
+    ('MS', 'Mood Stabilizers'),
+    ('HR', 'Hormone Replacement'),
+    ('OC', 'Oral Contraceptives'),
+    ('S', 'Stimulants'),
+    ('T', 'Tranquilizers'),
+    ('ST', 'Statins'),
+)
+
+MEDICAL_TEST_CHOICES = (
+    ('AMN', 'Amniocentesis'),
+    ('BA', 'Blood Analysis'),
+    ('GFA', 'Gastric Fluid Analysis'),
+    ('KFT', 'Kidney Function Test'),
+    ('LFT', 'Liver Function Test'),
+    ('LP', 'Lumbar Puncture'),
+    ('MT', 'Malabsorption Test'),
+    ('PS', 'PAP Smear'),
+    ('PHT', 'Phenolsulfonphthalein Test'),
+    ('PGT', 'Pregnancy Test'),
+    ('PNT', 'Prenatal Test'),
+    ('PBIO', 'Protein-Bound Iodine Test'),
+    ('SYPT', 'Syphilis Test'),
+    ('THOR', 'Thoracentesis'),
+    ('TFT', 'Thyroid Function Test'),
+    ('TXT', 'Toxicology Test'),
+    ('UR', 'Urinalysis/Uroscopy'),
+    ('DI', 'Diagnostic Imaging'),
+    ('GT', 'Genetic Testing'),
+    ('M', 'Measurement'),
+    ('PAVE', 'Physical and Visual Examination')
+)
 
 # Async Functions
 
@@ -41,6 +79,7 @@ async def check_delayed_consults(user):
         current user, it is used to collect the delayed consults. This async function will await for the close_consults()
         coroutine.
     """
+    from appointments.models import Consult
     today = timezone.localtime()
     tzone = timezone.get_current_timezone()
     not_attended_consults = Consult.objects.filter(created_by=user, datetime__date__lte=today.date(), status="OPEN")

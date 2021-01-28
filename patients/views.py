@@ -16,7 +16,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from accounts.models import MailingCredential
 from django.template.loader import render_to_string
-from appointments.models import Consult, MedicalExam
+from appointments.models import Consult, MedicalTestResult
 from appointments.forms import ConsultDetailsFilterForm
 from utilities.accounts_utilities import open_connection
 from utilities.global_utilities import country_number_codes, collect_country_code
@@ -149,7 +149,7 @@ def patient_details(request, pk):
     insurance = InsuranceInformation.objects.get(patient=patient)
     consults_list = Consult.objects.filter(patient=patient, created_by=request.user).order_by('-datetime')
     charges_list = Consult.objects.filter(patient=patient, created_by=request.user, charge__gte=0).order_by('-datetime')
-    exams_list = MedicalExam.objects.filter(consult__patient=patient).order_by('-date')
+    exams_list = MedicalTestResult.objects.filter(consult__patient=patient).order_by('-date')
     page = request.GET.get('page')
     # Paginated Consults
     consults_paginator = Paginator(consults_list, 16)
@@ -211,7 +211,7 @@ def filter_patient_details(request):
         context = {'charges': charges_page_obj, 'filtered': True}
         data = {'html': render_to_string(template, context, request)}
     else:
-        filtered_results = MedicalExam.objects.filter(date__gte=date_from, date__lte=date_to, consult__created_by=request.user).order_by('-date')
+        filtered_results = MedicalTestResult.objects.filter(date__gte=date_from, date__lte=date_to, consult__created_by=request.user).order_by('-date')
         paginator = Paginator(filtered_results, 16)
         exams_page_obj = paginator.get_page(page)
         template = 'patients/patient_exams_partial_list.html'

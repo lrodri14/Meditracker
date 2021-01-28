@@ -1,0 +1,11 @@
+{% load static %}
+<form method="POST" action="{% url 'settings:add_medical_test' %}" autocomplete="off" class="add add-medical_test">
+    {% csrf_token %}
+    <h2>Add Medical Test</h2>
+    <p>{{ medical_test_form.test_type.label }}</p>
+    <p>{{ medical_test_form.test_type }}</p>
+    <p>{{ medical_test_form.name.label }}</p>
+    <p>{{ medical_test_form.name }}</p>
+    <p class="error"><small>{{ error }}</small></p>
+    <button type="submit" id="medical-test-submit">Add Medical Test</button>
+</form>

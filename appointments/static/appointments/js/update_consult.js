@@ -51,6 +51,15 @@ var addDrugModalContent = document.querySelector('.add-drug-modal-content')
 var addDrugForm = document.querySelector('.add-drug-modal-content form')
 var checkedDrugs = []
 
+// Medical Tests
+
+var addTest = document.querySelector('.add-test')
+var addTestModal = document.querySelector('.add-test-modal')
+var testing = document.querySelector('#id_testing')
+var MedicalTestTypeFilter = document.querySelector('#id_test_type')
+var addTestForm = document.querySelector('.add-test-modal-content form')
+var checkedTests = []
+
 // Modals
 
 var modal = document.querySelector('.modal')
@@ -81,6 +90,27 @@ async function addDrugAsync(url, method, formData, csrfmiddlewaretoken){
 
 async function retrieveDrugsFilterAsync(url){
     /* This retrieveDrugsFilterAsync function is used to filter the drugs options in the drugs select element, this
+    function only takes one argument, the url containing the parameters for the GET request, the response will be
+    converted into JSON Format and finally, displayed in the select box. It takes a single argument, the 'url' to make
+    the GET request.*/
+    const result = await fetch(url)
+    const data = await result.json()
+    return data
+}
+
+async function addTestAsync(url, method, formData, csrfmiddlewaretoken){
+    /*This addTestAsync function is used to drugs asynchronously to the server, this function takes 4 paramaters we collect
+    from the form that fires the submit event, we need to collect the 'url' to where we make our POST request, we also
+    need to collect 'method' from the form.method attribute and 'csrfmiddlewaretoken' from the form's hidden input, finally
+    we collect the formData from the form and send it in our request, the response will be converted to JSON Format and
+    returned for further processing.*/
+    const result = await fetch(url, {method:method, headers:{'X-CSRFToken':csrfmiddlewaretoken}, body:formData})
+    const data = await result.json()
+    return data
+}
+
+async function retrieveMedicalTestsFilterAsync(url){
+    /* This retrieveMedicalTestsFilterAsync function is used to filter the medical tests options in the testing select element, this
     function only takes one argument, the url containing the parameters for the GET request, the response will be
     converted into JSON Format and finally, displayed in the select box. It takes a single argument, the 'url' to make
     the GET request.*/
@@ -601,6 +631,35 @@ if (controllers){
 
 }
 
+// Drug Category Filter Event Listeners
+
+if (drugCategoryFilter){
+
+    drugCategoryFilter.addEventListener('change', function(e){
+        /* This event will be target any time the category filter dropdown detects a change, it will asynchronously
+           display the drugs that belong to the category the user chose. This event will perform many actions such as
+           grab the url to make the 'GET' request, afterwards, collecting the category to filter the drugs, after this
+           data is collected, the checkboxes will be updated with the information retrieved from the server and finally
+           checking the options that were checked in case there were.*/
+        const data = e.target.options[e.target.selectedIndex].value
+        const url = e.target.parentNode.getAttribute('data-url') + '?category=' + data
+        retrieveDrugsFilterAsync(url)
+        .then(data => {
+            document.querySelector('#id_drugs').innerHTML = data['updated_drugs']
+            // Better way to take control of the already checked checkboxes
+            let checkboxes = document.querySelectorAll('#id_drugs input[type=checkbox]')
+            for (let i = 0; i<checkedDrugs.length; i++){
+                let checkedDrug = checkedDrugs[i]
+                for (let j = 0; j<checkboxes.length; j++){
+                    if (checkedDrug.value === checkboxes[j].value){
+                        checkboxes[j].checked = true
+                    }
+                }
+            }
+        })
+    })
+}
+
 // Check for a better way to improve this code.
 // Better way to take control of the already checked checkboxes
 
@@ -636,28 +695,128 @@ if (drugList){
     })
 }
 
-// Drug Category Filter Event Listeners
 
-if (drugCategoryFilter){
+// Medical Test Type Filter Event Listeners
 
-    drugCategoryFilter.addEventListener('change', function(e){
-        /* This event will be target any time the category filter dropdown detects a change, it will asynchronously
-           display the drugs that belong to the category the user chose. This event will perform many actions such as
+if (MedicalTestTypeFilter){
+
+    MedicalTestTypeFilter.addEventListener('change', function(e){
+        /* This event will be target any time the type filter dropdown detects a change, it will asynchronously
+           display the tests that belong to the test type the user chose. This event will perform many actions such as
            grab the url to make the 'GET' request, afterwards, collecting the category to filter the drugs, after this
            data is collected, the checkboxes will be updated with the information retrieved from the server and finally
            checking the options that were checked in case there were.*/
         const data = e.target.options[e.target.selectedIndex].value
-        const url = e.target.parentNode.getAttribute('data-url') + '?category=' + data
-        retrieveDrugsFilterAsync(url)
+        const url = e.target.parentNode.getAttribute('data-url') + '?test_type=' + data
+        retrieveMedicalTestsFilterAsync(url)
         .then(data => {
-            document.querySelector('#id_drugs').innerHTML = data['updated_drugs']
-            // Better way to take control of the already checked checkboxes
-            let checkboxes = document.querySelectorAll('input[type=checkbox]')
-            for (let i = 0; i<checkedDrugs.length; i++){
-                let checkedDrug = checkedDrugs[i]
+            document.querySelector('#id_testing').innerHTML = data['updated_tests']
+//          Better way to take control of the already checked checkboxes
+            let checkboxes = document.querySelectorAll('#id_testing input[type=checkbox]')
+            for (let i = 0; i<checkedTests.length; i++){
+                let checkedTest = checkedTests[i]
                 for (let j = 0; j<checkboxes.length; j++){
-                    if (checkedDrug.value === checkboxes[j].value){
+                    if (checkedTest.value === checkboxes[j].value){
                         checkboxes[j].checked = true
+                    }
+                }
+            }
+        })
+    })
+}
+
+// Testing Event Listeners
+
+if (testing){
+
+    // This event will be fired every time the target is the testing element, it will add or remove elements from the checkedTests Array
+    testing.addEventListener('change', (e) => {
+
+        checkedTests.includes(e.target) ? checkedTests.splice(checkedTests.indexOf(e.target), 1) : checkedTests.push(e.target)
+
+    })
+
+}
+
+// Add Test Event Listeners
+
+if (addTest){
+
+    // This event will be fired every time the addDrug element is hovered, it will add the 'add-drug-hover' class to the classList.
+    addTest.addEventListener('mouseover', function(e){
+        this.classList.add('add-test-hover')
+    })
+
+    // This event will be fired every time a hover out occurs in the addDrug element, it will remove the 'add-drug-hover' class from the classList.
+    addTest.addEventListener('mouseout', function(e){
+        this.classList.remove('add-test-hover')
+    })
+
+    // This event will be fired every time a click occurs in the addDrug element, this event will add the 'modal-show' class to the addDrugModal element.
+    addTest.addEventListener('click', function(e){
+        addTestModal.classList.add('modal-show')
+    })
+
+}
+
+// Add Test Modal Event Listeners.
+
+if (addTestModal){
+
+    // addDrugModal click event listeners
+    addTestModal.addEventListener('click', function(e){
+        /* This event will be fired every time the target is the addDrugModal element, this event will clear the form and remove the errors if needed.*/
+        if (e.target.classList.contains('add-test-modal')){
+            document.querySelector('.add-test-modal .error').innerText = ''
+            addTestForm.reset()
+            this.classList.remove('modal-show')
+        }
+    })
+
+    // This event will be fired every time the target is a button inside the addDrugModal element, this will add the 'button-hover' class to the target's classList.
+    addDrugModal.addEventListener('mouseover', function(e){
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.add('button-hover')
+        }
+    })
+
+    // This event will be fired every time the target is a button inside the addDrugModal element, this will remove the 'button-hover' class to the target's classList.
+    addDrugModal.addEventListener('mouseout', function(e){
+        if (e.target.nodeName === 'BUTTON'){
+            e.target.classList.remove('button-hover')
+        }
+    })
+
+    /* This event will be fired whenever the addTestModal catches a submit event, this event will perform various operations,
+       first, the data needed to perform the asynchronous request to the server, the url, method, csrf token and the formData,
+       the request will be done, and if the response contains the 'html' key then this means an error was raised and will
+       be rendered to the form, if not, then the modal will be closed and the form will be reset, the select option will
+       be updated and the checkboxes that were checked, will be checked again.*/
+    addTestModal.addEventListener('submit', function(e){
+        e.preventDefault()
+        e.stopPropagation()
+        const url = addTestForm.action
+        const method = addTestForm.method
+        const data = new FormData(addTestForm)
+        const csrfmiddlewaretoken = document.querySelector('.add-medical-test-form > [name=csrfmiddlewaretoken]').value
+        addTestAsync(url, method, data, csrfmiddlewaretoken)
+        .then(data => {
+            if (data['html']){
+                const error = document.querySelector('.add-medical-test-form .error')
+                error.innerText = 'This test is already listed.'
+            }else{
+                addTestModal.classList.remove('modal-show')
+                document.querySelector('.add-medical-test-form .error').innerText = ''
+                addTestForm.reset()
+                document.querySelector('#id_testing').innerHTML = data['updated_tests_list']
+                // Better way to take control of the already checked checkboxes
+                let checkboxes = document.querySelectorAll('#id_testing input[type=checkbox]')
+                for (let i = 0; i<checkedTests.length; i++){
+                    let checkedTest = checkedTests[i]
+                    for (let j = 0; j<checkboxes.length; j++){
+                        if (checkedTest.value === checkboxes[j].value){
+                            checkboxes[j].checked = true
+                        }
                     }
                 }
             }
@@ -694,7 +853,7 @@ if (addDrugModal){
     addDrugModal.addEventListener('click', function(e){
         /* This event will be fired every time the target is the addDrugModal element, this event will clear the form and remove the errors if needed.*/
         if (e.target.classList.contains('add-drug-modal')){
-            document.querySelector('#error').innerText = ''
+            document.querySelector('.add-drug-modal .error').innerText = ''
             addDrugForm.reset()
             this.classList.remove('modal-show')
         }
@@ -729,15 +888,15 @@ if (addDrugModal){
         addDrugAsync(url, method, data, csrfmiddlewaretoken)
         .then(data => {
             if (data['html']){
-                const error = document.querySelector('#error')
+                const error = document.querySelector('.add-drug-form .error')
                 error.innerText = 'This drug is already listed.'
             }else{
                 addDrugModal.classList.remove('modal-show')
-                document.querySelector('#error').innerText = ''
+                document.querySelector('.add-drug-form .error').innerText = ''
                 addDrugForm.reset()
                 document.querySelector('#id_drugs').innerHTML = data['updated_drugs_list']
                 // Better way to take control of the already checked checkboxes
-                let checkboxes = document.querySelectorAll('input[type=checkbox]')
+                let checkboxes = document.querySelectorAll('#id_drugs input[type=checkbox]')
                 for (let i = 0; i<checkedDrugs.length; i++){
                     let checkedDrug = checkedDrugs[i]
                     for (let j = 0; j<checkboxes.length; j++){

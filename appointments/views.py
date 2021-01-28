@@ -10,8 +10,8 @@ from datetime import datetime
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.shortcuts import redirect
-from .models import Consult, MedicalExam
-from .forms import ConsultForm, DrugForm, DrugCategoryFilterForm, UpdateConsultForm, MedicalExamFormset, AgendaDateFilterForm, RegisterFilterForm
+from .models import Consult, MedicalTestResult
+from .forms import ConsultForm, DrugForm, DrugCategoryFilterForm, MedicalTestForm, MedicalTestTypeFilterForm, UpdateConsultForm, MedicalTestResultFormset, AgendaDateFilterForm, RegisterFilterForm
 from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.db.models import Q
@@ -106,7 +106,7 @@ def consults_details(request, pk):
         a request object, and 'pk', which expects the pk of a specific consult.
     """
     consult = Consult.objects.get(pk=pk)
-    exams = MedicalExam.objects.filter(consult=consult) if len(MedicalExam.objects.filter(consult=consult)) > 0 else None
+    exams = MedicalTestResult.objects.filter(consult=consult) if len(MedicalTestResult.objects.filter(consult=consult)) > 0 else None
     template = 'appointments/consult_details.html'
     context = {'consult': consult, 'exams': exams}
     if 'patients/details' in request.META.get('HTTP_REFERER'):
@@ -153,14 +153,18 @@ def update_consult(request, pk):
     """
     consult = Consult.objects.get(pk=pk)
     consult_form = UpdateConsultForm(request.POST or None, user=request.user, instance=consult)
-    medical_exams_form = MedicalExamFormset(queryset=Consult.objects.none())
+    medical_test_result_formset = MedicalTestResultFormset(queryset=Consult.objects.none())
     drug_form = DrugForm
-    drug_category_filter_form = DrugCategoryFilterForm()
+    drug_category_filter_form = DrugCategoryFilterForm
+    medical_test_form = MedicalTestForm
+    medical_test_filter_form = MedicalTestTypeFilterForm
     template = 'appointments/update_consult.html'
-    context = {'consult': consult, 'consult_form': consult_form, 'medical_exams_form': medical_exams_form, 'drug_form': drug_form, 'drug_category_filter_form': drug_category_filter_form}
+    context = {'consult': consult, 'consult_form': consult_form, 'medical_test_result_formset': medical_test_result_formset,
+               'drug_form': drug_form, 'drug_category_filter_form': drug_category_filter_form, 'medical_test_form': medical_test_form,
+               'medical_test_filter_form': medical_test_filter_form}
     if request.method == 'POST':
         consult_form = UpdateConsultForm(request.POST or None, user=request.user, instance=consult)
-        medical_exams_form = MedicalExamFormset(request.POST, request.FILES)
+        medical_exams_form = MedicalTestResultFormset(request.POST, request.FILES)
         if consult_form.is_valid() and medical_exams_form.is_valid():
             consult = consult_form.save(commit=False)
             exam_instances = medical_exams_form.save(commit=False)
