@@ -10,7 +10,6 @@ var menuTitle = document.querySelector('h1')
 var queryResults = document.querySelector('.query-results')
 var tiles = document.querySelectorAll('.tile')
 var icons = document.querySelectorAll('i')
-var title = document.querySelectorAll('h3')
 var logoutTile = document.querySelector('#logout')
 var sound = document.querySelector('audio')
 var modal = document.querySelector('.modal')
@@ -70,8 +69,8 @@ if (queryResults){
         if (e.target.nodeName === 'TD'){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-            row.style.backgroundColor = '#C7E8F3'
-            row.style.color = '#496897'
+            row.style.backgroundColor = '#FFFFFF'
+            row.style.color = '#000000'
         }
 
     })
@@ -98,7 +97,6 @@ for (let i = 0; i<tiles.length; i++){
     tiles[i].addEventListener('mouseover', function(){
         tiles[i].classList.add('tile-hover')
         icons[i].classList.add('i-hover')
-        title[i].classList.add('h3-hover')
         sound.play()
     })
 
@@ -107,7 +105,6 @@ for (let i = 0; i<tiles.length; i++){
     tiles[i].addEventListener('mouseout', function(){
         tiles[i].classList.remove('tile-hover')
         icons[i].classList.remove('i-hover')
-        title[i].classList.remove('h3-hover')
     })
 }
 

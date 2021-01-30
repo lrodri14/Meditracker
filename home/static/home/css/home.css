@@ -1,18 +1,11 @@
 /* This home.css file contains all the styles needed to present the home page correctly. */
 
-/*//////////////////////////////////////////////////// Body //////////////////////////////////////////////////////////*/
-
-body{
-    overflow: hidden;
-}
-
 /*//////////////////////////////////////////////////// Container /////////////////////////////////////////////////////*/
 
 .container{
     position: absolute;
     top: 15%;
     left: 10%;
-    color: #3e5278;
     width: 80%;
     height: 80%;
 }
@@ -20,8 +13,7 @@ body{
 /*//////////////////////////////////////////////////// Menu Title ////////////////////////////////////////////////////*/
 
 h1{
-    color: #FFFFFF;
-    transition: 0.5s;
+    transition: all 0.5s;
 }
 
 /*//////////////////////////////////////////////////// Search Bar ////////////////////////////////////////////////////*/
@@ -32,13 +24,15 @@ h1{
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    background-color: #5A7FAF;
     border: none;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     width: 57%;
     height: 30px;
     padding-left: 10px;
-    font-size: 15px;
-    color: #FFFFFF;
+    animation: show-up 1s linear forwards;
 }
 
 #search-bar:focus{
@@ -61,17 +55,21 @@ h1{
     left: 10%;
     width: 82%;
     max-height: 74%;
-    background-color: #496897;
     overflow: scroll;
     opacity: 0;
     visibility: hidden;
-    transition: 0.5s;
+    transition: opacity 0.5s;
 }
 
 table{
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     border-collapse: collapse;
     margin: auto;
     width: 100%;
+    animation: show-up 1s linear forwards;
 }
 
 tr{
@@ -99,18 +97,17 @@ tr td{
 }
 
 tr:nth-child(odd){
-    background-color: #6082AD;
+    background-color: rgba(255,255,255,0.1);
 }
 
 tr:nth-child(even){
-    background-color: #6E8DB4;
+    background-color: rgba(255,255,255,0.2);
 }
 
 .query-results-show{
     opacity: 1;
     visibility: visible;
     transition: 0.5s;
-    transition-delay: 0.3s;
 }
 
 .no-results{
@@ -121,7 +118,6 @@ tr:nth-child(even){
 .hide-menu{
     opacity: 0;
     visibility: hidden;
-    transition: 0.5s;
 }
 
 /*//////////////////////////////////////////////////// Top Wrapper ///////////////////////////////////////////////////*/
@@ -130,7 +126,6 @@ tr:nth-child(even){
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
-    transition: 0.5s;
 }
 
 /*//////////////////////////////////////////////////// Bottom Wrapper ////////////////////////////////////////////////*/
@@ -140,7 +135,6 @@ tr:nth-child(even){
     grid-template-columns: 25% 25% 25% 25%;
     grid-gap: 10px;
     margin-top: 20px;
-    transition: 0.5s;
 }
 
 /*/////////////////////////////////////////////////////// Tiles //////////////////////////////////////////////////////*/
@@ -148,25 +142,29 @@ tr:nth-child(even){
 .tile{
     text-align: center;
     padding: 20%;
-    background-color: #5A7FAF;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     color: #FFFFFF;
     cursor: pointer;
     transition: background-color 0.5s;
-
+    animation: show-up 1s linear forwards;
 }
 
 .tile-hover{
     background-color: #FFFFFF;
-    color: #5075A5;
+    color: #000000;
     border: none;
     transition: background-color 0.5s;
 }
 
-a{
-    color: inherit;
+.tile-hover h3{
+    color: #000000;
 }
 
-i:not(.fa-search):not(.fa-users):not(.fa-times):not(.fa-check):not(.fa-trash):not(.fa-paper-plane){
+.tile-icon{
     font-size: 50px;
     pointer-events: none;
 }
@@ -178,7 +176,10 @@ h3{
 /*/////////////////////////////////////////////////////// Modal //////////////////////////////////////////////////////*/
 
 .modal{
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     position: absolute;
     top: 0;
     left: 0;
@@ -186,35 +187,38 @@ h3{
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    transition: 0.3s;
+    transition: all 0.3s;
 }
 
 .modal-show{
     opacity: 1;
     visibility: visible;
-    transition: 0.3s;
+    transition: all 0.3s;
 }
 
 /*//////////////////////////////////////////////////// Modal Content /////////////////////////////////////////////////*/
 
 .modal-content{
-    background-color: #5A7FAF;
     text-align: center;
     width: 40%;
     padding: 2%;
     margin-left: 28%;
     margin-top: 25%;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
 }
 
 button{
-    background-color: #5A7FAF;
-    color: #FFFFFF;
-    border-radius: 10px;
-    border-color: #C7E8F3;
-    width: 20%;
-    height: 30px;
     cursor: pointer;
-    transition: all 0.5s;
+    width: 100px;
+    height: 30px;
+    border: 1px solid #FFFFFF;
+    border-radius: 20px;
+    background-color: transparent;
+    transition: background-color 0.5s, color 0.5s;
 }
 
 button:focus{
@@ -222,7 +226,14 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #C7E8F3;
-    color: #5A7FAF;
-    transition: all 0.5s;
+    background-color: #FFFFFF;
+    color: #000000;
+    transition: background-color 0.5s, color 0.5s,;
+}
+
+/*//////////////////////////////////////////////////// Animations ////////////////////////////////////////////////////*/
+
+@keyframes show-up{
+    from {opacity: 0;}
+    to {opacity: 1;}
 }

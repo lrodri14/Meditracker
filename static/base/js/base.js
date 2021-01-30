@@ -384,8 +384,8 @@ if (socialSection){
     })
 }
 
-// Window Event Listeners
-// This event will be fired every time the DOM content has been fully loaded, the loaderModal will be hidden.
+//// Window Event Listeners
+//// This event will be fired every time the DOM content has been fully loaded, the loaderModal will be hidden.
 window.addEventListener('DOMContentLoaded', () => {
     loaderModal.classList.add('loader-modal-hide')
 })
