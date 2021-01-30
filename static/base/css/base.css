@@ -139,6 +139,7 @@ input:focus{
 /*////////////////////////////////////////////////////// Buttons //////////////////////////////////////////////////////*/
 
 button{
+    font-family: 'Nunito', sans-serif;
     border: 1px solid #FFFFFF;
     border-radius: 20px;
     background-color: transparent;
@@ -513,6 +514,28 @@ a {
     transition: 0.5s;
 }
 
+/*/////////////////////////////////////////////////////// Modal //////////////////////////////////////////////////////*/
+
+.modal{
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+}
+
+.modal-show{
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
 
 /*////////////////////////////////////////////////// Global Loader ///////////////////////////////////////////////////*/
 

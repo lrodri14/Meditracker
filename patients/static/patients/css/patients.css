@@ -2,13 +2,6 @@
 /*This patients.css file contains all the styles needed for the patients main page.*/
 /*This file is divided into 4 sections: Body, Data Available, No Data and Modal*/
 
-
-/*##################################################### Body #########################################################*/
-/*Body*/
-body{
-    overflow-x: hidden;
-}
-
 /*##################################################### No Data ######################################################*/
 /*Patients*/
 #no-patients{
@@ -43,8 +36,16 @@ body{
     grid-gap: 1%;
 }
 
+h2{
+    margin-left: 1%;
+}
+
 /*Table*/
 table{
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     border-collapse: collapse;
     margin: auto;
     width: 100%;
@@ -70,7 +71,7 @@ table{
 }
 
 #heading{
-    background-color: #3E5979;
+    background-color: rgba(255,255,255,0.3);
     color: #FFFFFF;
     line-height: 25px;
     cursor: default;
@@ -152,11 +153,11 @@ tr td{
 }
 
 tr:nth-child(odd){
-    background-color: #6082AD;
+    background-color: rgba(255,255,255,0.1);
 }
 
 tr:nth-child(even){
-    background-color: #6E8DB4;
+    background-color: rgba(255,255,255,0.2);
 }
 
 /* Pop-Up */
@@ -177,14 +178,14 @@ tr:nth-child(even){
 .popup-text{
     max-width: 29%;
     height: 5%;
-    background-color: #CBA415;
-    color: #3C567C;
+    background-color: rgba(255,255,255,0.1);
+    color: #FFFFFF;
     font-size: 10px;
     padding: 5px;
 }
 
 .popup-text-in-order{
-    background-color: #25BB41;
+    background-color: rgba(255,255,255,0.1);
 }
 
 /*Form*/
@@ -206,8 +207,11 @@ tr:nth-child(even){
 
 .filter-form{
     text-align: center;
-    background-color: #5A7FAF;
     padding: 10px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     transform: translateY(-200%);
     transition: transform 0.5s;
 }
@@ -217,35 +221,9 @@ tr:nth-child(even){
     transition: transform 0.5s ease-out;
 }
 
-input{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  background-color: #5A7FAF;
-  border: none;
-  color: #FFFFFF;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  transition: width 0.5s;
-}
-
-input:focus{
-    outline: none;
-}
-
-.input-hover{
-  width: 75%;
-  transition: width 0.5s;
-}
-
 button{
     width: 25%;
     height: 30px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #5A7FAF;
-    border-color: #C7E8F3;
-    border-radius: 10px;
-    color: #FFFFFF;
 }
 
 button:focus{
@@ -253,46 +231,23 @@ button:focus{
 }
 
 .button-form-hover{
-    color: #5A7FAF;
-    background-color: #C7E8F3;
-    transition: 0.5s;
     cursor: pointer;
-}
-
-.button-hover{
-    color: #12212b;
+    color: #000000;
+    background-color: #FFFFFF;
     transition: 0.5s;
-    cursor: pointer;
 }
 
 /*##################################################### Modal ########################################################*/
-.modal{
-  background-color: rgba(0,0,0,0.3);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0.3s, opacity 0.3s;
-}
-
-.modal-show{
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.3s;
-}
 
 .modal-content{
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     width: 40%;
     margin-left: 30%;
     margin-top: 20%;
     text-align: center;
-    background-color: #5A7FAF;
     padding: 15px;
-}
-
-.modal-content #modal-form{
-    margin-top: 0%;
 }
