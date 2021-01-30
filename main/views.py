@@ -4,6 +4,7 @@
 """
 
 from django.shortcuts import render
+from utilities.main_utilities import collect_quote
 
 # Create your views here.
 
@@ -14,4 +15,6 @@ def main(request):
         request, which expects a request object.
     """
     template = 'main/main.html'
-    return render(request, template, {})
+    quote, author = collect_quote()
+    context = {'quote': quote, 'author': author}
+    return render(request, template, context)

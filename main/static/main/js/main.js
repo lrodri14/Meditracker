@@ -5,9 +5,9 @@
 ///////////////////////////////////////////////// Variables ////////////////////////////////////////////////////////////
 
 var body = document.querySelector('body')
-var li = document.querySelectorAll('li')
-var loginBtn = document.querySelector('.login')
-var signUpBtn = document.querySelector('.sign-up')
+var quoteContainer = document.querySelector('.quote-container')
+var loginBtn = document.querySelector('#login-btn')
+var signUpBtn = document.querySelector('#signup-btn')
 var modal = document.querySelector('.modal')
 var modalContent = document.querySelector('.modal-content')
 var accountType = document.querySelector('.account-type-selector')
@@ -21,7 +21,7 @@ let passwordResetEmail
 let signUpInputs = []
 
 // Submit Button
-let submit
+let submitBtn
 
 ///////////////////////////////////////////////// Functions ////////////////////////////////////////////////////////////
 
@@ -78,8 +78,8 @@ if (body){
     body.addEventListener('mouseover', (e) => {
         /* This event will be fired every time the target contains the login or sign-up class in it's classList, it will
            add the hover-over class */
-        if (e.target.classList.contains('login') || e.target.classList.contains('sign-up')){
-            e.target.classList.add('hover-over')
+        if (e.target === loginBtn || e.target === signUpBtn){
+            e.target.classList.add('auth-btn-hover')
         }
 
         /* This event will be fired every time the target contains the doctor-type or assistant-type class in it's
@@ -92,8 +92,8 @@ if (body){
     body.addEventListener('mouseout', (e) => {
         /* This event will be fired every time the target contains the login or sign-up class in it's classList, it will
            remove the hover-over class */
-        if (e.target.classList.contains('login') || e.target.classList.contains('sign-up')){
-            e.target.classList.remove('hover-over')
+        if (e.target === loginBtn || e.target === signUpBtn){
+            e.target.classList.remove('auth-btn-hover')
         }
 
         /* This event will be fired every time the target contains the doctor-type or assistant-type class in it's
@@ -105,51 +105,55 @@ if (body){
 
     body.addEventListener('click', (e) => {
 
+        if (e.target === container){
+            /* This event will be fired every time the target is the container, this event will show up all the hidden elements */
+            loginBtn.classList.remove('auth-btn-hide')
+            signUpBtn.classList.remove('auth-btn-hide')
+            quoteContainer.classList.remove('quote-container-hide')
+            accountType.classList.remove('account-type-selector-show')
+        }
+
         /* This event will be fired every time the target contains the login class in its classList, it will hide the
            sign-up button and collect the url from the data-url attribute and make a request through the loginFormAW func,
-           the response will be added to the modalContent and finally the modal will be displayed*/
-        if (e.target.classList.contains('login')){
-            e.preventDefault()
-            e.stopPropagation()
-            e.target.classList.add('login-btn-hide')
-            signUpBtn.classList.remove('signup-btn-hide')
+           the response will be added to the modalContent and finally the modal will be displayed */
+        if (e.target === loginBtn){
+            loginBtn.classList.add('auth-btn-hide')
+            signUpBtn.classList.add('auth-btn-hide')
+            quoteContainer.classList.add('quote-container-hide')
             accountType.classList.remove('account-type-selector-show')
             const url = e.target.getAttribute('data-url')
             loginFormAW(url)
             .then(data => {
-                modal.classList.add('modal-show')
                 modalContent.innerHTML = data['html']
+                modal.classList.add('modal-show')
                 username = document.querySelector('#id_username')
                 password = document.querySelector('#id_password')
-                submit = document.querySelector('button[type=submit]')
+                submitBtn = document.querySelector('.login-submit-btn')
             })
         }
 
         /* This event will be fired every time the target contains the sign-up class in its classList, it will hide the
            login button, finally the accountType modal will be displayed */
-        if (e.target.classList.contains('sign-up')){
-            e.stopPropagation()
-            e.preventDefault()
-            signUpBtn.classList.add('signup-btn-hide')
-            loginBtn.classList.remove('login-btn-hide')
-            modal.classList.remove('modal-show')
+        if (e.target === signUpBtn){
+            signUpBtn.classList.add('auth-btn-hide')
+            loginBtn.classList.add('auth-btn-hide')
+            quoteContainer.classList.add('quote-container-hide')
             accountType.classList.add('account-type-selector-show')
         }
-
-        /* This event will be fired every time the target contains either the doctor-type or assistant-type class in its
-           classList, we collect the type from the data-type attribute and the url from the data-url attribute, we build
-           up our url and call the signUpFormAW function to make the request to the server, finally the response will be
-           added to the modalContent.innerHTML and the modal will be displayed.*/
+//        /* This event will be fired every time the target contains either the doctor-type or assistant-type class in its
+//           classList, we collect the type from the data-type attribute and the url from the data-url attribute, we build
+//           up our url and call the signUpFormAW function to make the request to the server, finally the response will be
+//           added to the modalContent.innerHTML and the modal will be displayed.*/
         if (e.target.classList.contains('doctor-type') || e.target.classList.contains('assistant-type')){
             let type = e.target.getAttribute('data-type')
             let url = e.target.getAttribute('data-url') + '?account_type=' + type
             signUpFormAW(url)
             .then(data => {
                 accountType.classList.remove('account-type-selector-show')
-                modal.classList.add('modal-show')
                 modalContent.innerHTML = data['html']
+                modal.classList.add('modal-show')
                 signUpInputs = document.querySelectorAll('input,select')
-                submit = document.querySelector('button')
+                submitBtn = document.querySelector('.signup-submit-btn')
             })
         }
     })
@@ -160,15 +164,14 @@ if (modal){
 
     // Click Event
     modal.addEventListener('click', (e) =>{
-
         /* This event will be fired every time the target is the modal, this event will hide the modal, and display the
            buttons.*/
-        if (e.target == modal){
+        if (e.target === modal){
             modal.classList.remove('modal-show')
-            loginBtn.classList.remove('login-btn-hide')
-            signUpBtn.classList.remove('signup-btn-hide')
+            loginBtn.classList.remove('auth-btn-hide')
+            signUpBtn.classList.remove('auth-btn-hide')
+            quoteContainer.classList.remove('quote-container-hide')
             accountType.classList.remove('account-type-selector-show')
-            modalContent.innerHTML = ''
         }
 
         /* This event will be fired every time the target contains the password-reset class in it's classList, this event
@@ -181,21 +184,7 @@ if (modal){
             .then(data => {
                 modalContent.innerHTML = data['html']
                 passwordResetEmail = document.querySelector('#id_email')
-                submit = document.querySelector('button[type=submit]')
-            })
-        }
-
-        /* This event will be fired every time the target contains the password-reset class in it's classList, this event
-           will display the reset password form, we will collect the url from the anchor href attribute to make the request,
-           the response will be added to the modalContent.innerHTMl*/
-        if (e.target.classList.contains('new-password-reset')){
-            e.preventDefault()
-            e.stopPropagation()
-            passwordResetFormAW(e.target.href)
-            .then(data => {
-                modalContent.innerHTML = data['html']
-                passwordResetEmail = document.querySelector('#id_email')
-                submit = document.querySelector('button[type=submit]')
+                submitBtn = document.querySelector('.password-reset-submit-btn')
             })
         }
 
@@ -210,7 +199,7 @@ if (modal){
                 modalContent.innerHTML = data['html']
                 username = document.querySelector('#id_username')
                 password = document.querySelector('#id_password')
-                submit = document.querySelector('button[type=submit]')
+                submitBtn = document.querySelector('.login-submit-btn')
             })
         }
 
@@ -224,9 +213,9 @@ if (modal){
            if not, it will be hidden.*/
         if (e.target === username || e.target === password){
             if (username.value.length > 0 && password.value.length > 0){
-                submit.classList.add('button-fadeIn')
+                submitBtn.classList.add('submit-btn-fade-in')
             }else{
-                submit.classList.remove('button-fadeIn')
+                submitBtn.classList.remove('submit-btn-fade-in')
             }
         }
 
@@ -235,9 +224,9 @@ if (modal){
            if not, it will be hidden.*/
         if (e.target === passwordResetEmail){
             if (passwordResetEmail.value.length > 0 && passwordResetEmail.value.search('@') !== -1){
-                submit.classList.add('button-fadeIn')
+                submitBtn.classList.add('submit-btn-fade-in')
             }else{
-                submit.classList.remove('button-fadeIn')
+                submitBtn.classList.remove('submit-btn-fade-in')
             }
         }
 
@@ -246,9 +235,9 @@ if (modal){
         if (e.target.nodeName === 'INPUT' || e.target.nodeName === 'SELECT'){
             for (let i = 0; i<signUpInputs.length; i++){
                 if (signUpInputs[i].value && signUpInputs.length - i === 1){
-                    submit.classList.add('button-fadeIn')
+                    submitBtn.classList.add('submit-btn-fade-in')
                 }else{
-                   submit.classList.remove('button-fadeIn')
+                   submitBtn.classList.remove('submit-btn-fade-in')
                 }
             }
         }
@@ -259,8 +248,8 @@ if (modal){
     modal.addEventListener('mouseover', (e) => {
 
         // This event will be fired when the target is submit, the button-hover class will be added.
-        if (e.target == submit){
-            submit.classList.add('button-hover')
+        if (e.target === submitBtn){
+            submitBtn.classList.add('submit-btn-hover')
         }
 
         // This event will be fired when the target's nodeName is 'INPUT', the input-hover class will be added.
@@ -268,14 +257,9 @@ if (modal){
             e.target.classList.add('input-hover')
         }
 
-        // This event will be fired when the target's nodeName is 'A', the update-password-hover class will be added.
-        if (e.target.nodeName === 'A'){
-            e.target.classList.add('update-password-hover')
-        }
-
         // This event will be fired when the target's classList contains new-password-hover class, the new-password-hover class will be added.
-        if (e.target.classList.contains('new-password-reset')){
-            e.target.classList.add('new-password-reset-hover')
+        if (e.target.classList.contains('password-reset')){
+            e.target.classList.add('password-reset-hover')
         }
 
         // This event will be fired when the target's classList contains continue class, the continue class will be added.
@@ -288,8 +272,8 @@ if (modal){
     modal.addEventListener('mouseout', (e) => {
 
         // This event will be fired when the target is submit, the button-hover class will be removed.
-        if (e.target == submit){
-            submit.classList.remove('button-hover')
+        if (e.target === submitBtn){
+            submitBtn.classList.remove('submit-btn-hover')
         }
 
         // This event will be fired when the target's nodeName is 'INPUT', the input-hover class will be removed.
@@ -297,14 +281,10 @@ if (modal){
             e.target.classList.remove('input-hover')
         }
 
-        // This event will be fired when the target's nodeName is 'A', the update-password-hover class will be removed.
-        if (e.target.nodeName === 'A'){
-            e.target.classList.remove('update-password-hover')
-        }
 
         // This event will be fired when the target's classList contains new-password-hover class, the new-password-hover class will be removed.
-        if (e.target.classList.contains('new-password-reset')){
-            e.target.classList.remove('new-password-reset-hover')
+        if (e.target.classList.contains('password-reset')){
+            e.target.classList.remove('password-reset-hover')
         }
 
         // This event will be fired when the target's classList contains continue class, the continue class will be removed.
@@ -315,6 +295,7 @@ if (modal){
 
     // Submit Events
     modal.addEventListener('submit', (e) => {
+
         e.preventDefault()
         e.stopPropagation()
 
@@ -327,14 +308,15 @@ if (modal){
             let csrfmiddlewaretoken = document.querySelector('input[type=hidden]').value
             /* If the target contains the login-form classList, the loginAW function will be called, if the data is
                authentic then the user will be logged in, if not, an error will be displayed.*/
-             if (e.target.classList.contains('login-form')){
-                loginAW(formData, url, method, csrfmiddlewaretoken)
+             if (e.target.id === 'login-form'){
+                 loginAW(formData, url, method, csrfmiddlewaretoken)
                 .then(data => {
                     if (data['html']){
                         modalContent.innerHTML = data['html']
                         username = document.querySelector('#id_username')
                         password = document.querySelector('#id_password')
-                        submit = document.querySelector('button[type=submit]')
+                        submitBtn = document.querySelector('.submit-btn')
+                        passwordReset = document.querySelector('.password-reset')
                     }else{
                         window.location.href = '/home/'
                     }
@@ -343,7 +325,7 @@ if (modal){
 
             /* If the target contains the password-reset-form class in it's classList, the loginAW function will be called,
                and the response will be added to the modalContent.innerHTML*/
-             if (e.target.classList.contains('password-reset-form')){
+             if (e.target.id === 'password-reset-form'){
                 loginAW(formData, url, method, csrfmiddlewaretoken)
                 .then(data => {
                     if (data['html']){
@@ -355,11 +337,13 @@ if (modal){
             /* If the target's classList contains the signup-form class in its classList, the signUpAW function will be
                called and depending if we received errors or not, they will be displayed, else, the login form will
                be displayed.*/
-            if (e.target.classList.contains('signup-form')){
+            if (e.target.id === 'signup-form'){
                 signUpAW(formData, url, method, csrfmiddlewaretoken)
                 .then(data => {
                     if (data['error']){
                         modalContent.innerHTML = data['html']
+                        signUpInputs = document.querySelectorAll('input,select')
+                        submitBtn = document.querySelector('.submit-btn')
                     }else{
                         modal.classList.remove('modal-show')
                         loginBtn.click()
@@ -369,54 +353,3 @@ if (modal){
         }
     })
 }
-
-
-//        if (e.target.nodeName === 'FORM' && e.target.classList.contains('login-form')){
-//            let form = e.target
-//            let formData = new FormData(form)
-//            let url = form.action
-//            let method = form.method
-//            let csrfmiddlewaretoken = document.querySelector('input[type=hidden]').value
-//            loginAW(formData, url, method, csrfmiddlewaretoken)
-//            .then(data => {
-//                if (data['html']){
-//                    modalContent.innerHTML = data['html']
-//                    username = document.querySelector('#id_username')
-//                    password = document.querySelector('#id_password')
-//                    submit = document.querySelector('button[type=submit]')
-//                }else{
-//                    window.location.href = '/home/'
-//                }
-//            })
-//        }
-//
-//        if (e.target.nodeName === 'FORM' && e.target.classList.contains('password-reset-form')){
-//            let form = e.target
-//            let formData = new FormData(form)
-//            let url = form.action
-//            let method = form.method
-//            let csrfmiddlewaretoken = document.querySelector('input[type=hidden]').value
-//            loginAW(formData, url, method, csrfmiddlewaretoken)
-//            .then(data => {
-//                if (data['html']){
-//                    modalContent.innerHTML = data['html']
-//                }
-//            })
-//        }
-//
-//        if (e.target.nodeName === 'FORM' && e.target.classList.contains('signup-form')){
-//            let form = e.target
-//            let formData = new FormData(form)
-//            let url = form.action
-//            let method = form.method
-//            let csrfmiddlewaretoken = document.querySelector('input[type=hidden]').value
-//            signUpAW(formData, url, method, csrfmiddlewaretoken)
-//            .then(data => {
-//                if (data['error']){
-//                    modalContent.innerHTML = data['html']
-//                }else{
-//                    modal.classList.remove('modal-show')
-//                    loginBtn.click()
-//                }
-//            })
-//        }

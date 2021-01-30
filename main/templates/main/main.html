@@ -1,46 +1,67 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
 {% load static %}
-{% block title %}MediTracker{% endblock %}
-{% block body_block %}
-{% block return %}{% endblock %}{% block home %}{% endblock %}
-<link rel="stylesheet" href="{% static 'main/css/main.css' %}">
-    <!-- Background Video -->
-    <video autoplay muted loop>
-        <source src="{% static 'main/backgrounds/background_video.mp4' %}">
-    </video>
-    <!-- Login and Sign Up Buttons -->
-    <div class="overlay">
-        <div id="wrapper">
-            <img id="logo" src="{% static 'main/logo/logo.png' %}">
-            <ul>
-                <li data-url="{% url 'accounts:login' %}" class="login">
-                    Log In
-                </li>
-                <li class="sign-up">
-                    Sign Up
-                </li>
-            </ul>
-        </div>
-    </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediTracker</title>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+</head>
+    <body>
 
-    <!-- Modal -->
-    <div class="modal">
-        <div class="modal-content">
+        <!-- Background Image -->
+        <img src="{% static 'main/backgrounds/background.jpg' %}" alt="background" id="main-background">
 
+        <!-- Container -->
+        <div id="container">
+            <!-- Logo -->
+            <img id="logo" src="{% static 'main/logo/seal.svg' %}" alt="">
+            <!-- Authentication -->
+            <div id="authentication">
+                <div id="authentication-controls">
+                    <button type="button" id="login-btn" class="auth-btn" data-url="{% url 'accounts:login' %}">Log In</button>
+                    <button type="button" id="signup-btn" class="auth-btn">Sign Up</button>
+                </div>
+            </div>
+            <!-- Slogan Container -->
+            <div class="quote-container">
+                <q>{{ quote }}</q><br>
+                {% if author is not None %}
+                    <i>- {{ author }}</i>
+                {% endif %}
+            </div>
+            <!-- Footer -->
+            <div id="footer">
+                <div id="social-media-contact">
+                    <a href="" target="_blank"><img class="social-media-logo" src="{% static 'main/social_media_icons/facebook.svg' %}" alt=""></a>
+                    <a href="" target="_blank"><img class="social-media-logo" src="{% static 'main/social_media_icons/instagram.svg' %}" alt=""></a>
+                    <a href="" target="_blank"><img class="social-media-logo" src="{% static 'main/social_media_icons/twitter.svg' %}" alt=""></a>
+                    <a href="" target="_blank"><img class="social-media-logo" src="{% static 'main/social_media_icons/seal.svg' %}" alt=""></a>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- Account Type Selector -->
-    <div class="account-type-selector">
-        <div class="doctor-type tile" data-url="{% url 'accounts:signup' %}" data-type="doctor">
-            <i class="fas fa-user-md"></i>
-            Doctor
+        <!-- Account Type Selector -->
+        <div class="account-type-selector">
+            <div class="doctor-type tile" data-url="{% url 'accounts:signup' %}" data-type="doctor">
+                <i class="fas fa-user-md"></i>
+                Doctor
+            </div>
+            <div class="assistant-type tile" data-url="{% url 'accounts:signup' %}" data-type="assistant">
+                <i class="fas fa-user-nurse"></i>
+                Assistant
+            </div>
         </div>
-        <div class="assistant-type tile" data-url="{% url 'accounts:signup' %}" data-type="assistant">
-            <i class="fas fa-user-nurse"></i>
-            Assistant
-        </div>
-    </div>
 
-    <script src="{% static 'main/js/main.js' %}"></script>
-{%endblock%}
+        <!-- Modal -->
+        <div class="modal">
+            <div class="modal-content">
+
+            </div>
+        </div>
+
+        <script src="{% static 'main/js/main.js' %}"></script>
+    </body>
+</html>
+

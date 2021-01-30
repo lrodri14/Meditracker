@@ -160,6 +160,8 @@ TWILIO_CHAT_SERVICE_SID = os.environ.get('TWILIO_CHAT_SERVICE_SID')
 
 NUMVERIFY_API_KEY = os.environ.get('NUMVERIFY_API_KEY')
 
+PAPERQUOTES_API_KEY = os.environ.get('PAPERQUOTES_API_KEY')
+
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 LOGIN_URL = '/'

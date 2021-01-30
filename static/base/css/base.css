@@ -1,137 +1,85 @@
 /* This base.css file contains all the styles needed to present the base.html template, this file also contains the guide
    of the colors used in each element aroung the whole application, as well as the title size used in each element.*/
-
 /*
-    Color Listing
-    -------------
-    -------------
-    #496897;
-    #FFFFFF;
-    #5A7FAF;
-    #C7E8F3;
-    #00CCFF;
-    #A31621;
-    #456387;
-    #6082AD;
-    #6E8DB4;
-    #25BB41;
-    #CBA415;
-    rgba(0,0,0,0)
-    rgba(0,0,0,0.3)
-    #00E083;
-    #EAC234;
-    #D73533;
-    #95B6C6;
-    #E85858;
+
+    Global Styles
+    ------------------
+    ------------------
+    margin: 0;
+    padding: 0;
+    color: #FFFFFF;
+    font-family: 'Nunito', sans-serif;
 
 
-    Base
-    -----
-
-    Background Color: #496897;
-    Text Color: #FFFFFF;
-    Button Color: #5A7FAF;
-    Button Hovers: #C7E8F3;
-    Button Hovers Text: #496897;
-    Button Borders: #C7E8F3;
-    Input Background: #5A7FAF;
-    Input Borders: #C7E8F3;
-    Input Text: #FFFFFF;
-    Forms: #5A7FAF;
-    Icons: #FFFFFF;
-    Icons Hover: #00CCFF;
-    Search Bar: #496897;
-    Query Results: #496897;
-
-    Main Forms
-    ----------
-    Background color: rgba(0,0,0,0)
-    Text Color: #FFFFFF
-    Button Hover: #FFFFFF
-    Button Text on Hover: #496897;
-
-    Menu
-    -----
-
-    Menu Background: #496897;
-    Menu Text: #FFFFFF;
-    Menu Tile Hover: #FFFFFF;
-    Menu Text Hover: #3C567C;
-    Menu Exit: #A31621;
-
-    Tiles
-    -----
-
-    Tiles Background Color: #5A7FAF;
-    Tiles Hover: #FFFFFF;
-
-    Table
-    _____
-    Table Header: #456387;
-    Table Row (Odd): #6082AD;
-    Table Row (Even): #6E8DB4;
-    Table Row Hover: #C7E8F3;
-    Table Row Hover Text: #496897;
+    New Colors Listing
+    ------------------
+    ------------------
+    #FFFFFF
+    #000000
 
 
-    Scroll
-    --------
-    Scroll bar track: #3C567C;
-    Scroll bar thumb: #C7E8F3;
-
-    Status
-    ------
-    Open: #EAC234;
-    Confirmed: #00E083;
-    Closed: #D73533;
-    Cancelled: #95B6C6;
-    Pending: #EAC234;
-    Attended: #00E083;
-    Never Attended: #D73533;
-
-    Warnings
-    _______________________
-
-    In-Order: #25BB41;
-    Anomally: #CBA415;
-    Popup: #CBA415;
-    Popup Text: #496897;
-
-    Operations
-    ----------
-
-    Add: #25BB41;
-    Delete: #A31621;
-    Update: #CBA415;
-    Confirm: #25BB41;
-    Cancel: #D73533;
-
-    Errors & Reminders
-    __________________
-
-    Error: #FFFFFF;
-    Reminders: #FFFFFF;
+    Effects Used
+    ----------------
+    GlassMorphism
 
 
-    Navigator
-    _________
-    Navigator Background: #496897;
-    Navigator Text: #FFFFFF;
-    Navigator Tile Hover: #FFFFFF;
-    Navigator Text Hover: #3C567C;
-    Navigator Exit: #E85858;
+    Authentication Buttons
+    ----------------------
+    cursor: pointer;
+    border: none;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    font-size: 16px;
+    height: 50px;
+    width: 120px;
+    transition: background-color 0.5s ease, color 0.5s ease, opacity 0.5s;
 
-    # Titles
-    Titles: H2
 
-    # Filter Forms Font Size:
-    Title: H3
-    Other Content: Paragraph + Small
+    Authentication Submit Buttons
+    ----------------------
+    cursor: pointer;
+    margin-top: 5%;
+    width: 100px;
+    height: 30px;
+    border: 1px solid #FFFFFF;
+    border-radius: 25px;
+    background-color: transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: background-color 0.5s, color 0.5s, opacity 0.5s;
 
-    #Modal Timing
-    Timing: 0.3s;
-    Background opacity: rgba(0,0,0,0.3)
-*/
+
+    Forms
+    ------------------
+    text-align: center;
+    border-radius: 25px
+    background-color: rgba(255,255,255,0)
+    backdrop-filter: blur(10px)
+    -webkit-backdrop-filter: blur(10px)
+    background-clip: padding-box;
+    animation: show-up 2s linear forwards
+    z-index: 1
+
+
+    Inputs
+    --------------------
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #FFFFFF;
+    color: #FFFFFF;
+
+
+    Selects
+    --------------------
+    text-align-last: center;
+    border: none;
+    border-bottom: 1px solid #FFFFFF;
+    color: #FFFFFF;
+
+
+ */
 
 /*////////////////////////////////////////////////////// Body ////////////////////////////////////////////////////////*/
 body{
