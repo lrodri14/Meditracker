@@ -13,7 +13,7 @@ let extras = document.querySelector('.extras')
 let appointments = document.querySelector('.appointments')
 let exams = document.querySelector('.exams')
 let charges = document.querySelector('.charges')
-let title = document.querySelector('#title')
+let title = document.querySelector('#patient-name')
 
 // Image Preview
 let previewImg = document.querySelector('.image-preview')
@@ -164,8 +164,8 @@ body.addEventListener('mouseover', (e) => {
     if (e.target.nodeName === 'TD'){
         let row
         e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-        row.style.backgroundColor = '#C7E8F3'
-        row.style.color = '#496897'
+        row.style.backgroundColor = '#FFFFFF'
+        row.style.color = '#000000'
     }
 
     /* This event will be fired every time a hover occurs over the target and the target or parentNode contains the

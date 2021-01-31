@@ -63,12 +63,41 @@
     z-index: 1
 
 
+    Table
+    --------------------
+        margin: auto;
+        width: 100%;
+        border-collapse: collapse;
+        background-color: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        background-clip: padding-box;
+        animation: show-up 0.5s linear forwards;
+
+        tr:nth-child(odd)
+            background-color: rgba(255,255,255,0.1);
+
+
+        tr:nth-child(even)
+            background-color: rgba(255,255,255,0.2);
+
+
     Inputs
     --------------------
+    color: #FFFFFF;
     text-align: center;
     border: none;
     border-bottom: 1px solid #FFFFFF;
-    color: #FFFFFF;
+
+    Textarea
+    ------------------
+      font-family: 'Nunito', sans-serif;
+      color: #FFFFFF;
+      background-color: transparent;
+      border: 1px solid #FFFFFF;
+      padding: 5px;
+      resize: none;
+      transition: 0.5s;
 
 
     Selects
@@ -78,7 +107,8 @@
     border-bottom: 1px solid #FFFFFF;
     color: #FFFFFF;
 
-    Modals and Modal Content
+
+    Modals
     ---------------------
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
@@ -90,9 +120,9 @@
 /*////////////////////////////////////////////////////// Body ////////////////////////////////////////////////////////*/
 
 body{
+    font-family: 'Nunito', sans-serif;
     padding: 0;
     margin: 0;
-    font-family: 'Nunito', sans-serif;
     color: #FFFFFF;
     overflow: hidden;
 }
@@ -115,15 +145,15 @@ h1,h2,h3,h4,h5,h6{
 /*////////////////////////////////////////////////////// Inputs //////////////////////////////////////////////////////*/
 
 input{
-  font-family: 'Nunito', sans-serif;
-  text-align: center;
-  background-color: transparent;
-  border: none;
-  color: #FFFFFF;
-  border-bottom: 1px solid #FFFFFF;
-  height: 30px;
-  width: 60%;
-  transition: width 0.5s;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: transparent;
+    font-family: 'Nunito', sans-serif;
+    border: none;
+    border-bottom: 1px solid #FFFFFF;
+    height: 30px;
+    width: 60%;
+    transition: width 0.5s;
 }
 
 input:focus{
@@ -135,15 +165,53 @@ input:focus{
   transition: width 0.5s;
 }
 
+textarea{
+  font-family: 'Nunito', sans-serif;
+  color: #FFFFFF;
+  background-color: transparent;
+  border: 1px solid #FFFFFF;
+  padding: 5px;
+  resize: none;
+  transition: 0.5s;
+}
+
+textarea:focus{
+  outline: none;
+}
+
+select{
+  font-family: 'Nunito', sans-serif;
+  text-align-last: center;
+  color: #FFFFFF;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #FFFFFF;
+  height: 30px;
+  width:60%;
+  margin: 5px;
+  transition: 0.5s;
+}
+
+select:focus{
+    outline: none;
+}
+
 
 /*////////////////////////////////////////////////////// Buttons //////////////////////////////////////////////////////*/
 
 button{
     font-family: 'Nunito', sans-serif;
-    border: 1px solid #FFFFFF;
     border-radius: 20px;
+    border: 1px solid #FFFFFF;
     background-color: transparent;
     color: #FFFFFF;
+}
+
+.button-hover{
+    background-color: #FFFFFF;
+    color: #000000;
+    transition: 0.5s;
+    cursor: pointer;
 }
 
 /*///////////////////////////////////////////////// ScrollBar ////////////////////////////////////////////////////////*/
@@ -170,8 +238,8 @@ button{
     position: relative;
     font-size: 25px;
     transition: 0.5s;
-    margin-top: 0.5%;
-    margin-left: 0.5%;
+    margin-top: 1%;
+    margin-left: 1%;
 }
 
 .fa-long-arrow-alt-left:hover{
@@ -210,6 +278,70 @@ button{
     color: #00CCFF;
     transition: 0.5s;
     cursor: pointer;
+}
+
+.fa-search{
+    position: absolute;
+    top: 4.5%;
+    left: 80%;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+.fa-angle-left{
+    cursor: pointer;
+    transition: 0.5s;
+    float: left;
+}
+
+.fa-angle-right{
+    cursor: pointer;
+    transition: 0.5s;
+    float: right;
+}
+
+.fa-angle-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
+.fa-plus{
+    padding: 5px 10px 5px 5px;
+    transition: 0.5s;
+}
+
+.fa-plus-hover{
+    color: #25BB41;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-trash-hover{
+    color: #A31621;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-edit-hover{
+    color: #CBA415;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.fa-envelope-hover{
+    color: #00CCFF;
+    transition: 0.5s;
+}
+
+.fa-filter{
+    float: left;
+    transition: 0.5s;
+}
+
+.fa-filter-hover{
+    cursor: pointer;
+    color: #00CCFF;
+    transition: 0.5s;
 }
 
 a {
@@ -517,23 +649,23 @@ a {
 /*/////////////////////////////////////////////////////// Modal //////////////////////////////////////////////////////*/
 
 .modal{
-    background-color: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background-clip: padding-box;
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.3s, opacity 0.3s;
 }
 
 .modal-show{
-    visibility: visible;
     opacity: 1;
+    visibility: visible;
     transition: opacity 0.3s;
 }
 
@@ -574,6 +706,13 @@ a {
     margin-right: -50%;
     transform: translate(-50%, -50%);
     animation: beat 1s infinite alternate;
+}
+
+/*//////////////////////////////////////////////////// Animations ////////////////////////////////////////////////////*/
+
+@keyframes show-up{
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 @keyframes spin{

@@ -24,27 +24,19 @@ h1{
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
+    width: 57%;
+    height: 30px;
+    padding-left: 10px;
     border: none;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-clip: padding-box;
-    width: 57%;
-    height: 30px;
-    padding-left: 10px;
-    animation: show-up 1s linear forwards;
+    animation: show-up 0.5s linear forwards;
 }
 
 #search-bar:focus{
     outline: none;
-}
-
-.fa-search{
-    position: absolute;
-    top: 4.5%;
-    left: 80%;
-    font-size: 20px;
-    color: #FFFFFF;
 }
 
 /*//////////////////////////////////////////////////// Query Results /////////////////////////////////////////////////*/
@@ -58,18 +50,17 @@ h1{
     overflow: scroll;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s;
 }
 
 table{
+    margin: auto;
+    width: 100%;
+    border-collapse: collapse;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-clip: padding-box;
-    border-collapse: collapse;
-    margin: auto;
-    width: 100%;
-    animation: show-up 1s linear forwards;
+    animation: show-up 0.5s linear forwards;
 }
 
 tr{
@@ -107,7 +98,6 @@ tr:nth-child(even){
 .query-results-show{
     opacity: 1;
     visibility: visible;
-    transition: 0.5s;
 }
 
 .no-results{
@@ -140,6 +130,8 @@ tr:nth-child(even){
 /*/////////////////////////////////////////////////////// Tiles //////////////////////////////////////////////////////*/
 
 .tile{
+    color: #FFFFFF;
+    cursor: pointer;
     text-align: center;
     padding: 20%;
     border-radius: 10px;
@@ -147,16 +139,14 @@ tr:nth-child(even){
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-clip: padding-box;
-    color: #FFFFFF;
-    cursor: pointer;
     transition: background-color 0.5s;
-    animation: show-up 1s linear forwards;
+    animation: show-up 0.5s linear forwards;
 }
 
 .tile-hover{
-    background-color: #FFFFFF;
-    color: #000000;
     border: none;
+    color: #000000;
+    background-color: #FFFFFF;
     transition: background-color 0.5s;
 }
 
@@ -171,29 +161,6 @@ tr:nth-child(even){
 
 h3{
     pointer-events: none;
-}
-
-/*/////////////////////////////////////////////////////// Modal //////////////////////////////////////////////////////*/
-
-.modal{
-    background-color: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background-clip: padding-box;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
-}
-
-.modal-show{
-    opacity: 1;
-    visibility: visible;
-    transition: all 0.3s;
 }
 
 /*//////////////////////////////////////////////////// Modal Content /////////////////////////////////////////////////*/
@@ -212,9 +179,9 @@ h3{
 }
 
 button{
-    cursor: pointer;
     width: 100px;
     height: 30px;
+    cursor: pointer;
     border: 1px solid #FFFFFF;
     border-radius: 20px;
     background-color: transparent;
@@ -226,14 +193,8 @@ button:focus{
 }
 
 .button-hover{
-    background-color: #FFFFFF;
     color: #000000;
+    background-color: #FFFFFF;
     transition: background-color 0.5s, color 0.5s,;
 }
 
-/*//////////////////////////////////////////////////// Animations ////////////////////////////////////////////////////*/
-
-@keyframes show-up{
-    from {opacity: 0;}
-    to {opacity: 1;}
-}

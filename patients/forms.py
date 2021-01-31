@@ -197,4 +197,4 @@ class EmailForm(forms.Form):
     """
 
     subject = forms.CharField(widget=forms.TextInput)
-    body = forms.CharField(widget=forms.Textarea(attrs={"cols": 100}))
+    body = forms.CharField(widget=forms.Textarea(attrs={"cols": 100, 'rows': 8}))

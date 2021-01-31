@@ -151,7 +151,7 @@ class Allergy(models.Model):
         any registers, if it is, then the delete operation will not be performed.
     """
     allergy_type = models.CharField('Allergy', max_length=100, null=False, blank=False, help_text='Allergy Type')
-    created_by = models.ForeignKey(user, blank=False, on_delete=models.CASCADE, null=True,help_text='User by who this allergy was created', related_name='user')
+    created_by = models.ForeignKey(user, blank=False, on_delete=models.CASCADE, null=True, help_text='User by who this allergy was created', related_name='user')
 
     class Meta:
         unique_together = ['allergy_type', 'created_by']

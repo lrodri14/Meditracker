@@ -32,7 +32,7 @@
 /*Wrapper*/
 .wrapper{
     display: grid;
-    grid-template-columns: 80% 19%;
+    grid-template-columns: 80% 18%;
     grid-gap: 1%;
 }
 
@@ -42,13 +42,14 @@ h2{
 
 /*Table*/
 table{
+    margin: auto;
+    width: 100%;
+    border-collapse: collapse;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-clip: padding-box;
-    border-collapse: collapse;
-    margin: auto;
-    width: 100%;
+    animation: show-up 1s linear forwards;
 }
 
 #paginator{
@@ -71,50 +72,10 @@ table{
 }
 
 #heading{
-    background-color: rgba(255,255,255,0.3);
     color: #FFFFFF;
+    background-color: rgba(255,255,255,0.3);
     line-height: 25px;
     cursor: default;
-}
-
-.fa-angle-left{
-    cursor: pointer;
-    transition: 0.5s;
-    float: left;
-}
-
-.fa-angle-right{
-    cursor: pointer;
-    transition: 0.5s;
-    float: right;
-}
-
-.fa-angle-hover{
-    color: #00CCFF;
-    transition: 0.5s;
-}
-
-.fa-plus{
-    padding: 5px 10px 5px 5px;
-    transition: 0.5s;
-}
-
-.fa-plus-hover{
-    color: #25BB41;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.fa-trash-hover{
-    color: #A31621;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.fa-edit-hover{
-    color: #CBA415;
-    cursor: pointer;
-    transition: 0.5s;
 }
 
 .fa-exclamation-circle{
@@ -138,14 +99,15 @@ tr{
 }
 
 tr th{
+    text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 tr td{
+    text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
-    text-align: center;
     max-width: 100px;
     white-space: nowrap;
     overflow: hidden;
@@ -164,22 +126,22 @@ tr:nth-child(even){
 .popup{
     position: absolute;
     left: 81%;
-    visibility: hidden;
     opacity: 0;
+    visibility: hidden;
     transition: 0.5s;
 }
 
 .popup-show{
-    visibility: visible;
     opacity: 1;
+    visibility: visible;
     transition: opacity 0.5s;
 }
 
 .popup-text{
     max-width: 29%;
     height: 5%;
-    background-color: rgba(255,255,255,0.1);
     color: #FFFFFF;
+    background-color: rgba(255,255,255,0.1);
     font-size: 10px;
     padding: 5px;
 }
@@ -189,17 +151,6 @@ tr:nth-child(even){
 }
 
 /*Form*/
-
-.fa-filter{
-    float: left;
-    transition: 0.5s;
-}
-
-.fa-filter-hover{
-    cursor: pointer;
-    color: #00CCFF;
-    transition: 0.5s;
-}
 
 .fa-filter-hide{
     display: none;

@@ -1,20 +1,19 @@
 /*This add_patient.css stylesheet contains all the styles for the update_patient.html template, it is divided into four
   sections: wrapper, forms, modal and save confirmation modal.*/
 
-
 /*################################################### Wrapper ########################################################*/
 
 .wrapper{
+    height: 100vh;
     display: grid;
-    grid-template-columns: 30% 69%;
-    grid-gap: 1%;
-    height: 98vh;
+    grid-template-columns: 30% 70%;
 }
 
 .fa-users{
     position: absolute;
-    top: 1.5%;
-    right: 1%;
+    top: 0%;
+    right: 0%;
+    z-index: 1;
 }
 
 .fa-long-arrow-alt-left{
@@ -22,9 +21,12 @@
 }
 
 .general-info{
-    background-color: #5A7FAF;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
     padding: 10px;
+    border-right: 1px solid #FFFFFF;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
 }
 
 .info{
@@ -33,9 +35,11 @@
 }
 
 .extra-info{
-    background-color: #5A7FAF;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.88);
     padding: 10px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
 }
 
 
@@ -43,10 +47,6 @@
 
 form{
     text-align: center;
-}
-
-::-webkit-scrollbar-track {
-    background: #5A7FAF;
 }
 
 .error{
@@ -64,8 +64,8 @@ form{
 }
 
 h1{
-    overflow: auto;
     padding: 25px;
+    overflow: auto;
 }
 
 table{
@@ -74,47 +74,6 @@ table{
 
 td{
     width: 20%;
-}
-
-.fa-plus{
-    transition: 0.5s;
-}
-
-.fa-plus-hover{
-    color: #25BB41;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.fa-trash{
-    transition: 0.5s;
-}
-
-.fa-trash-hover{
-    color: #A31621;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-input{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  transition: 0.5s;
-}
-
-.input-hover{
-    width: 75%;
-    transition: 0.5s;
-}
-
-input:focus{
-    outline: none;
 }
 
 #id_phone_number{
@@ -130,36 +89,6 @@ input:focus{
 .flag-icon{
     position: relative;
     left: -10%;
-}
-
-textarea{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: 1px solid #C7E8F3;
-  resize: none;
-  transition: 0.5s;
-}
-
-textarea:focus{
-  outline: none;
-}
-
-select{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align-last:center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  margin: 5px;
-  transition: 0.5s;
-}
-
-select:focus{
-    outline: none;
 }
 
 .allergy-delete-check{
@@ -182,11 +111,7 @@ button{
     margin: 20px;
     width: 30%;
     height: 30px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #5A7FAF;
-    border-color: #C7E8F3;
     border-radius: 10px;
-    color: #FFFFFF;
     transition: 0.5s;
 }
 
@@ -194,37 +119,16 @@ button:focus{
     outline: none;
 }
 
-.button-hover{
-    background-color: #C7E8F3;
-    color: #5A7FAF;
-    transition: 0.5s;
-    cursor: pointer;
-}
 
 /*#################################################### Modal #########################################################*/
 
-.modal{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0,0,0,0.3);
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.5s;
-}
-
-.modal-show{
-    visibility: visible;
-    opacity: 1;
-    transition: 0.5s;
-}
-
 /*Modal Forms*/
 .modal-content > form{
-    text-align: center;
-    background-color: #5A7FAF;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     padding: 20px;
     position: absolute;
     top: 50%;
@@ -238,30 +142,37 @@ button:focus{
 /*######################################## Save confirmation modal ###################################################*/
 
 .save-confirmation-modal{
-    background-color: rgba(0,0,0,0.3);
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    visibility: hidden;
     opacity: 0;
+    visibility: hidden;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     transition: opacity 0.3s;
 }
 
 .save-confirmation-modal-show{
-    visibility: visible;
     opacity: 1;
+    visibility: visible;
     transition: opacity 0.3s;
 }
 
 .save-confirmation-modal-content{
-    text-align: center;
-    background-color: #5A7FAF;
     width: 50%;
+    padding: 2%;
     margin-left: 25%;
     margin-top: 20%;
-    padding: 2%;
+    text-align: center;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
 }
 
 .save-confirmation-modal-content button{
