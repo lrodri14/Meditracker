@@ -338,8 +338,8 @@ if (recordsTable){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
             let url = row.getAttribute('data-url')
-            row.style.backgroundColor = '#C7E8F3'
-            row.style.color = '#496897'
+            row.style.backgroundColor = '#FFFFFF'
+            row.style.color = '#000000'
             consultSummaryAW(url)
             .then(data => {
                 recordsSummary.innerHTML = data['html']
@@ -610,14 +610,14 @@ if (controllers){
 
         // This event will be fired every time a hover occurs over a controller, it will add the 'angle-active' class to the classList.
         controllers[i].addEventListener('mouseover', function(){
-            this.classList.add('angle-active')
+            this.classList.add('fa-angle-hover')
         })
 
         // Controllers Mouseout events
 
         // This event will be fired every time a hover out occurs from a controller, it will remove the 'angle-active' class to the classList.
         controllers[i].addEventListener('mouseout', function(){
-            this.classList.remove('angle-active')
+            this.classList.remove('fa-angle-hover')
         })
 
         // Controllers Click events
@@ -963,6 +963,8 @@ if (modal){
 
     modal.addEventListener('click', (e) => {
 
+        e.preventDefault()
+        e.stopPropagation()
         // This event will be fired every time the target is the modal itself, or a button with 'No' as it's text content, this will remove the 'modal-show' class from the modal.
         if (e.target === modal || (e.target.nodeName === 'BUTTON' && e.target.textContent === 'No')){
             modal.classList.remove('modal-show')
@@ -996,7 +998,7 @@ if (modal){
 //            }
 //        }
 
-        form.submit()
+//        form.submit()
 
 
    })

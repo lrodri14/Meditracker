@@ -118,8 +118,8 @@ if (table){
         if (e.target.nodeName === 'TD' ||  e.target.classList.contains('fa-edit')){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-            row.style.backgroundColor = '#C7E8F3'
-            row.style.color = '#496897'
+            row.style.backgroundColor = '#FFFFFF'
+            row.style.color = '#000000'
         }
 
         /*This event will be fired every time a mouseover occurs over a target which contains the 'fa-plus' class in it's

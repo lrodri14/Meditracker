@@ -4,10 +4,12 @@
 """
 import calendar
 import requests
+from django.db.models import Q
 from twilio.rest import Client
 from django.utils import timezone
 from twilio.base.exceptions import TwilioRestException
 from meditracker.settings import TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, NUMVERIFY_API_KEY
+
 
 # Twilio Client instance
 client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
@@ -143,6 +145,7 @@ def filter_conditional_results(user, **kwargs):
         three different type of individual filters: 'patient', 'month' and 'year', the same way you can mix them to get
         the results expected.
     """
+    from appointments.models import Consult
     cleaned_data = kwargs.pop('cleaned_data')
     patient = cleaned_data.get('patient')
     month = int(cleaned_data.get('month'))

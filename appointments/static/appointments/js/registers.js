@@ -66,8 +66,8 @@ if (wrapper){
         if (e.target.nodeName === 'TD' || (e.target.classList.contains('fa-edit') || e.target.classList.contains('fa-check') || e.target.classList.contains('fa-times-circle'))){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-            row.style.backgroundColor = '#C7E8F3'
-            row.style.color = '#496897'
+            row.style.backgroundColor = '#FFFFFF'
+            row.style.color = '#000000'
         }
 
         /* This event is fired every time a hover occurs over an input tag, it will add the input-hover class to the target*/

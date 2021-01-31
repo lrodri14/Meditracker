@@ -65,21 +65,21 @@
 
     Table
     --------------------
-        margin: auto;
-        width: 100%;
-        border-collapse: collapse;
+    margin: auto;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    animation: show-up 0.5s linear forwards;
+
+    tr:nth-child(odd)
         background-color: rgba(255,255,255,0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        background-clip: padding-box;
-        animation: show-up 0.5s linear forwards;
-
-        tr:nth-child(odd)
-            background-color: rgba(255,255,255,0.1);
 
 
-        tr:nth-child(even)
-            background-color: rgba(255,255,255,0.2);
+    tr:nth-child(even)
+        background-color: rgba(255,255,255,0.2);
 
 
     Inputs
@@ -91,14 +91,13 @@
 
     Textarea
     ------------------
-      font-family: 'Nunito', sans-serif;
-      color: #FFFFFF;
-      background-color: transparent;
-      border: 1px solid #FFFFFF;
-      padding: 5px;
-      resize: none;
-      transition: 0.5s;
-
+    font-family: 'Nunito', sans-serif;
+    color: #FFFFFF;
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    padding: 5px;
+    resize: none;
+    transition: 0.5s;
 
     Selects
     --------------------
@@ -106,7 +105,6 @@
     border: none;
     border-bottom: 1px solid #FFFFFF;
     color: #FFFFFF;
-
 
     Modals
     ---------------------
@@ -179,6 +177,10 @@ textarea:focus{
   outline: none;
 }
 
+textarea::-webkit-input-placeholder {
+  color: #FFFFFF;
+}
+
 select{
   font-family: 'Nunito', sans-serif;
   text-align-last: center;
@@ -205,6 +207,18 @@ button{
     border: 1px solid #FFFFFF;
     background-color: transparent;
     color: #FFFFFF;
+    z-index: 1;
+}
+
+button:focus{
+    outline: none;
+}
+
+.button-form-hover{
+    color: #000000;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
 .button-hover{
@@ -306,13 +320,13 @@ button{
 }
 
 .fa-plus{
+    cursor: pointer;
     padding: 5px 10px 5px 5px;
     transition: 0.5s;
 }
 
 .fa-plus-hover{
     color: #25BB41;
-    cursor: pointer;
     transition: 0.5s;
 }
 

@@ -5,10 +5,13 @@ sections: Wrapper, Table, Forms, Pagination, No Data*/
 
 .wrapper{
     display: grid;
-    grid-template-columns: 80% 19%;
+    grid-template-columns: 80% 18%;
     grid-gap: 1%;
 }
 
+h2, #item-count{
+    margin-left: 1%;
+}
 /*########################################################## Paginator ###############################################*/
 
 #paginator{
@@ -28,35 +31,23 @@ sections: Wrapper, Table, Forms, Pagination, No Data*/
     font-size: 24px;
 }
 
-.fa-angle-left{
-    cursor: pointer;
-    transition: 0.5s;
-    float: left;
-}
-
-.fa-angle-right{
-    cursor: pointer;
-    transition: 0.5s;
-    float: right;
-}
-
-.fa-angle-hover{
-    color: #00CCFF;
-    transition: 0.5s;
-}
-
 /*########################################################## Table ###################################################*/
 
 table{
-    border-collapse: collapse;
-    margin: auto;
     width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    animation: show-up 0.5s linear forwards;
 }
 
 #heading{
-    background-color: #456387;
-    line-height: 25px;
     cursor: default;
+    line-height: 25px;
+    background-color: rgba(255,255,255,0.3);
 }
 
 tr{
@@ -78,12 +69,12 @@ tr td{
 }
 
 tr:nth-child(odd){
-    background-color: #6082AD;
+    background-color: rgba(255,255,255,0.1);
     transition: 0.5s;
 }
 
 tr:nth-child(even){
-    background-color: #6E8DB4;
+    background-color: rgba(255,255,255,0.2);
     transition: 0.5s;
 }
 
@@ -144,11 +135,14 @@ tr:nth-child(even){
 
 form{
     text-align: center;
-    background-color: #5A7FAF;
     padding: 10px;
     transform: translateY(-200%);
     transition: 0.5s;
     visibility: hidden;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     transition: 0.5s;
 }
 
@@ -162,69 +156,13 @@ form{
     transition: transform 0.5s ease-out;
 }
 
-input{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  transition: 0.5s;
-}
-
-input:focus{
-    outline: none;
-}
-
-.input-hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-select{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align-last:center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  margin: 5px;
-  transition: 0.5s;
-}
-
-select:focus{
-    outline: none;
-}
-
 button{
     width: 30%;
     height: 30px;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    background-color: #5A7FAF;
-    border-color: #C7E8F3;
-    border-radius: 10px;
-    color: #FFFFFF;
 }
 
 button:focus{
     outline: none;
-}
-
-.button-form-hover{
-    background-color: #C7E8F3;
-    color: #496897;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-.button-hover{
-    color: #12212b;
-    transition: 0.5s;
-    cursor: pointer;
 }
 
 /*########################################################## No Data #################################################*/

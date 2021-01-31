@@ -12,7 +12,7 @@
             <p>{{ forloop.counter }}.- {{ drug }}</p>
         {% endfor %}
     {% endif %}
-    {% if consult.medicin e%}
+    {% if consult.medicine %}
         <h4>Indications</h4>
         {% for indication in consult.indications.splitlines %}
             <p>{{ forloop.counter }}.- {{ indication }}</p>
@@ -21,7 +21,7 @@
     {% if consult.actions %}
         <h4>Actions</h4>
         {% for actions in consult.actions.splitlines %}
-            <p>{{f orloop.counter }}.- {{ actions }}</p>
+            <p>{{ forloop.counter }}.- {{ actions }}</p>
         {% endfor %}
     {% endif %}
 {% endif %}
