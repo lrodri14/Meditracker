@@ -55,6 +55,7 @@ tr{
     line-height: 20px;
     margin: 10px;
     transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
 }
 
 tr th{
@@ -76,48 +77,6 @@ tr:nth-child(odd){
 tr:nth-child(even){
     background-color: rgba(255,255,255,0.2);
     transition: 0.5s;
-}
-
-#Open{
-    background-color: #EAC234;
-    color: #12212b;
-    height: 100%;
-}
-
-#Confirmed{
-    background-color: #00E083;
-    color: #12212b;
-    height: 100%;
-}
-
-#Cancelled{
-    background-color: #95B6C6;
-    color: #12212b;
-    height: 100%;
-}
-
-#Closed{
-    background-color: #D73533;
-    color: #12212b;
-    height: 100%;
-}
-
-#never_attended{
-    background-color: #D73533;
-    color: #12212b;
-    height: 100%;
-}
-
-#pending{
-    background-color: #EAC234;
-    color: #12212b;
-    height: 100%;
-}
-
-#attended{
-    background-color: #00E083;
-    color: #12212b;
-    height: 100%;
 }
 
 /*########################################################## Forms ###################################################*/

@@ -49,7 +49,7 @@ table{
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-clip: padding-box;
-    animation: show-up 1s linear forwards;
+    animation: show-up 0.5s linear forwards;
 }
 
 #paginator{
@@ -96,6 +96,7 @@ tr{
     line-height: 20px;
     cursor: pointer;
     transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
 }
 
 tr th{

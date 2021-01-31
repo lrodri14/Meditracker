@@ -39,7 +39,7 @@ def patients(request):
     doctor = doctor_group in request.user.groups.all()
     template = 'patients/patients.html'
     patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
-    paginator = Paginator(patients_list, 17)
+    paginator = Paginator(patients_list, 1)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     patient_filter = PatientFilterForm

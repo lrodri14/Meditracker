@@ -51,6 +51,7 @@ tr{
     line-height: 20px;
     cursor: pointer;
     transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
 }
 
 tr th{
@@ -72,11 +73,6 @@ tr:nth-child(odd){
 tr:nth-child(even){
     background-color: rgba(255,255,255,0.2);
     transition: background-color 0.5s;
-}
-
-#status-0{
-    background-color: #EAC234;
-    color: #000000;
 }
 
 /*#################################################### PopUp #########################################################*/

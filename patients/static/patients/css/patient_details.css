@@ -117,6 +117,7 @@ table{
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-clip: padding-box;
+    animation: show-up 0.5s linear forwards;
 }
 
 tr{
@@ -124,6 +125,7 @@ tr{
     margin: 10px;
     cursor: pointer;
     transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
 }
 
 tr th{
@@ -152,41 +154,6 @@ tr:nth-child(even){
     line-height: 25px;
     cursor: default;
 }
-
-.attended{
-    background-color: #00E083;
-    color: #000000 !important;
-}
-
-.not-attended{
-    background-color: #D73533;
-    color: #000000 !important;
-}
-
-.Open{
-    background-color: #EAC234;
-    color: #000000 !important;
-    height: 100%;
-}
-
-.Confirmed{
-    background-color: #00E083;
-    color: #000000 !important;
-    height: 100%;
-}
-
-.Canceled{
-    background-color: #95B6C6;
-    color: #000000 !important;
-    height: 100%;
-}
-
-.Closed{
-    background-color: #D73533;
-    color: #000000 !important;
-    height: 100%;
-}
-
 /*##################################################### Filtering Form ###############################################*/
 
 .fa-filter{

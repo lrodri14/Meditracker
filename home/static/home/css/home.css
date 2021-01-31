@@ -68,6 +68,7 @@ tr{
     max-line-height: 15px;
     cursor: pointer;
     transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
 }
 
 tr td{
@@ -89,6 +90,7 @@ tr td{
 
 tr:nth-child(odd){
     background-color: rgba(255,255,255,0.1);
+
 }
 
 tr:nth-child(even){

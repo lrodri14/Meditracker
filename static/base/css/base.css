@@ -59,7 +59,7 @@
     backdrop-filter: blur(10px)
     -webkit-backdrop-filter: blur(10px)
     background-clip: padding-box;
-    animation: show-up 2s linear forwards
+    animation: show-up 2s linear forwards;
     z-index: 1
 
 
@@ -139,6 +139,97 @@ body{
 h1,h2,h3,h4,h5,h6{
     color: #FFFFFF;
 }
+
+/*////////////////////////////////////////////////////// Status //////////////////////////////////////////////////////*/
+
+#Open{
+    background-color: #EAC234;
+    color: #12212b;
+    height: 100%;
+}
+
+#Confirmed{
+    background-color: #00E083;
+    color: #12212b;
+    height: 100%;
+}
+
+#Cancelled{
+    background-color: #95B6C6;
+    color: #12212b;
+    height: 100%;
+}
+
+#Closed{
+    background-color: #D73533;
+    color: #12212b;
+    height: 100%;
+}
+
+.Open{
+    background-color: #EAC234;
+    color: #12212b;
+    height: 100%;
+}
+
+.Confirmed{
+    background-color: #00E083;
+    color: #12212b;
+    height: 100%;
+}
+
+.Cancelled{
+    background-color: #95B6C6;
+    color: #12212b;
+    height: 100%;
+}
+
+.Closed{
+    background-color: #D73533;
+    color: #12212b;
+    height: 100%;
+}
+
+#pending{
+    background-color: #EAC234;
+    color: #12212b;
+    height: 100%;
+}
+
+#attended{
+    background-color: #00E083;
+    color: #12212b;
+    height: 100%;
+}
+
+.attended{
+    background-color: #00E083;
+    color: #12212b;
+    height: 100%;
+}
+
+.not-attended{
+    background-color: #D73533;
+    color: #000000 !important;
+}
+
+#never_attended{
+    background-color: #D73533;
+    color: #12212b;
+    height: 100%;
+}
+
+#status-0{
+    background-color: #EAC234;
+    color: #000000;
+}
+
+#status-1{
+    background-color: #00E083;
+    color: #000000;
+    height: 100%;
+}
+
 
 /*////////////////////////////////////////////////////// Inputs //////////////////////////////////////////////////////*/
 
