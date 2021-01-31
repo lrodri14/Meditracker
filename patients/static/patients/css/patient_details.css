@@ -47,6 +47,7 @@
     display: grid;
     grid-template-columns: 79% 20%;
     grid-gap: 1%;
+    margin-top: 3%;
 }
 
 a{
@@ -70,48 +71,14 @@ a{
     margin-left: 45%;
 }
 
-/*##################################################### Paginator ####################################################*/
-
-#consults-paginator{
-    position: absolute;
-    left: 154%;
-    top: 16%;
-    width: 25%;
-    font-size: 18px;
-}
-
-#exams-paginator{
-    position: absolute;
-    left: 254%;
-    top: 16%;
-    width: 25%;
-    font-size: 18px;
-}
-
-#charges-paginator{
-    position: absolute;
-    left: 354%;
-    top: 16%;
-    width: 25%;
-    font-size: 18px;
-}
-
-.navigation{
-    width: 20%;
-    float: right;
-}
-
-.paginator i{
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 24px;
-}
-
 /*##################################################### Data Table ###################################################*/
+
+.data-table{
+    max-height: 725px;
+}
 
 table{
     width: 100%;
-    margin-top: 5%;
     border-collapse: collapse;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
@@ -158,7 +125,6 @@ tr:nth-child(even){
 
 .fa-filter{
     transition: 0.5s;
-    margin-top: 20%;
 }
 
 .fa-filter-hover{
@@ -172,6 +138,7 @@ form{
     padding: 10px;
     text-align: center;
     margin-top: -300%;
+    border-radius: 25px;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -185,7 +152,7 @@ form{
 }
 
 .show-form{
-    margin-top: 30%;
+    margin-top: 10%;
     visibility: visible;
     transition: 0.5s;
 }
@@ -318,7 +285,7 @@ button:focus{
 .image-preview{
     position: fixed;
     margin-left: 79.5%;
-    margin-top: -37%;
+    margin-top: -48%;
     max-width: 20%;
     max-height: 70%;
     opacity: 0;

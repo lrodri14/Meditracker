@@ -41,6 +41,7 @@ h2{
 }
 
 /*Table*/
+
 table{
     margin: auto;
     width: 100%;
@@ -50,25 +51,6 @@ table{
     -webkit-backdrop-filter: blur(10px);
     background-clip: padding-box;
     animation: show-up 0.5s linear forwards;
-}
-
-#paginator{
-    position: absolute;
-    left: 40%;
-    top: 9%;
-    font-size: 18px;
-    width: 39.5%;
-}
-
-#navigation{
-    width: 20%;
-    float: right;
-}
-
-#paginator i{
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 24px;
 }
 
 #heading{
@@ -160,6 +142,7 @@ tr:nth-child(even){
 .filter-form{
     text-align: center;
     padding: 10px;
+    border-radius: 25px;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);

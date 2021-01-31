@@ -39,14 +39,8 @@ def patients(request):
     doctor = doctor_group in request.user.groups.all()
     template = 'patients/patients.html'
     patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
-    paginator = Paginator(patients_list, 1)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
     patient_filter = PatientFilterForm
-    context = {'patients': page_obj, 'form': patient_filter, 'doctor': doctor}
-    if page_number:
-        data = {'html': render_to_string('patients/patients_partial_list.html', context, request)}
-        return JsonResponse(data)
+    context = {'patients': patients_list, 'form': patient_filter, 'doctor': doctor}
     return render(request, template, context)
 
 
