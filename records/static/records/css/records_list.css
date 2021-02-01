@@ -13,26 +13,11 @@ h2{
     margin-left: 1%;
 }
 
-/*################################################## Paginator ###########################################*/
-
-#paginator{
-    position: absolute;
-    width: 40%;
-    top: 9%;
-    left: 39%;
-    font-size: 18px;
-}
-
-#navigation{
-    float: right;
-    width: 10%;
-}
-
-#paginator i{
-    font-size: 24px;
-}
-
 /*################################################## Table ###############################################*/
+
+.data-table{
+    max-height: 766px;
+}
 
 table{
     margin: auto;
@@ -92,6 +77,7 @@ tr:nth-child(even){
 form{
     text-align: center;
     padding: 10px;
+    border-radius: 25px;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);

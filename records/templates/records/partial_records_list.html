@@ -1,17 +1,5 @@
 {% load static %}
-{% load records_custom_tags %}
-{% if records.has_other_pages %}
-    <div id="paginator">
-        <span>{{ records.number }} / {{ records.paginator.num_pages }}</span>
-        <div id="navigation">
-            {% if filtered %}
-                {% if records.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'records:filter_records' %}{% current_url 'page' records.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if records.has_next %}<i class="fas fa-angle-right" data-url="{% url 'records:filter_records' %}{% current_url 'page' records.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% else %}
-                {% if records.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'records:records' %}{% current_url 'page' records.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if records.has_next %}<i class="fas fa-angle-right" data-url="{% url 'records:records'%}{% current_url 'page' records.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% endif %}
-        </div>
-    </div>
-{% endif %}
+
 {% if records %}
     {% for r in records %}
         <tr onclick="window.location='{% url 'appointments:consult_details' r.pk %}'">
