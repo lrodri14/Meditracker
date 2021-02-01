@@ -1,20 +1,5 @@
 {% load static %}
 
-{% load settings_custom_tags %}
-
-{% if allergies.has_other_pages %}
-    <div id="paginator">
-        <span> {{ allergies.number }} / {{ allergies.paginator.num_pages }} </span>
-        <div id="navigation">
-            {% if filtered %}
-                {% if allergies.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'settings:filter_allergies' %}{% current_url 'page' allergies.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if allergies.has_next %}<i class="fas fa-angle-right" data-url="{% url 'settings:filter_allergies' %}{% current_url 'page' allergies.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% else %}
-                {% if allergies.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'settings:allergy_list' %}{% current_url 'page' allergies.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if allergies.has_next %}<i class="fas fa-angle-right" data-url="{% url 'settings:allergy_list' %}{% current_url 'page' allergies.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% endif %}
-        </div>
-    </div>
-{% endif %}
-
 {% if allergies %}
      {% for a in allergies %}
         <tr data-url="{% url 'settings:allergy_details' a.pk %}">
@@ -24,6 +9,4 @@
             <td></td>
         </tr>
     {% endfor %}
-{% else %}
-    <p class="no-data">No allergies listed</p>
 {% endif %}

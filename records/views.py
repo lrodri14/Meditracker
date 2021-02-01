@@ -8,7 +8,6 @@
 from datetime import datetime
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from patients.models import Patient
 from appointments.models import Consult

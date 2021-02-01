@@ -248,7 +248,7 @@ class DrugFilterForm(forms.Form):
         DOCSTRING:
         The DrugFilterForm is used to filter drugs and display them dynamically in our template.
     """
-    category = forms.CharField(label='Category', required=False, widget=forms.Select(choices=CATEGORY_CHOICES))
+    name = forms.CharField(label='Name', required=False)
 
 
 class MedicalTestForm(forms.ModelForm):

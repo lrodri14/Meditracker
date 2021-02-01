@@ -11,7 +11,6 @@ from .models import *
 from django.db.models import Q
 from django.http import JsonResponse
 from django.core.mail import send_mail
-from django.core.paginator import Paginator
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from accounts.models import MailingCredential
@@ -201,11 +200,8 @@ def delete_patient(request, pk):
             patient.delete()
             context = {'patient_deleted': ' Patient has been deleted successfully'}
             patients_list = Patient.objects.filter(created_by=request.user).order_by('id_number')
-            paginator = Paginator(patients_list, 17)
-            page_number = request.GET.get('page')
-            page_obj = paginator.get_page(page_number)
             data = {'html': render_to_string(template, context, request),
-                    'patients': render_to_string('patients/patients_list.html', {'patients': page_obj, 'doctor': doctor}, request)}
+                    'patients': render_to_string('patients/patients_list.html', {'patients': patients_list, 'doctor': doctor}, request)}
     return JsonResponse(data)
 
 

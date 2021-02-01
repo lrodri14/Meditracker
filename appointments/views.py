@@ -17,7 +17,6 @@ from django.contrib.auth.models import Group
 from django.db.models import Q
 # Import is unused because we will use it in a future update.
 from .tasks import save_new_drug
-from django.core.paginator import Paginator
 # Implementing PDF Creation Functionality
 # from weasyprint import HTML
 from django.http import HttpResponse

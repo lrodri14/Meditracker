@@ -1,8 +1,7 @@
 {% load static %}
 {% block body_block %}
 {% if allergies %}
-    <div class="table">
-        <div>
+        <div class="data-table">
             <table>
                 <thead>
                     <tr id="heading">
@@ -25,7 +24,6 @@
                 <p>{{ form.allergy_type }}</p>
             </form>
         </div>
-    </div>
 {%else%}
     <p class="no-data">No allergies listed</p>
     <i class="fas fa-plus add-data" data-url="{% url 'settings:add_allergy' %}"></i>

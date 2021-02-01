@@ -1,19 +1,4 @@
 {% load static %}
-{% load settings_custom_tags %}
-
-{% if medical_tests.has_other_pages %}
-    <div id="paginator">
-        <span> {{ medical_tests.number }} / {{ medical_tests.paginator.num_pages }} </span>
-        <div id="navigation">
-            {% if filtered %}
-                {% if medical_tests.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'settings:medical_test_list' %}{% current_url 'page' medical_tests.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if medical_tests.has_next %}<i class="fas fa-angle-right" data-url="{% url 'settings:medical_test_list' %}{% current_url 'page' medical_tests.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% else %}
-                {% if medical_tests.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'settings:medical_test_list' %}{% current_url 'page' medical_tests.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if medical_tests.has_next %}<i class="fas fa-angle-right" data-url="{% url 'settings:medical_test_list' %}{% current_url 'page' medical_tests.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% endif %}
-        </div>
-    </div>
-{% endif %}
-
 {% if medical_tests %}
     {% for mt in medical_tests %}
         <tr data-url="{% url 'settings:medical_test_details' mt.pk %}">
@@ -24,6 +9,4 @@
             <td></td>
         </tr>
     {% endfor %}
-{% else %}
-    <p class="no-data">No medical tests listed</p>
 {% endif %}

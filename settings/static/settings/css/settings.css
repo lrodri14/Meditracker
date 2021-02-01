@@ -3,126 +3,93 @@
 
 /*###################################################### Nav Bar #####################################################*/
 
-ul{
-    list-style-type: none;
-    padding-left: 0px;
-    width: 55%;
+h2{
+    margin-left: 1%;
 }
 
-li{
+#settings-navigator{
+    position: absolute;
+    top: 0%
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
+}
+
+.tab{
     cursor: pointer;
-    display: inline-block;
     padding: 15px;
-    margin: 0px;
-    background-color: #456387;
+    text-align: center;
+    display: inline-block;
     transition: 0.5s;
 }
 
 .tab-hover{
     background-color: #FFFFFF;
-    color: #496897;
+    color: #000000;
     transition: 0.5s;
-}
-
-.tab-hover a{
-    color: #496897;
 }
 
 .tab-active{
     background-color: #FFFFFF;
-    color: #496897;
-    transition: 0.5s;
-}
-
-.tab-active a{
-    color: #496897;
-}
-
-/*################################################### Pagination #####################################################*/
-
-#paginator{
-    position: absolute;
-    left: 55%;
-    top: 16%;
-    font-size: 18px;
-    width: 25%;
-}
-
-#navigation{
-    width: 20%;
-    float: right;
-}
-
-#paginator i{
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 24px;
-}
-
-.fa-angle-left{
-    cursor: pointer;
-    transition: 0.5s;
-    float: left;
-}
-
-.fa-angle-right{
-    cursor: pointer;
-    transition: 0.5s;
-    float: right;
-}
-
-.fa-angle-hover{
-    color: #00CCFF;
+    color: #000000;
     transition: 0.5s;
 }
 
 /*###################################################### Wrapper #####################################################*/
 
-.table{
+.wrapper{
     display: grid;
-    grid-template-columns: 80% 19%;
+    grid-template-columns: 80% 18%;
     grid-gap: 1%;
+    margin-top: 6%;
 }
 
 .filter-form{
     text-align: center;
-    background-color: #5A7FAF;
     padding: 10px;
     transform: translateY(-500%);
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
     transition: 0.5s;
 }
 
 .show-filter-form{
-    transform: translateY(10%);
+    transform: translateY(18%);
     transition: 0.5s;
-}
-
-.fa-filter{
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.fa-filter-hover{
-   color: #00CCFF;
-   transition: 0.5s;
 }
 
 button{
     cursor: pointer;
     width: 120px;
     height: 30px;
-    margin-left: 1%;
-    background-color: #5A7FAF;
-    border-color: #C7E8F3;
-    color: #FFFFFF;
-    transition: background-color 0.5s;
 }
+
+/*####################################################### Account Settings ###########################################*/
+
+#account-settings p, #account-settings button{
+    margin-left: 1%;
+}
+
 
 /*####################################################### Mailing #####################################################*/
 
+.mailing-info-form{
+    animation: show-up 0.5s linear forwards;
+}
+
 .mailing-info-form input{
     width: 25%;
-    background-color: #496897;
+}
+
+.mailing-info-form p, input, .mailing-info-form button{
+    margin-left: 1%;
 }
 
 .mailing-info-form input[type=checkbox]{
@@ -131,14 +98,23 @@ button{
 
 /*####################################################### Tables #####################################################*/
 
+.data-table{
+    max-height: 686px;
+}
+
 table{
-    border-collapse: collapse;
     width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    animation: show-up 0.5s linear forwards;
 }
 
 #heading{
-    background-color: #456387;
     cursor: default;
+    background-color: rgba(255,255,255,0.3);
 }
 
 tr{
@@ -146,6 +122,7 @@ tr{
     line-height: 20px;
     margin: 10px;
     transition: 0.5s;
+        animation: show-up 0.5s linear forwards;
 }
 
 tr th{
@@ -160,60 +137,14 @@ tr td{
 }
 
 tr:nth-child(odd){
-    background-color: #6082AD;
+    background-color: rgba(255,255,255,0.1);
 }
 
 tr:nth-child(even){
-    background-color: #6E8DB4;
-}
-
-.fa-plus{
-    cursor: pointer;
-    padding: 10px;
-}
-
-.fa-plus-hover{
-    color: #25BB41;
-    transition: 0.5s;
-}
-
-.fa-trash{
-    cursor: pointer;
-}
-
-.fa-trash-hover{
-    color: #A31621;
-    transition: 0.5s;
-}
-
-.fa-edit{
-    cursor: pointer;
-}
-
-.fa-edit-hover{
-    color: #CBA415;
-    transition: 0.5s;
+    background-color: rgba(255,255,255,0.2);
 }
 
 /*####################################################### Modal ######################################################*/
-
-.modal{
-    background-color: rgba(0,0,0,0.3);
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0.3s, opacity 0.3s;
-}
-
-.show-modal{
-    visibility: visible;
-    opacity: 1;
-    transition: all 0.3s;
-}
 
 .modal-content{
     margin-left: 25%;
@@ -221,29 +152,30 @@ tr:nth-child(even){
 }
 
 .error-response{
+    width: 30%;
+    height: 12%;
     text-align: center;
-    background-color: #5A7FAF;
     padding: 20px;
     position: absolute;
     top: 45%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 30%;
-    height: 12%;
+    background-color: rgba(255,255,255,0.1);
 }
 
 .modal-content form{
+    width: 25%;
+    height: 40%;
     text-align: center;
-    background-color: #5A7FAF;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
     padding: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 25%;
-    height: 40%;
 }
 
 .modal-content .password-form{
@@ -255,28 +187,29 @@ tr:nth-child(even){
 }
 
 #delete{
+    width: 25%;
+    height: 20%;
     text-align: center;
-    background-color: #5A7FAF;
     padding: 20px;
     position: absolute;
     top: 45%;
     left: 50%;
     margin-right: -50%;
+    background-color: rgba(255,255,255,0.1);
     transform: translate(-50%, -50%);
-    width: 25%;
-    height: 20%;
 }
 
 #details{
-    background-color: #5A7FAF;
+    width: 25%;
+    height: 30%;
     padding: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
     transform: translate(-50%, -50%);
-    width: 25%;
-    height: 30%;
 }
 
 #details h2{
@@ -291,55 +224,8 @@ tr:nth-child(even){
     height: 35%;
 }
 
-input{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align: center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  transition: width 0.5s;
-}
-
-input:focus{
-    outline: none;
-}
-
-.input-hover{
-  width: 75%;
-  transition: 0.5s;
-}
-
-select{
-  font-family: 'Alegreya Sans SC', sans-serif;
-  text-align-last:center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  transition: 0.5s;
-}
-
-select:focus{
-    outline: none;
-}
-
 form button{
     border-radius: 10px;
-}
-
-button:focus{
-    outline: none;
-}
-
-.button-hover{
-    background-color: #C7E8F3;
-    color: #496897;
-    transition: 0.5s;
 }
 
 /*###################################################### No Data #####################################################*/

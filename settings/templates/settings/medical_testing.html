@@ -1,7 +1,6 @@
 {% load static %}
 {% if medical_tests %}
-    <div class="table">
-        <div>
+        <div class="data-table">
             <table>
                 <thead>
                     <tr id="heading">
@@ -25,7 +24,7 @@
                 <p>{{ form.name }}</p>
             </form>
         </div>
-    </div>
+
 {%else%}
     <p class="no-data">No tests listed</p>
     <i class="fas fa-plus add-data" data-url="{% url 'settings:add_medical_test' %}"></i>

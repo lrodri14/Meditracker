@@ -1,20 +1,5 @@
 {%load static%}
 
-{% load settings_custom_tags %}
-
-{% if drugs.has_other_pages %}
-    <div id="paginator">
-        <span> {{ drugs.number }} / {{ drugs.paginator.num_pages }} </span>
-        <div id="navigation">
-            {% if filtered %}
-                {% if drugs.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'settings:filter_drugs' %}{% current_url 'page' drugs.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if drugs.has_next %}<i class="fas fa-angle-right" data-url="{% url 'settings:filter_drugs' %}{% current_url 'page' drugs.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% else %}
-                {% if drugs.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'settings:drugs_list' %}{% current_url 'page' drugs.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if drugs.has_next %}<i class="fas fa-angle-right" data-url="{% url 'settings:drugs_list' %}{% current_url 'page' drugs.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% endif %}
-        </div>
-    </div>
-{% endif %}
-
 {% if drugs %}
      {% for d in drugs %}
         <tr data-url="{% url 'settings:drug_details' d.pk %}">
@@ -25,6 +10,4 @@
             <td></td>
         </tr>
     {% endfor %}
-{% else %}
-    <p class="no-data">No drugs listed</p>
 {% endif %}

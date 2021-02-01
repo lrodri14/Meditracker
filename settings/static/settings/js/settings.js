@@ -185,8 +185,8 @@ if (wrapper){
         if (e.target.nodeName === 'TD' || ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit')))){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-            row.style.backgroundColor = '#C7E8F3'
-            row.style.color = '#496897'
+            row.style.backgroundColor = '#FFFFFF'
+            row.style.color = '#000000'
         }
 
         /* This event will be fired every time the target contains the 'fa-filter' class in its classList, it will add
@@ -304,7 +304,7 @@ if (wrapper){
             const url = e.target.parentNode.getAttribute('data-url')
             viewElementAW(url)
             .then(data => {
-                modal.classList.add('show-modal')
+                modal.classList.add('modal-show')
                 modalContent.innerHTML = data['html']
             })
         }
@@ -326,7 +326,7 @@ if (wrapper){
             const url = e.target.getAttribute('data-url')
             showForm(url)
             .then(data => {
-                modal.classList.add('show-modal')
+                modal.classList.add('modal-show')
                 modalContent.innerHTML = data['html']
             })
         }
@@ -341,7 +341,7 @@ if (wrapper){
             const url = e.target.getAttribute('data-url')
             showForm(url)
             .then(data => {
-                modal.classList.add('show-modal')
+                modal.classList.add('modal-show')
                 modalContent.innerHTML = data['html']
             })
         }
@@ -356,7 +356,7 @@ if (wrapper){
             const url = e.target.getAttribute('data-url')
             showForm(url)
             .then(data => {
-                modal.classList.add('show-modal')
+                modal.classList.add('modal-show')
                 modalContent.innerHTML = data['html']
             })
         }
@@ -369,7 +369,7 @@ if (wrapper){
             showForm(url)
             .then(data => {
                 modalContent.innerHTML = data['html']
-                modal.classList.add('show-modal')
+                modal.classList.add('modal-show')
             })
         }
     })
@@ -418,14 +418,14 @@ if (modal){
 
         // This event will be fired every time the target is the modal, the 'show-modal' class will be removed from the modal.
         if (e.target === modal){
-            modal.classList.remove('show-modal')
+            modal.classList.remove('modal-show')
         }
 
         // This event will be fired every time the target is the a button with the value of 'no', the 'show-modal' class will be removed from the modal.
         if (e.target.value === 'no' || e.target.textContent === "Ok"){
             e.preventDefault()
             e.stopPropagation()
-            modal.classList.remove('show-modal')
+            modal.classList.remove('modal-show')
         }
 
     })
@@ -492,7 +492,7 @@ if (modal){
                         modalContent.innerHTML = data['html']
                     }else{
                         wrapper.innerHTML = data['updated_html']
-                        modal.classList.remove('show-modal')
+                        modal.classList.remove('modal-show')
                     }
                 })
             }
@@ -524,7 +524,7 @@ if (modal){
                     if (data['html']){
                         modalContent.innerHTML = data['html']
                     }else{
-                        modal.classList.remove('show-modal')
+                        modal.classList.remove('modal-show')
                     }
                 })
             }

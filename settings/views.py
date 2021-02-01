@@ -4,7 +4,6 @@
 """
 
 # Imports
-from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db import IntegrityError
@@ -91,10 +90,8 @@ def medical_testing_list(request):
     page = request.GET.get('page')
     medical_test_list = MedicalTest.objects.filter(created_by=request.user).order_by('name')
     medical_test_filter_form = MedicalTestFilterForm
-    paginator = Paginator(medical_test_list, 16)
-    page_obj = paginator.get_page(page)
     template = 'settings/medical_tests_partial_list.html' if page else 'settings/medical_testing.html'
-    context = {'medical_tests': page_obj, 'form': medical_test_filter_form}
+    context = {'medical_tests': medical_test_list, 'form': medical_test_filter_form}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -111,11 +108,8 @@ def filter_medical_testing(request):
     """
     query = request.GET.get('query')
     updated_medical_tests = MedicalTest.objects.filter(name__icontains=query, created_by=request.user).order_by('name')
-    paginator = Paginator(updated_medical_tests, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
     template = 'settings/medical_tests_partial_list.html'
-    context = {'medical_tests': page_obj, 'filtered': True}
+    context = {'medical_tests': updated_medical_tests}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -160,9 +154,7 @@ def add_medical_test(request):
                 medical_test.created_by = request.user
                 medical_test.save()
                 updated_medical_test = MedicalTest.objects.filter(created_by=request.user).order_by('name')
-                paginator = Paginator(updated_medical_test, 16)
-                page_obj = paginator.get_page(1)
-                context = {'medical_tests': page_obj, 'form': MedicalTestFilterForm}
+                context = {'medical_tests': updated_medical_test, 'form': MedicalTestFilterForm}
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/medical_testing.html', context, request), 'updated_tests_list': render_to_string('appointments/partial_medical_tests_selection.html', context=context, request=request)}
             except IntegrityError:
@@ -210,9 +202,7 @@ def update_medical_test(request, pk):
                 # Why do i need to provide again the user?
                 medical_test_form.save()
                 updated_medical_tests = MedicalTest.objects.filter(created_by=request.user).order_by('name')
-                paginator = Paginator(updated_medical_tests, 16)
-                page_obj = paginator.get_page(1)
-                context = {'medical_tests': page_obj, 'form': MedicalTestForm}
+                context = {'medical_tests': updated_medical_tests, 'form': MedicalTestForm}
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/medical_testing.html', context, request)}
             except IntegrityError:
@@ -237,9 +227,7 @@ def delete_medical_test(request, pk):
         if not medical_test.operative(request.user):
             medical_test.delete()
             updated_medical_tests = MedicalTest.objects.filter(created_by=request.user).order_by('name')
-            paginator = Paginator(updated_medical_tests, 16)
-            page_obj = paginator.get_page(1)
-            context = {'medical_tests': page_obj, 'form': MedicalTestForm}
+            context = {'medical_tests': updated_medical_tests, 'form': MedicalTestForm}
             data = {'updated_html': render_to_string('settings/medical_testing.html', context, request)}
         else:
             context = {'error': "Medical Test linked to some registers, deletion prohibited"}
@@ -262,12 +250,9 @@ def insurance_list(request):
         which expects a request object.
     """
     insurances_list = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
-    paginator = Paginator(insurances_list, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
     insurance_filter_form = InsuranceCarrierFilterForm
-    template = 'settings/insurance_partial_list.html' if page else 'settings/insurance_list.html'
-    context = {'insurances': page_obj, 'form': insurance_filter_form}
+    template = 'settings/insurance_list.html'
+    context = {'insurances': insurances_list, 'form': insurance_filter_form}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -284,11 +269,8 @@ def filter_insurance(request):
     """
     query = request.GET.get('query')
     updated_insurances = InsuranceCarrier.objects.filter(company__icontains=query, created_by=request.user).order_by('company')
-    paginator = Paginator(updated_insurances, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
     template = 'settings/insurance_partial_list.html'
-    context = {'insurances': page_obj, 'filtered': True}
+    context = {'insurances': updated_insurances, 'filtered': True}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -315,9 +297,7 @@ def add_insurance_carrier(request):
                 insurance.created_by = request.user
                 insurance.save()
                 updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
-                paginator = Paginator(updated_insurances, 16)
-                page_obj = paginator.get_page(1)
-                context = {'insurances': page_obj, 'form': InsuranceCarrierFilterForm}
+                context = {'insurances': updated_insurances, 'form': InsuranceCarrierFilterForm}
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/insurance_list.html', context, request), 'updated_selections': render_to_string('settings/insurance_partial_select.html', context=context, request=request)}
             except IntegrityError:
@@ -365,9 +345,7 @@ def update_insurance(request, pk):
                 # Why do i need to provide again the user?
                 insurance_form.save()
                 updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
-                paginator = Paginator(updated_insurances, 16)
-                page_obj = paginator.get_page(1)
-                context = {'insurances': page_obj, 'form': InsuranceCarrierFilterForm}
+                context = {'insurances': updated_insurances, 'form': InsuranceCarrierFilterForm}
                 # How to return an error from the backend to the frontend?
                 data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
             except IntegrityError:
@@ -392,9 +370,7 @@ def delete_insurance(request, pk):
         if not carrier.operative(request.user):
             carrier.delete()
             updated_insurances = InsuranceCarrier.objects.filter(created_by=request.user).order_by('company')
-            paginator = Paginator(updated_insurances, 16)
-            page_obj = paginator.get_page(1)
-            context = {'insurances': page_obj, 'form': InsuranceCarrierFilterForm}
+            context = {'insurances': updated_insurances, 'form': InsuranceCarrierFilterForm}
             data = {'updated_html': render_to_string('settings/insurance_list.html', context, request)}
         else:
             context = {'error': "Carrier linked to some registers, deletion prohibited"}
@@ -418,12 +394,9 @@ def allergy_list(request):
         which expects a request object.
     """
     allergies_list = Allergies.objects.filter(created_by=request.user).order_by('allergy_type')
-    paginator = Paginator(allergies_list, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
     filter_form = AllergyFilterForm
-    template = 'settings/allergies_partial_list.html' if page else 'settings/allergies_list.html'
-    context = {'allergies': page_obj, 'form': filter_form}
+    template = 'settings/allergies_list.html'
+    context = {'allergies': allergies_list, 'form': filter_form}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -440,11 +413,8 @@ def filter_allergies(request):
     """
     query = request.GET.get('query')
     filtered_allergies = Allergies.objects.filter(allergy_type__icontains=query, created_by=request.user).order_by('allergy_type')
-    paginator = Paginator(filtered_allergies, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
     template = 'settings/allergies_partial_list.html'
-    context = {'allergies': page_obj, 'filtered': True}
+    context = {'allergies': filtered_allergies, 'filtered': True}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -471,9 +441,7 @@ def add_allergy(request):
                 allergy.created_by = request.user
                 allergy.save()
                 allergies_list = Allergies.objects.filter(created_by=request.user).order_by('allergy_type')
-                paginator = Paginator(allergies_list, 16)
-                page_obj = paginator.get_page(1)
-                context = {'allergies': page_obj, 'form': AllergyFilterForm}
+                context = {'allergies': allergies_list, 'form': AllergyFilterForm}
                 data = {'updated_html': render_to_string('settings/allergies_list.html', context, request), 'updated_selections': render_to_string('settings/allergies_partial_select.html', context=context, request=request)}
             except IntegrityError:
                 context['error'] = 'Allergy is already listed in your options'
@@ -506,9 +474,7 @@ def update_allergy(request, pk):
                 allergy.created_by = request.user
                 allergy.save()
                 allergies_list = Allergies.objects.filter(created_by=request.user).order_by('allergy_type')
-                paginator = Paginator(allergies_list, 16)
-                page_obj = paginator.get_page(1)
-                context = {'allergies': page_obj, 'form': AllergyFilterForm}
+                context = {'allergies': allergies_list, 'form': AllergyFilterForm}
                 data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
             except IntegrityError:
                 context['error'] = 'Allergy is already listed in your options'
@@ -547,9 +513,7 @@ def delete_allergy(request, pk):
         if not allergy.operative(request.user):
             allergy.delete()
             allergies_list = Allergies.objects.filter(created_by=request.user).order_by('allergy_type')
-            paginator = Paginator(allergies_list, 16)
-            page_obj = paginator.get_page(1)
-            context = {'allergies': page_obj, 'form': AllergyFilterForm}
+            context = {'allergies': allergies_list, 'form': AllergyFilterForm}
             data = {'updated_html': render_to_string('settings/allergies_list.html', context, request)}
         else:
             context = {'error': 'Allergy linked to some registers, deletion prohibited'}
@@ -573,11 +537,8 @@ def drug_list(request):
         which expects a request object.
     """
     drugs_list = Drugs.objects.filter(created_by=request.user).order_by('name')
-    paginator = Paginator(drugs_list, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
-    template = 'settings/drugs_partial_list.html' if page else 'settings/drugs_list.html'
-    context = {'drugs': page_obj, 'form': DrugFilterForm}
+    template = 'settings/drugs_list.html'
+    context = {'drugs': drugs_list, 'form': DrugFilterForm}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -593,12 +554,9 @@ def filter_drugs(request):
         'request' which expects a request object.
     """
     query = request.GET.get('query')
-    page = request.GET.get('page')
     filtered_drugs = Drugs.objects.filter(name__icontains=query, created_by=request.user).order_by('name')
-    paginator = Paginator(filtered_drugs, 16)
-    page_obj = paginator.get_page(page)
     template = 'settings/drugs_partial_list.html'
-    context = {'drugs': page_obj, 'filtered': True}
+    context = {'drugs': filtered_drugs, 'filtered': True}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -643,9 +601,7 @@ def add_drug(request):
                 drug.created_by = request.user
                 drug.save()
                 drugs_list = Drugs.objects.filter(created_by=request.user).order_by('name')
-                paginator = Paginator(drugs_list, 16)
-                page_obj = paginator.get_page(1)
-                context = {'drugs': page_obj, 'form': DrugFilterForm}
+                context = {'drugs': drugs_list, 'form': DrugFilterForm}
                 data = {'updated_html': render_to_string('settings/drugs_list.html', context, request), 'updated_drugs_list': render_to_string('appointments/partial_drugs_selection.html', {'drugs': drugs_list}, request)}
             except IntegrityError:
                 context['error'] = 'Drug already listed in your options'
@@ -693,9 +649,7 @@ def update_drug(request, pk):
                 drug.created_by = request.user
                 drug.save()
                 drugs_list = Drugs.objects.filter(created_by=request.user).order_by('name')
-                paginator = Paginator(drugs_list, 16)
-                page_obj = paginator.get_page(1)
-                context = {'drugs': page_obj, 'form': DrugFilterForm}
+                context = {'drugs': drugs_list, 'form': DrugFilterForm}
                 data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
             except IntegrityError:
                 context['error'] = 'Drug already listed in your options'
@@ -719,9 +673,7 @@ def delete_drug(request, pk):
         if not drug.operative(request.user):
             drug.delete()
             drugs_list = Drugs.objects.filter(created_by=request.user).order_by('name')
-            paginator = Paginator(drugs_list, 16)
-            page_obj = paginator.get_page(1)
-            context = {'drugs': page_obj, 'form': DrugFilterForm}
+            context = {'drugs': drugs_list, 'form': DrugFilterForm}
             data = {'updated_html': render_to_string('settings/drugs_list.html', context, request)}
         else:
             context = {'error': 'Drug linked to some registers, deletion prohibited'}

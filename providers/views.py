@@ -6,7 +6,6 @@
 
 # Imports
 from django.core.mail import send_mail
-from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
 from django.http import JsonResponse
