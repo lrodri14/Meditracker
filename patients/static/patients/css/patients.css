@@ -112,6 +112,10 @@ tr:nth-child(even){
     opacity: 0;
     visibility: hidden;
     transition: 0.5s;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
 }
 
 .popup-show{
@@ -124,7 +128,6 @@ tr:nth-child(even){
     max-width: 29%;
     height: 5%;
     color: #FFFFFF;
-    background-color: rgba(255,255,255,0.1);
     font-size: 10px;
     padding: 5px;
 }
