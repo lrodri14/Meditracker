@@ -14,26 +14,15 @@ h2,h3{
     margin-left: 1%;
 }
 
-/*########################################################## Pagination ##############################################*/
-
-#paginator{
-    position: absolute;
-    width: 40%;
-    top: 16%;
-    left: 39%;
-    font-size: 18px;
-}
-
-#navigation{
-    float: right;
-    width: 10%;
-}
-
-#paginator i{
-    font-size: 24px;
-}
-
 /*########################################################## Table ###################################################*/
+
+h3:first-child{
+    display: none;
+}
+
+.data-table{
+    max-height: 750px;
+}
 
 table{
     width: 100%;
@@ -94,6 +83,7 @@ form{
 }
 
 .filter-form{
+    border-radius: 25px;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);

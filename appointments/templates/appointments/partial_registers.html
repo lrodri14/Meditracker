@@ -1,17 +1,5 @@
 {% load static %}
-{% load appointments_custom_tags %}
-{% if registers.has_other_pages %}
-    <div id="paginator">
-        <span> {{ registers.number }} / {{ registers.paginator.num_pages }}</span>
-        <div id="navigation">
-            {% if filtered %}
-                {% if registers.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'appointments:filter_registers' %}{% current_url 'page' registers.previous_page_number request.GET.urlencode %}"></i>{% endif %}{% if registers.has_next %}<i class="fas fa-angle-right" data-url="{% url 'appointments:filter_registers' %}{% current_url 'page' registers.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% else %}
-                {% if registers.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'appointments:registers' %}{% current_url 'page' registers.previous_page_number request.GET.urlencode %}"></i>{% endif %} {% if registers.has_next %}<i class="fas fa-angle-right" data-url="{% url 'appointments:registers' %}{% current_url 'page' registers.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% endif %}
-        </div>
-    </div>
-{% endif %}
+
 {% if registers %}
     {% for r in registers %}
         <tr>

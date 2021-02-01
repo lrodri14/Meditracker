@@ -56,11 +56,8 @@ def filter_patients(request):
     doctor = doctor_group in request.user.groups.all()
     template = 'patients/patients_partial_list.html'
     query = request.GET.get('query')
-    page_number = request.GET.get('page')
     patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
-    paginator = Paginator(patients_list, 17)
-    page_obj = paginator.get_page(page_number)
-    context = {'patients': page_obj, 'doctor': doctor, 'filtered': True}
+    context = {'patients': patients_list, 'doctor': doctor, 'filtered': True}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -144,36 +141,8 @@ def patient_details(request, pk):
     consults_list = Consult.objects.filter(patient=patient, created_by=request.user).order_by('-datetime')
     charges_list = Consult.objects.filter(patient=patient, created_by=request.user, charge__gte=0).order_by('-datetime')
     exams_list = MedicalTestResult.objects.filter(consult__patient=patient).order_by('-date')
-    page = request.GET.get('page')
-    # Paginated Consults
-    consults_paginator = Paginator(consults_list, 16)
-    consults_page_obj = consults_paginator.get_page(page)
-    # Paginated Charges
-    charges_paginator = Paginator(charges_list, 16)
-    charges_page_obj = charges_paginator.get_page(page)
-    # Paginated Exams
-    exams_paginator = Paginator(exams_list, 16)
-    exams_page_obj = exams_paginator.get_page(page)
-    # If the page attribute is present
-    if page:
-        requested_details = request.GET.get('requested_details')
-        if requested_details == 'consults':
-            consults_page_obj = consults_paginator.get_page(page)
-            template = 'patients/patient_consults_partial_list.html'
-            data = {'html': render_to_string(template, {'consults': consults_page_obj, 'patient': patient}, request)}
-            return JsonResponse(data)
-        elif requested_details == 'charges':
-            charges_page_obj = charges_paginator.get_page(page)
-            template = 'patients/patient_charges_partial_list.html'
-            data = {'html': render_to_string(template, {'charges': charges_page_obj, 'patient': patient}, request)}
-            return JsonResponse(data)
-        else:
-            exams_page_obj = exams_paginator.get_page(page)
-            template = 'patients/patient_exams_partial_list.html'
-            data = {'html': render_to_string(template, {'exams': exams_page_obj, 'patient': patient}, request)}
-            return JsonResponse(data)
     template = 'patients/patient_details.html'
-    context = {'patient': patient, 'consults': consults_page_obj, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'exams': exams_page_obj, 'charges': charges_page_obj, 'consults_form': ConsultDetailsFilterForm}
+    context = {'patient': patient, 'consults': consults_list, 'allergies': allergies, 'antecedents': antecedents, 'insurance':insurance, 'exams': exams_list, 'charges': charges_list, 'consults_form': ConsultDetailsFilterForm}
     return render(request, template, context)
 
 
@@ -189,27 +158,20 @@ def filter_patient_details(request):
     date_from = datetime.datetime.strptime(request.GET.get('date_from'), '%Y-%m-%d')
     date_to = datetime.datetime.strptime(request.GET.get('date_to'), '%Y-%m-%d')
     requested_details = request.GET.get('filter_request_type')
-    page = request.GET.get('page')
     if requested_details == 'appointments':
         filtered_results = Consult.objects.filter(datetime__date__gte=date_from, datetime__date__lte=date_to, created_by=request.user).order_by('-datetime')
-        paginator = Paginator(filtered_results, 16)
-        consults_page_obj = paginator.get_page(page)
         template = 'patients/patient_consults_partial_list.html'
-        context = {'consults': consults_page_obj, 'filtered': True}
+        context = {'consults': filtered_results, 'filtered': True}
         data = {'html': render_to_string(template, context, request)}
     elif requested_details == 'charges':
         filtered_results = Consult.objects.filter(datetime__date__gte=date_from, datetime__date__lte=date_to, created_by=request.user, charge__gte=0).order_by('-datetime')
-        paginator = Paginator(filtered_results, 16)
-        charges_page_obj = paginator.get_page(page)
         template = 'patients/patient_charges_partial_list.html'
-        context = {'charges': charges_page_obj, 'filtered': True}
+        context = {'charges': filtered_results, 'filtered': True}
         data = {'html': render_to_string(template, context, request)}
     else:
         filtered_results = MedicalTestResult.objects.filter(date__gte=date_from, date__lte=date_to, consult__created_by=request.user).order_by('-date')
-        paginator = Paginator(filtered_results, 16)
-        exams_page_obj = paginator.get_page(page)
         template = 'patients/patient_exams_partial_list.html'
-        context = {'exams': exams_page_obj, 'filtered': True}
+        context = {'exams': filtered_results, 'filtered': True}
         data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 

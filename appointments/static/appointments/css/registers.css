@@ -12,26 +12,12 @@ sections: Wrapper, Table, Forms, Pagination, No Data*/
 h2, #item-count{
     margin-left: 1%;
 }
-/*########################################################## Paginator ###############################################*/
-
-#paginator{
-    position: absolute;
-    width: 40%;
-    top: 13%;
-    left: 39%;
-    font-size: 18px;
-}
-
-#navigation{
-    float: right;
-    width: 10%;
-}
-
-#paginator i{
-    font-size: 24px;
-}
 
 /*########################################################## Table ###################################################*/
+
+.data-table{
+    max-height: 725px;
+}
 
 table{
     width: 100%;
@@ -98,6 +84,7 @@ form{
     transform: translateY(-200%);
     transition: 0.5s;
     visibility: hidden;
+    border-radius: 25px;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
