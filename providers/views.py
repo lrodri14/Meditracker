@@ -49,12 +49,9 @@ def providers_list(request):
     """
     requested_type = request.GET.get('provider_type')
     listed_providers = Provider.objects.filter(provider_type=requested_type, created_by=request.user).order_by('company')
-    paginator = Paginator(listed_providers, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
     filter_form = ProviderFilterForm
-    template = 'providers/providers_list.html' if not page else 'providers/providers_partial_list.html'
-    context = {'providers': page_obj, 'filter_form': filter_form, 'requested_type': requested_type}
+    template = 'providers/providers_list.html'
+    context = {'providers': listed_providers, 'filter_form': filter_form, 'requested_type': requested_type}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -71,11 +68,8 @@ def filter_providers(request):
     query = request.GET.get('query')
     provider_type = request.GET.get('provider_type')
     filtered_providers = Provider.objects.filter(company__icontains=query, provider_type=provider_type, created_by=request.user).order_by('company')
-    paginator = Paginator(filtered_providers, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
     template = 'providers/providers_partial_list.html'
-    context = {'providers': page_obj, 'filtered': True, 'requested_type': provider_type}
+    context = {'providers': filtered_providers, 'requested_type': provider_type}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -107,10 +101,8 @@ def create_provider(request):
                 provider.save()
                 provider_type = 'LP' if provider.provider_type == 'LP' else 'MP'
                 updated_providers = Provider.objects.filter(provider_type=provider_type, created_by=request.user).order_by('company')
-                paginator = Paginator(updated_providers, 16)
-                page_obj = paginator.get_page(1)
                 template = 'providers/providers_list.html'
-                context = {'providers': page_obj, 'filter_form': ProviderFilterForm, 'requested_type': provider_type}
+                context = {'providers': updated_providers, 'filter_form': ProviderFilterForm, 'requested_type': provider_type}
                 data = {'updated_html': render_to_string(template, context, request)}
                 return JsonResponse(data)
             except IntegrityError:
@@ -164,10 +156,8 @@ def update_provider(request, pk):
                 provider.save()
                 provider_type = 'LP' if provider.provider_type == 'LP' else 'MP'
                 updated_providers = Provider.objects.filter(provider_type=provider_type, created_by=request.user).order_by('company')
-                paginator = Paginator(updated_providers, 16)
-                page_obj = paginator.get_page(1)
                 template = 'providers/providers_list.html'
-                context = {'providers': page_obj, 'filter_form': ProviderFilterForm, 'requested_type': provider_type}
+                context = {'providers': updated_providers, 'filter_form': ProviderFilterForm, 'requested_type': provider_type}
                 data = {'updated_html': render_to_string(template, context, request)}
                 return JsonResponse(data)
             except IntegrityError:
@@ -198,10 +188,8 @@ def delete_provider(request, pk):
         provider_type = provider.provider_type
         provider.delete()
         updated_providers = Provider.objects.filter(provider_type=provider_type, created_by=request.user).order_by('company')
-        paginator = Paginator(updated_providers, 16)
-        page_obj = paginator.get_page(1)
         template = 'providers/providers_list.html'
-        context = {'providers': page_obj, 'filter_form': ProviderFilterForm, 'requested_type':provider_type}
+        context = {'providers': updated_providers, 'filter_form': ProviderFilterForm, 'requested_type':provider_type}
         data['updated_html'] = render_to_string(template, context, request)
         return JsonResponse(data)
     template = 'providers/delete_providers.html'
@@ -222,12 +210,9 @@ def visitors_list(request):
         one parameter 'request', which expects a request object.
     """
     listed_visitors = Visitor.objects.filter(created_by=request.user).order_by('name')
-    paginator = Paginator(listed_visitors, 16)
-    page = request.GET.get('page')
-    visitors = paginator.get_page(page)
     filter_form = VisitorFilterForm
-    template = 'providers/visitors_list.html' if not page else 'providers/visitors_partial_list.html'
-    context = {'visitors': visitors, 'filter_form': filter_form}
+    template = 'providers/visitors_list.html'
+    context = {'visitors': listed_visitors, 'filter_form': filter_form}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -241,11 +226,8 @@ def filter_visitors(request):
     """
     query = request.GET.get('query')
     filtered_visitors = Visitor.objects.filter(Q(name__icontains=query) | Q(last_name__icontains=query), created_by=request.user).order_by('name')
-    paginator = Paginator(filtered_visitors, 16)
-    page = request.GET.get('page')
-    page_obj = paginator.get_page(page)
     template = 'providers/visitors_partial_list.html'
-    context = {'visitors': page_obj, 'filtered': True}
+    context = {'visitors': filtered_visitors}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -275,9 +257,7 @@ def create_visitor(request):
             visitor.save()
             updated_visitors = Visitor.objects.filter(created_by=request.user).order_by('name')
             template = 'providers/visitors_list.html'
-            paginator = Paginator(updated_visitors, 16)
-            page_obj = paginator.get_page(1)
-            context = {'visitors': page_obj, 'filter_form': VisitorFilterForm}
+            context = {'visitors': updated_visitors, 'filter_form': VisitorFilterForm}
             data = {'updated_html': render_to_string(template, context, request)}
             return JsonResponse(data)
     context['form'] = form
@@ -325,9 +305,7 @@ def update_visitor(request, pk):
             visitor.save()
             template = 'providers/visitors_list.html'
             listed_visitors = Visitor.objects.filter(created_by=request.user).order_by('name')
-            paginator = Paginator(listed_visitors, 16)
-            page_obj = paginator.get_page(1)
-            context = {'visitors': page_obj, 'filter_form': VisitorFilterForm}
+            context = {'visitors': listed_visitors, 'filter_form': VisitorFilterForm}
             data = {'updated_html': render_to_string(template, context, request)}
             return JsonResponse(data)
     form = VisitorForm(request.POST or None, user=request.user, instance=visitor)
@@ -355,9 +333,7 @@ def delete_visitor(request, pk):
         visitor.delete()
         template = 'providers/visitors_list.html'
         listed_visitors = Visitor.objects.filter(created_by=request.user).order_by('name')
-        paginator = Paginator(listed_visitors, 16)
-        page_obj = paginator.get_page(1)
-        context = {'visitors': page_obj, 'filter_form': VisitorFilterForm}
+        context = {'visitors': listed_visitors, 'filter_form': VisitorFilterForm}
         data = {'updated_html': render_to_string(template, context, request)}
         return JsonResponse(data)
     template = 'providers/delete_visitors.html'

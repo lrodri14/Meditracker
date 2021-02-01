@@ -1,17 +1,4 @@
 {% load static %}
-{% load providers_custom_tags %}
-{% if providers.has_other_pages %}
-    <div id="paginator">
-        <span>{{ providers.number }} / {{ providers.paginator.num_pages }}</span>
-        <div id="navigation">
-            {% if filtered %}
-                {% if providers.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'providers:filter_providers'%}{% current_url 'page' providers.previous_page_number request.GET.urlencode %}" data-provider-type="{{ requested_type }}"></i>{% endif %}{% if providers.has_next %}<i class="fas fa-angle-right" data-url="{% url 'providers:filter_providers'%}{% current_url 'page' providers.next_page_number request.GET.urlencode %}" data-provider-type="{{ requested_type }}"></i>{% endif %}
-            {% else %}
-                {% if providers.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'providers:providers_list'%}{% current_url 'page' providers.previous_page_number request.GET.urlencode %}" data-provider-type="{{ requested_type }}"></i>{% endif %}{% if providers.has_next %}<i class="fas fa-angle-right" data-url="{% url 'providers:providers_list'%}{% current_url 'page' providers.next_page_number request.GET.urlencode %}" data-provider-type="{{ requested_type }}"></i>{% endif %}
-            {% endif %}
-        </div>
-    </div>
-{% endif %}
 {% if providers %}
     <!--For each instance-->
     {% for provider in providers %}
@@ -25,6 +12,4 @@
         <td><i class="fas fa-envelope" data-url="{% url 'providers:send_email' provider.pk %}"></i></td>
     </tr>
     {% endfor %}
-{% else %}
-    <p class="no-providers">No providers of this category listed</p>
 {% endif %}

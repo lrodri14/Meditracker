@@ -217,7 +217,7 @@ def filter_agenda(request):
     query_date_to = datetime.strptime(request.GET.get('date_to'), "%Y-%m-%d")
     consults_list = Consult.objects.filter(datetime__date__gte=query_date_from, datetime__date__lte=query_date_to, created_by=request.user).order_by('datetime')
     months = collect_months_names(consults_list, tzone)
-    context = {'appointments': consults_list, 'months': months, 'filtered': True}
+    context = {'appointments': consults_list, 'months': months}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -340,6 +340,6 @@ def filter_registers(request):
     month_query = request.GET.get('month')
     year_query = request.GET.get('year')
     consults_list = filter_conditional_results(request.user, cleaned_data={'patient': patient_query, 'month': month_query, 'year': year_query}).order_by('datetime')
-    context = {'registers': consults_list, 'filtered': True}
+    context = {'registers': consults_list}
     data = {'html': render_to_string('appointments/partial_registers.html', context, request)}
     return JsonResponse(data)

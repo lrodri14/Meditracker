@@ -34,95 +34,53 @@
     transition: 0.5s;
 }
 
-/*##################################################### Data #########################################################*/
-/*Data available styles.*/
-
 /*##################################################### Wrapper ######################################################*/
 
 .wrapper{
     display: grid;
-    grid-template-columns: 80% 19%;
+    grid-template-columns: 80% 18%;
     grid-gap: 1%;
+    margin-top: 6%;
 }
 
-/*Navigator*/
-ul{
-    list-style-type: none;
-    line-height: 3;
-    width: 25%;
-    padding-right: 0px;
-    padding-left: 0px;
-}
-
-li{
-    cursor: pointer;
-    display: inline;
-    padding: 15px;
-    background-color: #456387;
-    transition: 0.5s;
-}
-
-.tab-active{
-    background-color: #FFFFFF;
-    color: #496897;
-    transition: 0.5s;
-}
-
-.tab-hover{
-    background-color: #FFFFFF;
-    color: #496897;
-    transition: 0.5s;
-}
-
-.input-hover{
-    width: 75%;
-    transition: 0.5s;
+h2{
+    margin-left: 1%;
 }
 
 /*##################################################### Navigation ###################################################*/
 
-#paginator{
+#providers-navigation{
     position: absolute;
-    left: 40%;
-    top: 16%;
-    font-size: 18px;
-    width: 39.5%;
+    top: 0%
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
 }
 
-#navigation{
-    width: 20%;
-    float: right;
+.tab{
+    padding: 15px;
+    text-align: center;
+    display: inline-block;
+    transition: 0.5s;
 }
 
-#paginator i{
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 24px;
-}
-
-#heading{
-    background-color: #3E5979;
-    color: #FFFFFF;
-    line-height: 25px;
-    cursor: default;
-}
-
-.fa-angle-left{
+.tab-hover{
     cursor: pointer;
+    color: #000000;
+    background-color: #FFFFFF;
     transition: 0.5s;
-    float: left;
 }
 
-.fa-angle-right{
-    cursor: pointer;
+.tab-active{
+    color: #000000;
+    background-color: #FFFFFF;
     transition: 0.5s;
-    float: right;
 }
 
-.fa-angle-hover{
-    color: #00CCFF;
-    transition: 0.5s;
-}
 
 /*##################################################### Data Table ###################################################*/
 
@@ -135,54 +93,25 @@ li{
     transform: translate(-50%, -50%);
 }
 
+.data-table{
+    max-height: 687px;
+}
+
 table{
-    border-collapse: collapse;
     margin: auto;
     width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    animation: show-up 0.5s linear forwards;
 }
 
 #heading{
-    background-color: #456387;
-    line-height: 25px;
     cursor: default;
-}
-
-.fa-plus{
-    cursor: pointer;
-    padding: 5px 10px 5px 5px;
-    transition: 0.5s;
-}
-
-.fa-plus-hover{
-    color: #25BB41;
-    transition: 0.5s;
-}
-
-.fa-trash{
-    cursor: pointer;
-}
-
-.fa-trash-hover{
-    color: #A31621;
-    transition: 0.5s;
-}
-
-.fa-edit{
-    cursor: pointer;
-}
-
-.fa-edit-hover{
-    color: #CBA415;
-    transition: 0.5s;
-}
-
-.fa-envelope{
-    cursor: pointer;
-}
-
-.fa-envelope-hover{
-    color: #00CCFF;
-    transition: 0.5s;
+    line-height: 25px;
+    background-color: rgba(255,255,255,0.3);
 }
 
 tr{
@@ -190,6 +119,7 @@ tr{
     line-height: 20px;
     margin: 10px;
     transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
 }
 
 tr th{
@@ -208,21 +138,11 @@ tr td{
 }
 
 tr:nth-child(odd){
-    background-color: #6082AD;
+    background-color: rgba(255,255,255,0.1);
 }
 
 tr:nth-child(even){
-    background-color: #6E8DB4;
-}
-
-.fa-filter{
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.fa-filter-hover{
-    color: #00CCFF;
-    transition: 0.5s;
+    background-color: rgba(255,255,255,0.3);
 }
 
 /*##################################################### Forms ########################################################*/
@@ -239,38 +159,45 @@ tr:nth-child(even){
 
 /*Filter form*/
 .filter-form{
-    transform: translateY(-200%);
-    background-color: #5A7FAF;
     text-align: center;
     padding: 10px;
     visibility: hidden;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-clip: padding-box;
+    transform: translateY(-200%);
     transition: 0.5s;
 }
 
 .filter-form-show{
     visibility: visible;
-    transform: translateY(5%);
+    transform: translateY(15%);
     transition: 0.5s;
 }
 
 /*Form inside modals*/
 .modal form{
+    width: 25%;
+    height: 55%;
+    color: #FFFFFF;
     text-align: center;
-    background-color: #5A7FAF;
     padding: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 25%;
-    height: 55%;
-    color: #FFFFFF;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
 }
 
 .modal .email-form{
     width: 50%;
     height: 60%;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
 }
 
 .loader{
@@ -278,7 +205,7 @@ tr:nth-child(even){
     visibility: hidden;
     top: 8%;
     left: 92%;
-    border: 3px solid #5A7FAF;
+    border: 3px solid rgba(0,0,0,0);
     border-top: 3px solid #FFFFFF;
     border-radius: 50%;
     height: 25px;
@@ -296,7 +223,7 @@ tr:nth-child(even){
 
 .email-form hr{
     border: none;
-    border-bottom: 1px solid #C7E8F3;
+    border-bottom: 1px solid #FFFFFF;
 }
 
 .email-form input{
@@ -311,29 +238,18 @@ tr:nth-child(even){
 .server-response{
     width: 50%;
     text-align: center;
-    background-color: #5A7FAF;
     padding: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
 }
 
 .server-response button{
     width: 20%;
-}
-
-textarea{
-    resize: none;
-    border-color: #C7E8F3;
-    background-color: #5A7FAF;
-    color: #FFFFFF;
-    font-family: 'Alegreya Sans SC', sans-serif;
-}
-
-textarea:focus{
-    outline: none;
 }
 
 .modal .create-visitor-form{
@@ -350,30 +266,16 @@ textarea:focus{
 }
 
 #provider-details{
-    background-color: #5A7FAF;
-    padding: 10px;
+    padding: 20px;
     width: 25%;
     margin-left: 37.5%;
     margin-top: 15%;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.1);
 }
 
 #provider-details h2{
     text-align: center;
-}
-
-input{
-  text-align: center;
-  color: #FFFFFF;
-  background-color: #5A7FAF;
-  border: none;
-  border-bottom: 1px solid #C7E8F3;
-  height: 30px;
-  width:60%;
-  transition: width 0.5s;
-}
-
-input:focus{
-  outline: none;
 }
 
 #id_country_code{
@@ -387,59 +289,11 @@ input:focus{
     left: 6%;
 }
 
-select{
-    background-color: #5A7FAF;
-    border: none;
-    border-bottom: 1px solid #C7E8F3;
-    width:60%;
-    text-align-last: center;
-    color: #FFFFFF;
-}
-
-select:focus{
-  outline: none;
-}
-
 button{
     cursor: pointer;
     margin: 5px;
     width: 30%;
     height: 30px;
-    background-color: #5A7FAF;
-    border-color: #C7E8F3;
-    border-radius: 10px;
-    color: #FFFFFF;
-    transition: 0.5s;
-}
-
-button:focus{
-    outline: none;
-}
-
-.button-hover{
-    background-color: #C7E8F3;
-    color: #496897;
-    transition: 0.5s;
-}
-
-/*##################################################### Modal ########################################################*/
-
-.modal{
-    position: absolute;
-    background-color: rgba(0,0,0,0.3);
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0.3s, opacity 0.3s;
-}
-
-.modal-show{
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.3s;
 }
 
 /*##################################################### Key Frames ###################################################*/

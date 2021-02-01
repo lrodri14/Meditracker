@@ -9,7 +9,11 @@
 <h2>Providers</h2>
 <!--Navigation bar, each of this tabs contains an data-url attribute and data-provider-type which is used to request
     data from the server side.-->
-<ul class="navigation"><li data-provider-type="LP" data-url="{% url 'providers:providers_list' %}" class="tab">Laboratories</li><li data-provider-type="MP" data-url="{% url 'providers:providers_list' %}" class="tab">Medical Providers</li><li class="tab" data-url="{% url 'providers:visitors' %}">Visitors</li></ul>
+
+<div id="providers-navigation">
+    <div class="tab" data-provider-type="LP" data-url="{% url 'providers:providers_list' %}">Laboratories</div><div class="tab" data-provider-type="MP" data-url="{% url 'providers:providers_list' %}">Medical Providers</div><div class="tab" data-url="{% url 'providers:visitors' %}"> Visitors </div>
+</div>
+
 <!--Wrapper, this container will be filled with the content retrieved from the server side asynchronously.-->
 <div class="wrapper">
 

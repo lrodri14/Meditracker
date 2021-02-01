@@ -46,7 +46,7 @@ def filter_records(request):
     query_date_to = datetime.strptime(request.GET.get('date_to'), '%Y-%m-%d')
     filtered_records = Consult.objects.filter(created_by=request.user, datetime__date__gte=query_date_from, datetime__date__lte=query_date_to, medical_status=True).order_by('-datetime')
     template = 'records/partial_records_list.html'
-    context = {'records': filtered_records, 'filtered': True}
+    context = {'records': filtered_records}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 

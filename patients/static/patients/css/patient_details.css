@@ -194,6 +194,7 @@ button:focus{
     -webkit-backdrop-filter: blur(10px);
     background-clip: padding-box;
     transition: 0.5s;
+    animation: show-up 0.5s linear forwards;
 }
 
 .info-display{

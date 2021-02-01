@@ -1,17 +1,4 @@
 {% load static %}
-{% load providers_custom_tags %}
-{% if visitors.has_other_pages %}
-    <div id="paginator">
-        <span>{{ visitors.number }} / {{ visitors.paginator.num_pages }}</span>
-        <div id="navigation">
-            {% if filtered %}
-                {% if visitors.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'providers:filter_visitors'%}{% current_url 'page' visitors.previous_page_number request.GET.urlencode %}"></i>{% endif %}{%if visitors.has_next %}<i class="fas fa-angle-right" data-url="{% url 'providers:filter_visitors' %}{% current_url 'page' visitors.next_page_number request.GET.urlencode %}"></i>{% endif %}
-            {% else %}
-                {% if visitors.has_previous %}<i class="fas fa-angle-left" data-url="{% url 'providers:visitors'%}{% current_url 'page' visitors.previous_page_number %}"></i>{% endif %}{% if visitors.has_next %}<i class="fas fa-angle-right" data-url="{% url 'providers:visitors' %}{% current_url 'page' visitors.next_page_number %}"></i>{%endif%}
-            {% endif %}
-        </div>
-    </div>
-{% endif %}
 {% if visitors %}
     <!--For each instance-->
     {% for visitor in visitors %}

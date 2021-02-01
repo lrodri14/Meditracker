@@ -57,7 +57,7 @@ def filter_patients(request):
     template = 'patients/patients_partial_list.html'
     query = request.GET.get('query')
     patients_list = Patient.objects.filter(Q(first_names__icontains=query) | Q(last_names__icontains=query), created_by=request.user).order_by('id_number')
-    context = {'patients': patients_list, 'doctor': doctor, 'filtered': True}
+    context = {'patients': patients_list, 'doctor': doctor}
     data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 
@@ -161,17 +161,17 @@ def filter_patient_details(request):
     if requested_details == 'appointments':
         filtered_results = Consult.objects.filter(datetime__date__gte=date_from, datetime__date__lte=date_to, created_by=request.user).order_by('-datetime')
         template = 'patients/patient_consults_partial_list.html'
-        context = {'consults': filtered_results, 'filtered': True}
+        context = {'consults': filtered_results}
         data = {'html': render_to_string(template, context, request)}
     elif requested_details == 'charges':
         filtered_results = Consult.objects.filter(datetime__date__gte=date_from, datetime__date__lte=date_to, created_by=request.user, charge__gte=0).order_by('-datetime')
         template = 'patients/patient_charges_partial_list.html'
-        context = {'charges': filtered_results, 'filtered': True}
+        context = {'charges': filtered_results}
         data = {'html': render_to_string(template, context, request)}
     else:
         filtered_results = MedicalTestResult.objects.filter(date__gte=date_from, date__lte=date_to, consult__created_by=request.user).order_by('-date')
         template = 'patients/patient_exams_partial_list.html'
-        context = {'exams': filtered_results, 'filtered': True}
+        context = {'exams': filtered_results}
         data = {'html': render_to_string(template, context, request)}
     return JsonResponse(data)
 

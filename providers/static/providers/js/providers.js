@@ -12,7 +12,7 @@ events listener sections, the wrapper event listeners section and the modal even
 // Available Data
 if (document.querySelector('.wrapper') !== 'undefined' && document.querySelector('.wrapper') !== 'null'){
     var wrapper = document.querySelector('.wrapper')
-    var navigation = document.querySelector('.navigation')
+    var navigation = document.querySelector('#providers-navigation')
     var tabs = document.querySelectorAll('.tab')
 }
 
@@ -211,7 +211,7 @@ if (navigation){
           visitors tab is clicked, the providerType variable will be useless. Once the function
           is executed, the JSON Format data will be added to the Wrapper inner HTML.'*/
         if (e.target.classList.contains('tab')){
-            navigation.childNodes.forEach(tab => tab.classList.remove('tab-active'))
+            tabs.forEach(tab => tab.classList.remove('tab-active'))
             e.target.classList.add('tab-active')
             let providerType = e.target.getAttribute('data-provider-type')
             let url = providerType ? e.target.getAttribute('data-url') + '?provider_type=' + providerType : e.target.getAttribute('data-url')
@@ -401,8 +401,8 @@ if (wrapper){
         if (e.target.nodeName === 'TD' ||  ((e.target.classList.contains('fa-trash') || e.target.classList.contains('fa-edit') || e.target.classList.contains('fa-envelope')))){
             let row
             e.target.nodeName === 'TD' ? row = e.target.parentNode : row = e.target.parentNode.parentNode
-            row.style.backgroundColor = '#C7E8F3'
-            row.style.color = '#496897'
+            row.style.backgroundColor = '#FFFFFF'
+            row.style.color = '#000000'
         }
 
         /*This mouseover event will be fired every time a hover occurs over an input, this will add the input-hover class
